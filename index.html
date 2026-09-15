@@ -1,12 +1,227 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ude Projects</title>
+  <meta name="description" content="Projects, experiments, software, media, and odd little tools made with ChatGPT.">
+  <title>Ude Projects — Made with ChatGPT</title>
+  <style>
+    :root {
+      --paper: #f3efe7;
+      --ink: #151515;
+      --muted: #666159;
+      --line: #cfc7bb;
+      --card: #fbf8f2;
+      --red: #be4b2f;
+      --blue: #385f73;
+      --gold: #b78b34;
+      --green: #596b4c;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    a { color: inherit; }
+    .wrap { width: min(1180px, calc(100% - 36px)); margin: 0 auto; }
+    header { padding: 28px 0 76px; border-bottom: 1px solid var(--line); }
+    nav { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+    .mark { font-weight: 800; letter-spacing: .08em; text-transform: uppercase; font-size: .78rem; text-decoration: none; }
+    .navlink { color: var(--muted); text-decoration: none; font-size: .92rem; }
+    .hero { padding-top: 84px; max-width: 940px; }
+    .kicker { color: var(--red); text-transform: uppercase; letter-spacing: .14em; font-weight: 800; font-size: .76rem; }
+    h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; font-weight: 400; }
+    h1 { font-size: clamp(3.7rem, 9vw, 8rem); line-height: .92; letter-spacing: -.055em; margin: 18px 0 28px; }
+    .hero p { max-width: 760px; font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.25rem, 2.4vw, 1.65rem); line-height: 1.45; color: #38342f; margin: 0; }
+    main { padding: 68px 0 100px; }
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 24px; }
+    .section-head h2 { font-size: clamp(2.2rem, 5vw, 4rem); margin: 0; letter-spacing: -.035em; }
+    .section-note { color: var(--muted); max-width: 430px; line-height: 1.5; }
+    .featured { display: grid; grid-template-columns: repeat(12, 1fr); gap: 18px; margin-bottom: 78px; }
+    .card {
+      position: relative;
+      background: var(--card);
+      border: 1px solid var(--line);
+      padding: clamp(24px, 4vw, 42px);
+      min-height: 330px;
+      overflow: hidden;
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: auto -70px -110px auto;
+      width: 220px;
+      height: 220px;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      opacity: .13;
+    }
+    .featured .card:nth-child(1) { grid-column: span 7; color: var(--blue); }
+    .featured .card:nth-child(2) { grid-column: span 5; color: var(--red); }
+    .featured .card:nth-child(3) { grid-column: span 12; min-height: 280px; color: var(--gold); }
+    .status { display: inline-flex; gap: 8px; align-items: center; color: var(--muted); text-transform: uppercase; letter-spacing: .11em; font-size: .7rem; font-weight: 800; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+    .card h3 { color: var(--ink); font-size: clamp(2.2rem, 5vw, 4.6rem); line-height: .98; letter-spacing: -.045em; margin: 38px 0 20px; }
+    .card p { color: #413d38; line-height: 1.6; max-width: 680px; font-size: 1rem; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+    .button {
+      display: inline-block;
+      border: 1px solid var(--ink);
+      padding: 11px 15px;
+      text-decoration: none;
+      font-weight: 750;
+      font-size: .82rem;
+      background: var(--ink);
+      color: var(--paper);
+    }
+    .button.secondary { background: transparent; color: var(--ink); }
+    .wisdom-copy { display: grid; grid-template-columns: 1.25fr .75fr; gap: 42px; align-items: end; }
+    .wisdom-copy h3 { margin-bottom: 12px; }
+    .wisdom-quote { font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.25rem, 2.4vw, 1.65rem); line-height: 1.45; color: #3a352d; }
+    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-bottom: 78px; }
+    .grid .card { min-height: 300px; }
+    .grid .card h3 { font-size: clamp(2rem, 4vw, 3.4rem); margin-top: 30px; }
+    .small-projects { display: grid; grid-template-columns: repeat(2, 1fr); border-top: 1px solid var(--line); }
+    .small { padding: 30px 0; border-bottom: 1px solid var(--line); }
+    .small:nth-child(odd) { padding-right: 30px; border-right: 1px solid var(--line); }
+    .small:nth-child(even) { padding-left: 30px; }
+    .small h3 { font-size: 2rem; margin: 5px 0 10px; }
+    .small p { color: var(--muted); line-height: 1.55; margin-bottom: 0; }
+    .label { text-transform: uppercase; letter-spacing: .11em; color: var(--muted); font-size: .68rem; font-weight: 800; }
+    footer { border-top: 1px solid var(--line); padding: 32px 0 50px; color: var(--muted); font-size: .85rem; line-height: 1.6; }
+    @media (max-width: 760px) {
+      header { padding-bottom: 54px; }
+      .hero { padding-top: 54px; }
+      .featured .card:nth-child(n), .grid .card { grid-column: 1 / -1; }
+      .featured, .grid { grid-template-columns: 1fr; }
+      .wisdom-copy { grid-template-columns: 1fr; }
+      .small-projects { grid-template-columns: 1fr; }
+      .small:nth-child(n) { padding: 26px 0; border-right: 0; }
+      .section-head { display: block; }
+      .section-note { margin-top: 10px; }
+    }
+  </style>
 </head>
 <body>
-  <h1>Projects</h1>
-  <p>Things I've made with ChatGPT.</p>
+  <header>
+    <div class="wrap">
+      <nav>
+        <a class="mark" href="/">Ude Projects</a>
+        <a class="navlink" href="https://github.com/udeudeude">GitHub</a>
+      </nav>
+      <div class="hero">
+        <div class="kicker">Made with ChatGPT</div>
+        <h1>Useful things, strange things, and working experiments.</h1>
+        <p>Software, physical interfaces, media, teaching projects, and repurposed machines developed in conversation with ChatGPT.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section aria-labelledby="featured-heading">
+      <div class="section-head">
+        <h2 id="featured-heading">Featured projects</h2>
+        <div class="section-note">These are usable now, substantial enough to explore, or both.</div>
+      </div>
+
+      <div class="featured">
+        <article class="card">
+          <div class="status"><span class="dot"></span> Working prototype</div>
+          <h3>LightHouse</h3>
+          <p>An illuminated digital play surface that works directly with physical Looney Pyramids. The screen becomes part board, part light source, part interface, with physical calibration, stacking and nesting, collision behavior, saved boards, and browser and native-device versions.</p>
+          <div class="actions">
+            <a class="button" href="https://udeudeude.github.io/LightHouse-StashBoard/">Try LightHouse</a>
+            <a class="button secondary" href="https://github.com/udeudeude/LightHouse-StashBoard">View source</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="status"><span class="dot"></span> Working local app</div>
+          <h3>Anaglyph &amp; Friends</h3>
+          <p>Turns one ordinary photograph into stereoscopic and autostereoscopic formats using a monocular depth estimate: anaglyphs, stereograms, wiggle-grams, lenticular output, phantograms, viewer formats, print tools, and more.</p>
+          <div class="actions">
+            <a class="button" href="https://github.com/udeudeude/Anaglyph-and-Friends">Explore the project</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="wisdom-copy">
+            <div>
+              <div class="status"><span class="dot"></span> Downloadable &amp; usable</div>
+              <h3>Wisdom Watch</h3>
+              <p>A calendar made to put an idea from a wise thinker in front of you late at night, instead of letting tomorrow's first logistical obligation own that space. Install the calendar and the entries appear alongside your ordinary events.</p>
+              <div class="actions">
+                <a class="button" href="https://raw.githubusercontent.com/udeudeude/1AM-wisdom/main/wisdom.ics">Add Wisdom Watch to your calendar</a>
+                <a class="button secondary" href="https://github.com/udeudeude/1AM-wisdom">See the calendar project</a>
+              </div>
+            </div>
+            <div class="wisdom-quote">John Cage, James P. Carse, Christopher Alexander, Kierkegaard, McLuhan, Gregory of Nyssa, and others become small appointments with attention.</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="more-heading">
+      <div class="section-head">
+        <h2 id="more-heading">More projects</h2>
+        <div class="section-note">Different media, same general instinct: make the idea concrete enough to use.</div>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <div class="status"><span class="dot"></span> Native Mac experiment</div>
+          <h3>TouchBarpalooza</h3>
+          <p>A playground for Touch Bar MacBook Pros: Lemmings, Pong, Snake, Breakout, Conway's Life, clipboard tools, live audio visualization, MIDI controls, and a persistent KITT scanner.</p>
+          <div class="actions"><a class="button secondary" href="https://github.com/udeudeude/TouchBarpalooza">View project</a></div>
+        </article>
+
+        <article class="card">
+          <div class="status"><span class="dot"></span> Live publication</div>
+          <h3>Living Patterns</h3>
+          <p>Brief original audio reflections on living structure, repair, participation, and the fit between human life and place, published with transcripts, an archive, and an RSS feed.</p>
+          <div class="actions"><a class="button" href="https://udeudeude.github.io/Living-Patterns-Podcast/">Listen</a></div>
+        </article>
+
+        <article class="card">
+          <div class="status"><span class="dot"></span> Learner draft</div>
+          <h3>Sorting Algorithms with Playing Cards</h3>
+          <p>A hands-on course for learning sorting algorithms with an ordinary 52-card deck, comparing what is efficient for a computer with what is efficient for human hands at a table.</p>
+          <div class="actions"><a class="button secondary" href="https://github.com/udeudeude/Sorting-Algorithms-with-Playing-Cards">View manuscript project</a></div>
+        </article>
+
+        <article class="card">
+          <div class="status"><span class="dot"></span> Device-hacking experiment</div>
+          <h3>AI on Kindle</h3>
+          <p>An ongoing attempt to make an older Kindle considerably stranger and more useful: KOReader, expanded browser capability, custom plugins, and experiments with reaching artificial-intelligence services from an e-ink reader.</p>
+          <p><strong>Project notes and installation details coming here later.</strong></p>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="experiments-heading">
+      <div class="section-head">
+        <h2 id="experiments-heading">Creative experiments</h2>
+      </div>
+      <div class="small-projects">
+        <article class="small">
+          <div class="label">Music</div>
+          <h3>SuperCollider studies</h3>
+          <p>Music and sound experiments made collaboratively with ChatGPT while learning SuperCollider. This is creative work in progress, not a software project or a claim on the SuperCollider web repository I forked for later exploration.</p>
+        </article>
+        <article class="small">
+          <div class="label">More incoming</div>
+          <h3>The shelf has room.</h3>
+          <p>This site is meant to grow as projects become worth showing, including failures, prototypes, one-off tools, and things that resist tidy categories.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">Built as another ChatGPT collaboration. Source projects live on GitHub; some run directly in the browser, some are downloads, and some require the peculiar hardware they were made for.</div>
+  </footer>
 </body>
 </html>
