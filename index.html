@@ -3,191 +3,284 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Projects made with ChatGPT.">
+  <meta name="description" content="Projects, works, and experiments by Ude.">
   <title>Ude Projects</title>
   <style>
     :root {
-      --page: #0d1720;
-      --ink: #f4fbff;
-      --muted: #c9d8e2;
+      --page:#08131c;
+      --ink:#f5fbff;
+      --muted:#b7cad7;
+      --gap:10px;
     }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      background: var(--page);
-      color: var(--ink);
-      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-    a { color: inherit; }
-    .wrap { width: min(1180px, calc(100% - 24px)); margin: 0 auto; }
-    header { padding: 34px 0 28px; }
-    nav { display: flex; justify-content: space-between; gap: 20px; align-items: center; }
-    .mark, .github { text-decoration: none; }
-    .mark { font-weight: 800; letter-spacing: .08em; text-transform: uppercase; font-size: .76rem; }
-    .github { color: var(--muted); font-size: .82rem; }
-    h1 {
-      margin: 34px 0 8px;
-      font-size: clamp(2.1rem, 6vw, 4.8rem);
-      line-height: .95;
-      letter-spacing: -.045em;
-    }
-    .intro { margin: 0; color: var(--muted); font-size: .98rem; }
-    main { padding: 10px 0 46px; }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-    }
-    .card {
-      min-width: 0;
-      min-height: 230px;
-      padding: 20px;
-      border-radius: 12px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .c1 { background: #1f5f7a; }
-    .c2 { background: #305e92; }
-    .c3 { background: #3d5a80; }
-    .c4 { background: #27747b; }
-    .c5 { background: #495f8a; }
-    .c6 { background: #316b70; }
-    .c7 { background: #425c72; }
-    .c8 { background: #4d5687; }
-    .status {
-      font-size: .64rem;
-      font-weight: 800;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      opacity: .78;
-    }
-    h2 {
-      margin: 12px 0 8px;
-      font-size: clamp(1.35rem, 2.5vw, 2rem);
-      line-height: 1;
-      letter-spacing: -.035em;
-    }
-    .card p {
-      margin: 0;
-      line-height: 1.35;
-      font-size: .88rem;
-      color: #edf7fb;
-    }
-    .links { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
-    .links a {
-      font-size: .72rem;
-      font-weight: 750;
-      text-decoration: none;
-      border-bottom: 1px solid #ffffff99;
-      padding-bottom: 2px;
-    }
-    footer { padding: 0 0 30px; color: #8fa8b7; font-size: .72rem; }
-    @media (max-width: 900px) {
-      .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    }
-    @media (max-width: 650px) {
-      .wrap { width: min(100% - 16px, 1180px); }
-      header { padding-top: 22px; }
-      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-      .card { min-height: 205px; padding: 14px; border-radius: 10px; }
-      .card p { font-size: .78rem; }
-      .links { gap: 8px; margin-top: 14px; }
-      .links a { font-size: .66rem; }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--page);color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    a{color:inherit}
+    .wrap{width:min(1220px,calc(100% - 22px));margin:0 auto}
+    header{padding:24px 0 22px}
+    nav{display:flex;justify-content:space-between;align-items:center;gap:16px}
+    .mark{font-weight:850;letter-spacing:.08em;text-transform:uppercase;font-size:.74rem;text-decoration:none}
+    .medium{color:var(--muted);font-size:.72rem}
+    h1{margin:34px 0 4px;font-size:clamp(2.5rem,7vw,5.5rem);line-height:.92;letter-spacing:-.055em}
+    .intro{margin:0;color:var(--muted);font-size:.9rem}
+    main{padding:12px 0 54px}
+    .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap);align-items:start}
+    .project{min-width:0;border-radius:12px;overflow:hidden;transition:transform .18s ease;position:relative}
+    .project.open{grid-column:span 2}
+    .c1{background:#174c65}.c2{background:#1d5875}.c3{background:#364d78}.c4{background:#17636d}
+    .c5{background:#344b69}.c6{background:#255b62}.c7{background:#314f60}.c8{background:#444b79}
+    .tile-toggle{display:block;width:100%;padding:0;border:0;background:transparent;color:inherit;text-align:left;cursor:pointer;font:inherit}
+    .visual{aspect-ratio:4/3;display:grid;place-items:center;overflow:hidden;background:#ffffff0a;position:relative}
+    .visual svg,.visual img{width:100%;height:100%;display:block;object-fit:cover}
+    .visual::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1px #ffffff12;pointer-events:none}
+    .caption{padding:12px 14px 14px}
+    .status{font-size:.58rem;font-weight:850;letter-spacing:.11em;text-transform:uppercase;opacity:.72}
+    h2{margin:5px 0 0;font-size:clamp(1rem,2vw,1.55rem);line-height:1.02;letter-spacing:-.035em}
+    .expand{display:none;border-top:1px solid #ffffff24;padding:16px 16px 18px}
+    .project.open .expand{display:block}
+    .expand p{margin:0 0 14px;max-width:58ch;line-height:1.45;font-size:.88rem;color:#eff8fc}
+    .gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0 16px}
+    .gallery img,.gallery .mini{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:8px;background:#ffffff12;display:grid;place-items:center;overflow:hidden}
+    .mini svg{width:100%;height:100%}
+    .links{display:flex;gap:12px;flex-wrap:wrap}
+    .links a{font-size:.72rem;font-weight:800;text-decoration:none;border-bottom:1px solid #ffffffaa;padding-bottom:2px}
+    footer{padding:0 0 28px;color:#7994a5;font-size:.68rem}
+    button:focus-visible,a:focus-visible{outline:3px solid #d9f4ff;outline-offset:3px}
+    @media(max-width:920px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+    @media(max-width:650px){
+      .wrap{width:calc(100% - 14px)}
+      header{padding-top:18px}
+      .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+      .project{border-radius:9px}
+      .project.open{grid-column:span 2}
+      .caption{padding:9px 10px 11px}
+      .status{font-size:.5rem}
+      h2{font-size:clamp(.88rem,4vw,1.2rem)}
+      .expand{padding:13px 12px 15px}
+      .expand p{font-size:.8rem}
+      .links{gap:9px}
+      .links a{font-size:.65rem}
     }
   </style>
 </head>
 <body>
-  <header class="wrap">
-    <nav>
-      <a class="mark" href="/">Ude Projects</a>
-      <a class="github" href="https://github.com/udeudeude">GitHub</a>
-    </nav>
-    <h1>Made with ChatGPT.</h1>
-    <p class="intro">Projects, tools, media, and experiments.</p>
-  </header>
+<header class="wrap">
+  <nav>
+    <a class="mark" href="/">Ude Projects</a>
+    <span class="medium">Made with ChatGPT</span>
+  </nav>
+  <h1>Projects.</h1>
+  <p class="intro">Software, media, objects, experiments.</p>
+</header>
 
-  <main class="wrap">
-    <div class="grid">
-      <article class="card c1">
-        <div>
-          <div class="status">Usable calendar</div>
-          <h2>Wisdom Watch</h2>
-          <p>Late-night calendar entries from thinkers worth meeting before tomorrow's logistics.</p>
+<main class="wrap">
+  <section class="grid" id="project-grid" aria-label="Projects">
+
+    <article class="project c1" data-key="wisdom-watch" data-rank="1">
+      <button class="tile-toggle" aria-expanded="false">
+        <div class="visual" aria-hidden="true">
+          <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+            <rect width="800" height="600" fill="#174c65"/>
+            <circle cx="615" cy="145" r="92" fill="#d7edf4" opacity=".92"/>
+            <circle cx="653" cy="113" r="90" fill="#174c65"/>
+            <rect x="125" y="200" width="400" height="275" rx="28" fill="#e9f6fb" opacity=".93"/>
+            <rect x="125" y="200" width="400" height="68" rx="28" fill="#9bc5d2"/>
+            <rect x="184" y="310" width="282" height="22" rx="11" fill="#174c65" opacity=".65"/>
+            <rect x="184" y="359" width="220" height="22" rx="11" fill="#174c65" opacity=".42"/>
+            <rect x="184" y="408" width="252" height="22" rx="11" fill="#174c65" opacity=".42"/>
+          </svg>
         </div>
+        <div class="caption"><div class="status">Usable calendar</div><h2>1AM Wisdom Watch</h2></div>
+      </button>
+      <div class="expand">
+        <p>Late-night calendar entries from thinkers worth meeting before tomorrow's logistics. Subscribe once and the entries appear in your calendar.</p>
         <div class="links">
           <a href="webcal://raw.githubusercontent.com/udeudeude/1AM-wisdom/main/wisdom.ics">Subscribe</a>
-          <a href="https://raw.githubusercontent.com/udeudeude/1AM-wisdom/main/wisdom.ics">Download</a>
+          <a href="https://raw.githubusercontent.com/udeudeude/1AM-wisdom/main/wisdom.ics">Download calendar</a>
           <a href="https://github.com/udeudeude/1AM-wisdom">GitHub</a>
         </div>
-      </article>
+      </div>
+    </article>
 
-      <article class="card c2">
-        <div>
-          <div class="status">Working prototype</div>
-          <h2>LightHouse</h2>
-          <p>An illuminated touchscreen play surface for physical Looney Pyramids.</p>
+    <article class="project c2" data-key="lighthouse" data-rank="2">
+      <button class="tile-toggle" aria-expanded="false">
+        <div class="visual" aria-hidden="true">
+          <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+            <rect width="800" height="600" fill="#1d5875"/>
+            <g stroke="#8fcde1" stroke-width="3" opacity=".45"><path d="M0 120H800M0 240H800M0 360H800M0 480H800"/><path d="M160 0V600M320 0V600M480 0V600M640 0V600"/></g>
+            <path d="M178 438 L294 205 L410 438 Z" fill="#d6f5ff" opacity=".9"/>
+            <path d="M367 438 L470 265 L573 438 Z" fill="#93d6e8" opacity=".78"/>
+            <path d="M535 438 L604 324 L673 438 Z" fill="#eefcff" opacity=".9"/>
+          </svg>
         </div>
-        <div class="links">
-          <a href="https://udeudeude.github.io/LightHouse/">Try it</a>
-          <a href="https://github.com/udeudeude/LightHouse">GitHub</a>
-        </div>
-      </article>
+        <div class="caption"><div class="status">Working prototype</div><h2>LightHouse</h2></div>
+      </button>
+      <div class="expand">
+        <p>An illuminated touchscreen play surface for physical Looney Pyramids. The screen, light, and plastic pieces form one interface.</p>
+        <div class="links"><a href="https://udeudeude.github.io/LightHouse/">Try it</a><a href="https://github.com/udeudeude/LightHouse">GitHub</a></div>
+      </div>
+    </article>
 
-      <article class="card c3">
-        <div>
-          <div class="status">Working local app</div>
-          <h2>Anaglyph &amp; Friends</h2>
-          <p>One photograph transformed into many stereoscopic and 3D viewing formats.</p>
+    <article class="project c3" data-key="anaglyph-friends" data-rank="3">
+      <button class="tile-toggle" aria-expanded="false">
+        <div class="visual" aria-hidden="true">
+          <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+            <rect width="800" height="600" fill="#364d78"/>
+            <circle cx="325" cy="305" r="170" fill="#4fe1e6" opacity=".6"/>
+            <circle cx="475" cy="305" r="170" fill="#8897ff" opacity=".58"/>
+            <circle cx="400" cy="305" r="105" fill="#e4f8ff" opacity=".75"/>
+            <path d="M255 445L400 170L545 445Z" fill="none" stroke="#eefaff" stroke-width="18" opacity=".7"/>
+          </svg>
         </div>
-        <div class="links"><a href="https://github.com/udeudeude/Anaglyph-and-Friends">GitHub</a></div>
-      </article>
+        <div class="caption"><div class="status">Working local app</div><h2>Anaglyph &amp; Friends</h2></div>
+      </button>
+      <div class="expand">
+        <p>Turns one photograph into stereoscopic and 3D formats: anaglyphs, stereograms, lenticular output, phantograms, wiggle-grams, viewer formats, and print tools.</p>
+        <div class="links"><a href="https://github.com/udeudeude/Anaglyph-and-Friends">Project &amp; installation</a></div>
+      </div>
+    </article>
 
-      <article class="card c4">
-        <div>
-          <div class="status">Native Mac app</div>
-          <h2>TouchBarpalooza</h2>
-          <p>Games, tools, visualization, MIDI, and Lemmings for the Touch Bar.</p>
+    <article class="project c4" data-key="touchbarpalooza" data-rank="4">
+      <button class="tile-toggle" aria-expanded="false">
+        <div class="visual" aria-hidden="true">
+          <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+            <rect width="800" height="600" fill="#17636d"/>
+            <rect x="70" y="240" width="660" height="120" rx="38" fill="#07171d"/>
+            <circle cx="130" cy="300" r="28" fill="#a8e5ea"/>
+            <rect x="190" y="270" width="105" height="60" rx="12" fill="#64b8c3"/>
+            <path d="M354 330L394 270L434 330Z" fill="#dff9fb"/>
+            <rect x="500" y="274" width="16" height="52" rx="8" fill="#8cd4db"/><rect x="525" y="250" width="16" height="76" rx="8" fill="#8cd4db"/><rect x="550" y="285" width="16" height="41" rx="8" fill="#8cd4db"/>
+            <path d="M620 280Q660 300 620 320Q580 300 620 280" fill="none" stroke="#dff9fb" stroke-width="9"/>
+          </svg>
         </div>
+        <div class="caption"><div class="status">Native Mac app</div><h2>TouchBarpalooza</h2></div>
+      </button>
+      <div class="expand">
+        <p>Games and tools built specifically for the MacBook Pro Touch Bar: Lemmings, Pong, Snake, Breakout, Life, clipboard tools, audio visualization, MIDI, and KITT.</p>
         <div class="links"><a href="https://github.com/udeudeude/TouchBarpalooza">GitHub</a></div>
-      </article>
+      </div>
+    </article>
 
-      <article class="card c5">
-        <div>
-          <div class="status">Live publication</div>
-          <h2>Living Patterns</h2>
-          <p>Two-minute audio reflections on living structure, repair, and place.</p>
+    <article class="project c5" data-key="living-patterns" data-rank="5">
+      <button class="tile-toggle" aria-expanded="false">
+        <div class="visual"><img src="https://raw.githubusercontent.com/udeudeude/Living-Patterns-Podcast/main/living-patterns-cover.jpg" alt="Living Patterns cover art"></div>
+        <div class="caption"><div class="status">Live publication</div><h2>Living Patterns</h2></div>
+      </button>
+      <div class="expand">
+        <p>Short audio reflections on living structure, repair, participation, and place.</p>
+        <div class="gallery"><img src="https://raw.githubusercontent.com/udeudeude/Living-Patterns-Podcast/main/living-patterns-cover.jpg" alt="Living Patterns cover"><img src="https://raw.githubusercontent.com/udeudeude/Living-Patterns-Podcast/main/og.png" alt="Living Patterns site preview"></div>
+        <div class="links"><a href="https://udeudeude.github.io/Living-Patterns-Podcast/">Listen</a><a href="https://github.com/udeudeude/Living-Patterns-Podcast">GitHub</a></div>
+      </div>
+    </article>
+
+    <article class="project c6" data-key="sorting-cards" data-rank="6">
+      <button class="tile-toggle" aria-expanded="false">
+        <div class="visual" aria-hidden="true">
+          <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+            <rect width="800" height="600" fill="#255b62"/>
+            <g transform="translate(190 125) rotate(-12 120 170)"><rect width="220" height="330" rx="18" fill="#e8f6f8"/><text x="28" y="60" font-family="Georgia" font-size="48" fill="#255b62">A</text><path d="M110 120L145 175L110 230L75 175Z" fill="#498793"/></g>
+            <g transform="translate(405 135) rotate(10 110 165)"><rect width="220" height="330" rx="18" fill="#cfe7eb"/><text x="28" y="60" font-family="Georgia" font-size="48" fill="#255b62">K</text><circle cx="110" cy="180" r="55" fill="#5da3ad"/></g>
+          </svg>
         </div>
-        <div class="links"><a href="https://udeudeude.github.io/Living-Patterns-Podcast/">Listen</a></div>
-      </article>
+        <div class="caption"><div class="status">Learner draft</div><h2>Sorting with Playing Cards</h2></div>
+      </button>
+      <div class="expand">
+        <p>A hands-on course for learning sorting algorithms with an ordinary deck, comparing computational efficiency with efficiency for human hands.</p>
+        <div class="links"><a href="https://github.com/udeudeude/Sorting-Algorithms-with-Playing-Cards">Manuscript project</a></div>
+      </div>
+    </article>
 
-      <article class="card c6">
-        <div>
-          <div class="status">Learner draft</div>
-          <h2>Sorting with Playing Cards</h2>
-          <p>Learn sorting algorithms physically with an ordinary deck of cards.</p>
+    <article class="project c7" data-key="ai-kindle" data-rank="7">
+      <button class="tile-toggle" aria-expanded="false">
+        <div class="visual" aria-hidden="true">
+          <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+            <rect width="800" height="600" fill="#314f60"/>
+            <rect x="230" y="65" width="340" height="470" rx="30" fill="#0a171e"/>
+            <rect x="258" y="105" width="284" height="360" rx="8" fill="#d7e2e4"/>
+            <circle cx="400" cy="500" r="11" fill="#7da0aa"/>
+            <path d="M300 175h190M300 215h145M300 255h180" stroke="#314f60" stroke-width="16" stroke-linecap="round" opacity=".75"/>
+            <path d="M485 322c0-35-29-64-64-64s-64 29-64 64 29 64 64 64h13l40 31-9-39c12-12 20-34 20-56Z" fill="#7fb2bf"/>
+          </svg>
         </div>
-        <div class="links"><a href="https://github.com/udeudeude/Sorting-Algorithms-with-Playing-Cards">GitHub</a></div>
-      </article>
+        <div class="caption"><div class="status">Device experiment</div><h2>AI on Kindle</h2></div>
+      </button>
+      <div class="expand">
+        <p>Repurposing an older Kindle with KOReader, browser and plugin experiments, and access to modern AI services from an e-ink reader.</p>
+        <div class="links"><a href="https://github.com/udeudeude/AI-on-Kindle">Project page</a></div>
+      </div>
+    </article>
 
-      <article class="card c7">
-        <div>
-          <div class="status">Device experiment</div>
-          <h2>AI on Kindle</h2>
-          <p>Repurposing an older Kindle with KOReader, plugins, browsing, and AI.</p>
+    <article class="project c8" data-key="supercollider" data-rank="8">
+      <button class="tile-toggle" aria-expanded="false">
+        <div class="visual" aria-hidden="true">
+          <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+            <rect width="800" height="600" fill="#444b79"/>
+            <path d="M45 300 C90 110 130 490 175 300 S260 110 305 300 S390 490 435 300 S520 110 565 300 S650 490 755 300" fill="none" stroke="#c9d8ff" stroke-width="13" stroke-linecap="round"/>
+            <path d="M45 300 C110 230 145 370 210 300 S310 230 375 300 S480 370 545 300 S650 230 755 300" fill="none" stroke="#7aa1dc" stroke-width="7" opacity=".8"/>
+          </svg>
         </div>
-      </article>
+        <div class="caption"><div class="status">Music</div><h2>SuperCollider studies</h2></div>
+      </button>
+      <div class="expand">
+        <p>Music and sound pieces made while learning SuperCollider with ChatGPT. Audio examples will replace this description as the collection grows.</p>
+      </div>
+    </article>
 
-      <article class="card c8">
-        <div>
-          <div class="status">Music studies</div>
-          <h2>SuperCollider</h2>
-          <p>Music and sound made with ChatGPT while learning SuperCollider.</p>
-        </div>
-      </article>
-    </div>
-  </main>
+  </section>
+</main>
 
-  <footer class="wrap">Built with ChatGPT.</footer>
+<footer class="wrap">The works are the point. ChatGPT is one of the media used to make them.</footer>
+
+<script>
+(() => {
+  const grid = document.getElementById('project-grid');
+  const projects = [...grid.querySelectorAll('.project')];
+  const counterBase = 'https://abacus.jasoncameron.dev';
+  const namespace = 'udeudeude-portfolio-2026-v1';
+
+  async function readCount(project) {
+    try {
+      const r = await fetch(`${counterBase}/get/${namespace}/${project.dataset.key}`);
+      if (!r.ok) return 0;
+      const data = await r.json();
+      return Number(data.value) || 0;
+    } catch (_) { return 0; }
+  }
+
+  async function sortByInterest() {
+    const scored = await Promise.all(projects.map(async project => ({
+      project,
+      count: await readCount(project),
+      rank: Number(project.dataset.rank)
+    })));
+    scored.sort((a,b) => b.count - a.count || a.rank - b.rank);
+    scored.forEach(({project}) => grid.appendChild(project));
+  }
+
+  function recordInterest(project) {
+    const key = `portfolio-counted-${project.dataset.key}`;
+    if (sessionStorage.getItem(key)) return;
+    sessionStorage.setItem(key, '1');
+    fetch(`${counterBase}/hit/${namespace}/${project.dataset.key}`).catch(() => {});
+  }
+
+  projects.forEach(project => {
+    const toggle = project.querySelector('.tile-toggle');
+    toggle.addEventListener('click', () => {
+      const opening = !project.classList.contains('open');
+      projects.forEach(other => {
+        if (other !== project) {
+          other.classList.remove('open');
+          other.querySelector('.tile-toggle').setAttribute('aria-expanded','false');
+        }
+      });
+      project.classList.toggle('open', opening);
+      toggle.setAttribute('aria-expanded', String(opening));
+      if (opening) recordInterest(project);
+    });
+  });
+
+  sortByInterest();
+})();
+</script>
 </body>
 </html>
