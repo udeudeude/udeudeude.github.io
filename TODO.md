@@ -11,7 +11,7 @@
 - Treat the site like an artist portfolio: acknowledge the medium, but center the works rather than the tools.
 - Public name for the calendar project is **1AM Wisdom Watch** for now.
 - AI on Kindle has its own repository: `udeudeude/AI-on-Kindle`.
-- Project order should eventually respond to global interaction: more-explored projects rise higher.
+- Project order should eventually respond to global interaction: more-explored projects rise higher.\n- Asheville GoLocal Card + Google Maps Integration is a portfolio project.
 
 ## In progress / next
 
@@ -20,7 +20,7 @@
 - [x] Make project tiles expandable.
 - [x] Add global interaction-count scaffolding for project ordering.
 - [x] Keep authored order as the fallback / tie-breaker.
-- [ ] Replace provisional project graphics with strong real screenshots/photos wherever possible.
+- [ ] Replace provisional project graphics with strong real screenshots/photos wherever possible.\n- [ ] Add real screenshots and a fuller write-up for Asheville GoLocal Card + Google Maps Integration.\n- [ ] Add its live/install/share link when available.
 - [ ] Add 2–4 images to expanded views for the strongest projects.
 - [ ] Decide the preferred initial project order before interaction data accumulates significantly.
 - [ ] Add a proper AI on Kindle write-up and screenshots.
