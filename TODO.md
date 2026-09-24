@@ -12,6 +12,9 @@
 - Public name for the calendar project is **1AM Wisdom Watch** for now.
 - AI on Kindle has its own repository: `udeudeude/AI-on-Kindle`.
 - Project order should eventually respond to global interaction: more-explored projects rise higher.\n- Asheville GoLocal Card + Google Maps Integration is a portfolio project.
+- TV-b-goner is represented as a working web app.
+- Biofeedback Play is represented as a local signal workspace.
+- n-Counter Dice is represented as a board-game prototype.
 
 ## In progress / next
 
@@ -20,7 +23,9 @@
 - [x] Make project tiles expandable.
 - [x] Add global interaction-count scaffolding for project ordering.
 - [x] Keep authored order as the fallback / tie-breaker.
-- [ ] Replace provisional project graphics with strong real screenshots/photos wherever possible.\n- [ ] Add real screenshots and a fuller write-up for Asheville GoLocal Card + Google Maps Integration.\n- [ ] Add its live/install/share link when available.
+- [ ] Replace provisional project graphics with strong real screenshots/photos wherever possible.
+- [ ] Replace the provisional TV-b-goner, Biofeedback Play, and n-Counter Dice graphics with real imagery.
+- [ ] Decide whether n-Counter Dice should get its own repository/project page.\n- [ ] Add real screenshots and a fuller write-up for Asheville GoLocal Card + Google Maps Integration.\n- [ ] Add its live/install/share link when available.
 - [ ] Add 2–4 images to expanded views for the strongest projects.
 - [ ] Decide the preferred initial project order before interaction data accumulates significantly.
 - [ ] Add a proper AI on Kindle write-up and screenshots.
