@@ -86,14 +86,6 @@
 - [ ] Muse EEG plus head-motion panels
 - [ ] Optional photo of sensors actually being worn/used
 
-## n-Counter Dice
-- [ ] Full tabletop prototype with dice, encounter cards, and other components
-- [ ] Close photo of the custom die faces, especially GO and resource faces
-- [ ] Encounter card beside a live roll/count example
-- [ ] Spreadsheet view showing outcome probabilities for a card
-- [ ] Donut/pie visualization of possible outcomes
-- [ ] Playtest photo showing rolling and collecting happening at the same time
-
 ## Portfolio
 - [ ] Finished desktop homepage
 - [ ] Finished phone layout showing two tiles across
