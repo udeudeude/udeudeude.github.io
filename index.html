@@ -26,9 +26,12 @@
     .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap);align-items:start}
     .project{min-width:0;border-radius:12px;overflow:hidden;transition:transform .22s cubic-bezier(.2,.8,.2,1),box-shadow .22s ease;position:relative;box-shadow:0 1px 0 #ffffff10}
     .project.open{grid-column:span 2;box-shadow:0 18px 44px #00000038}
+    .project:not(.open):hover,.project:not(.open):focus-within{transform:translateY(-3px);box-shadow:0 12px 28px #00000030}
     .c1{background:#174c65}.c2{background:#1d5875}.c3{background:#364d78}.c4{background:#17636d}
-    .c5{background:#344b69}.c6{background:#245d6f}.c7{background:#255b62}.c8{background:#314f60}.c9{background:#444b79}.c10{background:#38556b}
+    .c5{background:#344b69}.c6{background:#245d6f}.c7{background:#255b62}.c8{background:#314f60}.c9{background:#444b79}.c10{background:#38556b}.c11{background:#244f73}.c12{background:#2b6570}.c13{background:#405b84}
     .tile-toggle{display:grid;grid-template-rows:auto 94px;width:100%;padding:0;border:0;background:transparent;color:inherit;text-align:left;cursor:pointer;font:inherit;position:relative}
+    .tile-toggle::after{content:"+";position:absolute;top:10px;right:10px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#07151db8;box-shadow:inset 0 0 0 1px #ffffff26;font-size:1.05rem;line-height:1;transition:transform .2s ease,background .2s ease}
+    .project.open .tile-toggle::after{transform:rotate(45deg);background:#07151de8}
     .visual{aspect-ratio:4/3;display:grid;place-items:center;overflow:hidden;background:#ffffff0a;position:relative}
     .visual svg,.visual img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .32s cubic-bezier(.2,.8,.2,1),filter .32s ease}
     .visual::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1px #ffffff12;pointer-events:none}
@@ -54,7 +57,8 @@
       .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
       .project{border-radius:9px}
       .project.open{grid-column:span 2}
-      .tile-toggle{grid-template-rows:auto 94px}\n      .caption{height:94px;padding:9px 34px 11px 10px}
+      .tile-toggle{grid-template-rows:auto 94px}
+      .caption{height:94px;padding:9px 34px 11px 10px}
       .status{font-size:.5rem}
       h2{font-size:clamp(.88rem,4vw,1.2rem)}
       .expand{padding:13px 12px 15px}
@@ -117,7 +121,7 @@
         <div class="caption"><div class="status">Working prototype</div><h2>LightHouse</h2></div>
       </button>
       <div class="expand">
-        <p>An illuminated touchscreen play surface for physical Looney Pyramids. The screen, light, and plastic pieces form one interface.</p>
+        <p>An illuminated touchscreen play surface for physical Looney Pyramids, with calibrated geometry, stacks and nests, board underlays, toys, saves, and remote sessions where one table can be controlled by multiple devices.</p>
         <div class="links"><a href="https://udeudeude.github.io/LightHouse/">Try it</a><a href="https://github.com/udeudeude/LightHouse">GitHub</a></div>
       </div>
     </article>
@@ -136,12 +140,56 @@
         <div class="caption"><div class="status">Working local app</div><h2>Anaglyph &amp; Friends</h2></div>
       </button>
       <div class="expand">
-        <p>Turns one photograph into stereoscopic and 3D formats: anaglyphs, stereograms, lenticular output, phantograms, wiggle-grams, viewer formats, and print tools.</p>
+        <p>Turns one photograph and an AI depth map into anaglyphs, stereograms, lenticular prints, phantograms, wiggle-grams, viewer formats, View-Master reels, and other 3D experiments.</p>
         <div class="links"><a href="https://github.com/udeudeude/Anaglyph-and-Friends">Project &amp; installation</a></div>
       </div>
     </article>
 
-    <article class="project c4" data-key="touchbarpalooza" data-rank="4">
+    <article class="project c11" data-key="tv-b-goner" data-rank="4">
+      <button class="tile-toggle" aria-expanded="false">
+        <div class="visual" aria-hidden="true">
+          <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+            <rect width="800" height="600" fill="#244f73"/>
+            <rect x="105" y="155" width="250" height="290" rx="24" fill="#d9eef7"/>
+            <rect x="142" y="195" width="176" height="160" rx="10" fill="#244f73"/>
+            <circle cx="230" cy="405" r="14" fill="#7fb9d0"/>
+            <rect x="520" y="170" width="155" height="245" rx="26" fill="#0b1c28"/>
+            <rect x="542" y="204" width="111" height="157" rx="8" fill="#d9eef7"/>
+            <circle cx="598" cy="389" r="8" fill="#7fb9d0"/>
+            <path d="M390 260c44-42 93-42 137 0M410 300c31-29 64-29 95 0M432 340c17-16 34-16 51 0" fill="none" stroke="#a9dceb" stroke-width="18" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="caption"><div class="status">Working web app</div><h2>TV-b-goner</h2></div>
+      </button>
+      <div class="expand">
+        <p>An iPhone-oriented audio-to-infrared TV power-code sweeper for the little headphone-jack IR emitter. It can favor explicit OFF commands, sweep broader power codes, import Flipper IR files, and rebuild its TV-code database automatically.</p>
+        <div class="links"><a href="https://udeudeude.github.io/TV-b-goner/">Try it</a><a href="https://github.com/udeudeude/TV-b-goner">GitHub</a></div>
+      </div>
+    </article>
+
+    <article class="project c12" data-key="biofeedback-play" data-rank="5">
+      <button class="tile-toggle" aria-expanded="false">
+        <div class="visual" aria-hidden="true">
+          <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+            <rect width="800" height="600" fill="#2b6570"/>
+            <rect x="78" y="90" width="644" height="420" rx="24" fill="#0a2229" opacity=".9"/>
+            <rect x="110" y="125" width="260" height="145" rx="16" fill="#d9f1f3" opacity=".94"/>
+            <rect x="400" y="125" width="290" height="145" rx="16" fill="#b9e2e6" opacity=".86"/>
+            <rect x="110" y="300" width="580" height="175" rx="16" fill="#163c44"/>
+            <path d="M135 385C175 285 210 465 255 365S335 275 380 380s85 80 130-10 80-85 135 15" fill="none" stroke="#a8e4e8" stroke-width="12" stroke-linecap="round"/>
+            <circle cx="150" cy="160" r="18" fill="#4ba7b2"/><circle cx="195" cy="160" r="18" fill="#6bc0c8"/><circle cx="240" cy="160" r="18" fill="#8fd7dc"/>
+            <path d="M430 190h220M430 225h150" stroke="#2b6570" stroke-width="18" stroke-linecap="round" opacity=".72"/>
+          </svg>
+        </div>
+        <div class="caption"><div class="status">Local signal workspace</div><h2>Biofeedback Play</h2></div>
+      </button>
+      <div class="expand">
+        <p>A device-agnostic workspace for live physiological signals, visual feedback, audio sonification, recording, diagnostics, derived metrics, and creative-control output. Current devices include Lightstone, emWave, and the 2014 Muse.</p>
+        <div class="links"><a href="https://github.com/udeudeude/Biofeedback-Play">GitHub</a></div>
+      </div>
+    </article>
+
+    <article class="project c4" data-key="touchbarpalooza" data-rank="6">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -162,7 +210,34 @@
       </div>
     </article>
 
-    <article class="project c5" data-key="living-patterns" data-rank="5">
+    <article class="project c13" data-key="n-counter-dice" data-rank="7">
+      <button class="tile-toggle" aria-expanded="false">
+        <div class="visual" aria-hidden="true">
+          <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+            <rect width="800" height="600" fill="#405b84"/>
+            <g transform="translate(115 145) rotate(-9 120 120)">
+              <rect width="240" height="240" rx="42" fill="#dbe8ff"/>
+              <path d="M120 55v105M78 118l42 42 42-42" fill="none" stroke="#405b84" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+            <g transform="translate(430 170) rotate(10 110 110)">
+              <rect width="220" height="220" rx="38" fill="#bfd2f2"/>
+              <circle cx="70" cy="70" r="23" fill="#405b84"/>
+              <circle cx="150" cy="70" r="23" fill="#6f88b0"/>
+              <circle cx="70" cy="150" r="23" fill="#8fa7cb"/>
+              <path d="M150 130l20 34h-40Z" fill="#405b84"/>
+            </g>
+            <path d="M170 470h460" stroke="#b9cbec" stroke-width="14" stroke-linecap="round" opacity=".7"/>
+            <circle cx="255" cy="470" r="28" fill="#dbe8ff"/><circle cx="390" cy="470" r="28" fill="#9fb5da"/><circle cx="525" cy="470" r="28" fill="#6f88b0"/>
+          </svg>
+        </div>
+        <div class="caption"><div class="status">Board game prototype</div><h2>n-Counter Dice</h2></div>
+      </button>
+      <div class="expand">
+        <p>A real-time, no-turn dice game built around repeated rolls, a GO face that ends the run, encounter cards keyed to the roll count, and resource faces that reward players who are watching and collecting.</p>
+      </div>
+    </article>
+
+    <article class="project c5" data-key="living-patterns" data-rank="8">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual"><img src="https://raw.githubusercontent.com/udeudeude/Living-Patterns-Podcast/main/living-patterns-cover.jpg" alt="Living Patterns cover art"></div>
         <div class="caption"><div class="status">Live publication</div><h2>Living Patterns</h2></div>
@@ -174,7 +249,7 @@
       </div>
     </article>
 
-    <article class="project c6" data-key="asheville-golocal-maps" data-rank="6">
+    <article class="project c6" data-key="asheville-golocal-maps" data-rank="9">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -194,7 +269,7 @@
       </div>
     </article>
 
-    <article class="project c7" data-key="sorting-cards" data-rank="7">
+    <article class="project c7" data-key="sorting-cards" data-rank="10">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -211,7 +286,7 @@
       </div>
     </article>
 
-    <article class="project c8" data-key="ai-kindle" data-rank="8">
+    <article class="project c8" data-key="ai-kindle" data-rank="11">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -231,7 +306,7 @@
       </div>
     </article>
 
-    <article class="project c9" data-key="supercollider" data-rank="9">
+    <article class="project c9" data-key="supercollider" data-rank="13">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -248,7 +323,7 @@
     </article>
 
 
-    <article class="project c10" data-key="print-pocketmod" data-rank="10">
+    <article class="project c10" data-key="print-pocketmod" data-rank="12">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
