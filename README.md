@@ -23,6 +23,8 @@ It is an image-first index of software, media, device experiments, utilities, an
 
 The homepage tiles expand in place for more information. Their default order can be adjusted by aggregate visitor interaction.
 
+The Anaglyph & Friends tile offers direct Intel and Apple Silicon Mac ZIP downloads from the project's latest checked GitHub release, alongside the hosted demo. Installation, unsigned-app guidance, and cloud-tested macOS versions are disclosed under “Mac download instructions”. Release assets live in the project repository, not in this portfolio source.
+
 ## This repository
 
 - `index.html` — the portfolio site
