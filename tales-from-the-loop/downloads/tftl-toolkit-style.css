@@ -1,4 +1,4 @@
-/* TFTL TOOLKIT v3 — open-licensed fonts; notices included in the source ZIP. */
+/* TFTL TOOLKIT v4 — open-licensed fonts; notices included in the source ZIP. */
 @font-face { font-family:'Poppins'; src:url('https://udeudeude.github.io/tales-from-the-loop/fonts/Poppins-Bold.woff') format('woff'); font-weight:700; font-style:normal; font-display:swap; }
 @font-face { font-family:'Poppins'; src:url('https://udeudeude.github.io/tales-from-the-loop/fonts/Poppins-Regular.woff') format('woff'); font-weight:400; font-style:normal; font-display:swap; }
 @font-face { font-family:'Crimson Text'; src:url('https://udeudeude.github.io/tales-from-the-loop/fonts/CrimsonText-Regular.woff') format('woff'); font-weight:400; font-style:normal; font-display:swap; }
@@ -179,3 +179,41 @@
 /* Denser reference rhythm for the fill-in mystery. */
 .page .mysteryCompact h2 { margin:9px 0 5px; }
 .page .mysteryCompact p { margin-bottom:6px; }
+
+
+/* ORIGINAL SVG COMPONENTS — editable labels stay as live text. */
+.page .rail { background-image:url('https://udeudeude.github.io/tales-from-the-loop/assets/sidebar-wear.svg'),linear-gradient(to bottom,#ee7518 0,#ee7518 130px,#ffc335 130px,#ffc335 100%); background-size:100% 100%,100% 100%; background-repeat:no-repeat; }
+.page .clueNode { border:0; border-radius:0; background:transparent url('https://udeudeude.github.io/tales-from-the-loop/assets/clue-frame.svg') center / 100% 100% no-repeat; min-height:102px; padding:20px 20px; }
+.page .flowStart, .page .flowEnd { border:0; background:transparent url('https://udeudeude.github.io/tales-from-the-loop/assets/showdown-frame.svg') center / 100% 100% no-repeat; padding:20px 24px; min-height:77px; }
+.page .flowArrow { background:transparent url('https://udeudeude.github.io/tales-from-the-loop/assets/arrow-down.svg') center / contain no-repeat; height:28px; width:28px; justify-self:center; font-size:0; }
+.page .handout, .page .paperBox { display:block; background:#d9dbd7 url('https://udeudeude.github.io/tales-from-the-loop/assets/gray-paper.svg') center / 100% 100%; border:1px solid #b9bdb6; border-radius:1px 3px 2px 1px; box-shadow:2px 4px 7px rgba(30,34,30,.2),0 1px 1px rgba(30,34,30,.2); padding:12px 13px 10px; color:#30342f; font-family:'Special Elite','Courier New',monospace; font-size:10px; line-height:1.35; margin:12px 2px 16px 0; }
+.page .handout::before, .page .paperBox::before { content:''; display:block; height:29px; width:160px; margin:0 0 8px; background:transparent url('https://udeudeude.github.io/tales-from-the-loop/assets/nordhamn-energi.svg') left center / contain no-repeat; }
+.page .handout h3, .page .paperBox h3 { color:#30342f; background:transparent; padding:0 0 7px; margin:0 0 8px; border-bottom:1px solid #969d91; font-family:'Special Elite','Courier New',monospace; font-weight:400; font-size:11px; letter-spacing:.5px; }
+.page .handout p, .page .paperBox p { line-height:1.35; }
+.page .brandVektora::before { background-image:url('https://udeudeude.github.io/tales-from-the-loop/assets/vektora-systems.svg'); }
+.page .brandSundby::before { background-image:url('https://udeudeude.github.io/tales-from-the-loop/assets/sundby-signalverk.svg'); }
+.page .brandMeridian::before { background-image:url('https://udeudeude.github.io/tales-from-the-loop/assets/meridian-labs.svg'); }
+.page .brandNorthline::before { background-image:url('https://udeudeude.github.io/tales-from-the-loop/assets/northline-transit.svg'); }
+.page .brandAster::before { background-image:url('https://udeudeude.github.io/tales-from-the-loop/assets/aster-cold-storage.svg'); }
+.page .brandBoreal::before { background-image:url('https://udeudeude.github.io/tales-from-the-loop/assets/boreal-survey-office.svg'); }
+.page .brandSchool::before { background-image:url('https://udeudeude.github.io/tales-from-the-loop/assets/lake-district-schools.svg'); }
+.page .noBrand::before { display:none; }
+.page .mysteryCompact .handout { padding:8px 10px 7px; margin-top:8px; margin-bottom:10px; font-size:9px; }
+.page .mysteryCompact .handout::before { height:22px; margin-bottom:5px; }
+.page .mysteryCompact .handout h3 { font-size:10px; margin-bottom:5px; padding-bottom:5px; }
+.page .coverPage { display:block; width:calc(100% + 42px); margin-left:-42px; padding:26px 16px 0; text-align:center; }
+.page .coverPage .coverEyebrow { display:block; font-family:Poppins,Arial,sans-serif; font-weight:700; font-size:10px; letter-spacing:2px; text-transform:uppercase; margin:0 0 18px; }
+.page .coverPage h1 { font-size:48px; line-height:1.08; color:#e86a16; text-transform:uppercase; margin:0 0 13px; letter-spacing:-1.3px; }
+.page .coverPage .coverSubtitle { display:block; font-family:Poppins,Arial,sans-serif; font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin:0 0 18px; }
+.page .coverPage .coverArt { display:flex; align-items:center; justify-content:center; height:285px; border:1px dashed #b8a385; background:#f0eade; margin:18px 0; font-family:Poppins,Arial,sans-serif; color:#857154; font-size:11px; }
+.page .coverArt p { margin:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
+.page .coverArt img { display:block; width:100%; height:100%; object-fit:contain; }
+.page .coverPage .coverPreamble { display:block; max-width:470px; margin:16px auto; font-family:'Crimson Text',Georgia,serif; font-size:15px; line-height:1.35; font-style:italic; }
+.page .coverPage .coverAuthor { display:block; font-family:Poppins,Arial,sans-serif; font-size:12px; font-weight:700; margin:22px 0 14px; }
+.page .coverPage .coverLegal { display:block; font-family:Poppins,Arial,sans-serif; font-size:8px; line-height:1.5; border-top:1px solid #e86a16; padding-top:12px; max-width:510px; margin:auto; color:#6b6255; }
+.page .logoGrid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px 22px; margin:15px 0; }
+.page .logoCard { display:block; border-top:1px solid #cbbfae; padding:9px 0 5px; min-width:0; }
+.page .logoCard img { display:block; width:100%; height:57px; object-fit:contain; object-position:left center; margin:0 0 7px; }
+.page .logoCard p { font-size:11px; line-height:1.25; margin:0 0 5px; }
+.page .logoCard .logoCode { display:block; font-family:'Special Elite',monospace; font-size:9px; color:#79705f; }
+@media print { .page .handout, .page .paperBox { break-inside:avoid; print-color-adjust:exact; } }

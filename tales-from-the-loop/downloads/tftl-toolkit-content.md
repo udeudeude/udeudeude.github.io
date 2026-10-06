@@ -1,4 +1,4 @@
-<!-- TFTL TOOLKIT v3 — COPY AND EDIT
+<!-- TFTL TOOLKIT v4 — COPY AND EDIT
 Clone with Source > Clone to New. Keep the Style Editor and V3 renderer.
 Every page is independent. Copy a whole page or individual {{blocks}}, then replace bracketed fields.
 The \page command (a backslash followed by page) starts the next sheet; text does not auto-paginate.
@@ -52,9 +52,11 @@ Split long sections yourself. Check the preview before sharing.
 | 06 | Wide, portrait, and wrapped image layouts |
 | 07 | A continuation page with mixed widths |
 | 08 | An editable clue-flow map |
+| 09 | A title-page template |
+| 10 | Eight fictional organization logos |
 
 ## Keep what you need
-[Write a short overview of your campaign, mystery, or collection here. Delete this instruction page when your document is ready.]
+[Your campaign overview. Remove unused examples. Move page 09 to the front for a title page.]
 }}
 {{loopColumn
 ## Copy components
@@ -748,5 +750,121 @@ Use short labels in the nodes. Put details in the reference table. These are edi
 
 {{footer
 {{footerText [YOUR NAME] · ORIGINAL UNOFFICIAL TALES FROM THE LOOP MATERIAL}}
+{{folio &nbsp;}}
+}}
+
+
+\page
+
+{{coverPage
+{{coverEyebrow [AN ORIGINAL MYSTERY / YOUR CAMPAIGN]}}
+# [YOUR TITLE]<br>[SECOND LINE]
+{{coverSubtitle [A subtitle / place / year]}}
+
+{{coverArt
+[YOUR COVER IMAGE]<br>Replace this text with a public image URL.
+}}
+
+{{coverPreamble
+[An ordinary day, one impossible detail, and a reason the Kids cannot walk away. Write a short, evocative introduction here.]
+}}
+
+{{coverAuthor BY [YOUR NAME]}}
+
+{{coverLegal
+[Your copyright and image credits.]<br>
+Unofficial material for Tales from the Loop.<br>
+[If publishing through Free League Workshop, supply the required notice and permitted Workshop branding under that agreement.]
+}}
+}}
+
+<!-- TITLE PAGE: copy this complete page to the front. Keep the page break after it.
+Replace the coverArt contents with ![Description](PUBLIC_IMAGE_URL).
+This cover intentionally has no chapter rail or printed folio.
+All other pages retain automatic numbering; after moving this cover first, numbering includes the cover.
+No official logos or artwork are supplied. -->
+
+\page
+
+{{rail
+{{railLabel TOOLKIT}}
+{{railNumber &nbsp;}}
+{{railCode LOGOS}}
+{{railVertical ORIGINAL FICTIONAL ORGANIZATIONS / SETTING PROPS}}
+}}
+
+{{masthead
+{{kicker ORIGINAL SVG ASSETS / AN ALTERNATIVE 1980S}}
+# ORGANIZATIONS
+{{dek Eight fictional identities for letters, equipment labels,<br>school paperwork, terminals, and suspicious deliveries.}}
+}}
+
+{{logoGrid
+{{logoCard
+![NORDHAMN ENERGI](https://udeudeude.github.io/tales-from-the-loop/assets/nordhamn-energi.svg)
+A municipal power utility; substations, meters, maintenance notices.
+{{logoCode default / Nordhamn}}
+}}
+{{logoCard
+![VEKTORA COMPUTING SYSTEMS](https://udeudeude.github.io/tales-from-the-loop/assets/vektora-systems.svg)
+A computer contractor; terminal rooms, magnetic media, access cards.
+{{logoCode brandVektora}}
+}}
+{{logoCard
+![SUNDBY SIGNALVERK](https://udeudeude.github.io/tales-from-the-loop/assets/sundby-signalverk.svg)
+A telecommunications supplier; relay towers, service vans, switchboards.
+{{logoCode brandSundby}}
+}}
+{{logoCard
+![MERIDIAN LABORATORY SYSTEMS](https://udeudeude.github.io/tales-from-the-loop/assets/meridian-labs.svg)
+A scientific-instrument company; lab labels, sample crates, calibration slips.
+{{logoCode brandMeridian}}
+}}
+{{logoCard
+![NORTHLINE TRANSIT AUTHORITY](https://udeudeude.github.io/tales-from-the-loop/assets/northline-transit.svg)
+A transport authority; bus passes, depots, routes, lost-property receipts.
+{{logoCode brandNorthline}}
+}}
+{{logoCard
+![ASTER COLD STORAGE](https://udeudeude.github.io/tales-from-the-loop/assets/aster-cold-storage.svg)
+An industrial refrigeration company; warehouses and temperature logs.
+{{logoCode brandAster}}
+}}
+{{logoCard
+![BOREAL SURVEY OFFICE](https://udeudeude.github.io/tales-from-the-loop/assets/boreal-survey-office.svg)
+A mapping and surveying bureau; restricted maps, field notes, borehole tags.
+{{logoCode brandBoreal}}
+}}
+{{logoCard
+![LAKE DISTRICT SCHOOL BOARD](https://udeudeude.github.io/tales-from-the-loop/assets/lake-district-schools.svg)
+A school administration; permission slips, report cards, attendance records.
+{{logoCode brandSchool}}
+}}
+}}
+
+{{loopGrid
+{{loopColumn
+## Use a logo
+Copy an image URL above into a caption, letterhead, or equipment label. These are original, fictional props. Keep their names or edit the SVG source to invent your own organization.
+
+## Branded paper boxes
+The **handout** and **paperBox** styles use gray stationery, a soft shadow, and Nordhamn Energi by default. Add one of the brand classes above to change the letterhead; **noBrand** removes it.
+}}
+{{loopColumn
+{{paperBox,brandMeridian
+### Calibration notice
+FILE: [REFERENCE]<br>
+UNIT: [IDENTIFIER]<br>
+[A short clue disguised as an ordinary instruction.]
+}}
+
+{{smallText
+The downloadable source includes all SVG files. The worn frames, arrows, rail flecks, and paper texture were independently drawn for this toolkit.
+}}
+}}
+}}
+
+{{footer
+{{footerText [YOUR NAME] · ORIGINAL FICTIONAL ORGANIZATIONS}}
 {{folio &nbsp;}}
 }}
