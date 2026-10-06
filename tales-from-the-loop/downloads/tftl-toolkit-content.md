@@ -1,4 +1,4 @@
-<!-- TFTL TOOLKIT v2 — COPY AND EDIT
+<!-- TFTL TOOLKIT v3 — COPY AND EDIT
 Clone with Source > Clone to New. Keep the Style Editor and V3 renderer.
 Every page is independent. Copy a whole page or individual {{blocks}}, then replace bracketed fields.
 The \page command (a backslash followed by page) starts the next sheet; text does not auto-paginate.
@@ -51,13 +51,14 @@ Text stays on the sheet where you write it. Split long sections yourself and che
 | 05 | Kid, NPC, machine, and location cards |
 | 06 | Wide, portrait, and wrapped image layouts |
 | 07 | A continuation page with mixed widths |
+| 08 | An editable clue-flow map |
 
 ## Keep what you need
 [Write a short overview of your campaign, mystery, or collection here. Delete this instruction page when your document is ready.]
 }}
 {{loopColumn
 ## Copy components
-Each component has a labelled container in the source: **callout**, **readAloud**, **flavor**, **statCard**, **figure**, or **splitBand**. Copy the opening line, its contents, and the matching closing braces.
+Each component has a labelled container in the source: **callout**, **readAloud**, **flavor**, **statCard**, **figure**, **splitBand**, or **clueFlow**. Copy the opening line, its contents, and the matching closing braces.
 
 {{terminal
 ### Small syntax reference
@@ -239,12 +240,16 @@ Use **#####** for a compact reference label.
 Use **######** for the lowest level of annotation.
 
 ## Ordinary body text
-[Replace this paragraph with your own text. Body copy is serif, with a compact rhythm suitable for a printed RPG page. Blank lines separate paragraphs.]
+{{prose
+[The first paragraph starts flush left. Crimson Text gives story prose a readable, book-like rhythm.]
+
+[Later paragraphs indent. Use this prose container for continuous narrative; ordinary reference paragraphs retain their spacing.]
+}}
 
 Use **bold** for important names and labels, *italic* for emphasis or in-world titles, and ~~strikethrough~~ for an optional redacted detail. An explicit line break uses the HTML break tag shown in the source examples.
 
 {{lead
-[A short opening paragraph or summary can use the lead style for slightly larger text. Keep it to a few lines.]
+[A short summary can use lead for slightly larger text. An italic preamble introduces the scene.]
 }}
 
 {{smallText
@@ -256,6 +261,12 @@ Use **bold** for important names and labels, *italic* for emphasis or in-world t
 [This combination gives you another way to group reference information.]
 }}
 {{loopColumn
+{{preamble
+[Use this italic preamble for an introduction.]
+}}
+
+{{skill INVESTIGATE}}
+
 ## Flavor text
 {{flavor
 [The service lights blink beneath the lake. Somewhere on the other shore, a telephone rings in an empty house.]
@@ -647,5 +658,95 @@ Replace only the placeholder words inside **imageSlot** with Markdown image synt
 
 {{footer
 {{footerText [YOUR NAME] · UNOFFICIAL TALES FROM THE LOOP MATERIAL}}
+{{folio &nbsp;}}
+}}
+
+\page
+
+{{rail
+{{railLabel MYSTERY}}
+{{railNumber &nbsp;}}
+{{railCode FLOW}}
+{{railVertical [CAMPAIGN / MYSTERY / GM REFERENCE]}}
+}}
+
+{{masthead
+{{kicker AN EDITABLE MYSTERY MAP / GM ONLY}}
+# FOLLOW THE CLUES
+{{dek Several discoveries can lead the Kids toward the same confrontation.<br>Replace every bracketed field with your own locations and evidence.}}
+}}
+
+{{clueFlow
+{{flowStart
+### [The opening disturbance]
+{{nodeDetail [Why the Kids investigate. Offer access to all three clue sites.]}}
+}}
+{{flowArrow ↓}}
+{{flowArrow ↓}}
+{{flowArrow ↓}}
+{{clueNode
+### 01 / [Clue site]
+{{nodeDetail [Evidence pointing toward the showdown.]}}
+}}
+{{clueNode
+### 02 / [Clue site]
+{{nodeDetail [Another way to learn where to go.]}}
+}}
+{{clueNode
+### 03 / [Clue site]
+{{nodeDetail [A person or object that reveals the destination.]}}
+}}
+{{flowArrow ↓}}
+{{flowArrow ↓}}
+{{flowArrow ↓}}
+{{flowEnd
+### [The showdown / discovery]
+{{nodeDetail [The central dilemma. What can the Kids change?]}}
+}}
+}}
+
+{{loopGrid
+{{loopColumn
+## Make the routes meaningful
+[Give each location its own atmosphere, evidence, and relationship. Any one route can reveal the destination; other routes add context or useful options.]
+
+**Cross-link:** [At site 01, evidence also points to site 02. At site 03, someone remembers site 01.]
+
+**If a clue is missed:** [A second source, event, or witness keeps the mystery moving.]
+
+{{callout
+### Keep the graph readable
+Use short labels in the nodes. Put details in the reference table. These are editable text containers, not a flattened image.
+}}
+}}
+{{loopColumn
+## Pressure and consequences
+{{timeline
+**[First beat]** / [Everyday life calls the Kids away.]
+
+**[Second beat]** / [The situation changes at a clue site.]
+
+**[Deadline]** / [What happens if nobody intervenes.]
+}}
+
+{{npcQuote
+[“A short quote that captures the person at the heart of the mystery.”]
+}}
+
+**Afterward:** [An ordinary-life scene showing what the Kids gained, lost, or understood.]
+}}
+}}
+
+{{wideSection
+## Clue reference
+| Site | Essential discovery | Extra help or complication |
+|:---|:---|:---|
+| 01 / [Name] | [Where the trail leads] | [What this route adds] |
+| 02 / [Name] | [Where the trail leads] | [What this route adds] |
+| 03 / [Name] | [Where the trail leads] | [What this route adds] |
+}}
+
+{{footer
+{{footerText [YOUR NAME] · ORIGINAL UNOFFICIAL TALES FROM THE LOOP MATERIAL}}
 {{folio &nbsp;}}
 }}

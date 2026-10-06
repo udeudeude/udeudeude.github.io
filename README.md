@@ -34,3 +34,5 @@ The Anaglyph & Friends tile offers direct Intel and Apple Silicon Mac ZIP downlo
 - `IMAGE-SHOPPING-LIST.md` — photos and screenshots still wanted for project tiles and expanded views
 
 This is the portfolio repository, not the source repository for any one project. Project source lives in the linked project repositories.
+
+The Tales from the Loop Homebrewery Toolkit has eight example pages and an editable clue-flow map. Its web fonts (Poppins, Crimson Text, Special Elite) and license notices are hosted in `tales-from-the-loop/fonts/` and included in its source ZIP. Graphics are independently made; the companion guide credits the official Workshop templates.
