@@ -171,3 +171,7 @@
 .page .clueFlow .flowStart h3, .page .clueFlow .flowEnd h3 { font-size:12px; }
 .page .clueFlow .nodeDetail { display:block; font-size:11px; line-height:1.2; }
 .page .clueFlow, .page .clueNode, .page .flowEnd { break-inside:avoid; }
+
+/* Inline arrow spans become individual grid cells. */
+.page .clueFlow > p { display:contents; }
+.page .flowArrow { display:block; text-align:center; }

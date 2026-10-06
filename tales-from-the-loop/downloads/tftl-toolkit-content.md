@@ -37,9 +37,9 @@ The Style Editor supplies the common appearance. You can leave it unchanged whil
 
 {{callout
 ### The page model
-Every page is an independent sheet. Copy a complete example page, including its rail and footer, and put the page-break command between sheets. Page numbers update automatically.
+Copy a complete sheet, including its rail and footer. Separate sheets with a page break. Page numbers update automatically.
 
-Text stays on the sheet where you write it. Split long sections yourself and check the preview before sharing.
+Split long sections yourself. Check the preview before sharing.
 }}
 
 ## Choose a page pattern
@@ -58,7 +58,7 @@ Text stays on the sheet where you write it. Split long sections yourself and che
 }}
 {{loopColumn
 ## Copy components
-Each component has a labelled container in the source: **callout**, **readAloud**, **flavor**, **statCard**, **figure**, **splitBand**, or **clueFlow**. Copy the opening line, its contents, and the matching closing braces.
+Copy a complete **callout**, **readAloud**, **flavor**, **statCard**, **figure**, **splitBand**, or **clueFlow**, including its closing braces.
 
 {{terminal
 ### Small syntax reference
@@ -70,7 +70,7 @@ PAGE BREAK: backslash + page</code></pre>
 }}
 
 ## Add another sheet
-Use the continuation page at the end as your starting point. Copy everything from its rail to its footer. Separate it from the previous sheet with:
+Copy page 07 from its rail to its footer. Separate sheets with:
 
 <pre><code>\page</code></pre>
 
@@ -81,11 +81,11 @@ The image page uses empty frames. Replace the words inside an **imageSlot** with
 
 <pre><code>![Description](PUBLIC_IMAGE_URL)</code></pre>
 
-The image URL must be publicly accessible. Captions include space for a title and artist credit. The default fits the entire image; the **imageCover** variant crops it to fill its frame.
+Use a public image URL and credit the artist. The default fits the whole image; **imageCover** crops it.
 
 {{callout,sideNote
 ### Before sharing
-Review every page at a readable zoom. Shorten crowded copy or add a page. Keep important text above the footer. Remove unused examples and replace credits and campaign labels.
+Check every page. Move crowded text to another sheet. Replace labels and credits; remove unused examples.
 }}
 }}
 }}
@@ -117,19 +117,19 @@ Review every page at a readable zoom. Shorten crowded copy or add a page. Keep i
 {{loopGrid
 {{loopColumn
 ## The opening scene
-[Set the scene. Show what interrupts an ordinary day, why the Kids care, and what they can immediately investigate.]
+[Interrupt an ordinary day. Why do the Kids care? What can they investigate?]
 
-**Ask the players:** [A question connecting the mystery to their Kids' relationships, fears, or possessions.]
+**Ask the players:** [A question about the Kids' relationships, fears, or possessions.]
 
 {{truth
 ### The truth / GM only
-[What is really happening? Who or what caused it? What does the strange machine or creature want?]
+[The real cause. What does the person, machine, or creature want?]
 
 **If nobody intervenes:** [The consequence and its deadline.]
 }}
 
 ## Follow the clues
-[State how the Kids can find the essential information. Use rolls for uncertain, risky actions; give a complication for failure.]
+[How the Kids find essential information. Risky actions invite rolls and complications.]
 
 ### 01 / [First location]
 **Notice:** [Two sensory details.]<br>
@@ -144,16 +144,16 @@ Review every page at a readable zoom. Shorten crowded copy or add a page. Keep i
 **Failure:** [A new problem or cost.]
 
 ### 03 / [The final location]
-[Describe the scene, the discovery, and the immediate decision facing the Kids. Connect it to the person or machine in the other column.]
+[The discovery and decision. Connect this site to the person or machine opposite.]
 
 ## Back to everyday life
-[Show what changes after the mystery. Include a family, school, friendship, or Hideout scene.]
+[Show what changes in a family, school, friendship, or Hideout scene.]
 
 **Closing question:** [What do the Kids now think or feel differently?]
 
 {{truth
 ### A useful detail
-[Add equipment notes, machine behavior, a location feature, or a GM reminder. Delete this box if unused.]
+[Equipment, machine behavior, location detail, or GM reminder.]
 }}
 }}
 
@@ -184,7 +184,7 @@ STATUS: [AN UNSETTLING DETAIL]<br>
 **Anchor / Pride:** [Your notes]
 }}
 
-[For an NPC, replace the ratings box with personality, motivation, a secret, and something they can offer the Kids.]
+[For an NPC, use a motivation, secret, and something they offer the Kids.]
 
 ## Pressure from everyday life
 **[Time / beat 1] /** [A mundane obligation interrupts the investigation.]
@@ -194,11 +194,11 @@ STATUS: [AN UNSETTLING DETAIL]<br>
 **[Time / beat 3] /** [The approaching deadline becomes unmistakable.]
 
 ## Choices and consequences
-**[Approach A].** [What the Kids must do. Describe the outcome and any necessary Trouble roll.]
+**[Approach A].** [Action, outcome, and any Trouble roll.]
 
-**[Approach B].** [A different solution with a meaningful tradeoff.]
+**[Approach B].** [Another solution and its tradeoff.]
 
-**If things go wrong:** [A setback, changed relationship, lost opportunity, or Condition that follows from the fiction.]
+**If things go wrong:** [A setback, changed relationship, or Condition following from the fiction.]
 }}
 }}
 
@@ -246,14 +246,14 @@ Use **######** for the lowest level of annotation.
 [Later paragraphs indent. Use this prose container for continuous narrative; ordinary reference paragraphs retain their spacing.]
 }}
 
-Use **bold** for important names and labels, *italic* for emphasis or in-world titles, and ~~strikethrough~~ for an optional redacted detail. An explicit line break uses the HTML break tag shown in the source examples.
+Use **bold** for labels, *italic* for emphasis, and ~~strikethrough~~ for a redacted detail. Use an HTML break tag for an explicit line break.
 
 {{lead
 [A short summary can use lead for slightly larger text. An italic preamble introduces the scene.]
 }}
 
 {{smallText
-[A small note can hold a credit, caveat, pronunciation, or cross-reference. Use sparingly; do not put essential information in tiny type.]
+[A small credit or cross-reference. Keep essential information in body text.]
 }}
 
 {{eyebrow [A small section label]}}
@@ -302,7 +302,7 @@ An inline code label such as <code>UNIT L–17</code> suits a machine identifier
 
 {{callout,sideNote
 ### Type without clutter
-Use headings in order where possible. The page title is level one. Levels two and three are usually enough for a short mystery; the smaller levels support dense references.
+The page title is level one. Levels two and three suit short mysteries; smaller headings support dense references.
 }}
 }}
 }}
