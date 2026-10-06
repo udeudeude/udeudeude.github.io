@@ -114,7 +114,7 @@ Check every page. Move crowded text to another sheet. Replace labels and credits
 **WHEN** [Year / season] &nbsp; / &nbsp; **WHERE** [Place] &nbsp; / &nbsp; **PLAY** [Kids / duration]
 }}
 
-{{loopGrid
+{{loopGrid,mysteryCompact
 {{loopColumn
 ## The opening scene
 [Interrupt an ordinary day. Why do the Kids care? What can they investigate?]
@@ -225,7 +225,7 @@ STATUS: [AN UNSETTLING DETAIL]<br>
 {{loopGrid
 {{loopColumn
 ## Heading level two
-Use **##** for a major section, such as a location, chapter topic, or phase of a mystery.
+Use **##** for a location, chapter topic, or mystery phase.
 
 ### Heading level three
 Use **###** for a scene, subtopic, or card title.

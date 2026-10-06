@@ -175,3 +175,7 @@
 /* Inline arrow spans become individual grid cells. */
 .page .clueFlow > p { display:contents; }
 .page .flowArrow { display:block; text-align:center; }
+
+/* Denser reference rhythm for the fill-in mystery. */
+.page .mysteryCompact h2 { margin:9px 0 5px; }
+.page .mysteryCompact p { margin-bottom:6px; }
