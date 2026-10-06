@@ -8,6 +8,7 @@ assert.deepEqual(keys, [
   'wisdom-watch', 'lighthouse', 'anaglyph-friends', 'tv-b-goner',
   'biofeedback-play', 'touchbarpalooza', 'living-patterns', 'asheville-golocal-maps',
   'sorting-cards', 'ai-kindle', 'supercollider', 'print-pocketmod',
+  'tales-from-the-loop-toolkit',
 ]);
 const tile = html.match(/<article[^>]*data-key="anaglyph-friends"[\s\S]*?<\/article>/)?.[0];
 assert.ok(tile, 'Anaglyph tile remains present');

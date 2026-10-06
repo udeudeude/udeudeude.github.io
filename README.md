@@ -20,6 +20,7 @@ It is an image-first index of software, media, device experiments, utilities, an
 - AI on Kindle
 - Print as PocketMod
 - SuperCollider studies
+- Tales from the Loop Formatting Toolkit
 
 The homepage tiles expand in place for more information. Their default order can be adjusted by aggregate visitor interaction.
 
@@ -28,6 +29,7 @@ The Anaglyph & Friends tile offers direct Intel and Apple Silicon Mac ZIP downlo
 ## This repository
 
 - `index.html` — the portfolio site
+- `tales-from-the-loop/` — toolkit guide, public template and mystery links, and downloadable Markdown/CSS source
 - `TODO.md` — portfolio decisions and remaining work
 - `IMAGE-SHOPPING-LIST.md` — photos and screenshots still wanted for project tiles and expanded views
 

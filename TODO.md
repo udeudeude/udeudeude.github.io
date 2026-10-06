@@ -19,6 +19,8 @@
 
 ## In progress / next
 
+- [x] Include the Tales from the Loop toolkit with a dedicated guide and complete Markdown/CSS source downloads.
+
 - [x] Rename Wisdom Watch on the portfolio to 1AM Wisdom Watch.
 - [x] Create/initialize AI on Kindle repository documentation.
 - [x] Make project tiles expandable.

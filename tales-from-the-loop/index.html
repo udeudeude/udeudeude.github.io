@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A seven-page Tales from the Loop Homebrewery formatting toolkit, an original mystery, and practical instructions for making and saving your own pages.">
+  <title>Tales from the Loop Toolkit · Ude Projects</title>
+  <style>
+    :root{--bg:#08131c;--ink:#f5fbff;--muted:#b7cad7;--paper:#f5f0e6;--orange:#e6652e;--rule:#ffffff26}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.6}
+    a{color:inherit;text-underline-offset:4px}a:hover{text-decoration-thickness:2px}a:focus-visible,summary:focus-visible{outline:3px solid #a9dceb;outline-offset:5px}
+    .wrap{width:min(1080px,calc(100% - 36px));margin:auto}nav{display:flex;justify-content:space-between;gap:20px;padding:25px 0;border-bottom:1px solid var(--rule);font-size:.78rem}.mark{font-weight:850;letter-spacing:.08em;text-transform:uppercase;text-decoration:none}.back{color:var(--muted)}
+    .hero{display:grid;grid-template-columns:1.25fr 1fr;gap:42px;align-items:center;padding:58px 0 45px}.eyebrow{font-size:.7rem;font-weight:850;letter-spacing:.14em;text-transform:uppercase;color:#ffab76}h1{font-size:clamp(2.7rem,6vw,4.6rem);line-height:1.02;letter-spacing:-.055em;margin:16px 0 20px}h2{font-size:clamp(1.5rem,3vw,2rem);line-height:1.15;letter-spacing:-.035em;margin:0 0 18px}h3{font-size:1.05rem;margin:0 0 8px}p{margin:0 0 18px}.intro{color:var(--muted);font-size:1.05rem;max-width:55ch}.actions{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 16px}.button{padding:11px 16px;border:1px solid #ffffff55;border-radius:6px;text-decoration:none;font-size:.8rem;font-weight:800}.button.primary{color:#08131c;background:#a9dceb;border-color:#a9dceb}.fine{font-size:.76rem;color:var(--muted)}
+    .specimen{position:relative;background:var(--paper);color:#303630;padding:32px 28px 27px 42px;border-left:16px solid var(--orange);box-shadow:0 20px 60px #0005;transform:rotate(1deg)}.specimen .eyebrow{color:#5a5c56;font-size:.59rem}.specimen h2{font-family:Arial,sans-serif;color:#d95024;font-size:2.8rem;line-height:.95;margin:18px 0;letter-spacing:-.04em}.specimen p{font-family:Georgia,serif;font-size:.85rem;line-height:1.5}.specimen .box{background:#f2dbc6;padding:12px;font-family:Georgia,serif;font-size:.78rem}.specimen .label{background:#303630;color:#fff;margin:-12px -12px 9px;padding:7px 12px;font-family:Arial,sans-serif;font-size:.65rem;font-weight:800;letter-spacing:.04em}.specimen .credit{margin-top:18px;font:10px ui-monospace,monospace;border-top:1px solid #30363040;padding-top:8px}
+    .jump{display:flex;flex-wrap:wrap;gap:12px 22px;padding:18px 0;border-block:1px solid var(--rule);font-size:.8rem;color:var(--muted)}section{padding:44px 0;border-bottom:1px solid var(--rule);scroll-margin-top:20px}.section-head{display:flex;gap:16px;align-items:baseline}.num{color:#ffab76;font-family:ui-monospace,monospace;font-size:.82rem}.two{display:grid;grid-template-columns:1fr 1fr;gap:28px}.card{background:#153040;border:1px solid var(--rule);padding:22px;border-radius:9px}.card p:last-child{margin-bottom:0}ol{padding-left:24px;margin:0}li{padding-left:5px;margin:0 0 14px}li:last-child{margin-bottom:0}.note{border-left:3px solid var(--orange);padding:2px 0 2px 16px;margin-top:22px;color:var(--muted);font-size:.88rem}.note p{margin:0}code{font: .85em ui-monospace,SFMono-Regular,Consolas,monospace;background:#ffffff10;padding:2px 5px;border-radius:3px;overflow-wrap:anywhere}pre{background:#061019;border:1px solid var(--rule);border-radius:7px;padding:16px;overflow:auto;font-size:.85rem;line-height:1.6}pre code{background:none;padding:0}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.88rem}th{text-align:left;color:#ffab76;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em}td,th{padding:13px 12px;border-bottom:1px solid var(--rule);vertical-align:top}td:first-child{min-width:150px;font-weight:700}details{border-top:1px solid var(--rule);padding:17px 0}summary{cursor:pointer;font-weight:700}details p{margin:12px 0 0;color:var(--muted);max-width:80ch}footer{padding:28px 0 35px;color:var(--muted);font-size:.75rem}footer p{margin-bottom:10px}
+    @media(max-width:700px){.hero,.two{grid-template-columns:1fr}.hero{gap:30px;padding-top:34px}.specimen{transform:none;max-width:440px}.wrap{width:calc(100% - 30px)}nav{font-size:.68rem}.card{padding:18px}section{padding:32px 0}td,th{padding:10px 7px}.actions .button{flex:1;text-align:center;min-width:145px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav aria-label="Site"><a class="mark" href="/">Ude Projects</a><a class="back" href="/">← All projects</a></nav>
+    <main>
+      <header class="hero">
+        <div>
+          <div class="eyebrow">Stories / page design / tabletop play</div>
+          <h1>Tales from<br>the Loop<br>Toolkit.</h1>
+          <p class="intro">Turn your own mysteries, characters, and handouts into a coherent set of RPG pages. A seven-page Homebrewery template with warm paper, orange chapter rails, and reusable components.</p>
+          <div class="actions"><a class="button primary" href="https://homebrewery.naturalcrit.com/share/1mDaK9DdiNQZ">Open the template ↗</a><a class="button" href="#start">Make your own copy</a></div>
+          <p class="fine">Unofficial, independently made formatting inspired by Tales from the Loop. Image frames are ready for your art.</p>
+        </div>
+        <div class="specimen" aria-label="A taste of the page style and sample mystery">
+          <div class="eyebrow">An original mystery / school lost-and-found</div>
+          <h2>PLEASE RETURN<br>BEFORE MONDAY</h2>
+          <p>The lost-and-found starts returning things nobody has lost yet. A cassette promises a reunion. A retired robot is trying very hard to help.</p>
+          <div class="box"><div class="label">THE TRUTH / GM ONLY</div>L–17 has mistaken “will be lost” for “is lost.” The next collection pulse is coming at 18:00.</div>
+          <div class="credit">A style sample · Read the complete mystery below</div>
+        </div>
+      </header>
+      <nav class="jump" aria-label="On this page"><a href="#start">Copy &amp; save</a><a href="#components">What’s included</a><a href="#edit">Edit &amp; add pages</a><a href="#mystery">Sample mystery</a><a href="#backup">Source downloads</a><a href="#help">Troubleshooting</a></nav>
+
+      <section id="start">
+        <div class="section-head"><span class="num">01</span><h2>Make it yours. Keep the edit link.</h2></div>
+        <div class="two">
+          <div class="card"><h3>First copy and save</h3><ol>
+            <li><a href="https://homebrewery.naturalcrit.com/share/1mDaK9DdiNQZ">Open the public template</a>. In its top bar, choose <strong>Source → Clone to New</strong>.</li>
+            <li>In <strong>Brew Editor</strong>, replace a bracketed field with your own text. In <strong>Properties (ⓘ)</strong>, give the brew a name.</li>
+            <li>Click <strong>Save Now</strong> in the top bar. Wait for the saved status.</li>
+            <li><strong>Bookmark the resulting <code>/edit/</code> address.</strong> This is the link you return to when you want to change your document.</li>
+          </ol></div>
+          <div class="card"><h3>Then edit and share</h3><p>After the first save, edits save automatically. Check the saved status before closing the tab.</p><p>Use <strong>Share → View</strong> to open the public <code>/share/</code> page. Give that link to readers.</p><p><strong>Get PDF</strong> makes a printable version. Keep your editable brew as well.</p><p class="fine">Treat your edit URL as private: it can grant editing access. Keep a source backup too.</p></div>
+        </div>
+        <div class="note"><p><strong>Save Now disabled?</strong> A newly cloned copy may need a change first. Replace a field or rename it, then check the top bar again. If it already says saved, use the edit address in your browser.</p></div>
+      </section>
+
+      <section id="components">
+        <div class="section-head"><span class="num">02</span><h2>Seven pages. A library of parts.</h2></div>
+        <p class="intro">Copy complete page patterns or individual blocks. Keep the examples you need and remove the rest.</p>
+        <div class="table-wrap"><table><thead><tr><th scope="col">Template page</th><th scope="col">Use it for</th></tr></thead><tbody>
+          <tr><td>01 / Quickstart</td><td>Instructions, syntax reference, and a component index.</td></tr>
+          <tr><td>02 / Mystery</td><td>Opening scene, GM truth, clue sites, Trouble, character or machine, and resolution.</td></tr>
+          <tr><td>03 / Typography</td><td>All six heading levels; body, lead, small and eyebrow text; emphasis, flavor text, read-aloud, quotations, and logs.</td></tr>
+          <tr><td>04 / Boxes &amp; tables</td><td>General callouts, warnings, side notes, handouts, GM-only boxes, terminal text, lists, timelines, and compact or wide tables.</td></tr>
+          <tr><td>05 / Reference cards</td><td>Kid, NPC, machine, location, and equipment cards with space for your own information and stats.</td></tr>
+          <tr><td>06 / Images</td><td>Wide, portrait, and text-wrapped frames; captions and artist credits; full-image fit or fill-and-crop layouts.</td></tr>
+          <tr><td>07 / Continuation</td><td>More pages with running headers, two columns, full-width sections, and mixed-width bands.</td></tr>
+        </tbody></table></div>
+        <p class="fine" style="margin-top:18px">Page numbers update automatically. Page breaks and text overflow need your attention. This is a formatting toolkit; use the RPG’s rules for play.</p>
+      </section>
+
+      <section id="edit">
+        <div class="section-head"><span class="num">03</span><h2>Your information. The same visual system.</h2></div>
+        <div class="two">
+          <div><h3>Replace the content</h3><p>Write in <strong>Brew Editor</strong>. Replace the <code>[bracketed fields]</code> with your story, stats, names, and credits. The <strong>Style Editor</strong> controls the shared appearance.</p><p>For a callout or reference card, copy the whole block from an example, including its opening <code>{{</code> and matching closing <code>}}</code>. Change the words inside it.</p><pre><code>{{callout
+### A clue worth keeping
+[Your own information here.]
+}}</code></pre></div>
+          <div><h3>Add another page</h3><p>Copy the complete continuation page, from its rail through its footer. Put this on its own line between sheets:</p><pre><code>\page</code></pre><p>Keep both <code>loopColumn</code> blocks inside their <code>loopGrid</code>. Put a full-width section before or after the grid.</p><p>Check each sheet in the preview. Long text stays on that sheet; shorten it or move some to the next page.</p></div>
+        </div>
+        <details><summary>Add images when you have them</summary><p>On the image example page, replace the placeholder inside an <code>imageSlot</code> with <code>![Description](PUBLIC_IMAGE_URL)</code>. Use a direct, publicly accessible image URL. Keep the figure and caption wrappers, and add an artist credit. The default frame fits the whole image; <code>imageCover</code> crops it to fill the frame.</p></details>
+      </section>
+
+      <section id="mystery">
+        <div class="section-head"><span class="num">04</span><h2>Try a finished mystery.</h2></div>
+        <div class="card"><div class="eyebrow">Please Return Before Monday</div><p style="margin-top:12px">A school’s lost-and-found begins returning possessions from possible futures. Follow three clue sites to a retired retrieval robot, a moving-away Kid, and a cassette that promises a future reunion.</p><p>Includes everyday-life pressures, Trouble, a deadline, and two ways to resolve the machine’s mistaken task.</p><div class="actions"><a class="button primary" href="https://homebrewery.naturalcrit.com/share/yIVM9vfX4F4X">Read the one-page mystery ↗</a><a class="button" href="https://homebrewery.naturalcrit.com/share/1mDaK9DdiNQZ">Browse the toolkit ↗</a></div></div>
+      </section>
+
+      <section id="backup">
+        <div class="section-head"><span class="num">05</span><h2>A complete source backup.</h2></div>
+        <p>Both the content and the stylesheet are included. Keep both to preserve the formatting.</p>
+        <div class="actions"><a class="button primary" href="downloads/tftl-formatting-toolkit-source.zip" download>Download everything · ZIP</a><a class="button" href="downloads/tftl-toolkit-content.md" download>Content · Markdown</a><a class="button" href="downloads/tftl-toolkit-style.css" download>Styles · CSS</a></div>
+        <details><summary>Restore the template from these files</summary><ol style="margin-top:15px"><li>Open a <a href="https://homebrewery.naturalcrit.com/new/">new Homebrewery brew</a> and use the <strong>V3</strong> renderer in Properties.</li><li>Paste <code>tftl-toolkit-content.md</code> into <strong>Brew Editor</strong>.</li><li>Paste <code>tftl-toolkit-style.css</code> into <strong>Style Editor</strong>.</li><li>Give the brew a name, save it, and bookmark the edit address.</li></ol></details>
+        <p class="fine" style="margin-top:18px">These downloads are the original seven-page toolkit. To back up your customized brew, also copy your own Brew Editor content and Style Editor CSS.</p>
+      </section>
+
+      <section id="help">
+        <div class="section-head"><span class="num">06</span><h2>When something looks wrong.</h2></div>
+        <details><summary>I can read it, but I can’t edit it.</summary><p>You may be on the public share page. Open your bookmarked <code>/edit/</code> URL. To start your own copy of the public template, choose <strong>Source → Clone to New</strong>.</p></details>
+        <details><summary>Text runs off the page or overlaps the footer.</summary><p>Homebrewery does not automatically flow this template’s text onto another sheet. Shorten the section or copy a continuation page and move some content there. Check for a long URL, unbroken text, or a missing closing <code>}}</code> if a block extends sideways.</p></details>
+        <details><summary>The content is there, but the styling is missing.</summary><p>Use <strong>V3</strong> and check the <strong>Style Editor</strong>. If you restored from files, paste the CSS as well as the Markdown. Cloning the public template is the simplest starting point.</p></details>
+        <details><summary>My image doesn’t appear.</summary><p>Try opening its URL directly in a new tab. It should display the image itself without a sign-in. A local file path or a link to a gallery page will not work as the image URL.</p></details>
+      </section>
+    </main>
+    <footer><p>Independent fan-made material. Not affiliated with or endorsed by Free League Publishing or Simon Stålenhag. No official artwork, logos, or rules text is included.</p><a href="/">← Back to Ude Projects</a></footer>
+  </div>
+</body>
+</html>
