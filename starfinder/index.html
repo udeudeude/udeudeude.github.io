@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A Starfinder Second Edition Homebrewery toolkit with reusable layouts, art recipes, encounter structures, hacking maps, starship scenes, and publishing guidance.">
+  <title>Starfinder 2e Homebrewery Toolkit · Ude Projects</title>
+  <style>
+    :root{
+      --bg:#08141d;--panel:#102b38;--panel2:#163b4b;--paper:#f7faf9;--ink:#17262d;
+      --cyan:#5fcbd7;--cyan2:#dff3f5;--magenta:#b63f95;--purple:#684a9c;--gold:#d9a044;
+      --muted:#9db7c2;--line:#2b5b69
+    }
+    *{box-sizing:border-box}
+    html{background:var(--bg)}
+    body{margin:0;color:#eef8fb;background:
+      radial-gradient(circle at 80% 10%,#51284e55,transparent 25rem),
+      radial-gradient(circle at 12% 52%,#17677844,transparent 28rem),
+      var(--bg);
+      font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    a{color:inherit}
+    .wrap{width:min(1120px,calc(100% - 28px));margin:auto}
+    header{padding:20px 0 0}
+    nav{display:flex;justify-content:space-between;align-items:center;gap:16px}
+    nav a{text-decoration:none;font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:.72rem}
+    nav span{font-size:.72rem;color:var(--muted)}
+    .hero{margin:20px auto 18px;min-height:520px;border:1px solid #ffffff22;position:relative;overflow:hidden;
+      background:
+       linear-gradient(90deg,#091620ed,#12394dbd 52%,#38203cb5),
+       radial-gradient(circle at 80% 22%,#b63f9577,transparent 22rem),
+       radial-gradient(circle at 28% 80%,#5fcbd75c,transparent 21rem);
+      clip-path:polygon(0 0,92% 0,100% 11%,100% 100%,8% 100%,0 90%)}
+    .hero:before{content:"";position:absolute;inset:0;background:
+      repeating-linear-gradient(120deg,transparent 0 68px,#ffffff08 68px 70px),
+      linear-gradient(135deg,transparent 0 64%,#5fcbd712 64% 69%,transparent 69%)}
+    .hero:after{content:"";position:absolute;left:22px;right:22px;top:22px;bottom:22px;border:1px solid #76dde650;
+      clip-path:polygon(0 0,90% 0,100% 9%,100% 100%,10% 100%,0 91%)}
+    .hero-copy{position:relative;z-index:2;padding:92px 58px 56px;max-width:760px}
+    .eyebrow{color:#81e3e9;text-transform:uppercase;letter-spacing:.18em;font-size:.72rem;font-weight:850}
+    h1{font-size:clamp(3.3rem,8vw,6.9rem);line-height:.84;letter-spacing:-.065em;text-transform:uppercase;margin:12px 0 18px}
+    .deck{font-size:clamp(1.05rem,2vw,1.35rem);line-height:1.35;color:#d7eef2;max-width:40rem}
+    .bar{width:210px;height:5px;background:linear-gradient(90deg,var(--cyan),var(--magenta));transform:skewX(-28deg);margin:22px 0}
+    .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+    .button{display:inline-block;text-decoration:none;font-size:.78rem;font-weight:850;letter-spacing:.04em;padding:11px 14px;border:1px solid #ffffff38;background:#ffffff0d}
+    .button.primary{background:var(--cyan);border-color:var(--cyan);color:#09202a}
+    .button:hover{transform:translateY(-1px)}
+    main{padding-bottom:56px}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
+    .card{grid-column:span 6;background:#eef7f8;color:var(--ink);padding:22px;border-top:5px solid var(--cyan);min-height:190px}
+    .card.magenta{border-color:var(--magenta)}
+    .card.purple{border-color:var(--purple)}
+    .card.dark{background:var(--panel);color:#edf8fa;border-color:var(--cyan)}
+    .card h2{font-size:1rem;letter-spacing:.08em;text-transform:uppercase;margin:0 0 10px;color:#183d4c}
+    .card.dark h2{color:#85e4eb}
+    .card p,.card li{font-size:.9rem;line-height:1.5}
+    .card ul,.card ol{padding-left:1.2rem}
+    .showcase{grid-column:span 12;background:var(--paper);color:var(--ink);padding:0;overflow:hidden;border-top:5px solid var(--magenta)}
+    .show-head{display:flex;justify-content:space-between;gap:12px;padding:18px 20px 10px;border-bottom:1px solid #abc6cc}
+    .show-head b{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--magenta)}
+    .page-mock{display:grid;grid-template-columns:1.05fr .95fr;min-height:430px;background:white}
+    .mock-copy{padding:34px}
+    .mock-copy h3{margin:0;color:#143849;text-transform:uppercase;font-size:2rem;letter-spacing:-.04em;border-bottom:3px solid var(--cyan);padding-bottom:8px}
+    .mock-band{margin:18px 0 12px;background:#143849;color:white;border-left:7px solid var(--magenta);padding:8px 12px;text-transform:uppercase;font-size:.72rem;font-weight:850;letter-spacing:.1em}
+    .mock-box{border:1px solid #a9c1c6;border-top:4px solid var(--cyan);padding:11px;margin:10px 0;background:#f8fbfb;font-size:.82rem;line-height:1.42}
+    .mock-art{position:relative;background:
+      radial-gradient(circle at 62% 38%,#b63f9580,transparent 20%),
+      radial-gradient(circle at 43% 60%,#5fcbd780,transparent 22%),
+      linear-gradient(145deg,#0d2531,#192d46 55%,#3b254a);overflow:hidden}
+    .mock-art:before{content:"";position:absolute;inset:8%;border:1px solid #7ae0e85e;clip-path:polygon(0 0,86% 0,100% 10%,100% 100%,12% 100%,0 90%)}
+    .figure{position:absolute;left:22%;right:18%;top:12%;bottom:7%;background:#d7f6f8;
+      clip-path:polygon(47% 0,60% 13%,58% 27%,74% 43%,67% 52%,77% 100%,48% 89%,23% 100%,31% 55%,19% 40%,38% 26%,37% 12%);opacity:.88}
+    .facet{position:absolute;right:0;top:70px;width:28px;height:250px;background:linear-gradient(var(--purple),var(--magenta),var(--cyan));clip-path:polygon(55% 0,100% 7%,100% 92%,45% 100%,0 80%,0 15%)}
+    .note{grid-column:span 12;color:var(--muted);font-size:.78rem;line-height:1.5;padding:4px 2px 0}
+    footer{padding:0 0 34px;color:#7894a2;font-size:.7rem}
+    code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#0b2632;color:#c8f4f7;padding:2px 5px;border-radius:4px}
+    @media(max-width:760px){
+      .hero{min-height:500px}.hero-copy{padding:70px 28px 45px}
+      .card{grid-column:span 12}.page-mock{grid-template-columns:1fr}.mock-art{min-height:330px}
+      nav span{display:none}
+    }
+  </style>
+</head>
+<body>
+<header class="wrap">
+  <nav><a href="/">← Ude Projects</a><span>RPG publishing toolkit · working version 7</span></nav>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="hero-copy">
+      <div class="eyebrow">Starfinder Second Edition · Homebrewery</div>
+      <h1>Build pages<br>for the Pact Worlds.</h1>
+      <div class="bar"></div>
+      <div class="deck">A reusable authoring system for Starfinder 2e homebrew: page architecture, stat blocks, mission tools, hacking maps, starship scenes, world dossiers, and practical ways to make art belong on the page.</div>
+      <div class="actions">
+        <a class="button primary" href="downloads/starfinder-homebrewery-toolkit-v7.md" download>Download toolkit v7</a>
+        <a class="button" href="https://homebrewery.naturalcrit.com/new/" target="_blank" rel="noopener">Open blank Homebrewery</a>
+        <a class="button" href="https://paizo.com/licenses/communityuse/package" target="_blank" rel="noopener">Paizo art resources</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="showcase">
+      <div class="show-head"><b>Page language</b><span>white reading field · navy/cyan hierarchy · magenta/purple navigation · integrated art</span></div>
+      <div class="page-mock" aria-label="Stylized example of the toolkit layout">
+        <div class="mock-copy">
+          <h3>Character Option</h3>
+          <div class="mock-band">Rules first, illustration at publication scale</div>
+          <div class="mock-box"><b>Ghost in the Telemetry</b><br>Strong title band, trait language, readable rules text, and enough negative space for a character illustration to remain legible rather than becoming a thumbnail.</div>
+          <div class="mock-box"><b>Art recipes</b><br>Wide banners, transparent cutouts, outer-edge spot art, half-page plates, chapter openers, maps that do not crop tactical information, and focal-point controls.</div>
+        </div>
+        <div class="mock-art"><div class="figure"></div><div class="facet"></div></div>
+      </div>
+    </div>
+
+    <article class="card">
+      <h2>What it actually gives you</h2>
+      <ul>
+        <li>Creature, item, feat, ability, hazard, and dossier structures.</li>
+        <li>Mission briefs, escalation clocks, research tracks, and chase zones.</li>
+        <li>Network-topology encounters for hacking and permissions.</li>
+        <li>Cinematic starship-scene layouts with crew-facing objectives.</li>
+        <li>System maps, faction profiles, transmissions, terminals, and page furniture.</li>
+      </ul>
+    </article>
+
+    <article class="card magenta">
+      <h2>Art belongs to the layout</h2>
+      <p>The toolkit includes copy-paste patterns for full-width scene art, transparent character cutouts, half-page and full-page plates, inset illustrations, edge art, maps, and chapter-opening images.</p>
+      <p>Current examples use Paizo-hosted Starfinder 2e iconic art where the applicable fan/community-use terms permit it.</p>
+    </article>
+
+    <article class="card purple">
+      <h2>How to use it</h2>
+      <ol>
+        <li>Download the <code>.md</code> file.</li>
+        <li>Open a blank Homebrewery brew.</li>
+        <li>Delete the starter material and paste the entire toolkit source.</li>
+        <li>Copy the components you need into your own brew and replace demo text/art.</li>
+      </ol>
+      <p><strong>Do not use “New from File.”</strong> Plain copy-paste has been the reliable path in testing.</p>
+    </article>
+
+    <article class="card dark">
+      <h2>Why it is a toolkit, not just a skin</h2>
+      <p>The recurring visual forms correspond to recurring Starfinder authoring problems. A component earns its place only if it makes information easier to write, find, compare, or run at the table.</p>
+      <p>That rule is the main lesson from the successful Tales from the Loop toolkit and the abandoned Old Gods of Appalachia attempt.</p>
+    </article>
+
+    <div class="note">
+      Independent fan-made work. Starfinder and related marks are property of Paizo Inc. This project is not affiliated with or endorsed by Paizo. Before publishing, choose the Paizo license/publishing route appropriate to your project and verify the current terms for any art or setting material you use.
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">Built for Homebrewery. Designed to sit comfortably near Starfinder 2e without pretending to be an official Paizo book.</footer>
+</body>
+</html>
