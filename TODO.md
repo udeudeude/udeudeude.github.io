@@ -16,6 +16,7 @@
 - Project order should eventually respond to global interaction: more-explored projects rise higher.\n- Asheville GoLocal Card + Google Maps Integration is a portfolio project.
 - TV-b-goner is represented as a working web app.
 - Biofeedback Play is represented as a local signal workspace.
+- Orchestral Maneuvers in the Dark is represented as a live podcast feed.
 
 ## In progress / next
 
@@ -27,6 +28,7 @@
 - [x] Add global interaction-count scaffolding for project ordering.
 - [x] Keep authored order as the fallback / tie-breaker.
 - [ ] Replace provisional project graphics with strong real screenshots/photos wherever possible.
+- [ ] Replace the provisional Orchestral Maneuvers in the Dark graphic with its existing 2000×2000 podcast cover.
 - [ ] Replace the provisional TV-b-goner and Biofeedback Play graphics with real imagery.\n- [ ] Add real screenshots and a fuller write-up for Asheville GoLocal Card + Google Maps Integration.\n- [ ] Add its live/install/share link when available.
 - [ ] Add 2–4 images to expanded views for the strongest projects.
 - [ ] Decide the preferred initial project order before interaction data accumulates significantly.
