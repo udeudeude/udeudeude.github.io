@@ -990,7 +990,7 @@ Do not add a panel merely because it looks thematic. Every recurring visual form
 </div>
 
 <div class="sf-datapad">
-<div class="sf-label">Toolkit status // v6</div>
+<div class="sf-label">Toolkit status // v7</div>
 **Self-contained CSS plus two live Paizo-hosted art demonstrations, now shown at publication-scale rather than thumbnail-scale.** Major diagrams span the full page. Published-book alignment revised: white reading field, cyan/navy information hierarchy, purple-magenta edge navigation, faceted geometry, and integrated art zones. Sample pages demonstrate mission structure, creature/hazard presentation, equipment, astrography, hacking infiltration, cinematic starships, research, chases, and player options.
 </div>
 
