@@ -39,6 +39,12 @@
 - [x] Podcast cover art
 - [ ] Optional photo of an episode playing on a device
 
+## Orchestral Maneuvers in the Dark
+- [ ] Existing 2000×2000 podcast cover art for the tile
+- [ ] Podcast landing page showing the current episode
+- [ ] Podcast app screenshot after subscribing to the feed
+- [ ] Optional Asheville FM / studio image if one becomes available
+
 ## Asheville GoLocal Card + Google Maps
 - [ ] Google Maps view showing GoLocal businesses in context
 - [ ] Close screenshot showing how a participating business is identified
