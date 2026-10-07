@@ -15,6 +15,7 @@ It is an image-first index of software, media, device experiments, utilities, an
 - Biofeedback Play
 - TouchBarpalooza
 - Living Patterns
+- Orchestral Maneuvers in the Dark
 - Asheville GoLocal Card + Google Maps
 - Sorting Algorithms with Playing Cards
 - AI on Kindle
