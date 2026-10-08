@@ -109,8 +109,26 @@
 - [ ] Hacking map or cinematic starship scene
 - [ ] Example of transparent or large art integrated into a page
 
+## Moiré Lab
+- [ ] Phone screenshot of a true moiré experiment
+- [ ] Sliding-barrier animation preset
+- [ ] Picture and transparency SVGs with registration crosses
+- [ ] Physical acetate and printed-paper prototype
+
+## PnP-o-matic
+- [ ] Front and back card sheets in the Mac app
+- [ ] Duplex arrangement and cut-line controls
+- [ ] PDF export preview
+- [ ] Actual printed and trimmed cards
+
+## Escape Pod Cast
+- [ ] Mac app window with its audio drop area and transmission dial
+- [ ] Publishing queue and status indicators
+- [ ] Setup interface, with account details hidden
+- [ ] Example Apple Podcasts subscription using sample audio
+
 ## Portfolio
 - [ ] Finished desktop homepage
 - [ ] Finished phone layout showing two tiles across
 - [ ] One expanded project tile
-- [ ] Page after popularity-based ordering visibly changes
+- [ ] Category selection showing a project with multiple category memberships
