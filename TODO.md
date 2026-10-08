@@ -9,6 +9,18 @@
 - Use an authored editorial order. Avoid third-party popularity ranking and layout movement after load.
 - Don't fabricate demo links or label unpublished artifacts as downloadable.
 
+## October 8, 2026 categories and audience presentation
+
+- [x] Add multi-category browsing without duplicate cards.
+- [x] Preserve tabletop games category boundaries: exclude TouchBarpalooza, retain LightHouse and Sorting Algorithms with Playing Cards.
+- [x] Filtered category URLs are shareable; nonmatching open tiles close.
+- [x] Reorder projects by estimated breadth of visitor interest, not raw clicks.
+- [x] Add discreet lifetime open counters using the existing Abacus namespace, with failure fallback and no visitor tracking by the site.
+- [x] Explain how to save a shared Google Maps Saved list on an iPhone.
+- [ ] Publish the actual shared Google Maps link for the collected Go Local Card list, once obtained from its owner Google account.
+- [ ] Evaluate optional Ko-fi / GitHub Sponsors / Buy Me a Coffee support link; no account has been configured by this site.
+- [ ] Watch category usage and counter health; reconsider editorial order after genuine feedback.
+
 ## Completed in October 2026 reliability and UX pass
 
 - [x] Remove third-party interest-counter requests and preserve stable editorial order.
