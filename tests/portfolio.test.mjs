@@ -39,7 +39,7 @@ assert.deepEqual(ranks, ranks.map((_, i) => i + 1), 'HTML starts in estimated au
 const filters = [...html.matchAll(/data-filter="([^"]+)"/g)].map(m => m[1]);
 const categorySet = new Set(filters);
 assert.equal(categorySet.size, filters.length, 'Each filter is unique');
-for (const category of ['all','asheville','tabletop','devices','print','audio','visual','learning']) {
+for (const category of ['all','asheville','tabletop','hardware','print','audio','visual','learning','recurring']) {
   assert.ok(categorySet.has(category), 'Category exists: ' + category);
 }
 const projectCategories = new Map([...html.matchAll(/<article class="project [^"]+" data-key="([^"]+)" data-rank="\d+" data-categories="([^"]+)"/g)]
@@ -55,11 +55,39 @@ assert.ok(!projectCategories.get('touchbarpalooza').includes('tabletop'), 'Touch
 assert.ok(projectCategories.get('asheville-golocal-maps').includes('asheville'), 'GoLocal is Asheville-related');
 assert.ok(projectCategories.get('orchestral-maneuvers-dark').includes('asheville'), 'Asheville FM is Asheville-related');
 assert.ok(projectCategories.get('anaglyph-friends').includes('print') && projectCategories.get('anaglyph-friends').includes('visual'), 'Multi-category membership works');
+
+assert.equal(cards.length, 18, 'All 18 curated projects are present');
+assert.ok(!categorySet.has('devices'), 'Obsolete Devices category was removed');
+assert.ok(!projectCategories.get('lighthouse').includes('hardware'), 'LightHouse is not in hardware-specific projects');
+assert.ok(projectCategories.get('sorting-cards').includes('print'), 'Sorting with Cards is printable work');
+assert.ok(projectCategories.get('living-patterns').includes('learning'), 'Living Patterns belongs in Learning and ideas');
+for (const key of ['wisdom-watch', 'living-patterns', 'orchestral-maneuvers-dark']) {
+  assert.ok(projectCategories.get(key).includes('recurring'), key + ' belongs to Recurring');
+}
+assert.ok(!projectCategories.get('escape-pod-cast').includes('recurring'), 'Podcast publishing utility is not itself recurring published content');
+assert.ok(projectCategories.get('moire-lab').includes('visual') && projectCategories.get('moire-lab').includes('print'), 'Moiré Lab is visual and print-oriented');
+assert.ok(projectCategories.get('pnp-o-matic').includes('tabletop') && projectCategories.get('pnp-o-matic').includes('print'), 'PnP-o-matic is for print-and-play');
+assert.ok(projectCategories.get('escape-pod-cast').includes('audio'), 'Escape Pod Cast is in Sound');
+const labels = [...html.matchAll(/<button class="filter-button"[^>]*data-filter="([^"]+)"[^>]*>([^<]+)/g)]
+  .map(m => [m[1], m[2]]);
+assert.equal(new Map(labels).get('hardware'), 'Hardware specific', 'Hardware label is correct');
+assert.equal(new Map(labels).get('print'), 'Print', 'Print label is correct');
+assert.equal(new Map(labels).get('audio'), 'Sound', 'Sound label is correct');
+assert.equal(new Map(labels).get('recurring'), 'Recurring', 'Recurring label is correct');
+const moire = cards.find(card => card[1] === 'moire-lab')?.[3];
+const pnp = cards.find(card => card[1] === 'pnp-o-matic')?.[3];
+const escape = cards.find(card => card[1] === 'escape-pod-cast')?.[3];
+assert.ok(moire?.includes('https://moire-lab.onrender.com/'), 'Moiré Lab has direct live app link');
+assert.ok(pnp?.includes('release is still pending'), 'PnP-o-matic makes no false release claim');
+assert.ok(escape?.includes('app-v0.7.0') && !escape.includes('/audio/'), 'Escape Pod Cast links to Mac release, not an episode feed');
+
 const curatedOrder = [
-  'anaglyph-friends', 'print-pocketmod', 'lighthouse', 'wisdom-watch',
-  'living-patterns', 'tales-from-the-loop-toolkit', 'starfinder-homebrewery-toolkit',
-  'asheville-golocal-maps', 'orchestral-maneuvers-dark', 'touchbarpalooza',
-  'sorting-cards', 'biofeedback-play', 'tv-b-goner', 'ai-kindle', 'supercollider'
+  'anaglyph-friends', 'print-pocketmod', 'lighthouse', 'moire-lab',
+  'wisdom-watch', 'living-patterns', 'tales-from-the-loop-toolkit',
+  'starfinder-homebrewery-toolkit', 'pnp-o-matic', 'asheville-golocal-maps',
+  'orchestral-maneuvers-dark', 'escape-pod-cast', 'touchbarpalooza',
+  'sorting-cards', 'biofeedback-play', 'tv-b-goner', 'ai-kindle',
+  'supercollider'
 ];
 assert.deepEqual(keys, curatedOrder, 'Preserve the intentional project order');
 const populatedStarfinder = 'https://homebrewery.naturalcrit.com/share/u41Swqyrcj1W';

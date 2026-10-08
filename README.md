@@ -11,12 +11,15 @@ This is the **portfolio repository**, not the source repository for LightHouse o
 - Anaglyph & Friends
 - Print as PocketMod
 - LightHouse
+- Moiré Lab
 - 1AM Wisdom Watch
 - Living Patterns
 - Tales from the Loop Homebrewery Toolkit
 - Starfinder 2e Homebrewery Toolkit
+- PnP-o-matic
 - Asheville GoLocal Card + Google Maps
 - Orchestral Maneuvers in the Dark
+- Escape Pod Cast
 - TouchBarpalooza
 - Sorting Algorithms with Playing Cards
 - Biofeedback Play
@@ -44,13 +47,15 @@ The homepage is static HTML, CSS, and JavaScript, hosted on GitHub Pages. Each p
 
 Projects use a space-separated `data-categories` attribute; a work can belong to several categories without appearing as separate tiles. Categories are chosen with the buttons above the grid, which update a shareable `?category=...` URL and hide irrelevant cards. If an open card does not match a new filter, it closes.
 
+The current categories are **Asheville**, **Tabletop & RPGs**, **Hardware specific**, **Print**, **Sound**, **3D & images**, **Learning & ideas**, and **Recurring**. Recurring describes subscriptions and periodically published content (1AM Wisdom Watch, Living Patterns, and Orchestral Maneuvers in the Dark), not utilities that happen to create podcasts. LightHouse is tabletop but intentionally not Hardware specific. PnP-o-matic belongs to Print and tabletop, and Moiré Lab belongs to Print and 3D & images.
+
 `data-rank` sets an editorial estimate of likely visitor interest: accessible web demos and useful tools are listed ahead of niche hardware experiments and works without published examples. This is a subjective opening hypothesis, not an audience measurement, and filtering retains that same relative order.
 
 ### Lifetime opens
 
 A small ↗ count records tile openings, not pageviews and not unique visitors. The site reads counts using `GET /get` and increments only when a visitor opens a card using `GET /hit` from the public Abacus counter service, at `abacus.jasoncameron.dev`. The existing `udeudeude-portfolio-2026-v1` namespace is reused to retain any prior recorded counts. Counts are approximate, publicly writable, and dependent on an external service; failed requests simply hide numbers. Because the counter is hosted by a third party, browser connections to it expose ordinary network data such as IP address to that host. No visitor identities or profiles are stored by this site.
 
-The layout preserves at least two columns on phones and uses equal-height closed cards.
+The layout preserves at least two columns on phones and uses equal-height closed cards. The three newer projects are clearly labeled: Moiré Lab is a live web workshop, PnP-o-matic is a development build without a public installer release, and Escape Pod Cast has a downloadable Mac release. Its personal podcast feed is deliberately not exposed.
 
 ### Development checks
 

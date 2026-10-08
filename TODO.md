@@ -1,5 +1,15 @@
 # Portfolio TODO
 
+## October 8, 2026 category and project additions
+
+- [x] Rename Devices to Hardware specific, excluding LightHouse.
+- [x] Rename Print & publishing to Print; add Sorting with Playing Cards.
+- [x] Rename Sound & podcasts to Sound; add Living Patterns to Learning & ideas.
+- [x] Add Recurring for Wisdom Watch, Living Patterns, and Orchestral Maneuvers in the Dark.
+- [x] Add Moiré Lab, PnP-o-matic, and Escape Pod Cast to the portfolio.
+- [ ] Add a public PnP-o-matic download only after release and printer validation.
+- [ ] Replace new tiles' provisional SVG art with authentic app/media images.
+
 ## Established decisions
 
 - An image-first collection of works and experiments, not primarily a software résumé.

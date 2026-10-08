@@ -49,7 +49,7 @@
     .tile-count[hidden]{display:none!important}
     .project:not(.open):hover,.project:not(.open):focus-within{transform:translateY(-3px);box-shadow:0 12px 28px #00000030}
     .c1{background:#174c65}.c2{background:#1d5875}.c3{background:#364d78}.c4{background:#17636d}
-    .c5{background:#344b69}.c6{background:#245d6f}.c7{background:#255b62}.c8{background:#314f60}.c9{background:#444b79}.c10{background:#38556b}.c11{background:#244f73}.c12{background:#2b6570}.c13{background:#153b50}.c14{background:#25344f}
+    .c5{background:#344b69}.c6{background:#245d6f}.c7{background:#255b62}.c8{background:#314f60}.c9{background:#444b79}.c10{background:#38556b}.c11{background:#244f73}.c12{background:#2b6570}.c13{background:#153b50}.c14{background:#25344f}.c15{background:#245165}.c16{background:#294b63}.c17{background:#2c465e}
     .tile-toggle{display:grid;grid-template-rows:auto 116px;width:100%;padding:0;border:0;background:transparent;color:inherit;text-align:left;cursor:pointer;font:inherit;position:relative}
     .tile-toggle::after{content:"+";position:absolute;top:10px;right:10px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#07151db8;box-shadow:inset 0 0 0 1px #ffffff26;font-size:1.05rem;line-height:1;transition:transform .2s ease,background .2s ease}
     .project.open .tile-toggle::after{transform:rotate(45deg);background:#07151de8}
@@ -117,11 +117,12 @@
       <button class="filter-button" type="button" data-filter="all" aria-pressed="true">All projects</button>
       <button class="filter-button" type="button" data-filter="asheville" aria-pressed="false">Asheville</button>
       <button class="filter-button" type="button" data-filter="tabletop" aria-pressed="false">Tabletop &amp; RPGs</button>
-      <button class="filter-button" type="button" data-filter="devices" aria-pressed="false">Devices</button>
-      <button class="filter-button" type="button" data-filter="print" aria-pressed="false">Print &amp; publishing</button>
-      <button class="filter-button" type="button" data-filter="audio" aria-pressed="false">Sound &amp; podcasts</button>
+      <button class="filter-button" type="button" data-filter="hardware" aria-pressed="false">Hardware specific</button>
+      <button class="filter-button" type="button" data-filter="print" aria-pressed="false">Print</button>
+      <button class="filter-button" type="button" data-filter="audio" aria-pressed="false">Sound</button>
       <button class="filter-button" type="button" data-filter="visual" aria-pressed="false">3D &amp; images</button>
       <button class="filter-button" type="button" data-filter="learning" aria-pressed="false">Learning &amp; ideas</button>
+      <button class="filter-button" type="button" data-filter="recurring" aria-pressed="false">Recurring</button>
     </div>
     <p class="filter-summary" id="filter-summary" role="status" aria-live="polite"></p>
   </section>
@@ -170,7 +171,7 @@
       </div>
     </article>
 
-    <article class="project c2" data-key="lighthouse" data-rank="3" data-categories="tabletop devices">
+    <article class="project c2" data-key="lighthouse" data-rank="3" data-categories="tabletop">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -189,7 +190,39 @@
       </div>
     </article>
 
-    <article class="project c1" data-key="wisdom-watch" data-rank="4" data-categories="learning">
+    <article class="project c15" data-key="moire-lab" data-rank="4" data-categories="visual print">
+      <button class="tile-toggle" aria-expanded="false">
+        <div class="visual" aria-hidden="true">
+          <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+            <rect width="800" height="600" fill="#245165"/>
+            <g fill="none" stroke="#d3f4f5" stroke-width="3.4" opacity=".9">
+              <path d="M-70 370C60 70 160 70 280 370S520 670 640 370S880 70 1010 370"/>
+              <path d="M-70 380C60 90 160 90 280 380S520 660 640 380S880 90 1010 380"/>
+              <path d="M-70 390C60 110 160 110 280 390S520 650 640 390S880 110 1010 390"/>
+              <path d="M-70 400C60 130 160 130 280 400S520 640 640 400S880 130 1010 400"/>
+              <path d="M-70 410C60 150 160 150 280 410S520 630 640 410S880 150 1010 410"/>
+              <path d="M-70 420C60 170 160 170 280 420S520 620 640 420S880 170 1010 420"/>
+            </g>
+            <g fill="none" stroke="#88c6d3" stroke-width="3.2" opacity=".8" transform="translate(28,-18)">
+              <path d="M-70 370C60 70 160 70 280 370S520 670 640 370S880 70 1010 370"/>
+              <path d="M-70 380C60 90 160 90 280 380S520 660 640 380S880 90 1010 380"/>
+              <path d="M-70 390C60 110 160 110 280 390S520 650 640 390S880 110 1010 390"/>
+              <path d="M-70 400C60 130 160 130 280 400S520 640 640 400S880 130 1010 400"/>
+              <path d="M-70 410C60 150 160 150 280 410S520 630 640 410S880 150 1010 410"/>
+              <path d="M-70 420C60 170 160 170 280 420S520 620 640 420S880 170 1010 420"/>
+            </g>
+            <path d="M98 100h140m-140 0v45M702 490H562m140 0v-45" stroke="#ecfdfd" stroke-width="9" fill="none" opacity=".8"/>
+          </svg>
+        </div>
+        <div class="caption"><div class="status">Live optical workshop</div><h2>Moiré Lab</h2></div><span class="tile-count" hidden aria-hidden="true"></span>
+      </button>
+      <div class="expand">
+        <p>A phone-friendly optical playground for true moiré motion and barrier-grid animation. Experiment with overlapping SVG gratings, then export matched printable artwork and transparent overlays, with registration marks and calibration sheets. A physical moving-picture book is the longer-term goal.</p>
+        <div class="links"><a href="https://moire-lab.onrender.com/">Try it</a><a href="https://github.com/udeudeude/Moire-Lab">GitHub</a></div>
+      </div>
+    </article>
+
+    <article class="project c1" data-key="wisdom-watch" data-rank="5" data-categories="learning recurring">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -215,7 +248,7 @@
       </div>
     </article>
 
-    <article class="project c5" data-key="living-patterns" data-rank="5" data-categories="audio">
+    <article class="project c5" data-key="living-patterns" data-rank="6" data-categories="audio learning recurring">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual"><img src="https://raw.githubusercontent.com/udeudeude/Living-Patterns-Podcast/main/living-patterns-cover.jpg" alt="Living Patterns podcast cover art" width="800" height="600" decoding="async"></div>
         <div class="caption"><div class="status">Live publication</div><h2>Living Patterns</h2></div><span class="tile-count" hidden aria-hidden="true"></span>
@@ -227,7 +260,7 @@
       </div>
     </article>
 
-    <article class="project c6" data-key="tales-from-the-loop-toolkit" data-rank="6" data-categories="tabletop print">
+    <article class="project c6" data-key="tales-from-the-loop-toolkit" data-rank="7" data-categories="tabletop print">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -252,7 +285,7 @@
       </div>
     </article>
 
-    <article class="project c13" data-key="starfinder-homebrewery-toolkit" data-rank="7" data-categories="tabletop print">
+    <article class="project c13" data-key="starfinder-homebrewery-toolkit" data-rank="8" data-categories="tabletop print">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -287,7 +320,35 @@
       </div>
     </article>
 
-    <article class="project c6" data-key="asheville-golocal-maps" data-rank="8" data-categories="asheville">
+    <article class="project c16" data-key="pnp-o-matic" data-rank="9" data-categories="tabletop print">
+      <button class="tile-toggle" aria-expanded="false">
+        <div class="visual" aria-hidden="true">
+          <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+            <rect width="800" height="600" fill="#294b63"/>
+            <rect x="92" y="74" width="275" height="446" rx="9" fill="#dbe9ed"/>
+            <rect x="433" y="74" width="275" height="446" rx="9" fill="#c8dee6"/>
+            <g fill="#32728d" stroke="#294b63" stroke-width="5">
+              <rect x="116" y="125" width="69" height="105" rx="4"/><rect x="195" y="125" width="69" height="105" rx="4"/><rect x="274" y="125" width="69" height="105" rx="4"/>
+              <rect x="116" y="245" width="69" height="105" rx="4"/><rect x="195" y="245" width="69" height="105" rx="4"/><rect x="274" y="245" width="69" height="105" rx="4"/>
+              <rect x="116" y="365" width="69" height="105" rx="4"/><rect x="195" y="365" width="69" height="105" rx="4"/><rect x="274" y="365" width="69" height="105" rx="4"/>
+            </g>
+            <g fill="#548aa1" stroke="#294b63" stroke-width="5">
+              <rect x="457" y="125" width="69" height="105" rx="4"/><rect x="536" y="125" width="69" height="105" rx="4"/><rect x="615" y="125" width="69" height="105" rx="4"/>
+              <rect x="457" y="245" width="69" height="105" rx="4"/><rect x="536" y="245" width="69" height="105" rx="4"/><rect x="615" y="245" width="69" height="105" rx="4"/>
+              <rect x="457" y="365" width="69" height="105" rx="4"/><rect x="536" y="365" width="69" height="105" rx="4"/><rect x="615" y="365" width="69" height="105" rx="4"/>
+            </g>
+            <path d="M376 295h47" stroke="#e5f9fc" stroke-width="9" stroke-linecap="round"/><path d="m409 280 17 15-17 15" stroke="#e5f9fc" stroke-width="9" fill="none" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="caption"><div class="status">Mac development build</div><h2>PnP-o-matic</h2></div><span class="tile-count" hidden aria-hidden="true"></span>
+      </button>
+      <div class="expand">
+        <p>A native macOS layout tool for print-and-play cards. Arrange fronts and backs on 3×3 sheets, mirror backs for duplex printing, choose card sizes and bleed, and export PDFs with optional cut guides. The code and test suite are public; a ready-to-download release is still pending real-printer checks.</p>
+        <div class="links"><a href="https://github.com/udeudeude/PnP-o-matic">Project &amp; development status</a></div>
+      </div>
+    </article>
+
+    <article class="project c6" data-key="asheville-golocal-maps" data-rank="10" data-categories="asheville">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -307,7 +368,7 @@
       </div>
     </article>
 
-    <article class="project c14" data-key="orchestral-maneuvers-dark" data-rank="9" data-categories="asheville audio">
+    <article class="project c14" data-key="orchestral-maneuvers-dark" data-rank="11" data-categories="asheville audio recurring">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -332,7 +393,31 @@
       </div>
     </article>
 
-    <article class="project c4" data-key="touchbarpalooza" data-rank="10" data-categories="devices audio">
+    <article class="project c17" data-key="escape-pod-cast" data-rank="12" data-categories="hardware audio">
+      <button class="tile-toggle" aria-expanded="false">
+        <div class="visual" aria-hidden="true">
+          <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+            <rect width="800" height="600" fill="#2c465e"/>
+            <rect x="113" y="108" width="574" height="376" rx="30" fill="#e1ded0"/>
+            <rect x="148" y="142" width="504" height="310" rx="24" fill="#1d3b51"/>
+            <ellipse cx="398" cy="290" rx="172" ry="110" fill="#d6d9d0" stroke="#ec936a" stroke-width="14"/>
+            <ellipse cx="398" cy="290" rx="135" ry="79" fill="#103448" stroke="#8fb0b8" stroke-width="8"/>
+            <path d="M303 290h194" stroke="#e8f4ee" stroke-width="10" stroke-linecap="round" opacity=".8"/>
+            <path d="m396 239 55 51-55 51" stroke="#f0a679" stroke-width="19" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="606" cy="405" r="16" fill="#f49c70"/>
+            <path d="M174 416h134" stroke="#8bb6ba" stroke-width="7"/>
+            <path d="M166 162h160" stroke="#8bb6ba" stroke-width="5" opacity=".7"/>
+          </svg>
+        </div>
+        <div class="caption"><div class="status">Mac utility · v0.7.0</div><h2>Escape Pod Cast</h2></div><span class="tile-count" hidden aria-hidden="true"></span>
+      </button>
+      <div class="expand">
+        <p>Drop permitted audio or supported YouTube links onto a Mac app and publish episodes to your own Apple Podcasts feed, using GitHub Pages and temporary Release-asset hosting. No additional hosting subscription is required. Each installation creates its own feed; there is no shared public episode library.</p>
+        <div class="links"><a href="https://github.com/udeudeude/Escape-Pod-Cast/releases/tag/app-v0.7.0">Download for Mac</a><a href="https://github.com/udeudeude/Escape-Pod-Cast">Setup &amp; source</a></div>
+      </div>
+    </article>
+
+    <article class="project c4" data-key="touchbarpalooza" data-rank="13" data-categories="hardware audio">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -353,7 +438,7 @@
       </div>
     </article>
 
-    <article class="project c7" data-key="sorting-cards" data-rank="11" data-categories="tabletop learning">
+    <article class="project c7" data-key="sorting-cards" data-rank="14" data-categories="tabletop learning print">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -370,7 +455,7 @@
       </div>
     </article>
 
-    <article class="project c12" data-key="biofeedback-play" data-rank="12" data-categories="devices audio">
+    <article class="project c12" data-key="biofeedback-play" data-rank="15" data-categories="hardware audio">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -392,7 +477,7 @@
       </div>
     </article>
 
-    <article class="project c11" data-key="tv-b-goner" data-rank="13" data-categories="devices">
+    <article class="project c11" data-key="tv-b-goner" data-rank="16" data-categories="hardware">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -414,7 +499,7 @@
       </div>
     </article>
 
-    <article class="project c8" data-key="ai-kindle" data-rank="14" data-categories="devices learning">
+    <article class="project c8" data-key="ai-kindle" data-rank="17" data-categories="hardware learning">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -434,7 +519,7 @@
       </div>
     </article>
 
-    <article class="project c9" data-key="supercollider" data-rank="15" data-categories="audio">
+    <article class="project c9" data-key="supercollider" data-rank="18" data-categories="audio">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -494,6 +579,13 @@
 
   function syncFromAddress(scroll = false) {
     let category = new URLSearchParams(location.search).get('category') || 'all';
+    if (category === 'devices') {
+      // Preserve older category links after the display/category name changed.
+      category = 'hardware';
+      const url = new URL(location.href);
+      url.searchParams.set('category', 'hardware');
+      history.replaceState(null, '', url);
+    }
     if (!allowed.has(category)) category = 'all';
     const active = activeProject();
 
