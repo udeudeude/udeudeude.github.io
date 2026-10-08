@@ -75,7 +75,6 @@
 - [ ] Any future visualizer paired with the music
 - [ ] Optional photo of the computer/audio setup while playing
 
-
 ## TV-b-goner
 - [ ] iPhone showing the TV-b-goner interface
 - [ ] Photo of the iPhone, Lightning-to-3.5 mm adapter, and small audio-to-IR emitter together
@@ -91,6 +90,24 @@
 - [ ] Audio/sonification controls visible on live panels
 - [ ] Muse EEG plus head-motion panels
 - [ ] Optional photo of sensors actually being worn/used
+
+## Print as PocketMod
+- [ ] Screenshot of the PDF Services submenu in macOS Print
+- [ ] Photo of a finished folded PocketMod next to its printed flat sheet
+- [ ] Clear close-up of the center cut and folding sequence
+- [ ] Sample 8-page document imposed into the PocketMod layout
+
+## Tales from the Loop Homebrewery Toolkit
+- [ ] Actual rendered title page
+- [ ] Clue-flow diagram using custom arrow and clue assets
+- [ ] Example handout with paper sidebar texture and fictional company logo
+- [ ] Finished mystery two-page spread
+
+## Starfinder 2e Homebrewery Toolkit
+- [ ] Rendered title or chapter opening from Homebrewery
+- [ ] Character or creature/gear layout populated with sample text
+- [ ] Hacking map or cinematic starship scene
+- [ ] Example of transparent or large art integrated into a page
 
 ## Portfolio
 - [ ] Finished desktop homepage

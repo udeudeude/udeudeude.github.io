@@ -3,7 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Projects, works, and experiments by Ude.">
+  <meta name="description" content="Software, music, publications, interfaces, and hands-on experiments by Ude. Browse projects, try web apps, listen, read, or make something.">
+  <meta name="theme-color" content="#08131c">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Ude Projects">
+  <meta property="og:description" content="Software, media, objects, experiments. A collection of things to try, hear, read, and make.">
+  <meta property="og:url" content="https://udeudeude.github.io/">
+  <meta name="twitter:card" content="summary">
+  <link rel="canonical" href="https://udeudeude.github.io/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <title>Ude Projects</title>
   <style>
     :root {
@@ -15,6 +23,9 @@
     *{box-sizing:border-box}
     body{margin:0;background:var(--page);color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
     a{color:inherit}
+    html{scroll-padding-top:14px}
+    .skip-link{position:absolute;left:12px;top:-100px;z-index:100;padding:12px 16px;background:#f5fbff;color:#08131c;border-radius:8px;font-weight:750}
+    .skip-link:focus{top:10px}
     .wrap{width:min(1220px,calc(100% - 22px));margin:0 auto}
     header{padding:24px 0 22px}
     nav{display:flex;justify-content:space-between;align-items:center;gap:16px}
@@ -25,19 +36,19 @@
     main{padding:12px 0 54px}
     .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap);align-items:start}
     .project{min-width:0;border-radius:12px;overflow:hidden;transition:transform .22s cubic-bezier(.2,.8,.2,1),box-shadow .22s ease;position:relative;box-shadow:0 1px 0 #ffffff10}
-    .project.open{grid-column:span 2;box-shadow:0 18px 44px #00000038}
+    .project.open{grid-column:span 2;box-shadow:0 18px 44px #00000038;scroll-margin-top:14px}
     .project:not(.open):hover,.project:not(.open):focus-within{transform:translateY(-3px);box-shadow:0 12px 28px #00000030}
     .c1{background:#174c65}.c2{background:#1d5875}.c3{background:#364d78}.c4{background:#17636d}
     .c5{background:#344b69}.c6{background:#245d6f}.c7{background:#255b62}.c8{background:#314f60}.c9{background:#444b79}.c10{background:#38556b}.c11{background:#244f73}.c12{background:#2b6570}.c13{background:#153b50}.c14{background:#25344f}
-    .tile-toggle{display:grid;grid-template-rows:auto 94px;width:100%;padding:0;border:0;background:transparent;color:inherit;text-align:left;cursor:pointer;font:inherit;position:relative}
+    .tile-toggle{display:grid;grid-template-rows:auto 116px;width:100%;padding:0;border:0;background:transparent;color:inherit;text-align:left;cursor:pointer;font:inherit;position:relative}
     .tile-toggle::after{content:"+";position:absolute;top:10px;right:10px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#07151db8;box-shadow:inset 0 0 0 1px #ffffff26;font-size:1.05rem;line-height:1;transition:transform .2s ease,background .2s ease}
     .project.open .tile-toggle::after{transform:rotate(45deg);background:#07151de8}
     .visual{aspect-ratio:4/3;display:grid;place-items:center;overflow:hidden;background:#ffffff0a;position:relative}
     .visual svg,.visual img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .32s cubic-bezier(.2,.8,.2,1),filter .32s ease}
     .visual::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1px #ffffff12;pointer-events:none}
-    .caption{height:94px;padding:12px 42px 14px 14px;display:flex;flex-direction:column;justify-content:flex-end}
-    .status{font-size:.58rem;font-weight:850;letter-spacing:.11em;text-transform:uppercase;opacity:.72}
-    h2{margin:5px 0 0;font-size:clamp(1rem,2vw,1.55rem);line-height:1.02;letter-spacing:-.035em}
+    .caption{height:116px;padding:14px 42px 16px 14px;display:flex;flex-direction:column;justify-content:flex-end}
+    .status{font-size:.72rem;font-weight:850;letter-spacing:.11em;text-transform:uppercase;opacity:.72}
+    h2{margin:6px 0 0;font-size:clamp(1rem,1.85vw,1.45rem);line-height:1.1;letter-spacing:-.035em}
     .expand{display:none;border-top:1px solid #ffffff24;padding:16px 16px 18px}
     .project.open .expand{display:block}
     .expand p{margin:0 0 14px;max-width:58ch;line-height:1.45;font-size:.88rem;color:#eff8fc}
@@ -45,11 +56,16 @@
     .gallery img,.gallery .mini{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:8px;background:#ffffff12;display:grid;place-items:center;overflow:hidden}
     .mini svg{width:100%;height:100%}
     .links{display:flex;gap:12px;flex-wrap:wrap}
-    .links a{font-size:.72rem;font-weight:800;text-decoration:none;border-bottom:1px solid #ffffffaa;padding-bottom:2px}
+    .links a{display:inline-flex;align-items:center;min-height:44px;padding:8px 11px;font-size:.82rem;font-weight:750;line-height:1.25;text-decoration:underline;text-underline-offset:3px;text-decoration-color:#ffffff95;border-radius:7px;background:#ffffff13}
+    .links a:hover{background:#ffffff28}
+    .links a:focus-visible{background:#ffffff25}
+    details{margin-top:14px}
+    summary{cursor:pointer;min-height:44px;display:list-item;padding:12px 0;font-weight:700}
+    summary:focus-visible{outline:3px solid #d9f4ff;outline-offset:3px}
     footer{padding:0 0 28px;color:#7994a5;font-size:.68rem}
     button:focus-visible,a:focus-visible{outline:3px solid #d9f4ff;outline-offset:3px}
     ::selection{background:#8fcde1;color:#08131c}
-    @media(prefers-reduced-motion:reduce){.project,.visual svg,.visual img,.tile-toggle::after,.expand{transition:none!important}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.project,.visual svg,.visual img,.tile-toggle::after,.expand{transition:none!important}}
     @media(max-width:920px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
     @media(max-width:650px){
       .wrap{width:calc(100% - 14px)}
@@ -57,18 +73,19 @@
       .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
       .project{border-radius:9px}
       .project.open{grid-column:span 2}
-      .tile-toggle{grid-template-rows:auto 94px}
-      .caption{height:94px;padding:9px 34px 11px 10px}
-      .status{font-size:.5rem}
-      h2{font-size:clamp(.88rem,4vw,1.2rem)}
+      .tile-toggle{grid-template-rows:auto 134px}
+      .caption{height:134px;padding:11px 35px 13px 11px}
+      .status{font-size:.68rem}
+      h2{font-size:clamp(.9rem,3.7vw,1.18rem);line-height:1.12}
       .expand{padding:13px 12px 15px}
       .expand p{font-size:.8rem}
       .links{gap:9px}
-      .links a{font-size:.65rem}
+      .links a{font-size:.81rem}
     }
   </style>
 </head>
 <body>
+<a class="skip-link" href="#project-grid">Skip to projects</a>
 <header class="wrap">
   <nav>
     <a class="mark" href="/">Ude Projects</a>
@@ -213,12 +230,12 @@
 
     <article class="project c5" data-key="living-patterns" data-rank="7">
       <button class="tile-toggle" aria-expanded="false">
-        <div class="visual"><img src="https://raw.githubusercontent.com/udeudeude/Living-Patterns-Podcast/main/living-patterns-cover.jpg" alt="Living Patterns cover art"></div>
+        <div class="visual"><img src="https://raw.githubusercontent.com/udeudeude/Living-Patterns-Podcast/main/living-patterns-cover.jpg" alt="Living Patterns podcast cover art" width="800" height="600" decoding="async"></div>
         <div class="caption"><div class="status">Live publication</div><h2>Living Patterns</h2></div>
       </button>
       <div class="expand">
         <p>Short audio reflections on living structure, repair, participation, and place.</p>
-        <div class="gallery"><img src="https://raw.githubusercontent.com/udeudeude/Living-Patterns-Podcast/main/living-patterns-cover.jpg" alt="Living Patterns cover"><img src="https://raw.githubusercontent.com/udeudeude/Living-Patterns-Podcast/main/og.png" alt="Living Patterns site preview"></div>
+        <div class="gallery"><img src="https://raw.githubusercontent.com/udeudeude/Living-Patterns-Podcast/main/living-patterns-cover.jpg" alt="Living Patterns cover" loading="lazy" decoding="async"><img src="https://raw.githubusercontent.com/udeudeude/Living-Patterns-Podcast/main/og.png" alt="Living Patterns site preview" loading="lazy" decoding="async"></div>
         <div class="links"><a href="https://udeudeude.github.io/Living-Patterns-Podcast/">Listen</a><a href="https://github.com/udeudeude/Living-Patterns-Podcast">GitHub</a></div>
       </div>
     </article>
@@ -244,7 +261,7 @@
       </button>
       <div class="expand">
         <p>A subscribable podcast feed built from the weekly two-hour Asheville FM show, turning the broadcasts into something easy to follow in a podcast app.</p>
-        <div class="links"><a href="https://om-weekly-podcast.workspace-310067.chatgpt.site/">Listen</a><a href="https://om-weekly-podcast.workspace-310067.chatgpt.site/feed.xml">Podcast feed</a></div>
+        <div class="links"><a href="https://om-weekly-podcast.workspace-310067.chatgpt.site/">Listen</a><a href="https://om-weekly-podcast.workspace-310067.chatgpt.site/feed.xml">Podcast feed</a><a href="https://ashevillefm.org/show/orchestral-maneuvers-in-the-dark/">Asheville FM show</a></div>
       </div>
     </article>
 
@@ -264,7 +281,7 @@
       </button>
       <div class="expand">
         <p>A Google Maps integration for finding Asheville GoLocal Card businesses while using the map.</p>
-        <div class="links"></div>
+        <div class="links"><a href="/golocal/">How it works</a><a href="https://golocalasheville.com/directory/">Official Go Local directory</a></div>
       </div>
     </article>
 
@@ -277,7 +294,7 @@
             <g transform="translate(405 135) rotate(10 110 165)"><rect width="220" height="330" rx="18" fill="#cfe7eb"/><text x="28" y="60" font-family="Georgia" font-size="48" fill="#255b62">K</text><circle cx="110" cy="180" r="55" fill="#5da3ad"/></g>
           </svg>
         </div>
-        <div class="caption"><div class="status">Learner draft</div><h2>Sorting with Playing Cards</h2></div>
+        <div class="caption"><div class="status">Hands-on learning</div><h2>Sorting Algorithms with Playing Cards</h2></div>
       </button>
       <div class="expand">
         <p>A hands-on course for learning sorting algorithms with an ordinary deck, comparing computational efficiency with efficiency for human hands.</p>
@@ -317,7 +334,7 @@
         <div class="caption"><div class="status">Music</div><h2>SuperCollider studies</h2></div>
       </button>
       <div class="expand">
-        <p>Music and sound pieces made while learning SuperCollider with ChatGPT. Audio examples will replace this description as the collection grows.</p>
+        <p>Music and sound experiments created in SuperCollider. Recordings and playable examples are being prepared; no published tracks are linked yet.</p>
       </div>
     </article>
 
@@ -414,52 +431,73 @@
 (() => {
   const grid = document.getElementById('project-grid');
   const projects = [...grid.querySelectorAll('.project')];
-  const counterBase = 'https://abacus.jasoncameron.dev';
-  const namespace = 'udeudeude-portfolio-2026-v1';
+  const sorted = [...projects].sort((a, b) => Number(a.dataset.rank) - Number(b.dataset.rank));
+  // Authored order is deliberately stable; no third-party tracking or layout shift.
+  sorted.forEach(project => grid.appendChild(project));
 
-  async function readCount(project) {
-    try {
-      const r = await fetch(`${counterBase}/get/${namespace}/${project.dataset.key}`);
-      if (!r.ok) return 0;
-      const data = await r.json();
-      return Number(data.value) || 0;
-    } catch (_) { return 0; }
-  }
-
-  async function sortByInterest() {
-    const scored = await Promise.all(projects.map(async project => ({
-      project,
-      count: await readCount(project),
-      rank: Number(project.dataset.rank)
-    })));
-    scored.sort((a,b) => b.count - a.count || a.rank - b.rank);
-    scored.forEach(({project}) => grid.appendChild(project));
-  }
-
-  function recordInterest(project) {
-    const key = `portfolio-counted-${project.dataset.key}`;
-    if (sessionStorage.getItem(key)) return;
-    sessionStorage.setItem(key, '1');
-    fetch(`${counterBase}/hit/${namespace}/${project.dataset.key}`).catch(() => {});
-  }
-
-  projects.forEach(project => {
+  const byId = new Map();
+  for (const project of projects) {
+    const key = project.dataset.key;
+    const id = 'project-' + key;
+    const panelId = id + '-details';
+    const heading = project.querySelector('h2');
+    const panel = project.querySelector('.expand');
     const toggle = project.querySelector('.tile-toggle');
-    toggle.addEventListener('click', () => {
-      const opening = !project.classList.contains('open');
-      projects.forEach(other => {
-        if (other !== project) {
-          other.classList.remove('open');
-          other.querySelector('.tile-toggle').setAttribute('aria-expanded','false');
-        }
-      });
-      project.classList.toggle('open', opening);
-      toggle.setAttribute('aria-expanded', String(opening));
-      if (opening) recordInterest(project);
-    });
-  });
+    project.id = id;
+    heading.id = id + '-title';
+    panel.id = panelId;
+    panel.setAttribute('role', 'region');
+    panel.setAttribute('aria-labelledby', heading.id);
+    toggle.setAttribute('aria-controls', panelId);
+    toggle.setAttribute('aria-label', 'Show details for ' + heading.textContent.trim());
+    byId.set(id, project);
+  }
 
-  sortByInterest();
+  function activeProject() {
+    return byId.get(decodeURIComponent(location.hash.slice(1))) || null;
+  }
+
+  function syncFromAddress(scroll = false) {
+    const active = activeProject();
+    for (const project of projects) {
+      const open = project === active;
+      project.classList.toggle('open', open);
+      const toggle = project.querySelector('.tile-toggle');
+      toggle.setAttribute('aria-expanded', String(open));
+      const heading = project.querySelector('h2');
+      toggle.setAttribute('aria-label', (open ? 'Hide' : 'Show') + ' details for ' + heading.textContent.trim());
+    }
+    if (active && scroll) {
+      requestAnimationFrame(() => {
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        active.scrollIntoView({block: 'start', behavior: reduced ? 'auto' : 'smooth'});
+      });
+    }
+  }
+
+  function selectProject(project) {
+    const isOpen = project.classList.contains('open');
+    const url = isOpen
+      ? location.pathname + location.search
+      : location.pathname + location.search + '#' + project.id;
+    history.pushState(null, '', url);
+    syncFromAddress(!isOpen);
+  }
+
+  for (const project of projects) {
+    project.querySelector('.tile-toggle').addEventListener('click', () => selectProject(project));
+  }
+
+  window.addEventListener('popstate', () => syncFromAddress(true));
+  window.addEventListener('hashchange', () => syncFromAddress(true));
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape' || !activeProject()) return;
+    const current = activeProject();
+    history.pushState(null, '', location.pathname + location.search);
+    syncFromAddress();
+    current.querySelector('.tile-toggle').focus({preventScroll: true});
+  });
+  syncFromAddress(Boolean(activeProject()));
 })();
 </script>
 </body>
