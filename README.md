@@ -1,12 +1,12 @@
 # Ude Projects
 
-This repository is the source for the portfolio at:
+**Portfolio:** https://udeudeude.github.io/
 
-https://udeudeude.github.io/
+A visual index of software, sound, publishing tools, browser experiments, and other works. Browse the grid, open a project, and follow the direct link to try, listen, read, or download wherever something is publicly available.
 
-It is an image-first index of software, media, device experiments, utilities, and other works. Individual projects may run directly in the browser, have their own project pages, offer downloads, or link to separate source repositories.
+This is the **portfolio repository**, not the source repository for LightHouse or any other individual app.
 
-## Current portfolio
+## Works on the homepage
 
 - 1AM Wisdom Watch
 - LightHouse
@@ -21,19 +21,39 @@ It is an image-first index of software, media, device experiments, utilities, an
 - AI on Kindle
 - Print as PocketMod
 - SuperCollider studies
-- Tales from the Loop Formatting Toolkit
+- Tales from the Loop Homebrewery Toolkit
+- Starfinder 2e Homebrewery Toolkit
 
-The homepage tiles expand in place for more information. Their default order can be adjusted by aggregate visitor interaction.
+## Repository guide
 
-The Anaglyph & Friends tile offers direct Intel and Apple Silicon Mac ZIP downloads from the project's latest checked GitHub release, alongside the hosted demo. Installation, unsigned-app guidance, and cloud-tested macOS versions are disclosed under “Mac download instructions”. Release assets live in the project repository, not in this portfolio source.
+- `index.html` — homepage, project tiles, and navigation
+- `favicon.svg` — portfolio icon
+- `golocal/` — project note for the Google Maps integration
+- `tales-from-the-loop/` — toolkit, reusable assets, fonts and downloads
+- `starfinder/` — Starfinder toolkit and source download
+- `IMAGE-SHOPPING-LIST.md` — wanted real screenshots and photographs
+- `TODO.md` — design decisions and next work
+- `tests/portfolio.test.mjs` — structural, script, and local-link tests
+- `tests/check-links.mjs` — weekly audit of external links
 
-## This repository
+## How it works
 
-- `index.html` — the portfolio site
-- `tales-from-the-loop/` — toolkit guide, public template and mystery links, and downloadable Markdown/CSS source
-- `TODO.md` — portfolio decisions and remaining work
-- `IMAGE-SHOPPING-LIST.md` — photos and screenshots still wanted for project tiles and expanded views
+The homepage is static HTML, CSS, and JavaScript, hosted on GitHub Pages. Each project opens within the grid. Its fragment URL (`#project-...`) can be shared, and browser Back/Forward navigation restores the open project. The default order is set by editorial `data-rank` values rather than a third-party popularity service.
 
-This is the portfolio repository, not the source repository for any one project. Project source lives in the linked project repositories.
+The layout preserves at least two columns on phones and uses equal-height closed cards.
 
-The Tales from the Loop Homebrewery Toolkit has eight example pages and an editable clue-flow map. Its web fonts (Poppins, Crimson Text, Special Elite) and license notices are hosted in `tales-from-the-loop/fonts/` and included in its source ZIP. Graphics are independently made; the companion guide credits the official Workshop templates.
+### Development checks
+
+With Node.js installed:
+
+```sh
+node tests/portfolio.test.mjs
+```
+
+GitHub Actions runs this on pushes and pull requests. A separate weekly workflow checks external links, reporting confirmed 404/410 responses as failures while treating rate limits and temporary network errors as inconclusive. Manual test runs are available through **Actions → Check portfolio links → Run workflow**.
+
+## Content and credits
+
+The works are the point. ChatGPT is one of the media used to make them.
+
+Original and third-party graphics, text, licensed fonts, and material associated with other games and brands have their own terms. See the relevant project pages and the font license files under `tales-from-the-loop/fonts/`. This repository's public visibility should not be interpreted as a blanket license for all included content.
