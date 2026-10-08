@@ -31,7 +31,35 @@ for (const arch of ['intel', 'apple-silicon']) {
 assert.ok(anaglyph.includes('not Apple-notarized'), 'Signing disclaimer remains');
 assert.ok(html.includes('href="/golocal/"'), 'GoLocal has an actionable project note');
 assert.ok(html.includes('href="/favicon.svg"'), 'Site links to its favicon');
-assert.ok(!html.includes('abacus.jasoncamer.dev'), 'No external sorting/tracking dependency');
+assert.ok(html.includes('abacus.jasoncameron.dev'), 'Persistent public click counter configured');
+assert.ok(html.includes("projects.forEach(project => requestCount(project, 'get'))"), 'Read totals without incrementing them on page load');
+assert.ok(html.includes("if (opening) requestCount(project, 'hit')"), 'Increment only when a tile opens');
+assert.equal((html.match(/class="tile-count"/g) || []).length, cards.length, 'Every tile has one small counter');
+assert.deepEqual(ranks, ranks.map((_, i) => i + 1), 'HTML starts in estimated audience order without layout reshuffling');
+const filters = [...html.matchAll(/data-filter="([^"]+)"/g)].map(m => m[1]);
+const categorySet = new Set(filters);
+assert.equal(categorySet.size, filters.length, 'Each filter is unique');
+for (const category of ['all','asheville','tabletop','devices','print','audio','visual','learning']) {
+  assert.ok(categorySet.has(category), 'Category exists: ' + category);
+}
+const projectCategories = new Map([...html.matchAll(/<article class="project [^"]+" data-key="([^"]+)" data-rank="\d+" data-categories="([^"]+)"/g)]
+  .map(m => [m[1], m[2].split(' ')]));
+assert.equal(projectCategories.size, cards.length, 'Each card has declared categories');
+for (const [key, assigned] of projectCategories) {
+  assert.ok(assigned.length >= 1, key + ' has at least one category');
+  for (const category of assigned) assert.ok(categorySet.has(category), key + ' has a valid category');
+}
+assert.ok(projectCategories.get('lighthouse').includes('tabletop'), 'LightHouse is tabletop-related');
+assert.ok(projectCategories.get('sorting-cards').includes('tabletop'), 'Cards course is tabletop-related');
+assert.ok(!projectCategories.get('touchbarpalooza').includes('tabletop'), 'TouchBar video games are not tabletop');
+assert.ok(projectCategories.get('asheville-golocal-maps').includes('asheville'), 'GoLocal is Asheville-related');
+assert.ok(projectCategories.get('orchestral-maneuvers-dark').includes('asheville'), 'Asheville FM is Asheville-related');
+assert.ok(projectCategories.get('anaglyph-friends').includes('print') && projectCategories.get('anaglyph-friends').includes('visual'), 'Multi-category membership works');
+assert.ok(html.includes("url.searchParams.set('category', category)"), 'Category selection is shareable');
+assert.ok(html.includes('project.hidden = !show'), 'Irrelevant tiles hide when filtered');
+const goLocal = read('golocal/index.html');
+assert.ok(goLocal.includes('Save list') && goLocal.includes('Show on your map'), 'GoLocal shows iPhone add-to-Maps instructions');
+assert.ok(goLocal.includes('has not yet been published here'), 'GoLocal is transparent about missing public share URL');
 for (const required of ['popstate', 'hashchange', 'Escape', 'aria-controls', 'scrollIntoView']) {
   assert.ok(html.includes(required), 'Expanded-card navigation includes ' + required);
 }
