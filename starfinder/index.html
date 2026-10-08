@@ -4,160 +4,249 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#08131c">
+  <meta name="description" content="A complete, populated Starfinder Second Edition Homebrewery toolkit with mission examples, stat blocks, art layouts, hacking maps, starship scenes, and editing instructions.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Starfinder 2e Homebrewery Toolkit · Ude Projects">
+  <meta property="og:description" content="Browse the populated Kestrel-9 toolkit, make your own copy, and adapt its Starfinder 2e authoring components.">
+  <link rel="canonical" href="https://udeudeude.github.io/starfinder/">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <meta name="description" content="A Starfinder Second Edition Homebrewery toolkit with reusable layouts, art recipes, encounter structures, hacking maps, starship scenes, and publishing guidance.">
   <title>Starfinder 2e Homebrewery Toolkit · Ude Projects</title>
   <style>
     :root{
-      --bg:#08141d;--panel:#102b38;--panel2:#163b4b;--paper:#f7faf9;--ink:#17262d;
-      --cyan:#5fcbd7;--cyan2:#dff3f5;--magenta:#b63f95;--purple:#684a9c;--gold:#d9a044;
-      --muted:#9db7c2;--line:#2b5b69
+      --bg:#08131c;--ink:#f4fbfd;--muted:#b7cad7;--paper:#f7faf9;
+      --navy:#143849;--cyan:#5fcbd7;--magenta:#b63f95;--purple:#684a9c;
+      --rule:#ffffff26;
     }
     *{box-sizing:border-box}
-    html{background:var(--bg)}
-    body{margin:0;color:#eef8fb;background:
-      radial-gradient(circle at 80% 10%,#51284e55,transparent 25rem),
-      radial-gradient(circle at 12% 52%,#17677844,transparent 28rem),
-      var(--bg);
-      font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-    a{color:inherit}
-    .wrap{width:min(1120px,calc(100% - 28px));margin:auto}
-    header{padding:20px 0 0}
-    nav{display:flex;justify-content:space-between;align-items:center;gap:16px}
-    nav a{text-decoration:none;font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:.72rem}
-    nav span{font-size:.72rem;color:var(--muted)}
-    .hero{margin:20px auto 18px;min-height:520px;border:1px solid #ffffff22;position:relative;overflow:hidden;
-      background:
-       linear-gradient(90deg,#091620ed,#12394dbd 52%,#38203cb5),
-       radial-gradient(circle at 80% 22%,#b63f9577,transparent 22rem),
-       radial-gradient(circle at 28% 80%,#5fcbd75c,transparent 21rem);
-      clip-path:polygon(0 0,92% 0,100% 11%,100% 100%,8% 100%,0 90%)}
-    .hero:before{content:"";position:absolute;inset:0;background:
-      repeating-linear-gradient(120deg,transparent 0 68px,#ffffff08 68px 70px),
-      linear-gradient(135deg,transparent 0 64%,#5fcbd712 64% 69%,transparent 69%)}
-    .hero:after{content:"";position:absolute;left:22px;right:22px;top:22px;bottom:22px;border:1px solid #76dde650;
-      clip-path:polygon(0 0,90% 0,100% 9%,100% 100%,10% 100%,0 91%)}
-    .hero-copy{position:relative;z-index:2;padding:92px 58px 56px;max-width:760px}
-    .eyebrow{color:#81e3e9;text-transform:uppercase;letter-spacing:.18em;font-size:.72rem;font-weight:850}
-    h1{font-size:clamp(3.3rem,8vw,6.9rem);line-height:.84;letter-spacing:-.065em;text-transform:uppercase;margin:12px 0 18px}
-    .deck{font-size:clamp(1.05rem,2vw,1.35rem);line-height:1.35;color:#d7eef2;max-width:40rem}
-    .bar{width:210px;height:5px;background:linear-gradient(90deg,var(--cyan),var(--magenta));transform:skewX(-28deg);margin:22px 0}
-    .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
-    .button{display:inline-block;text-decoration:none;font-size:.78rem;font-weight:850;letter-spacing:.04em;padding:11px 14px;border:1px solid #ffffff38;background:#ffffff0d}
-    .button.primary{background:var(--cyan);border-color:var(--cyan);color:#09202a}
-    .button:hover{transform:translateY(-1px)}
-    main{padding-bottom:56px}
-    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
-    .card{grid-column:span 6;background:#eef7f8;color:var(--ink);padding:22px;border-top:5px solid var(--cyan);min-height:190px}
-    .card.magenta{border-color:var(--magenta)}
-    .card.purple{border-color:var(--purple)}
-    .card.dark{background:var(--panel);color:#edf8fa;border-color:var(--cyan)}
-    .card h2{font-size:1rem;letter-spacing:.08em;text-transform:uppercase;margin:0 0 10px;color:#183d4c}
-    .card.dark h2{color:#85e4eb}
-    .card p,.card li{font-size:.9rem;line-height:1.5}
-    .card ul,.card ol{padding-left:1.2rem}
-    .showcase{grid-column:span 12;background:var(--paper);color:var(--ink);padding:0;overflow:hidden;border-top:5px solid var(--magenta)}
-    .show-head{display:flex;justify-content:space-between;gap:12px;padding:18px 20px 10px;border-bottom:1px solid #abc6cc}
-    .show-head b{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--magenta)}
-    .page-mock{display:grid;grid-template-columns:1.05fr .95fr;min-height:430px;background:white}
-    .mock-copy{padding:34px}
-    .mock-copy h3{margin:0;color:#143849;text-transform:uppercase;font-size:2rem;letter-spacing:-.04em;border-bottom:3px solid var(--cyan);padding-bottom:8px}
-    .mock-band{margin:18px 0 12px;background:#143849;color:white;border-left:7px solid var(--magenta);padding:8px 12px;text-transform:uppercase;font-size:.72rem;font-weight:850;letter-spacing:.1em}
-    .mock-box{border:1px solid #a9c1c6;border-top:4px solid var(--cyan);padding:11px;margin:10px 0;background:#f8fbfb;font-size:.82rem;line-height:1.42}
-    .mock-art{position:relative;background:
-      radial-gradient(circle at 62% 38%,#b63f9580,transparent 20%),
-      radial-gradient(circle at 43% 60%,#5fcbd780,transparent 22%),
-      linear-gradient(145deg,#0d2531,#192d46 55%,#3b254a);overflow:hidden}
-    .mock-art:before{content:"";position:absolute;inset:8%;border:1px solid #7ae0e85e;clip-path:polygon(0 0,86% 0,100% 10%,100% 100%,12% 100%,0 90%)}
-    .figure{position:absolute;left:22%;right:18%;top:12%;bottom:7%;background:#d7f6f8;
-      clip-path:polygon(47% 0,60% 13%,58% 27%,74% 43%,67% 52%,77% 100%,48% 89%,23% 100%,31% 55%,19% 40%,38% 26%,37% 12%);opacity:.88}
-    .facet{position:absolute;right:0;top:70px;width:28px;height:250px;background:linear-gradient(var(--purple),var(--magenta),var(--cyan));clip-path:polygon(55% 0,100% 7%,100% 92%,45% 100%,0 80%,0 15%)}
-    .note{grid-column:span 12;color:var(--muted);font-size:.78rem;line-height:1.5;padding:4px 2px 0}
-    footer{padding:0 0 34px;color:#7894a2;font-size:.7rem}
-    code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#0b2632;color:#c8f4f7;padding:2px 5px;border-radius:4px}
-    @media(max-width:760px){
-      .hero{min-height:500px}.hero-copy{padding:70px 28px 45px}
-      .card{grid-column:span 12}.page-mock{grid-template-columns:1fr}.mock-art{min-height:330px}
-      nav span{display:none}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.6}
+    a{color:inherit;text-underline-offset:4px}
+    a:hover{text-decoration-thickness:2px}
+    a:focus-visible,summary:focus-visible{outline:3px solid #b5f3f7;outline-offset:4px}
+    .wrap{width:min(1080px,calc(100% - 36px));margin:auto}
+    nav.site{display:flex;justify-content:space-between;gap:20px;padding:25px 0;border-bottom:1px solid var(--rule);font-size:.78rem}
+    nav.site .mark{font-weight:850;letter-spacing:.08em;text-transform:uppercase;text-decoration:none}
+    nav.site .back{color:var(--muted)}
+    .hero{display:grid;grid-template-columns:1.25fr 1fr;gap:42px;align-items:center;padding:58px 0 45px}
+    .eyebrow{font-size:.7rem;font-weight:850;letter-spacing:.14em;text-transform:uppercase;color:#8be4ed}
+    h1{font-size:clamp(2.7rem,6vw,4.6rem);line-height:1.02;letter-spacing:-.055em;margin:16px 0 20px}
+    h2{font-size:clamp(1.5rem,3vw,2rem);line-height:1.15;letter-spacing:-.035em;margin:0 0 18px}
+    h3{font-size:1.05rem;margin:0 0 8px}
+    p{margin:0 0 18px}
+    .intro{color:var(--muted);font-size:1.05rem;max-width:55ch}
+    .actions{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 16px}
+    .button{display:inline-flex;align-items:center;min-height:44px;padding:11px 16px;border:1px solid #ffffff55;border-radius:6px;text-decoration:none;font-size:.8rem;font-weight:800;line-height:1.2}
+    .button.primary{color:#08131c;background:var(--cyan);border-color:var(--cyan)}
+    .fine{font-size:.76rem;color:var(--muted)}
+    .specimen{position:relative;background:var(--paper);color:#243a44;padding:31px 27px 26px 36px;border-left:13px solid var(--navy);box-shadow:0 20px 60px #0006;transform:rotate(1deg);overflow:hidden}
+    .specimen::before{content:"";position:absolute;left:0;top:0;right:0;height:8px;background:linear-gradient(90deg,var(--cyan) 0 62%,var(--magenta) 62% 83%,var(--purple) 83%)}
+    .specimen::after{content:"";position:absolute;right:0;top:17%;width:9px;height:63%;background:linear-gradient(var(--purple),var(--magenta),var(--cyan));clip-path:polygon(0 0,100% 9%,100% 88%,0 100%)}
+    .specimen .eyebrow{color:#5b6770;font-size:.62rem}
+    .specimen h2{font-family:ui-sans-serif,system-ui,sans-serif;text-transform:uppercase;color:var(--navy);font-size:clamp(1.55rem,2.8vw,2.1rem);line-height:1.02;letter-spacing:-.05em;border-bottom:3px solid var(--cyan);padding-bottom:12px;margin:17px 0}
+    .specimen p{font-size:.82rem;line-height:1.5}
+    .specimen .box{background:#e3f1f3;border-top:4px solid var(--cyan);padding:12px;font-size:.78rem;line-height:1.45}
+    .specimen .box strong{display:block;background:var(--navy);color:white;padding:7px 11px;margin:-12px -12px 10px;text-transform:uppercase;font-size:.67rem;letter-spacing:.07em}
+    .specimen .credit{margin-top:16px;font:.7rem ui-monospace,monospace;border-top:1px solid #a1b8bd;padding-top:8px;color:#59737e}
+    nav.jump{display:flex;flex-wrap:wrap;gap:12px 22px;padding:18px 0;border-block:1px solid var(--rule);font-size:.8rem;color:var(--muted)}
+    section.topic{padding:44px 0;border-bottom:1px solid var(--rule);scroll-margin-top:20px}
+    .section-head{display:flex;gap:16px;align-items:baseline}
+    .num{color:#8be4ed;font-family:ui-monospace,monospace;font-size:.82rem}
+    .two{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+    .card{background:#153040;border:1px solid var(--rule);padding:22px;border-radius:9px}
+    .card p:last-child{margin-bottom:0}
+    ol,ul{padding-left:24px;margin:0 0 16px}
+    li{padding-left:5px;margin:0 0 13px}
+    li:last-child{margin-bottom:0}
+    .note{border-left:3px solid var(--magenta);padding:2px 0 2px 16px;margin-top:22px;color:var(--muted);font-size:.88rem}
+    .note p{margin:0}
+    code{font:.85em ui-monospace,SFMono-Regular,Consolas,monospace;background:#ffffff10;padding:2px 5px;border-radius:3px;overflow-wrap:anywhere}
+    pre{background:#061019;border:1px solid var(--rule);border-radius:7px;padding:16px;overflow:auto;font-size:.85rem;line-height:1.6}
+    pre code{background:transparent;padding:0}
+    .table-wrap{overflow-x:auto}
+    table{width:100%;border-collapse:collapse;font-size:.88rem}
+    th{text-align:left;color:#8be4ed;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em}
+    td,th{padding:13px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+    td:first-child{min-width:160px;font-weight:700}
+    details{border-top:1px solid var(--rule);padding:17px 0}
+    summary{cursor:pointer;font-weight:700}
+    details p,details ol{margin:12px 0 0;color:var(--muted);max-width:80ch}
+    .sample{background:#122c3c;border:1px solid var(--rule);padding:22px;border-radius:9px}
+    .sample .eyebrow{color:#99e8ec}
+    .sample h3{font-size:1.45rem;letter-spacing:-.035em;margin:7px 0 12px}
+    .mini-steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;margin:19px 0}
+    .mini-steps span{background:#214758;border-top:3px solid var(--cyan);padding:8px 6px;text-align:center;font-size:.68rem;font-weight:800}
+    .mini-steps span:nth-child(4){border-color:var(--magenta)}
+    footer{padding:28px 0 35px;color:var(--muted);font-size:.75rem}
+    footer p{margin-bottom:10px}
+    @media(max-width:700px){
+      .hero,.two{grid-template-columns:1fr}
+      .hero{gap:30px;padding-top:34px}
+      .specimen{transform:none;max-width:440px}
+      .wrap{width:calc(100% - 30px)}
+      nav.site{font-size:.68rem}
+      .card,.sample{padding:18px}
+      section.topic{padding:32px 0}
+      td,th{padding:10px 7px}
+      .actions .button{flex:1;text-align:center;justify-content:center;min-width:145px}
+      .mini-steps{grid-template-columns:repeat(3,minmax(0,1fr))}
     }
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   </style>
 </head>
 <body>
-<header class="wrap">
-  <nav><a href="/">← Ude Projects</a><span>RPG publishing toolkit · working version 7</span></nav>
-</header>
-
-<main class="wrap">
-  <section class="hero">
-    <div class="hero-copy">
-      <div class="eyebrow">Starfinder Second Edition · Homebrewery</div>
-      <h1>Build pages<br>for the Pact Worlds.</h1>
-      <div class="bar"></div>
-      <div class="deck">A reusable authoring system for Starfinder 2e homebrew: page architecture, stat blocks, mission tools, hacking maps, starship scenes, world dossiers, and practical ways to make art belong on the page.</div>
-      <div class="actions">
-        <a class="button primary" href="https://homebrewery.naturalcrit.com/share/u41Swqyrcj1W" target="_blank" rel="noopener noreferrer">View populated Homebrewery example</a>
-        <a class="button" href="downloads/starfinder-homebrewery-toolkit-v7.md" download>Download toolkit v7</a>
-        <a class="button" href="https://homebrewery.naturalcrit.com/new/" target="_blank" rel="noopener noreferrer">Open blank Homebrewery</a>
-        <a class="button" href="https://paizo.com/licenses/communityuse/package" target="_blank" rel="noopener noreferrer">Paizo art resources</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="grid">
-    <div class="showcase">
-      <div class="show-head"><b>Page language</b><span>white reading field · navy/cyan hierarchy · magenta/purple navigation · integrated art</span></div>
-      <div class="page-mock" aria-label="Stylized example of the toolkit layout">
-        <div class="mock-copy">
-          <h3>Character Option</h3>
-          <div class="mock-band">Rules first, illustration at publication scale</div>
-          <div class="mock-box"><b>Ghost in the Telemetry</b><br>Strong title band, trait language, readable rules text, and enough negative space for a character illustration to remain legible rather than becoming a thumbnail.</div>
-          <div class="mock-box"><b>Art recipes</b><br>Wide banners, transparent cutouts, outer-edge spot art, half-page plates, chapter openers, maps that do not crop tactical information, and focal-point controls.</div>
+  <div class="wrap">
+    <nav class="site" aria-label="Site"><a class="mark" href="/">Ude Projects</a><a class="back" href="/">← All projects</a></nav>
+    <main>
+      <header class="hero">
+        <div>
+          <div class="eyebrow">Science fantasy / page design / tabletop play</div>
+          <h1>Starfinder 2e<br>Homebrewery<br>Toolkit.</h1>
+          <p class="intro">Write your own missions, creatures, equipment, hacking encounters, and starship scenes in a coordinated set of Starfinder Second Edition-inspired pages. A working Homebrewery example and downloadable, self-contained source.</p>
+          <div class="actions">
+            <a class="button primary" href="https://homebrewery.naturalcrit.com/share/u41Swqyrcj1W" target="_blank" rel="noopener noreferrer">Open the populated toolkit ↗</a>
+            <a class="button" href="#start">Make your own copy</a>
+          </div>
+          <p class="fine">Independent fan-made publishing toolkit, not an official Paizo product. Version 7.</p>
         </div>
-        <div class="mock-art"><div class="figure"></div><div class="facet"></div></div>
-      </div>
-    </div>
+        <div class="specimen" aria-label="An excerpt of the Signal at Kestrel-9 sample mission and page style">
+          <div class="eyebrow">Pact Worlds Field Series / adventure sample</div>
+          <h2>Signal at<br>Kestrel-9</h2>
+          <p>A dormant relay in the Diaspora begins transmitting distress calls from nineteen hours in the future. The crew hears its own voices in a warning it hasn't recorded.</p>
+          <div class="box"><strong>Mission brief / levels 3–5</strong>Approach the station, follow prediction ghosts through its sealed routes, and decide whether to destroy, isolate, steal, or trust the predictive core.</div>
+          <div class="credit">A style and content sample · Explore the complete pages below</div>
+        </div>
+      </header>
 
-    <article class="card">
-      <h2>What it actually gives you</h2>
-      <ul>
-        <li>Creature, item, feat, ability, hazard, and dossier structures.</li>
-        <li>Mission briefs, escalation clocks, research tracks, and chase zones.</li>
-        <li>Network-topology encounters for hacking and permissions.</li>
-        <li>Cinematic starship-scene layouts with crew-facing objectives.</li>
-        <li>System maps, faction profiles, transmissions, terminals, and page furniture.</li>
-      </ul>
-    </article>
+      <nav class="jump" aria-label="On this page">
+        <a href="#start">Copy &amp; save</a>
+        <a href="#components">What’s included</a>
+        <a href="#edit">Edit &amp; add pages</a>
+        <a href="#example">Sample mission</a>
+        <a href="#backup">Source download</a>
+        <a href="#help">Troubleshooting</a>
+      </nav>
 
-    <article class="card magenta">
-      <h2>Art belongs to the layout</h2>
-      <p>The toolkit includes copy-paste patterns for full-width scene art, transparent character cutouts, half-page and full-page plates, inset illustrations, edge art, maps, and chapter-opening images.</p>
-      <p>Current examples use Paizo-hosted Starfinder 2e iconic art where the applicable fan/community-use terms permit it.</p>
-    </article>
+      <section class="topic" id="start">
+        <div class="section-head"><span class="num">01</span><h2>Make it yours. Keep the edit link.</h2></div>
+        <div class="two">
+          <div class="card">
+            <h3>First copy and save</h3>
+            <ol>
+              <li><a href="https://homebrewery.naturalcrit.com/share/u41Swqyrcj1W" target="_blank" rel="noopener noreferrer">Open the populated toolkit</a>. If its toolbar offers <strong>Source → Clone to New</strong>, choose that to make your own brew.</li>
+              <li>Alternatively, <a href="downloads/starfinder-homebrewery-toolkit-v7.md" download>download the complete source</a>, then open a <a href="https://homebrewery.naturalcrit.com/new/" target="_blank" rel="noopener noreferrer">blank Homebrewery brew</a> and paste the full file into <strong>Brew Editor</strong>.</li>
+              <li>Replace example text with your own mission, stats, and artwork. Give your brew a name and choose <strong>Save Now</strong>.</li>
+              <li><strong>Keep the resulting <code>/edit/</code> address private and bookmarked</strong>. It is how you return to your editable copy.</li>
+            </ol>
+          </div>
+          <div class="card">
+            <h3>Then edit and share</h3>
+            <p>Once saved, watch the Homebrewery saved status as you edit. Use <strong>Share → View</strong> to get a read-only <code>/share/</code> link for players and readers.</p>
+            <p>Use <strong>Get PDF</strong> to prepare a print copy. Keep the editable brew and a local backup of its source.</p>
+            <p class="fine">The <code>/edit/</code> address may grant editing access. Don’t share it as the public project link.</p>
+          </div>
+        </div>
+        <div class="note"><p><strong>A practical distinction:</strong> the public example is a way to see the design immediately. The downloaded Markdown source is a backup and alternate starting point, not an executable installer.</p></div>
+      </section>
 
-    <article class="card purple">
-      <h2>How to use it</h2>
-      <ol>
-        <li><a href="https://homebrewery.naturalcrit.com/share/u41Swqyrcj1W" target="_blank" rel="noopener noreferrer">Look through the populated example</a> to see the toolkit in Homebrewery before downloading anything.</li>
-        <li>Download the <code>.md</code> source file.</li>
-        <li>Open a new, blank Homebrewery brew.</li>
-        <li>Delete the starter material and paste the entire toolkit source.</li>
-        <li>Copy the components you need into your own brew and replace demo text/art.</li>
-      </ol>
-      <p><strong>Do not use “New from File.”</strong> Plain copy-paste has been the reliable path in testing.</p>
-    </article>
+      <section class="topic" id="components">
+        <div class="section-head"><span class="num">02</span><h2>One system. Pages that solve different problems.</h2></div>
+        <p class="intro">A cover and twelve additional sample pages provide copyable structures for Starfinder adventures, scenes, rules material, and illustrated publishing.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th scope="col">Example page</th><th scope="col">What it helps you make</th></tr></thead>
+            <tbody>
+              <tr><td>01 / Cover</td><td>A full-page science-fantasy mission cover with space for optional hero art.</td></tr>
+              <tr><td>02 / Mission</td><td>A situation brief, five-step structure, escalation clock, scene menu, and GM tracking tools.</td></tr>
+              <tr><td>03 / Threats</td><td>Creature and hazard information, tactical states, and encounter-reference cards.</td></tr>
+              <tr><td>04 / Gear &amp; rules</td><td>Items, character options, rule modules, and availability language.</td></tr>
+              <tr><td>05 / Dossiers</td><td>System and location summaries, faction profiles, and annotated setting material.</td></tr>
+              <tr><td>06 / Network</td><td>Hacking routes, node permissions, dependencies, and network encounters.</td></tr>
+              <tr><td>07 / Starship scenes</td><td>Crew-facing objectives, cinematic phases, and escalating complications.</td></tr>
+              <tr><td>08 / Research &amp; chase</td><td>Progress tracks, clue structures, pursuit zones, and evolving pressure.</td></tr>
+              <tr><td>09 / Character options</td><td>Feats, abilities, and player-facing modular rules text.</td></tr>
+              <tr><td>10 / Art in situ</td><td>Large-format art demonstrations and attribution treatment.</td></tr>
+              <tr><td>11 / Art recipes I</td><td>Wide banners, transparent cutouts, maps, and chapter openers.</td></tr>
+              <tr><td>12 / Art recipes II</td><td>Half-page, full-page, inset, and outer-edge illustration.</td></tr>
+              <tr><td>13 / Component index</td><td>Reusable labels, panels, meters, clocks, networks, maps, and page-design guidance.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="fine" style="margin-top:18px">These are design and authoring examples, not official Starfinder rules. Check all mechanics, licenses, line breaks, and page overflow before publishing.</p>
+      </section>
 
-    <article class="card dark">
-      <h2>Why it is a toolkit, not just a skin</h2>
-      <p>The recurring visual forms correspond to recurring Starfinder authoring problems. A component earns its place only if it makes information easier to write, find, compare, or run at the table.</p>
-      <p>That rule is the main lesson from the successful Tales from the Loop toolkit and the abandoned Old Gods of Appalachia attempt.</p>
-    </article>
+      <section class="topic" id="edit">
+        <div class="section-head"><span class="num">03</span><h2>Your setting. The same visual language.</h2></div>
+        <div class="two">
+          <div>
+            <h3>Replace the content</h3>
+            <p>Work in <strong>Brew Editor</strong>. The v7 source includes its own <code>&lt;style&gt;</code> section, so paste the <em>entire</em> downloaded file rather than copying only the text after the stylesheet. Replace the sample mission’s names, objectives, equipment, and character options.</p>
+            <p>Keep the opening and closing tags of a component when copying it. For instance, a mission card can use this pattern:</p>
+            <pre><code>&lt;div class="sf-mission sf-wide"&gt;
+&lt;div class="sf-label"&gt;Mission Brief&lt;/div&gt;
+Your mission text here.
+&lt;/div&gt;</code></pre>
+          </div>
+          <div>
+            <h3>Add another page</h3>
+            <p>Copy the complete structure of a matching example page and insert a Homebrewery page break on its own line:</p>
+            <pre><code>\page</code></pre>
+            <p>Choose the right structure for the material: a dossier for a location, a network diagram for hacking, or a phase-based scene for a starship sequence. Keep essential information legible at print size.</p>
+            <p>Review each added page in the preview. Text that spills past the printable area may require splitting into a continuation page.</p>
+          </div>
+        </div>
+        <details><summary>Add images when you have them</summary><p>Pages 11 and 12 include placement recipes for cinematic banners, maps, cutouts, and illustrated panels. Replace image URLs with direct, publicly reachable images you have rights to use. The source uses art-slot placeholders so the toolkit remains useful without adding artwork.</p></details>
+        <details><summary>Keeping a consistent look</summary><p>The stylesheet establishes a white reading field, navy structure, cyan information bands, magenta/purple accent geometry, and Oxanium/IBM Plex/Rajdhani typography. Reuse those existing styles instead of adding unrelated visual elements to every page.</p></details>
+      </section>
 
-    <div class="note">
-      Independent fan-made work. Starfinder and related marks are property of Paizo Inc. This project is not affiliated with or endorsed by Paizo. Before publishing, choose the Paizo license/publishing route appropriate to your project and verify the current terms for any art or setting material you use.
-    </div>
-  </section>
-</main>
+      <section class="topic" id="example">
+        <div class="section-head"><span class="num">04</span><h2>Try a populated science-fantasy mission.</h2></div>
+        <div class="sample">
+          <div class="eyebrow">Signal at Kestrel-9 / contained in the toolkit</div>
+          <h3>A distress call from tomorrow.</h3>
+          <p>A communications relay reactivates in the Diaspora and begins broadcasting emergency traffic timestamped nineteen hours ahead. Its messages identify the crew and describe failures that have not happened. Players must navigate prediction ghosts, mounting alert, and an approaching corporate salvage interest.</p>
+          <div class="mini-steps" aria-label="The five steps of the sample mission"><span>Hook</span><span>Approach</span><span>Complication</span><span>Choice</span><span>Fallout</span></div>
+          <p>The populated brew demonstrates the mission brief alongside later encounter, network, starship, chase, equipment, and art-layout examples.</p>
+          <div class="actions">
+            <a class="button primary" href="https://homebrewery.naturalcrit.com/share/u41Swqyrcj1W" target="_blank" rel="noopener noreferrer">Browse the complete example ↗</a>
+            <a class="button" href="#components">Explore the component index</a>
+          </div>
+        </div>
+      </section>
 
-<footer class="wrap">Built for Homebrewery. Designed to sit comfortably near Starfinder 2e without pretending to be an official Paizo book.</footer>
+      <section class="topic" id="backup">
+        <div class="section-head"><span class="num">05</span><h2>Keep a complete source backup.</h2></div>
+        <p>The version 7 Markdown download includes the styling and all page examples in one file. Paste it directly into a new Homebrewery brew, rather than attempting to import it with <strong>New from File</strong>.</p>
+        <div class="actions">
+          <a class="button primary" href="downloads/starfinder-homebrewery-toolkit-v7.md" download>Download complete v7 · Markdown</a>
+          <a class="button" href="https://homebrewery.naturalcrit.com/new/" target="_blank" rel="noopener noreferrer">Open blank Homebrewery</a>
+        </div>
+        <details><summary>Restore the toolkit from its Markdown file</summary>
+          <ol><li>Download the <code>.md</code> file above and open it in a text editor.</li><li>Select all and copy the contents, including the top <code>&lt;style&gt;</code> block.</li><li>Open a new Homebrewery brew and paste the full source into <strong>Brew Editor</strong>.</li><li>Save, rename if needed, bookmark your edit URL, and check each page in the preview.</li></ol>
+        </details>
+        <p class="fine" style="margin-top:18px">To back up your modified version, save your own Brew Editor source as well. The supplied file is the original v7 toolkit, not your later changes.</p>
+      </section>
+
+      <section class="topic" id="help">
+        <div class="section-head"><span class="num">06</span><h2>When something looks wrong.</h2></div>
+        <details><summary>I can view the example, but I can't edit it.</summary><p>You are probably on the public <code>/share/</code> page. Clone it when that command is available, or download the complete source and paste it into a new brew. Use and bookmark your own <code>/edit/</code> link.</p></details>
+        <details><summary>“New from File” doesn't seem to work.</summary><p>Open the downloaded Markdown in a text editor, copy all of it, and paste it into a blank Brew Editor. This is the tested workaround.</p></details>
+        <details><summary>The page looks unstyled.</summary><p>Verify that the full downloaded file was pasted, including the CSS <code>&lt;style&gt;</code> section at the start. This toolkit is self-contained; you shouldn't need a separate stylesheet download.</p></details>
+        <details><summary>Text overlaps, gets clipped, or disappears.</summary><p>Break long material onto a new page, reduce overly long strings, and check for unmatched HTML tags or missing markup. The template demonstrates print-sized components; it cannot automatically make arbitrary amounts of text fit.</p></details>
+        <details><summary>My illustration or map isn't visible.</summary><p>Use a direct URL to an image that opens without logging in. Place your link in one of the recipes on pages 11–12. Check image permissions and consult the relevant Paizo publishing/art terms.</p></details>
+      </section>
+
+      <section class="topic" id="credits">
+        <div class="section-head"><span class="num">07</span><h2>Credits and design references.</h2></div>
+        <p>This is an independently authored Starfinder Second Edition toolkit intended for use with <a href="https://homebrewery.naturalcrit.com/">Homebrewery</a>, which is developed by the NaturalCrit community. Thanks to those creators for making complex page layouts accessible through editable Markdown.</p>
+        <p>The toolkit studies contemporary Starfinder 2e page conventions: bright reading areas, cyan/navy structure, magenta/purple navigational accents, faceted shapes, and large integrated art. It uses its own page components rather than reproducing the publisher's exact trade dress.</p>
+        <p>If you intend to publish a Starfinder project, consult the official <a href="https://paizo.com/licenses/fancontent">Paizo Fan Content Policy</a> and <a href="https://paizo.com/licenses/communityuse/package">Community Use art resources</a>. Other publishing options may require different licenses; the appropriate choice depends on what material you include.</p>
+        <p class="fine">The source includes sample layouts with fictional mechanics. They are not official rules or a substitute for published Starfinder Second Edition material.</p>
+      </section>
+    </main>
+    <footer>
+      <p>Independent fan-made material. Starfinder and related marks belong to Paizo Inc. This project is not affiliated with, sponsored by, or endorsed by Paizo.</p>
+      <a href="/">← Back to Ude Projects</a>
+    </footer>
+  </div>
 </body>
 </html>

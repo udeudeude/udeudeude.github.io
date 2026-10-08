@@ -17,9 +17,9 @@ This is the **portfolio repository**, not the source repository for LightHouse o
 - Starfinder 2e Homebrewery Toolkit
 - Asheville GoLocal Card + Google Maps
 - Orchestral Maneuvers in the Dark
-- Biofeedback Play
 - TouchBarpalooza
 - Sorting Algorithms with Playing Cards
+- Biofeedback Play
 - TV-b-goner
 - AI on Kindle
 - SuperCollider studies
@@ -30,7 +30,7 @@ This is the **portfolio repository**, not the source repository for LightHouse o
 - `favicon.svg` — portfolio icon
 - `golocal/` — project note for the Google Maps integration
 - `tales-from-the-loop/` — toolkit, reusable assets, fonts and downloads
-- `starfinder/` — Starfinder toolkit, source download, and direct link to a populated read-only Homebrewery example
+- `starfinder/` — toolkit guide with a Tales from the Loop-style navigation layout, populated Homebrewery example, components, help and source download
 - `IMAGE-SHOPPING-LIST.md` — wanted real screenshots and photographs
 - `TODO.md` — design decisions and next work
 - `tests/portfolio.test.mjs` — structural, script, and local-link tests
@@ -64,7 +64,7 @@ GitHub Actions runs this on pushes and pull requests. A separate weekly workflow
 
 ## GoLocal installation
 
-The Go Local Maps experiment previously generated a Google Maps Saved list of 413 mappable businesses in the `Go Local Card` list. The `golocal/` page tells iPhone visitors how to save a shared list and how to find an already-imported list in Google Maps. One-tap public installation requires the source account's actual shared-list URL; no such URL is stored here yet.
+The Go Local Maps experiment previously generated a Google Maps Saved list of 413 mappable businesses in the `Go Local Card` list. The `golocal/` page tells iPhone visitors how to save a shared list and find a list already imported on their account. Google shares the Google Account profile name and picture along with a shared list, so the page warns against publishing the creator's personal list. One-tap public installation should instead use a separately maintained project Google account and verified view-only list. No public link is stored here yet.
 
 ## Optional funding
 

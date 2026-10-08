@@ -55,6 +55,14 @@
 - [ ] Decide whether projects with no public demonstration need a dedicated case-study page.
 - [ ] Check release/version labels as projects evolve.
 
+## October 8, 2026 refinements
+
+- [x] Move Biofeedback Play directly before TV-b-goner in the editorial order.
+- [x] Give Starfinder the same information architecture as the Tales from the Loop toolkit guide, retaining Starfinder styling and page-specific content.
+- [x] Explain that a shared personal Google Maps Saved list can expose the Google Account's name and picture.
+- [ ] Before offering one-tap GoLocal list installation, rebuild the curated list in a separate project Google account and verify its public profile and list in a signed-out browser.
+- [ ] Confirm the reconstructed public list contains only intended project places/notes and is shared view-only, not collaboratively editable.
+
 ## Maintenance and decisions still open
 
 - [ ] Set the GitHub repository's About description/topics (repo metadata isn't editable through the current GitHub connector).
