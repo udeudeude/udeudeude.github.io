@@ -37,6 +37,16 @@
     .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap);align-items:start}
     .project{min-width:0;border-radius:12px;overflow:hidden;transition:transform .22s cubic-bezier(.2,.8,.2,1),box-shadow .22s ease;position:relative;box-shadow:0 1px 0 #ffffff10}
     .project.open{grid-column:span 2;box-shadow:0 18px 44px #00000038;scroll-margin-top:14px}
+    .project[hidden]{display:none!important}
+    .filter-bar{margin:0 0 17px}
+    .filter-label{font-size:.75rem;text-transform:uppercase;letter-spacing:.12em;font-weight:800;color:var(--muted);margin:0 0 9px}
+    .filters{display:flex;gap:7px;flex-wrap:wrap}
+    .filter-button{font:inherit;font-size:.78rem;font-weight:700;color:#d7e6f0;background:#102734;border:1px solid #ffffff30;border-radius:999px;padding:9px 13px;min-height:39px;cursor:pointer;transition:background .14s,border-color .14s}
+    .filter-button:hover{background:#1a4253}
+    .filter-button[aria-pressed="true"]{background:#d6f0f6;border-color:#d6f0f6;color:#09202b}
+    .filter-summary{margin:9px 0 0;color:var(--muted);font-size:.75rem;min-height:1rem}
+    .tile-count{position:absolute;right:11px;bottom:11px;font-size:.66rem;font-weight:700;color:#eef7fbc7;letter-spacing:0;line-height:1.2;font-variant-numeric:tabular-nums;pointer-events:none}
+    .tile-count[hidden]{display:none!important}
     .project:not(.open):hover,.project:not(.open):focus-within{transform:translateY(-3px);box-shadow:0 12px 28px #00000030}
     .c1{background:#174c65}.c2{background:#1d5875}.c3{background:#364d78}.c4{background:#17636d}
     .c5{background:#344b69}.c6{background:#245d6f}.c7{background:#255b62}.c8{background:#314f60}.c9{background:#444b79}.c10{background:#38556b}.c11{background:#244f73}.c12{background:#2b6570}.c13{background:#153b50}.c14{background:#25344f}
@@ -81,6 +91,10 @@
       .expand p{font-size:.8rem}
       .links{gap:9px}
       .links a{font-size:.81rem}
+      .filter-bar{margin-bottom:14px}
+      .filters{gap:6px}
+      .filter-button{font-size:.73rem;padding:8px 11px;min-height:38px}
+      .tile-count{font-size:.62rem;right:8px;bottom:7px}
     }
   </style>
 </head>
@@ -96,9 +110,23 @@
 </header>
 
 <main class="wrap">
+  <section class="filter-bar" aria-label="Project categories">
+    <p class="filter-label">Browse by interest</p>
+    <div class="filters" role="group" aria-label="Filter projects">
+      <button class="filter-button" type="button" data-filter="all" aria-pressed="true">All projects</button>
+      <button class="filter-button" type="button" data-filter="asheville" aria-pressed="false">Asheville</button>
+      <button class="filter-button" type="button" data-filter="tabletop" aria-pressed="false">Tabletop &amp; RPGs</button>
+      <button class="filter-button" type="button" data-filter="devices" aria-pressed="false">Devices</button>
+      <button class="filter-button" type="button" data-filter="print" aria-pressed="false">Print &amp; publishing</button>
+      <button class="filter-button" type="button" data-filter="audio" aria-pressed="false">Sound &amp; podcasts</button>
+      <button class="filter-button" type="button" data-filter="visual" aria-pressed="false">3D &amp; images</button>
+      <button class="filter-button" type="button" data-filter="learning" aria-pressed="false">Learning &amp; ideas</button>
+    </div>
+    <p class="filter-summary" id="filter-summary" role="status" aria-live="polite"></p>
+  </section>
   <section class="grid" id="project-grid" aria-label="Projects">
 
-    <article class="project c1" data-key="wisdom-watch" data-rank="1">
+    <article class="project c1" data-key="wisdom-watch" data-rank="3" data-categories="learning">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -112,7 +140,7 @@
             <rect x="184" y="408" width="252" height="22" rx="11" fill="#174c65" opacity=".42"/>
           </svg>
         </div>
-        <div class="caption"><div class="status">Usable calendar</div><h2>1AM Wisdom Watch</h2></div>
+        <div class="caption"><div class="status">Usable calendar</div><h2>1AM Wisdom Watch</h2></div><span class="tile-count" hidden aria-hidden="true"></span>
       </button>
       <div class="expand">
         <p>Late-night calendar entries from thinkers worth meeting before tomorrow's logistics. Subscribe once and the entries appear in your calendar.</p>
@@ -124,7 +152,7 @@
       </div>
     </article>
 
-    <article class="project c2" data-key="lighthouse" data-rank="2">
+    <article class="project c2" data-key="lighthouse" data-rank="8" data-categories="tabletop devices">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -135,7 +163,7 @@
             <path d="M535 438 L604 324 L673 438 Z" fill="#eefcff" opacity=".9"/>
           </svg>
         </div>
-        <div class="caption"><div class="status">Working prototype</div><h2>LightHouse</h2></div>
+        <div class="caption"><div class="status">Working prototype</div><h2>LightHouse</h2></div><span class="tile-count" hidden aria-hidden="true"></span>
       </button>
       <div class="expand">
         <p>An illuminated touchscreen play surface for physical Looney Pyramids, with calibrated geometry, stacks and nests, board underlays, toys, saves, and remote sessions where one table can be controlled by multiple devices.</p>
@@ -143,7 +171,7 @@
       </div>
     </article>
 
-    <article class="project c3" data-key="anaglyph-friends" data-rank="3">
+    <article class="project c3" data-key="anaglyph-friends" data-rank="1" data-categories="visual print">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -154,7 +182,7 @@
             <path d="M255 445L400 170L545 445Z" fill="none" stroke="#eefaff" stroke-width="18" opacity=".7"/>
           </svg>
         </div>
-        <div class="caption"><div class="status">Web + local app</div><h2>Anaglyph &amp; Friends</h2></div>
+        <div class="caption"><div class="status">Web + local app</div><h2>Anaglyph &amp; Friends</h2></div><span class="tile-count" hidden aria-hidden="true"></span>
       </button>
       <div class="expand">
         <p>Turns one photograph and an AI depth map into anaglyphs, stereograms, lenticular prints, phantograms, wiggle-grams, viewer formats, View-Master reels, and other 3D experiments.</p>
@@ -163,7 +191,7 @@
       </div>
     </article>
 
-    <article class="project c11" data-key="tv-b-goner" data-rank="4">
+    <article class="project c11" data-key="tv-b-goner" data-rank="6" data-categories="devices">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -177,7 +205,7 @@
             <path d="M390 260c44-42 93-42 137 0M410 300c31-29 64-29 95 0M432 340c17-16 34-16 51 0" fill="none" stroke="#a9dceb" stroke-width="18" stroke-linecap="round"/>
           </svg>
         </div>
-        <div class="caption"><div class="status">Working web app</div><h2>TV-b-goner</h2></div>
+        <div class="caption"><div class="status">Working web app</div><h2>TV-b-goner</h2></div><span class="tile-count" hidden aria-hidden="true"></span>
       </button>
       <div class="expand">
         <p>An iPhone-oriented audio-to-infrared TV power-code sweeper for the little headphone-jack IR emitter. It can favor explicit OFF commands, sweep broader power codes, import Flipper IR files, and rebuild its TV-code database automatically.</p>
@@ -185,7 +213,7 @@
       </div>
     </article>
 
-    <article class="project c12" data-key="biofeedback-play" data-rank="5">
+    <article class="project c12" data-key="biofeedback-play" data-rank="11" data-categories="devices audio">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -199,7 +227,7 @@
             <path d="M430 190h220M430 225h150" stroke="#2b6570" stroke-width="18" stroke-linecap="round" opacity=".72"/>
           </svg>
         </div>
-        <div class="caption"><div class="status">Local signal workspace</div><h2>Biofeedback Play</h2></div>
+        <div class="caption"><div class="status">Local signal workspace</div><h2>Biofeedback Play</h2></div><span class="tile-count" hidden aria-hidden="true"></span>
       </button>
       <div class="expand">
         <p>A device-agnostic workspace for live physiological signals, visual feedback, audio sonification, recording, diagnostics, derived metrics, and creative-control output. Current devices include Lightstone, emWave, and the 2014 Muse.</p>
@@ -207,7 +235,7 @@
       </div>
     </article>
 
-    <article class="project c4" data-key="touchbarpalooza" data-rank="6">
+    <article class="project c4" data-key="touchbarpalooza" data-rank="12" data-categories="devices audio">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -220,7 +248,7 @@
             <path d="M620 280Q660 300 620 320Q580 300 620 280" fill="none" stroke="#dff9fb" stroke-width="9"/>
           </svg>
         </div>
-        <div class="caption"><div class="status">Released Mac apps · v0.3.0</div><h2>TouchBarpalooza</h2></div>
+        <div class="caption"><div class="status">Released Mac apps · v0.3.0</div><h2>TouchBarpalooza</h2></div><span class="tile-count" hidden aria-hidden="true"></span>
       </button>
       <div class="expand">
         <p>Games and tools built specifically for the MacBook Pro Touch Bar, including Lemmings, Pong, Snake, Breakout, Life, Mario, clipboard tools, audio visualization, MIDI, KITT, and more. The release also includes poki sitelen, a separate Touch Bar toki pona study app. Built for Macs with a physical Touch Bar and distributed as unsigned experimental software.</p>
@@ -228,10 +256,10 @@
       </div>
     </article>
 
-    <article class="project c5" data-key="living-patterns" data-rank="7">
+    <article class="project c5" data-key="living-patterns" data-rank="7" data-categories="audio">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual"><img src="https://raw.githubusercontent.com/udeudeude/Living-Patterns-Podcast/main/living-patterns-cover.jpg" alt="Living Patterns podcast cover art" width="800" height="600" decoding="async"></div>
-        <div class="caption"><div class="status">Live publication</div><h2>Living Patterns</h2></div>
+        <div class="caption"><div class="status">Live publication</div><h2>Living Patterns</h2></div><span class="tile-count" hidden aria-hidden="true"></span>
       </button>
       <div class="expand">
         <p>Short audio reflections on living structure, repair, participation, and place.</p>
@@ -240,7 +268,7 @@
       </div>
     </article>
 
-    <article class="project c14" data-key="orchestral-maneuvers-dark" data-rank="8">
+    <article class="project c14" data-key="orchestral-maneuvers-dark" data-rank="10" data-categories="asheville audio">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -257,7 +285,7 @@
             <circle cx="182" cy="151" r="27" fill="#d9e5f6"/><circle cx="618" cy="151" r="27" fill="#d9e5f6"/>
           </svg>
         </div>
-        <div class="caption"><div class="status">Live podcast feed</div><h2>Orchestral Maneuvers in the Dark</h2></div>
+        <div class="caption"><div class="status">Live podcast feed</div><h2>Orchestral Maneuvers in the Dark</h2></div><span class="tile-count" hidden aria-hidden="true"></span>
       </button>
       <div class="expand">
         <p>A subscribable podcast feed built from the weekly two-hour Asheville FM show, turning the broadcasts into something easy to follow in a podcast app.</p>
@@ -265,7 +293,7 @@
       </div>
     </article>
 
-    <article class="project c6" data-key="asheville-golocal-maps" data-rank="9">
+    <article class="project c6" data-key="asheville-golocal-maps" data-rank="9" data-categories="asheville">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -277,15 +305,15 @@
             <circle cx="409" cy="170" r="45" fill="#245d6f"/>
           </svg>
         </div>
-        <div class="caption"><div class="status">Maps integration</div><h2>Asheville GoLocal Card + Google Maps</h2></div>
+        <div class="caption"><div class="status">Maps integration</div><h2>Asheville GoLocal Card + Google Maps</h2></div><span class="tile-count" hidden aria-hidden="true"></span>
       </button>
       <div class="expand">
-        <p>A Google Maps integration for finding Asheville GoLocal Card businesses while using the map.</p>
-        <div class="links"><a href="/golocal/">How it works</a><a href="https://golocalasheville.com/directory/">Official Go Local directory</a></div>
+        <p>A Google Maps Saved-list project for exploring hundreds of Asheville Go Local businesses in the same map you already use on your phone. The project page explains how to add a shared list to Google Maps; the public list link still needs to be published.</p>
+        <div class="links"><a href="/golocal/">Add to Google Maps: instructions</a><a href="https://golocalasheville.com/directory/">Official Go Local directory</a></div>
       </div>
     </article>
 
-    <article class="project c7" data-key="sorting-cards" data-rank="10">
+    <article class="project c7" data-key="sorting-cards" data-rank="13" data-categories="tabletop learning">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -294,7 +322,7 @@
             <g transform="translate(405 135) rotate(10 110 165)"><rect width="220" height="330" rx="18" fill="#cfe7eb"/><text x="28" y="60" font-family="Georgia" font-size="48" fill="#255b62">K</text><circle cx="110" cy="180" r="55" fill="#5da3ad"/></g>
           </svg>
         </div>
-        <div class="caption"><div class="status">Hands-on learning</div><h2>Sorting Algorithms with Playing Cards</h2></div>
+        <div class="caption"><div class="status">Hands-on learning</div><h2>Sorting Algorithms with Playing Cards</h2></div><span class="tile-count" hidden aria-hidden="true"></span>
       </button>
       <div class="expand">
         <p>A hands-on course for learning sorting algorithms with an ordinary deck, comparing computational efficiency with efficiency for human hands.</p>
@@ -302,7 +330,7 @@
       </div>
     </article>
 
-    <article class="project c8" data-key="ai-kindle" data-rank="11">
+    <article class="project c8" data-key="ai-kindle" data-rank="14" data-categories="devices learning">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -314,7 +342,7 @@
             <path d="M485 322c0-35-29-64-64-64s-64 29-64 64 29 64 64 64h13l40 31-9-39c12-12 20-34 20-56Z" fill="#7fb2bf"/>
           </svg>
         </div>
-        <div class="caption"><div class="status">Device experiment</div><h2>AI on Kindle</h2></div>
+        <div class="caption"><div class="status">Device experiment</div><h2>AI on Kindle</h2></div><span class="tile-count" hidden aria-hidden="true"></span>
       </button>
       <div class="expand">
         <p>Repurposing an older Kindle with KOReader, browser and plugin experiments, and access to modern AI services from an e-ink reader.</p>
@@ -322,7 +350,7 @@
       </div>
     </article>
 
-    <article class="project c9" data-key="supercollider" data-rank="13">
+    <article class="project c9" data-key="supercollider" data-rank="15" data-categories="audio">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -331,7 +359,7 @@
             <path d="M45 300 C110 230 145 370 210 300 S310 230 375 300 S480 370 545 300 S650 230 755 300" fill="none" stroke="#7aa1dc" stroke-width="7" opacity=".8"/>
           </svg>
         </div>
-        <div class="caption"><div class="status">Music</div><h2>SuperCollider studies</h2></div>
+        <div class="caption"><div class="status">Music</div><h2>SuperCollider studies</h2></div><span class="tile-count" hidden aria-hidden="true"></span>
       </button>
       <div class="expand">
         <p>Music and sound experiments created in SuperCollider. Recordings and playable examples are being prepared; no published tracks are linked yet.</p>
@@ -339,7 +367,7 @@
     </article>
 
 
-    <article class="project c10" data-key="print-pocketmod" data-rank="12">
+    <article class="project c10" data-key="print-pocketmod" data-rank="2" data-categories="print">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -354,7 +382,7 @@
             </g>
           </svg>
         </div>
-        <div class="caption"><div class="status">Mac utility</div><h2>Print as PocketMod</h2></div>
+        <div class="caption"><div class="status">Mac utility</div><h2>Print as PocketMod</h2></div><span class="tile-count" hidden aria-hidden="true"></span>
       </button>
       <div class="expand">
         <p>A macOS 13+ Print-dialog utility for Intel and Apple Silicon Macs. It rearranges ordinary documents into foldable eight-page PocketMods and opens the imposed sheet in Preview.</p>
@@ -362,7 +390,7 @@
       </div>
     </article>
 
-    <article class="project c6" data-key="tales-from-the-loop-toolkit" data-rank="14">
+    <article class="project c6" data-key="tales-from-the-loop-toolkit" data-rank="5" data-categories="tabletop print">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -378,7 +406,7 @@
             <path d="M451 307H599M451 328H586M451 349H592" stroke="#8c796c" stroke-width="5" opacity=".65"/>
           </svg>
         </div>
-        <div class="caption"><div class="status">Reusable RPG page system</div><h2>Tales from the Loop Homebrewery Toolkit</h2></div>
+        <div class="caption"><div class="status">Reusable RPG page system</div><h2>Tales from the Loop Homebrewery Toolkit</h2></div><span class="tile-count" hidden aria-hidden="true"></span>
       </button>
       <div class="expand">
         <p>A ten-page Homebrewery toolkit for mysteries, characters, handouts, and illustrated reference sheets. Warm paper, orange chapter rails, and a full set of reusable text and layout components, including a clue-flow map, title page, and original fictional organization logos, with a finished mystery to try.</p>
@@ -387,7 +415,7 @@
       </div>
     </article>
 
-    <article class="project c13" data-key="starfinder-homebrewery-toolkit" data-rank="15">
+    <article class="project c13" data-key="starfinder-homebrewery-toolkit" data-rank="4" data-categories="tabletop print">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -414,7 +442,7 @@
             <rect x="471" y="481" width="137" height="8" fill="#b63f95"/>
           </svg>
         </div>
-        <div class="caption"><div class="status">Reusable RPG page system</div><h2>Starfinder 2e Homebrewery Toolkit</h2></div>
+        <div class="caption"><div class="status">Reusable RPG page system</div><h2>Starfinder 2e Homebrewery Toolkit</h2></div><span class="tile-count" hidden aria-hidden="true"></span>
       </button>
       <div class="expand">
         <p>A Starfinder Second Edition authoring toolkit for Homebrewery: published-book-inspired page architecture, creatures and gear, mission tools, hacking maps, cinematic starship scenes, research and chase structures, plus practical recipes for incorporating large-format and transparent art.</p>
@@ -431,69 +459,130 @@
 (() => {
   const grid = document.getElementById('project-grid');
   const projects = [...grid.querySelectorAll('.project')];
-  const sorted = [...projects].sort((a, b) => Number(a.dataset.rank) - Number(b.dataset.rank));
-  // Authored order is deliberately stable; no third-party tracking or layout shift.
-  sorted.forEach(project => grid.appendChild(project));
+  const buttons = [...document.querySelectorAll('.filter-button')];
+  const summary = document.getElementById('filter-summary');
+  const allowed = new Set(buttons.map(button => button.dataset.filter));
+  const counterBase = 'https://abacus.jasoncameron.dev';
+  const counterNamespace = 'udeudeude-portfolio-2026-v1';
+
+  projects.sort((a, b) => Number(a.dataset.rank) - Number(b.dataset.rank))
+    .forEach(project => grid.appendChild(project));
 
   const byId = new Map();
   for (const project of projects) {
-    const key = project.dataset.key;
-    const id = 'project-' + key;
-    const panelId = id + '-details';
+    const id = 'project-' + project.dataset.key;
     const heading = project.querySelector('h2');
     const panel = project.querySelector('.expand');
     const toggle = project.querySelector('.tile-toggle');
     project.id = id;
     heading.id = id + '-title';
-    panel.id = panelId;
+    panel.id = id + '-details';
     panel.setAttribute('role', 'region');
     panel.setAttribute('aria-labelledby', heading.id);
-    toggle.setAttribute('aria-controls', panelId);
-    toggle.setAttribute('aria-label', 'Show details for ' + heading.textContent.trim());
+    toggle.setAttribute('aria-controls', panel.id);
     byId.set(id, project);
   }
 
   function activeProject() {
-    return byId.get(decodeURIComponent(location.hash.slice(1))) || null;
+    try { return byId.get(decodeURIComponent(location.hash.slice(1))) || null; }
+    catch (_) { return null; }
+  }
+  function matches(project, category) {
+    return category === 'all' || project.dataset.categories.split(' ').includes(category);
   }
 
   function syncFromAddress(scroll = false) {
+    let category = new URLSearchParams(location.search).get('category') || 'all';
+    if (!allowed.has(category)) category = 'all';
     const active = activeProject();
+
+    // Never allow a direct project link to point at a hidden card.
+    if (active && !matches(active, category)) {
+      category = 'all';
+      const url = new URL(location.href);
+      url.searchParams.delete('category');
+      history.replaceState(null, '', url);
+    }
+
+    let visible = 0;
     for (const project of projects) {
-      const open = project === active;
+      const show = matches(project, category);
+      project.hidden = !show;
+      if (show) visible += 1;
+      const open = show && project === active;
       project.classList.toggle('open', open);
       const toggle = project.querySelector('.tile-toggle');
       toggle.setAttribute('aria-expanded', String(open));
-      const heading = project.querySelector('h2');
-      toggle.setAttribute('aria-label', (open ? 'Hide' : 'Show') + ' details for ' + heading.textContent.trim());
+      toggle.setAttribute('aria-label', (open ? 'Hide' : 'Show') + ' details for ' +
+        project.querySelector('h2').textContent.trim());
     }
+    for (const button of buttons) {
+      button.setAttribute('aria-pressed', String(button.dataset.filter === category));
+    }
+    summary.textContent = visible === projects.length
+      ? projects.length + ' projects'
+      : visible + ' matching ' + (visible === 1 ? 'project' : 'projects');
+
     if (active && scroll) {
       requestAnimationFrame(() => {
-        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        active.scrollIntoView({block: 'start', behavior: reduced ? 'auto' : 'smooth'});
+        active.scrollIntoView({block: 'start', behavior:
+          window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
       });
     }
   }
 
+  // A click/open is counted every time a visitor opens the card.
+  // These public counters are not unique-user analytics; unavailable counts stay hidden.
+  function setCount(project, value) {
+    if (!Number.isSafeInteger(value) || value < 0) return;
+    const el = project.querySelector('.tile-count');
+    el.textContent = '↗ ' + value.toLocaleString();
+    el.title = value.toLocaleString() + ' recorded project opens (not unique visitors)';
+    el.hidden = false;
+  }
+  async function requestCount(project, verb) {
+    const url = counterBase + '/' + verb + '/' + counterNamespace + '/' + project.dataset.key;
+    try {
+      const res = await fetch(url, {cache: 'no-store', credentials: 'omit'});
+      if (!res.ok) return;
+      const payload = await res.json();
+      if (typeof payload.value === 'number') setCount(project, payload.value);
+    } catch (_) { /* Do not disrupt navigation if counting is unavailable. */ }
+  }
+  projects.forEach(project => requestCount(project, 'get'));
+
   function selectProject(project) {
-    const isOpen = project.classList.contains('open');
-    const url = isOpen
-      ? location.pathname + location.search
-      : location.pathname + location.search + '#' + project.id;
+    const opening = !project.classList.contains('open');
+    const url = new URL(location.href);
+    url.hash = opening ? project.id : '';
     history.pushState(null, '', url);
-    syncFromAddress(!isOpen);
+    syncFromAddress(opening);
+    if (opening) requestCount(project, 'hit');
   }
 
   for (const project of projects) {
     project.querySelector('.tile-toggle').addEventListener('click', () => selectProject(project));
   }
-
+  for (const button of buttons) {
+    button.addEventListener('click', () => {
+      const category = button.dataset.filter;
+      if (button.getAttribute('aria-pressed') === 'true') return;
+      const url = new URL(location.href);
+      if (category === 'all') url.searchParams.delete('category');
+      else url.searchParams.set('category', category);
+      if (activeProject() && !matches(activeProject(), category)) url.hash = '';
+      history.pushState(null, '', url);
+      syncFromAddress();
+    });
+  }
   window.addEventListener('popstate', () => syncFromAddress(true));
   window.addEventListener('hashchange', () => syncFromAddress(true));
-  document.addEventListener('keydown', (event) => {
-    if (event.key !== 'Escape' || !activeProject()) return;
+  document.addEventListener('keydown', event => {
     const current = activeProject();
-    history.pushState(null, '', location.pathname + location.search);
+    if (event.key !== 'Escape' || !current) return;
+    const url = new URL(location.href);
+    url.hash = '';
+    history.pushState(null, '', url);
     syncFromAddress();
     current.querySelector('.tile-toggle').focus({preventScroll: true});
   });
