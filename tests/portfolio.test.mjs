@@ -58,8 +58,8 @@ assert.ok(projectCategories.get('anaglyph-friends').includes('print') && project
 const curatedOrder = [
   'anaglyph-friends', 'print-pocketmod', 'lighthouse', 'wisdom-watch',
   'living-patterns', 'tales-from-the-loop-toolkit', 'starfinder-homebrewery-toolkit',
-  'asheville-golocal-maps', 'orchestral-maneuvers-dark', 'biofeedback-play',
-  'touchbarpalooza', 'sorting-cards', 'tv-b-goner', 'ai-kindle', 'supercollider'
+  'asheville-golocal-maps', 'orchestral-maneuvers-dark', 'touchbarpalooza',
+  'sorting-cards', 'biofeedback-play', 'tv-b-goner', 'ai-kindle', 'supercollider'
 ];
 assert.deepEqual(keys, curatedOrder, 'Preserve the intentional project order');
 const populatedStarfinder = 'https://homebrewery.naturalcrit.com/share/u41Swqyrcj1W';
@@ -68,13 +68,26 @@ assert.ok(starfinderCard?.includes(populatedStarfinder), 'Starfinder tile direct
 const starfinderGuide = read('starfinder/index.html');
 assert.ok(starfinderGuide.includes(populatedStarfinder), 'Starfinder guide links directly to populated Homebrewery share');
 assert.ok(starfinderGuide.includes('Open blank Homebrewery'), 'Blank editor is retained as a secondary action');
+const talesGuide = read('tales-from-the-loop/index.html');
+for (const structuralClass of ['class="hero"', 'class="jump"', 'class="section-head"', 'class="two"', 'class="specimen"']) {
+  assert.ok(starfinderGuide.includes(structuralClass), 'Starfinder uses toolkit-guide structure: ' + structuralClass);
+  assert.ok(talesGuide.includes(structuralClass), 'Tales from the Loop supplies matching structure: ' + structuralClass);
+}
+for (const section of ['start','components','edit','example','backup','help','credits']) {
+  assert.ok(starfinderGuide.includes('id="' + section + '"'), 'Starfinder toolkit has navigable section ' + section);
+}
+assert.ok(starfinderGuide.includes('Signal at Kestrel-9'), 'Starfinder includes actual source-derived example mission');
+assert.ok(starfinderGuide.includes('Source → Clone to New'), 'Starfinder explains how to make an editable copy');
+assert.ok(starfinderGuide.includes('downloads/starfinder-homebrewery-toolkit-v7.md'), 'Starfinder source download remains accessible');
 assert.ok(!starfinderGuide.includes('homebrewery.naturalcrit.com/edit/'), 'Never publish an editable Homebrewery link');
 
 assert.ok(html.includes("url.searchParams.set('category', category)"), 'Category selection is shareable');
 assert.ok(html.includes('project.hidden = !show'), 'Irrelevant tiles hide when filtered');
 const goLocal = read('golocal/index.html');
 assert.ok(goLocal.includes('Save list') && goLocal.includes('Show on your map'), 'GoLocal shows iPhone add-to-Maps instructions');
-assert.ok(goLocal.includes('has not yet been published here'), 'GoLocal is transparent about missing public share URL');
+assert.ok(goLocal.includes('public-facing profile') && goLocal.includes('dedicated Google account'), 'GoLocal recommends a privacy-safe project account');
+assert.ok(goLocal.includes('does not') || goLocal.includes('not sharing a list from a personal Google account'), 'GoLocal warns against public personal-account lists');
+assert.ok(goLocal.includes('the public project') || goLocal.includes('a direct installation button'), 'GoLocal does not claim public list has shipped');
 for (const required of ['popstate', 'hashchange', 'Escape', 'aria-controls', 'scrollIntoView']) {
   assert.ok(html.includes(required), 'Expanded-card navigation includes ' + required);
 }
