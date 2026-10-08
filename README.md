@@ -8,21 +8,21 @@ This is the **portfolio repository**, not the source repository for LightHouse o
 
 ## Works on the homepage
 
-- 1AM Wisdom Watch
-- LightHouse
 - Anaglyph & Friends
-- TV-b-goner
-- Biofeedback Play
-- TouchBarpalooza
-- Living Patterns
-- Orchestral Maneuvers in the Dark
-- Asheville GoLocal Card + Google Maps
-- Sorting Algorithms with Playing Cards
-- AI on Kindle
 - Print as PocketMod
-- SuperCollider studies
+- LightHouse
+- 1AM Wisdom Watch
+- Living Patterns
 - Tales from the Loop Homebrewery Toolkit
 - Starfinder 2e Homebrewery Toolkit
+- Asheville GoLocal Card + Google Maps
+- Orchestral Maneuvers in the Dark
+- Biofeedback Play
+- TouchBarpalooza
+- Sorting Algorithms with Playing Cards
+- TV-b-goner
+- AI on Kindle
+- SuperCollider studies
 
 ## Repository guide
 
@@ -30,7 +30,7 @@ This is the **portfolio repository**, not the source repository for LightHouse o
 - `favicon.svg` — portfolio icon
 - `golocal/` — project note for the Google Maps integration
 - `tales-from-the-loop/` — toolkit, reusable assets, fonts and downloads
-- `starfinder/` — Starfinder toolkit and source download
+- `starfinder/` — Starfinder toolkit, source download, and direct link to a populated read-only Homebrewery example
 - `IMAGE-SHOPPING-LIST.md` — wanted real screenshots and photographs
 - `TODO.md` — design decisions and next work
 - `tests/portfolio.test.mjs` — structural, script, and local-link tests
