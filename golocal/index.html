@@ -23,6 +23,9 @@
     .panel{background:var(--panel);padding:20px 24px;border-radius:10px;margin:32px 0;border:1px solid #ffffff1c}
     .panel p{margin:0}
     .links{display:flex;gap:12px;flex-wrap:wrap;margin:25px 0 44px}
+    ol{padding-left:23px;line-height:1.7;color:var(--muted)}
+    li{padding:2px 0 8px}
+    strong{color:var(--ink)}
     .links a{color:var(--ink);padding:12px 14px;min-height:44px;border:1px solid #b4e9f46b;border-radius:7px;text-underline-offset:3px}
     a{color:#c6ecf7}
     a:focus-visible{outline:3px solid #f1fbff;outline-offset:4px}
@@ -35,16 +38,43 @@
   <div class="eyebrow">Browser / mapping experiment</div>
   <h1>Asheville GoLocal Card + Google Maps</h1>
   <p class="intro">An experiment in making the Go Local directory easier to use alongside an everyday map.</p>
-  <h2>The idea</h2>
-  <p>It is useful to know which independent Asheville businesses take part in the Go Local Card program while planning a route, choosing nearby shops, or exploring a neighborhood. This project brings that information into a Google Maps workflow rather than making you switch back and forth between separate directories.</p>
-  <h2>Current form</h2>
-  <p>The experiment has been distributed as a Mac/browser utility, including a Brave-compatible package. It is not currently published here as a maintained download, and this page is not a live interactive map. A public release link can be added when the package is ready for that role.</p>
-  <div class="panel"><p><strong>Independent experiment.</strong> This is not an official Go Local Asheville product or a substitute for its current business listings. Go Local participation and offers may change; check the official directory for up-to-date details.</p></div>
+  <h2>What it does</h2>
+  <p>The original Mac-assisted collection built a <strong>Google Maps Saved list</strong> named <strong>Go Local Card</strong>, marking participating businesses with a 💳 icon. The collection located <strong>413 physical, mappable places</strong> from the Go Local directory at the time. Once that list is in a Google account, it also appears in Google Maps on an iPhone signed into the same account.</p>
+
+  <div class="panel">
+    <p><strong>Want the list on your phone?</strong> The easiest public route is a shared Google Maps list. The shareable link for the collected Go Local Card list has not yet been published here. You can use the steps below once you have that link. This site cannot add places to your Google account automatically.</p>
+  </div>
+
+  <h2>For someone receiving the shared list</h2>
+  <ol>
+    <li>Open the shared <strong>Go Local Card</strong> Google Maps link on your phone.</li>
+    <li>Sign into Google Maps with the account you normally use.</li>
+    <li>Tap <strong>Save list</strong> (or <strong>Follow</strong>, depending on your version of Maps).</li>
+    <li>Open the Google Maps app and go to <strong>You / Saved</strong> to find the list among the lists you have saved.</li>
+    <li>If its markers are hidden, use the list's three-dot menu and choose <strong>Show on your map</strong>.</li>
+  </ol>
+  <p>Google documents this feature in its <a href="https://support.google.com/maps/answer/7280933?co=GENIE.Platform%3DiOS&amp;hl=en">official instructions for lists on iPhone and iPad</a>.</p>
+
+  <h2>If you already imported the list on a Mac</h2>
+  <ol>
+    <li>On the Mac, open <a href="https://maps.google.com/">Google Maps</a> in the account where you ran the importer and find your <strong>Go Local Card</strong> Saved list.</li>
+    <li>Open Google Maps on your phone with <strong>that same Google account</strong>.</li>
+    <li>Go to <strong>You / Saved</strong>, find <strong>Go Local Card</strong>, and ensure <strong>Show on your map</strong> is enabled.</li>
+  </ol>
+  <p>This is a synced Saved list, not a separate app and not a Google My Maps overlay.</p>
+
+  <h2>How to make it one-tap for everyone</h2>
+  <p>From the Google account containing the collected list, open the <strong>Go Local Card</strong> Saved list, choose <strong>Share list</strong>, and copy its share URL. The list must be shareable to people who have the link. That URL can then be placed directly on this page as an <strong>Add to my Google Maps</strong> link. The public link is the one piece still needed.</p>
+
+  <h2>About the data</h2>
+  <p>The project originally harvested 413 mappable listings; this is a snapshot, not a continuously maintained official business directory. Locations, card participation, and offers may have changed since collection.</p>
+  <div class="panel"><p><strong>Independent experiment.</strong> Not an official Go Local Asheville or Google project. For current participants, use the official Go Local directory.</p></div>
   <div class="links">
     <a href="https://golocalasheville.com/directory/">Official Go Local directory</a>
-    <a href="https://maps.google.com/">Open Google Maps</a>
+    <a href="https://support.google.com/maps/answer/7280933?co=GENIE.Platform%3DiOS&amp;hl=en">Google Maps list help</a>
     <a href="/">All projects</a>
   </div>
+
 </main>
 <footer class="wrap">Ude Projects · Independent work and experiments</footer>
 </body>
