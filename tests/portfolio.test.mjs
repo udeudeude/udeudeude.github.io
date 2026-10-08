@@ -55,6 +55,21 @@ assert.ok(!projectCategories.get('touchbarpalooza').includes('tabletop'), 'Touch
 assert.ok(projectCategories.get('asheville-golocal-maps').includes('asheville'), 'GoLocal is Asheville-related');
 assert.ok(projectCategories.get('orchestral-maneuvers-dark').includes('asheville'), 'Asheville FM is Asheville-related');
 assert.ok(projectCategories.get('anaglyph-friends').includes('print') && projectCategories.get('anaglyph-friends').includes('visual'), 'Multi-category membership works');
+const curatedOrder = [
+  'anaglyph-friends', 'print-pocketmod', 'lighthouse', 'wisdom-watch',
+  'living-patterns', 'tales-from-the-loop-toolkit', 'starfinder-homebrewery-toolkit',
+  'asheville-golocal-maps', 'orchestral-maneuvers-dark', 'biofeedback-play',
+  'touchbarpalooza', 'sorting-cards', 'tv-b-goner', 'ai-kindle', 'supercollider'
+];
+assert.deepEqual(keys, curatedOrder, 'Preserve the intentional project order');
+const populatedStarfinder = 'https://homebrewery.naturalcrit.com/share/u41Swqyrcj1W';
+const starfinderCard = cards.find(card => card[1] === 'starfinder-homebrewery-toolkit')?.[3];
+assert.ok(starfinderCard?.includes(populatedStarfinder), 'Starfinder tile directly links to a populated Homebrewery share');
+const starfinderGuide = read('starfinder/index.html');
+assert.ok(starfinderGuide.includes(populatedStarfinder), 'Starfinder guide links directly to populated Homebrewery share');
+assert.ok(starfinderGuide.includes('Open blank Homebrewery'), 'Blank editor is retained as a secondary action');
+assert.ok(!starfinderGuide.includes('homebrewery.naturalcrit.com/edit/'), 'Never publish an editable Homebrewery link');
+
 assert.ok(html.includes("url.searchParams.set('category', category)"), 'Category selection is shareable');
 assert.ok(html.includes('project.hidden = !show'), 'Irrelevant tiles hide when filtered');
 const goLocal = read('golocal/index.html');
