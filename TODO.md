@@ -1,46 +1,53 @@
 # Portfolio TODO
 
-## Decisions already made
+## Established decisions
 
-- Image-first project tiles.
-- Equal-size tiles for now.
-- Keep at least two columns, including small screens.
-- Cool solid-color palette.
-- Tiles expand in place to show more information and images.
-- GitHub is a secondary link, not the primary destination.
-- Treat the site like an artist portfolio: acknowledge the medium, but center the works rather than the tools.
-- Board-game work generally stays off this portfolio unless it has an explicit digital component or is deliberately included later.
-- LightHouse and Sorting Algorithms with Playing Cards are current board-game-related exceptions that belong here.
-- Public name for the calendar project is **1AM Wisdom Watch** for now.
-- AI on Kindle has its own repository: `udeudeude/AI-on-Kindle`.
-- Project order should eventually respond to global interaction: more-explored projects rise higher.\n- Asheville GoLocal Card + Google Maps Integration is a portfolio project.
-- TV-b-goner is represented as a working web app.
-- Biofeedback Play is represented as a local signal workspace.
-- Orchestral Maneuvers in the Dark is represented as a live podcast feed.
+- An image-first collection of works and experiments, not primarily a software résumé.
+- Preserve at least two equal-size columns on phones; keep a cool, restrained palette.
+- Cards expand in place. A live experience or useful project page should come before GitHub when possible.
+- Board-game work belongs here only when it has an explicit digital component or is deliberately selected. LightHouse and Sorting Algorithms with Playing Cards are included.
+- Use an authored editorial order. Avoid third-party popularity ranking and layout movement after load.
+- Don't fabricate demo links or label unpublished artifacts as downloadable.
 
-## In progress / next
+## Completed in October 2026 reliability and UX pass
 
-- [x] Include the Tales from the Loop toolkit with a dedicated guide and complete Markdown/CSS source downloads.
+- [x] Remove third-party interest-counter requests and preserve stable editorial order.
+- [x] Give expanded cards shareable URL fragments and browser Back/Forward navigation.
+- [x] Escape-to-close, accessible expanded state, panel relationships, and skip link.
+- [x] Increase mobile caption height, status-label legibility, and link touch targets.
+- [x] Add favicon and basic canonical/social text metadata.
+- [x] Add a GoLocal project note, plus official directory links.
+- [x] Link Orchestral Maneuvers in the Dark to its Asheville FM program page.
+- [x] Replace brittle project-list validation with structural and local-link tests.
+- [x] Schedule weekly external-link checks.
+- [x] Update README to describe the whole portfolio, its pages and tests.
 
-- [x] Rename Wisdom Watch on the portfolio to 1AM Wisdom Watch.
-- [x] Create/initialize AI on Kindle repository documentation.
-- [x] Make project tiles expandable.
-- [x] Add global interaction-count scaffolding for project ordering.
-- [x] Keep authored order as the fallback / tie-breaker.
-- [ ] Replace provisional project graphics with strong real screenshots/photos wherever possible.
-- [ ] Replace the provisional Orchestral Maneuvers in the Dark graphic with its existing 2000×2000 podcast cover.
-- [ ] Replace the provisional TV-b-goner and Biofeedback Play graphics with real imagery.\n- [ ] Add real screenshots and a fuller write-up for Asheville GoLocal Card + Google Maps Integration.\n- [ ] Add its live/install/share link when available.
-- [ ] Add 2–4 images to expanded views for the strongest projects.
-- [ ] Decide the preferred initial project order before interaction data accumulates significantly.
-- [ ] Add a proper AI on Kindle write-up and screenshots.
-- [ ] Add SuperCollider music/audio examples instead of treating it as a software project.
-- [ ] Add favicon and social-sharing image for the portfolio itself.
-- [ ] Test expansion, keyboard navigation, and two-column phone layout on real phones.
-- [ ] Check all external links periodically.
+## Media work awaiting real examples
 
-## Later
+- [ ] Replace provisional SVGs with authentic project photos/screenshots, one strong image per project first.
+- [ ] Add 2–4 images to expanded cards where examples make the difference.
+- [ ] Use the existing Orchestral Maneuvers in the Dark 2000×2000 cover when its source file is accessible.
+- [ ] Add actual rendered toolkit pages to the Tales from the Loop and Starfinder landing pages.
+- [ ] Provide a real screenshot of the GoLocal-enhanced map and a fuller case study.
+- [ ] Add Biofeedback Play live EEG/sensor views and hardware photos.
+- [ ] Add photos of the PocketMod paper object and of the Touch Bar in use.
+- [ ] Optimize thumbnails to modern formats and sizes once images are collected.
+- [ ] Make a portable social-sharing preview image for the portfolio.
 
-- [ ] Consider demoting selected projects visually or structurally.
-- [ ] Add new works as they become worth showing.
+## Project follow-ups
+
+- [ ] Publish a stable GoLocal download/share link if and when the browser utility is ready. Its existing older Mac/Brave packages are not a maintained public release.
+- [ ] Add recorded or playable SuperCollider music rather than linking to unrelated tutorials.
+- [ ] Add an AI on Kindle story showing which features really work.
+- [ ] Consider a more durable URL for the Orchestral Maneuvers podcast and its feed.
+- [ ] Decide whether projects with no public demonstration need a dedicated case-study page.
+- [ ] Check release/version labels as projects evolve.
+
+## Maintenance and decisions still open
+
+- [ ] Set the GitHub repository's About description/topics (repo metadata isn't editable through the current GitHub connector).
+- [ ] Test cards on actual phones, with large text, VoiceOver, and desktop keyboard navigation.
+- [ ] Check the weekly external link-check results and fix confirmed failures.
+- [ ] Decide whether selected projects should become visually featured after authentic imagery is available.
+- [ ] Consider light categorization (Try, Listen, Read, Make) once the collection grows.
 - [ ] Consider a custom domain.
-- [ ] Consider analytics only if they answer a useful question beyond the project-interaction ordering.
