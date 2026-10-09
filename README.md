@@ -34,6 +34,9 @@ This is the **portfolio repository**, not the source repository for LightHouse o
 - `golocal/` — project note for the Google Maps integration
 - `tales-from-the-loop/` — toolkit, reusable assets, fonts and downloads
 - `starfinder/` — toolkit guide with a Tales from the Loop-style navigation layout, populated Homebrewery example, components, help and source download
+- `assets/screenshots/` — real, compressed browser captures of Moiré Lab and two toolkit examples
+- `scripts/capture-portfolio-screenshots.mjs` — headless browser capture, reproducible with GitHub Actions
+- `.github/workflows/capture-screenshots.yml` — manual/automated screenshot capture and committing
 - `IMAGE-SHOPPING-LIST.md` — wanted real screenshots and photographs
 - `TODO.md` — design decisions and next work
 - `tests/portfolio.test.mjs` — structural, script, and local-link tests
