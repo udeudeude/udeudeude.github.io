@@ -27,6 +27,16 @@ jobs:
           repository: udeudeude/Moire-Lab
           path: _capture_source/moire
           persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: udeudeude/TV-b-goner
+          path: _capture_source/tv
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: udeudeude/Living-Patterns-Podcast
+          path: _capture_source/living
+          persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: 22
