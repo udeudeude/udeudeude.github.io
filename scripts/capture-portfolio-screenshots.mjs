@@ -146,7 +146,7 @@ try {
       if (Math.max(...channels.slice(0, 3).map(channel => channel.stdev)) < 16) {
         throw new Error('Screen is nearly uniform, likely an unfinished loading view');
       }
-      await sharp(png).resize(1000, 750, {fit: 'cover'})
+      await sharp(png).resize(1000, 750, {fit: 'contain', background: '#08131c'})
         .webp({quality: 85, effort: 5}).toFile(path.join(out, app.file));
       console.log('Captured hosted application: ' + app.name);
     } catch (error) {
