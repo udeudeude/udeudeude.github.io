@@ -1,0 +1,47 @@
+name: Capture real project screenshots
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/capture-screenshots.yml'
+      - 'scripts/capture-portfolio-screenshots.mjs'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: portfolio-screenshots
+  cancel-in-progress: false
+
+jobs:
+  screenshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/checkout@v4
+        with:
+          repository: udeudeude/Moire-Lab
+          path: _capture_source/moire
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install screenshot tools
+        run: npm install --no-save --no-package-lock --no-audit --no-fund playwright sharp
+      - name: Capture authentic running pages
+        run: node scripts/capture-portfolio-screenshots.mjs
+      - name: Save images to the portfolio repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/screenshots
+          if git diff --cached --quiet; then
+            echo "No screenshot changes."
+          else
+            git commit -m "Update authentic project screenshots [skip ci]"
+            git push origin HEAD:main
+          fi
