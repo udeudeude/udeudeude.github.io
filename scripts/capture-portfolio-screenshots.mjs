@@ -116,6 +116,37 @@ try {
     await page.close();
   }
 
+  // Best-effort captures of the two public hosted web applications.
+  // These require an accessible external service, unlike local source captures.
+  for (const app of [
+    {name: 'Anaglyph & Friends', url: 'https://anaglyph-and-friends.onrender.com/', file: 'anaglyph-web.webp', marker: /anaglyph|stereo|depth/i},
+    {name: 'LightHouse', url: 'https://udeudeude.github.io/LightHouse/', file: 'lighthouse-web.webp', marker: /lighthouse|flutter|pyramid|board/i}
+  ]) {
+    const hosted = await context.newPage();
+    try {
+      const response = await hosted.goto(app.url, {waitUntil: 'domcontentloaded', timeout: 45000});
+      if (!response?.ok()) throw new Error('HTTP status ' + response?.status());
+      await hosted.waitForTimeout(4000);
+      const bodyText = (await hosted.locator('body').innerText()).slice(0, 12000);
+      const flutterRoot = await hosted.locator('flutter-view, flt-glass-pane, flt-scene-host').count();
+      if (!app.marker.test(bodyText) && !(app.name === 'LightHouse' && flutterRoot)) {
+        throw new Error('Expected application content not visible');
+      }
+      const png = await hosted.screenshot({type: 'png', fullPage: false, animations: 'disabled'});
+      const {channels} = await sharp(png).stats();
+      if (Math.max(...channels.slice(0, 3).map(channel => channel.stdev)) < 16) {
+        throw new Error('Screen is nearly uniform, likely an unfinished loading view');
+      }
+      await sharp(png).resize(1000, 750, {fit: 'cover'})
+        .webp({quality: 85, effort: 5}).toFile(path.join(out, app.file));
+      console.log('Captured hosted application: ' + app.name);
+    } catch (error) {
+      console.warn('Hosted app not captured (' + app.name + '): ' + error.message);
+    } finally {
+      await hosted.close();
+    }
+  }
+
   await context.close();
 } finally {
   if (browser) await browser.close();
