@@ -61,7 +61,10 @@ try {
   const errors = [];
   moire.on('pageerror', error => errors.push(error.message));
   await moire.goto(moireUrl, {waitUntil: 'domcontentloaded', timeout: 45000});
-  await moire.locator('#experiment svg, #experiment path, #experiment rect, #experiment g').first().waitFor({timeout: 20000});
+  await moire.waitForFunction(() => {
+    const svg = document.getElementById('experiment');
+    return svg && svg.childElementCount > 0;
+  }, {timeout: 20000});
   // Both modes are captured from the *actual running application*.
   await moire.locator('#experimentChoices .experiment-choice').first().waitFor({timeout: 20000});
   await capture(moire, '.stage-surround', 'moire-lab.webp');
