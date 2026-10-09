@@ -15,3 +15,7 @@ jobs:
         with:
           node-version: 24
       - run: node tests/portfolio.test.mjs
+      - name: Install headless-browser test runner
+        run: npm install --no-save --no-package-lock --no-audit --no-fund playwright
+      - name: Validate mobile screenshot layout at iPhone width
+        run: node tests/mobile-gallery.test.mjs
