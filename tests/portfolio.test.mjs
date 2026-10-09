@@ -31,6 +31,15 @@ for (const arch of ['intel', 'apple-silicon']) {
 assert.ok(anaglyph.includes('not Apple-notarized'), 'Signing disclaimer remains');
 assert.ok(html.includes('href="/golocal/"'), 'GoLocal has an actionable project note');
 assert.ok(html.includes('href="/favicon.svg"'), 'Site links to its favicon');
+for (const [key, filename] of [
+  ['living-patterns', 'living-patterns-site.webp'],
+  ['tv-b-goner', 'tv-b-goner.webp']
+]) {
+  const card = cards.find(m => m[1] === key)?.[3];
+  assert.ok(card?.includes('/assets/screenshots/' + filename), key + ' includes a genuine running-site capture');
+  assert.ok(fs.existsSync(new URL('assets/screenshots/' + filename, root)), key + ' screenshot exists');
+}
+
 for (const [key, image] of [
   ['moire-lab', 'moire-lab.webp'],
   ['tales-from-the-loop-toolkit', 'tales-from-the-loop-guide.webp'],
