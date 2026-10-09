@@ -12,7 +12,7 @@
 - [ ] Two-device remote/controller setup
 - [ ] Clean board screenshot showing several sizes, orientations, and illuminated states
 - [ ] Distinctive board underlay
-- [ ] Calibration screen
+- [x] Genuine LightHouse browser capture of physical-size calibration screen
 - [ ] Menu showing boards/toys/display options
 
 ## Anaglyph & Friends
