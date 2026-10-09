@@ -31,6 +31,9 @@ for (const arch of ['intel', 'apple-silicon']) {
 assert.ok(anaglyph.includes('not Apple-notarized'), 'Signing disclaimer remains');
 assert.ok(html.includes('href="/golocal/"'), 'GoLocal has an actionable project note');
 assert.ok(html.includes('href="/favicon.svg"'), 'Site links to its favicon');
+assert.ok(html.includes('/assets/screenshots/anaglyph-web.webp'), 'Anaglyph has a real hosted interface screenshot');
+assert.ok(fs.existsSync(new URL('assets/screenshots/anaglyph-web.webp', root)), 'Anaglyph screenshot exists');
+
 assert.ok(html.includes('/assets/screenshots/lighthouse-web.webp'), 'LightHouse includes genuine app screenshot');
 assert.ok(fs.existsSync(new URL('assets/screenshots/lighthouse-web.webp', root)), 'LightHouse screenshot file exists');
 
