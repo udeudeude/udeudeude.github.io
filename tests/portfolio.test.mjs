@@ -31,6 +31,10 @@ for (const arch of ['intel', 'apple-silicon']) {
 assert.ok(anaglyph.includes('not Apple-notarized'), 'Signing disclaimer remains');
 assert.ok(html.includes('href="/golocal/"'), 'GoLocal has an actionable project note');
 assert.ok(html.includes('href="/favicon.svg"'), 'Site links to its favicon');
+assert.ok(/\.gallery img\{[^}]*height:auto/.test(html), 'Gallery images override intrinsic pixel height from HTML attributes');
+assert.ok(/\.gallery img\{[^}]*object-fit:contain/.test(html), 'Gallery images show the whole screenshot without destructive cropping');
+assert.ok(/@media\(max-width:650px\)[\s\S]*?\.gallery\{grid-template-columns:minmax\(0,1fr\)\}/.test(html), 'Gallery uses one readable column on phones');
+
 assert.ok(html.includes('/assets/screenshots/anaglyph-web.webp'), 'Anaglyph has a real hosted interface screenshot');
 assert.ok(fs.existsSync(new URL('assets/screenshots/anaglyph-web.webp', root)), 'Anaglyph screenshot exists');
 
