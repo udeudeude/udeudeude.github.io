@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#161825">
+  <meta name="description" content="Private-use preview page for comparing four wizard voices for Th’die’s Cast.">
+  <title>Wizard Voice Auditions · Th’die’s Cast</title>
+  <style>
+    :root { color-scheme:dark; --paper:#e9e0cb; --soft:#c0b8ab; --faint:#9894a2; --ink:#171821; --line:#6b637b77; --accent:#d6ad67; --bg:#161825; }
+    * { box-sizing:border-box; }
+    html { font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    body { background:radial-gradient(ellipse at 60% -10%,#37354d 0%,#161825 55%); background-color:var(--bg); color:var(--paper); margin:0; min-height:100dvh; }
+    main { max-width:760px; margin:auto; padding:28px 16px calc(50px + env(safe-area-inset-bottom)); }
+    .eyebrow { color:var(--accent); text-transform:uppercase; letter-spacing:.18em; font-size:.72rem; font-weight:750; }
+    h1 { font-family:Georgia,"Times New Roman",serif; font-weight:400; font-size:clamp(2.2rem,9vw,4rem); line-height:1.07; letter-spacing:-.035em; margin:11px 0 13px; }
+    .intro { font-size:1rem; line-height:1.6; color:var(--soft); margin:0 0 18px; }
+    .note { border-left:3px solid var(--accent); padding:10px 12px; background:#ffffff08; color:var(--soft); font-size:.89rem; margin:0 0 22px; line-height:1.5; }
+    .voice { background:#ffffff0a; border:1px solid var(--line); border-radius:15px; padding:16px; margin:12px 0; }
+    .voice.is-playing { border-color:var(--accent); box-shadow:0 0 0 1px #d6ad6740; }
+    .top { display:flex; align-items:baseline; justify-content:space-between; gap:12px; }
+    .number { color:var(--accent); font-size:.79rem; letter-spacing:.06em; font-variant-numeric:tabular-nums; }
+    h2 { font-family:Georgia,"Times New Roman",serif; font-size:1.47rem; font-weight:400; margin:5px 0 7px; }
+    .voice p { margin:0 0 14px; color:var(--soft); font-size:.89rem; line-height:1.45; }
+    .controls { display:flex; gap:9px; flex-wrap:wrap; align-items:center; margin-bottom:11px; }
+    button { appearance:none; border:1px solid #d6ad678f; cursor:pointer; color:var(--paper); background:#d6ad6715; border-radius:10px; font:inherit; font-weight:700; min-height:48px; padding:10px 16px; touch-action:manipulation; }
+    button.play { background:var(--accent); color:var(--ink); flex:1; }
+    button.selected { border-color:var(--accent); background:#d6ad6733; }
+    button:focus-visible,a:focus-visible { outline:3px solid #f4ca80; outline-offset:3px; }
+    audio { width:100%; height:48px; display:block; }
+    .small { color:var(--faint); font-size:.83rem; display:flex; justify-content:space-between; gap:10px; align-items:center; margin-top:9px; flex-wrap:wrap; }
+    a { color:#f1c889; text-underline-offset:3px; }
+    .selection { background:#d6ad6712; border:1px solid #d6ad6750; border-radius:12px; padding:13px 15px; margin-top:22px; color:var(--soft); font-size:.9rem; line-height:1.5; }
+    blockquote { font:italic 1.08rem/1.65 Georgia,"Times New Roman",serif; margin:10px 0 0; color:var(--soft); padding:14px 16px; border-left:2px solid var(--line); background:#00000025; }
+    details { margin-top:24px; }
+    summary { cursor:pointer; color:var(--accent); min-height:40px; }
+    .footer { margin-top:25px; font-size:.8rem; color:var(--faint); }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition:none!important; } }
+  </style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">Th’die’s Cast · Voice test 01</div>
+  <h1>Audition the wizard</h1>
+  <p class="intro">Four versions of the same passage. Tap <strong>Play</strong> on any card. Switching voices automatically pauses the previous one.</p>
+  <p class="note">These are actual MP3 voice samples, not browser text-to-speech. Works in Safari on iPhone. Headphones may help reveal the differences.</p>
+
+  <section class="voice" id="fable">
+    <div class="top"><div class="number">I / IV</div><div class="number">Kokoro · bm_fable</div></div>
+    <h2>Fable</h2><p>British, theatrical, storyteller's cadence. A strong wizard candidate.</p>
+    <div class="controls"><button class="play" type="button" data-play="fable" aria-label="Play Fable sample">▶ Play Fable</button><button class="choose" type="button" data-choose="fable" aria-pressed="false">☆ Favorite</button></div>
+    <audio controls preload="metadata" playsinline data-audio="fable" src="https://raw.githubusercontent.com/udeudeude/Th-die-s-Cast/wizard-voice-auditions/auditions/01-fable.mp3"></audio>
+    <div class="small"><span class="status" data-status="fable" role="status">Ready to play</span><a href="https://raw.githubusercontent.com/udeudeude/Th-die-s-Cast/wizard-voice-auditions/auditions/01-fable.mp3" target="_blank" rel="noopener">Open MP3 directly ↗</a></div>
+  </section>
+
+  <section class="voice" id="george">
+    <div class="top"><div class="number">II / IV</div><div class="number">Kokoro · bm_george</div></div>
+    <h2>George</h2><p>Scholarly and deliberate. The existing Living Patterns narrator, in a different role.</p>
+    <div class="controls"><button class="play" type="button" data-play="george" aria-label="Play George sample">▶ Play George</button><button class="choose" type="button" data-choose="george" aria-pressed="false">☆ Favorite</button></div>
+    <audio controls preload="metadata" playsinline data-audio="george" src="https://raw.githubusercontent.com/udeudeude/Th-die-s-Cast/wizard-voice-auditions/auditions/02-george.mp3"></audio>
+    <div class="small"><span class="status" data-status="george" role="status">Ready to play</span><a href="https://raw.githubusercontent.com/udeudeude/Th-die-s-Cast/wizard-voice-auditions/auditions/02-george.mp3" target="_blank" rel="noopener">Open MP3 directly ↗</a></div>
+  </section>
+
+  <section class="voice" id="lewis">
+    <div class="top"><div class="number">III / IV</div><div class="number">Kokoro · bm_lewis</div></div>
+    <h2>Lewis</h2><p>Conversational, understated, and less ceremonial.</p>
+    <div class="controls"><button class="play" type="button" data-play="lewis" aria-label="Play Lewis sample">▶ Play Lewis</button><button class="choose" type="button" data-choose="lewis" aria-pressed="false">☆ Favorite</button></div>
+    <audio controls preload="metadata" playsinline data-audio="lewis" src="https://raw.githubusercontent.com/udeudeude/Th-die-s-Cast/wizard-voice-auditions/auditions/03-lewis.mp3"></audio>
+    <div class="small"><span class="status" data-status="lewis" role="status">Ready to play</span><a href="https://raw.githubusercontent.com/udeudeude/Th-die-s-Cast/wizard-voice-auditions/auditions/03-lewis.mp3" target="_blank" rel="noopener">Open MP3 directly ↗</a></div>
+  </section>
+
+  <section class="voice" id="deep-fable">
+    <div class="top"><div class="number">IV / IV</div><div class="number">Fable · pitch / reverb treatment</div></div>
+    <h2>Deep Fable</h2><p>Fable with a restrained pitch reduction and a slight resonant echo.</p>
+    <div class="controls"><button class="play" type="button" data-play="deep-fable" aria-label="Play Deep Fable sample">▶ Play Deep Fable</button><button class="choose" type="button" data-choose="deep-fable" aria-pressed="false">☆ Favorite</button></div>
+    <audio controls preload="metadata" playsinline data-audio="deep-fable" src="https://raw.githubusercontent.com/udeudeude/Th-die-s-Cast/wizard-voice-auditions/auditions/04-fable-deeper.mp3"></audio>
+    <div class="small"><span class="status" data-status="deep-fable" role="status">Ready to play</span><a href="https://raw.githubusercontent.com/udeudeude/Th-die-s-Cast/wizard-voice-auditions/auditions/04-fable-deeper.mp3" target="_blank" rel="noopener">Open MP3 directly ↗</a></div>
+  </section>
+
+  <div class="selection" id="choice" role="status" aria-live="polite">No favorite selected. Tap ☆ Favorite on the voice you prefer; your choice will stay saved on this device.</div>
+
+  <details><summary>Read the common audition script</summary>
+    <blockquote>Welcome, traveler. The dice have spoken. Three doors stand before you. Behind the first, a treasure. Behind the second, a rather unpleasant death. And behind the third... hmm. Curious. I seem to have misplaced the third door. Roll a twenty-sided die, if you please.</blockquote>
+  </details>
+  <p class="footer">Temporary listening page for Th’die’s Cast. The MP3 files are hosted on GitHub. No analytics, account, or microphone required.</p>
+</main>
+<script>
+(function(){
+  'use strict';
+  const labels={fable:'Fable',george:'George',lewis:'Lewis','deep-fable':'Deep Fable'};
+  const audios=[...document.querySelectorAll('audio[data-audio]')];
+  function status(key,message) { document.querySelector('[data-status="'+key+'"]').textContent=message; }
+  function sync(){
+    for(const audio of audios){
+      const key=audio.dataset.audio;
+      const playing=!audio.paused&&!audio.ended;
+      const btn=document.querySelector('[data-play="'+key+'"]');
+      btn.textContent=playing?'Ⅱ Pause '+labels[key]:'▶ Play '+labels[key];
+      btn.setAttribute('aria-label',playing?'Pause '+labels[key]:'Play '+labels[key]);
+      audio.closest('.voice').classList.toggle('is-playing',playing);
+    }
+  }
+  for(const audio of audios){
+    const key=audio.dataset.audio;
+    audio.addEventListener('play',()=>{
+      for(const other of audios) if(other!==audio) other.pause();
+      status(key,'Playing');
+      sync();
+    });
+    audio.addEventListener('pause',()=>{status(key,audio.ended?'Finished':'Paused');sync();});
+    audio.addEventListener('ended',()=>{status(key,'Finished');sync();});
+    audio.addEventListener('waiting',()=>status(key,'Loading audio…'));
+    audio.addEventListener('error',()=>status(key,'Could not load audio. Try “Open MP3 directly” below.'));
+    audio.addEventListener('canplay',()=>{if(audio.paused)status(key,'Ready to play');});
+  }
+  for(const button of document.querySelectorAll('[data-play]')){
+    button.addEventListener('click',async()=>{
+      const key=button.dataset.play;
+      const audio=document.querySelector('[data-audio="'+key+'"]');
+      if(!audio.paused){audio.pause();return;}
+      // Call play() directly from the user gesture for iOS Safari.
+      try { await audio.play(); }
+      catch(e) { status(key,'Playback blocked or unavailable. Try “Open MP3 directly”.'); }
+    });
+  }
+  const storageKey='thdiescast-wizard-favorite-v1';
+  let favorite='';
+  try { favorite=localStorage.getItem(storageKey)||''; } catch(e) {}
+  function syncFavorite(){
+    document.querySelectorAll('[data-choose]').forEach(btn=>{
+      const chosen=btn.dataset.choose===favorite;
+      btn.textContent=chosen?'★ Favorite':'☆ Favorite';
+      btn.classList.toggle('selected',chosen);
+      btn.setAttribute('aria-pressed',String(chosen));
+    });
+    document.getElementById('choice').textContent=favorite
+      ? 'Current favorite: '+labels[favorite]+'. You can change your mind at any time.'
+      : 'No favorite selected. Tap ☆ Favorite on the voice you prefer; your choice will stay saved on this device.';
+  }
+  document.querySelectorAll('[data-choose]').forEach(btn=>btn.addEventListener('click',()=>{
+    favorite=btn.dataset.choose===favorite?'':btn.dataset.choose;
+    try { if(favorite)localStorage.setItem(storageKey,favorite); else localStorage.removeItem(storageKey); } catch(e) {}
+    syncFavorite();
+  }));
+  syncFavorite();
+  sync();
+})();
+</script>
+</body>
+</html>
