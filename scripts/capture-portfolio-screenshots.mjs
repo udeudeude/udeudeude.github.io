@@ -124,8 +124,17 @@ try {
   ]) {
     const hosted = await context.newPage();
     try {
-      const response = await hosted.goto(app.url, {waitUntil: 'domcontentloaded', timeout: 45000});
-      if (!response?.ok()) throw new Error('HTTP status ' + response?.status());
+      let response;
+      for (let attempt = 0; attempt < 5; attempt++) {
+        response = await hosted.goto(app.url, {waitUntil: 'domcontentloaded', timeout: 45000});
+        if (response?.ok()) break;
+        if (response?.status() !== 502 && response?.status() !== 503) {
+          throw new Error('HTTP status ' + response?.status());
+        }
+        console.warn(app.name + ': temporary HTTP ' + response.status() + ', retry ' + (attempt + 1));
+        await hosted.waitForTimeout(12000);
+      }
+      if (!response?.ok()) throw new Error('HTTP status ' + response?.status() + ' after retries');
       await hosted.waitForTimeout(4000);
       const bodyText = (await hosted.locator('body').innerText()).slice(0, 12000);
       const flutterRoot = await hosted.locator('flutter-view, flt-glass-pane, flt-scene-host').count();
