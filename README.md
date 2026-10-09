@@ -11,12 +11,12 @@ This is the **portfolio repository**, not the source repository for LightHouse o
 - Anaglyph & Friends
 - Print as PocketMod
 - LightHouse
-- Moiré Lab
 - 1AM Wisdom Watch
 - Living Patterns
 - Tales from the Loop Homebrewery Toolkit
 - Starfinder 2e Homebrewery Toolkit
 - PnP-o-matic
+- Moiré Lab
 - Asheville GoLocal Card + Google Maps
 - Orchestral Maneuvers in the Dark
 - Escape Pod Cast
