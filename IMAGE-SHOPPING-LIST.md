@@ -98,18 +98,23 @@
 - [ ] Sample 8-page document imposed into the PocketMod layout
 
 ## Tales from the Loop Homebrewery Toolkit
+- [x] Authentic browser capture of the webpage's sample mystery specimen
 - [ ] Actual rendered title page
 - [ ] Clue-flow diagram using custom arrow and clue assets
 - [ ] Example handout with paper sidebar texture and fictional company logo
 - [ ] Finished mystery two-page spread
 
 ## Starfinder 2e Homebrewery Toolkit
+- [x] Authentic browser capture of the webpage's Kestrel-9 specimen
 - [ ] Rendered title or chapter opening from Homebrewery
 - [ ] Character or creature/gear layout populated with sample text
 - [ ] Hacking map or cinematic starship scene
 - [ ] Example of transparent or large art integrated into a page
 
 ## Moiré Lab
+- [x] Browser capture: true moiré line field
+- [x] Browser capture: barrier-grid wheel
+- [x] Browser capture: workbench from the running app
 - [ ] Phone screenshot of a true moiré experiment
 - [ ] Sliding-barrier animation preset
 - [ ] Picture and transparency SVGs with registration crosses
