@@ -55,6 +55,8 @@ let browser;
 try {
   const portfolioUrl = await startServer(root, 4173);
   const moireUrl = await startServer(path.join(root, '_capture_source', 'moire'), 4174);
+  const tvUrl = await startServer(path.join(root, '_capture_source', 'tv'), 4175);
+  const livingUrl = await startServer(path.join(root, '_capture_source', 'living'), 4176);
   browser = await chromium.launch({channel: 'chrome', headless: true, args: ['--no-sandbox']});
   const context = await browser.newContext({
     viewport: {width: 1280, height: 900},
@@ -79,6 +81,26 @@ try {
   await capture(moire, '.stage-surround', 'moire-lab-barrier.webp');
   if (errors.length) console.warn('Moiré Lab browser messages:', errors.join(' | '));
   await moire.close();
+
+  // TV-b-goner: capture the real, unsimulated ready screen. Never transmit.
+  const tv = await context.newPage();
+  await tv.setViewportSize({width: 1000, height: 750});
+  await tv.goto(tvUrl, {waitUntil: 'domcontentloaded', timeout: 30000});
+  await tv.locator('#offButton').waitFor({state:'visible', timeout:20000});
+  try {
+    await tv.waitForFunction(() => document.getElementById('dbStatus')?.textContent !== 'loading…',
+      null, {timeout: 10000});
+  } catch { console.warn('TV-b-goner database still loading; capturing displayed UI anyway.'); }
+  const tvShot = await tv.screenshot({type:'png', fullPage:false, animations:'disabled'});
+  await sharp(tvShot).webp({quality:85, effort:5}).toFile(path.join(out, 'tv-b-goner.webp'));
+  await tv.close();
+
+  // Living Patterns: the published static homepage, not a made-up podcast mockup.
+  const living = await context.newPage();
+  await living.goto(livingUrl, {waitUntil: 'domcontentloaded', timeout:30000});
+  await living.locator('.hero .grid').waitFor({state:'visible', timeout:15000});
+  await capture(living, '.hero', 'living-patterns-site.webp');
+  await living.close();
 
   for (const item of [
     {slug:'tales-from-the-loop', filename:'tales-from-the-loop-guide.webp'},
