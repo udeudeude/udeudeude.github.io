@@ -33,6 +33,7 @@
 - [ ] Main launcher window if visually useful
 
 ## Living Patterns
+- [x] Real homepage capture showing introduction and podcast cover
 - [ ] Main website with cover and latest episode
 - [ ] Episode with transcript open
 - [ ] Archive showing several episode titles
@@ -76,6 +77,7 @@
 - [ ] Optional photo of the computer/audio setup while playing
 
 ## TV-b-goner
+- [x] Genuine browser screenshot of the TV-b-goner web interface (before IR codes are imported)
 - [ ] iPhone showing the TV-b-goner interface
 - [ ] Photo of the iPhone, Lightning-to-3.5 mm adapter, and small audio-to-IR emitter together
 - [ ] Close screenshot of Explicit OFF only versus All power codes
