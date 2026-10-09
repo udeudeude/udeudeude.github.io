@@ -29,18 +29,32 @@ try {
     assert.equal(await project.getAttribute('class').then(c=>c.includes('open')),true,key+' opens');
     const gallery=project.locator('.gallery');
     await gallery.waitFor({state:'visible'});
+    // The gallery may be below the initial viewport. Ensure images really load
+    // before measuring geometry, otherwise a broken image reports 0px height.
+    await gallery.scrollIntoViewIfNeeded();
+    await gallery.locator('img').evaluateAll(async images=>{
+      await Promise.all(images.map(async image=>{
+        image.loading='eager';
+        try { await image.decode(); } catch { /* Local-file images are asserted below. */ }
+      }));
+    });
     const layout=await gallery.evaluate(element=>{
       const bounds=element.getBoundingClientRect();
       const items=[...element.querySelectorAll('img')].map(img=>{
         const box=img.getBoundingClientRect(),css=getComputedStyle(img);
         return {width:box.width,height:box.height,left:box.left,right:box.right,
-          fit:css.objectFit,declaredHeight:img.getAttribute('height')};
+          fit:css.objectFit,declaredHeight:img.getAttribute('height'),
+          local:img.getAttribute('src')?.startsWith('/assets/'),naturalWidth:img.naturalWidth};
       });
       return {width:bounds.width, left:bounds.left,right:bounds.right,columns:getComputedStyle(element).gridTemplateColumns,items};
     });
     assert.ok(layout.width>200 && layout.width<=390, key+': gallery must fit phone');
     for(const item of layout.items){
       assert.ok(item.width>180 && item.width<=layout.width+2, key+': image fills gallery column');
+      if(item.local) {
+        assert.ok(item.naturalWidth>0, key+': local screenshot loads successfully');
+        assert.ok(item.height>120, key+': local screenshot is actually visible');
+      }
       assert.ok(item.height<500, key+': image height is not fixed at source-pixel dimensions');
       assert.ok(item.height<=item.width*1.45, key+': image ratio fits landscape source');
       assert.ok(item.left>=layout.left-2 && item.right<=layout.right+2, key+': no clipped overflow');
