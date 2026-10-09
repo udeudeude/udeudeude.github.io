@@ -39,9 +39,9 @@ async function capture(page, selector, filename, width = 1000, height = 750) {
   const filepath = path.join(out, filename);
   await sharp(png)
     .resize(width, height, {
-      fit: selector === 'header.hero .specimen' ? 'contain' : 'cover',
+      fit: (selector === 'header.hero .specimen' || selector === 'header.hero .grid') ? 'contain' : 'cover',
       position: 'centre',
-      background: '#08131c',
+      background: selector === 'header.hero .grid' ? '#f4eddd' : '#08131c',
       withoutEnlargement: false
     })
     .webp({quality: 85, effort: 5})
@@ -99,7 +99,7 @@ try {
   const living = await context.newPage();
   await living.goto(livingUrl, {waitUntil: 'domcontentloaded', timeout:30000});
   await living.locator('.hero .grid').waitFor({state:'visible', timeout:15000});
-  await capture(living, '.hero', 'living-patterns-site.webp');
+  await capture(living, 'header.hero .grid', 'living-patterns-site.webp');
   await living.close();
 
   for (const item of [
