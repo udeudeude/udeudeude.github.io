@@ -82,9 +82,9 @@ assert.ok(pnp?.includes('release is still pending'), 'PnP-o-matic makes no false
 assert.ok(escape?.includes('app-v0.7.0') && !escape.includes('/audio/'), 'Escape Pod Cast links to Mac release, not an episode feed');
 
 const curatedOrder = [
-  'anaglyph-friends', 'print-pocketmod', 'lighthouse', 'moire-lab',
-  'wisdom-watch', 'living-patterns', 'tales-from-the-loop-toolkit',
-  'starfinder-homebrewery-toolkit', 'pnp-o-matic', 'asheville-golocal-maps',
+  'anaglyph-friends', 'print-pocketmod', 'lighthouse', 'wisdom-watch',
+  'living-patterns', 'tales-from-the-loop-toolkit',
+  'starfinder-homebrewery-toolkit', 'pnp-o-matic', 'moire-lab', 'asheville-golocal-maps',
   'orchestral-maneuvers-dark', 'escape-pod-cast', 'touchbarpalooza',
   'sorting-cards', 'biofeedback-play', 'tv-b-goner', 'ai-kindle',
   'supercollider'
