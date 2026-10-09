@@ -31,6 +31,18 @@ for (const arch of ['intel', 'apple-silicon']) {
 assert.ok(anaglyph.includes('not Apple-notarized'), 'Signing disclaimer remains');
 assert.ok(html.includes('href="/golocal/"'), 'GoLocal has an actionable project note');
 assert.ok(html.includes('href="/favicon.svg"'), 'Site links to its favicon');
+for (const [key, image] of [
+  ['moire-lab', 'moire-lab.webp'],
+  ['tales-from-the-loop-toolkit', 'tales-from-the-loop-guide.webp'],
+  ['starfinder-homebrewery-toolkit', 'starfinder-guide.webp']
+]) {
+  const card = cards.find(match => match[1] === key)?.[3];
+  assert.ok(card?.includes('/assets/screenshots/' + image), key + ' uses an authentic browser screenshot');
+}
+for (const image of ['moire-lab.webp','moire-lab-interface.webp','moire-lab-barrier.webp','starfinder-guide.webp','tales-from-the-loop-guide.webp']) {
+  assert.ok(fs.existsSync(new URL('assets/screenshots/' + image, root)), 'Captured screenshot exists: ' + image);
+}
+
 assert.ok(html.includes('abacus.jasoncameron.dev'), 'Persistent public click counter configured');
 assert.ok(html.includes("projects.forEach(project => requestCount(project, 'get'))"), 'Read totals without incrementing them on page load');
 assert.ok(html.includes("if (opening) requestCount(project, 'hit')"), 'Increment only when a tile opens');
