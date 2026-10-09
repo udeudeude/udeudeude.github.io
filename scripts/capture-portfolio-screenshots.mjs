@@ -99,6 +99,8 @@ try {
   const living = await context.newPage();
   await living.goto(livingUrl, {waitUntil: 'domcontentloaded', timeout:30000});
   await living.locator('.hero .grid').waitFor({state:'visible', timeout:15000});
+  // A DOM-ready page can still have undecoded image pixels: wait for the real cover.
+  await living.locator('img.cover').evaluate(image => image.decode());
   await capture(living, 'header.hero .grid', 'living-patterns-site.webp');
   await living.close();
 
