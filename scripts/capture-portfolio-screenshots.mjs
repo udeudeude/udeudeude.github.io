@@ -38,7 +38,12 @@ async function capture(page, selector, filename, width = 1000, height = 750) {
   const png = await page.locator(selector).screenshot({type: 'png', animations: 'disabled', timeout: 30000});
   const filepath = path.join(out, filename);
   await sharp(png)
-    .resize(width, height, {fit: 'cover', position: 'centre', withoutEnlargement: false})
+    .resize(width, height, {
+      fit: selector === 'header.hero .specimen' ? 'contain' : 'cover',
+      position: 'centre',
+      background: '#08131c',
+      withoutEnlargement: false
+    })
     .webp({quality: 85, effort: 5})
     .toFile(filepath);
   const file = await stat(filepath);
@@ -83,7 +88,7 @@ try {
     await page.goto(portfolioUrl + '/' + item.slug + '/', {
       waitUntil: 'domcontentloaded', timeout: 30000
     });
-    await capture(page, 'header.hero', item.filename);
+    await capture(page, 'header.hero .specimen', item.filename);
     await page.close();
   }
 
