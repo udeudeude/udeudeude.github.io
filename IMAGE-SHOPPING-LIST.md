@@ -16,6 +16,7 @@
 - [ ] Menu showing boards/toys/display options
 
 ## Anaglyph & Friends
+- [x] Authentic hosted web studio screenshot before an image is chosen
 - [ ] Main workspace with source image, depth map, and output together
 - [ ] Strong red/cyan anaglyph example
 - [ ] Random-dot or patterned stereogram
