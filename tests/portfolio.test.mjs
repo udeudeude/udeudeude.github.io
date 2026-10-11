@@ -118,6 +118,21 @@ assert.ok(projectCategories.get('lewis-voice-lab').includes('audio'), 'Voice Lab
 assert.ok(projectCategories.get('lewis-voice-lab').includes('tabletop'), 'Voice Lab is relevant to tabletop production');
 const lab = read('voice-lab/index.html');
 const recipes = JSON.parse(read('voice-lab/presets/saved-user-recipes.json'));
+
+const voiceCatalog = JSON.parse(read('voice-lab/voice-catalog.json'));
+const browserJS = read('voice-lab/app.js');
+const allVoices = voiceCatalog.groups.flatMap(group => group.voices.map(voice => ({...voice,groupCode:group.code})));
+assert.equal(voiceCatalog.groups.length,9,'All nine Kokoro language/accent families are listed');
+assert.equal(allVoices.length,54,'All 54 native Kokoro speakers are catalogued');
+assert.equal(new Set(allVoices.map(v=>v.id)).size,54,'Voice IDs are unique');
+assert.ok(allVoices.every(v=>v.id.startsWith(v.groupCode+v.gender+'_')),'Native voice identifiers match language and profile');
+assert.ok(lab.includes('id="languageSelect"') && lab.includes('id="genderSelect"') && lab.includes('id="voiceSelect"'),'Language, gender and speaker have independent selectors');
+assert.ok(lab.includes('All languages / accents') && lab.includes('All genders'),'Unrestricted filter choices exist');
+assert.ok(browserJS.includes("const language = $('languageSelect').value;") && browserJS.includes("const profile = $('genderSelect').value;"),'Voice selection respects both facets independently');
+assert.ok(browserJS.includes("language==='all'||language===group.code") && browserJS.includes("profile==='all'||voice.gender===profile"),'No forced language-first or gender-first dependency');
+assert.ok(browserJS.includes('loadLibraryVoice') && browserJS.includes('voice-samples/manifest.json'),'Browser loads pre-rendered genuine Kokoro voice recordings');
+assert.ok(allVoices.some(v=>v.id==='bm_lewis'),'Lewis remains selectable');
+
 assert.ok(lab.includes('data-preset="savedDeepDry"') && lab.includes('data-preset="savedNaturalRoom"'), 'Both user recipes are selectable in Voice Lab');
 assert.ok(lab.includes('id="formant" min="-5" max="5" step="0.05"'), 'Formant control can represent user-supplied precision');
 assert.equal(recipes.presets.length, 2, 'Both user-defined settings profiles are permanently archived');
