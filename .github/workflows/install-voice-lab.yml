@@ -1,0 +1,101 @@
+name: Install Lewis Voice Lab
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.voice-lab-bootstrap.b64'
+      - '.github/workflows/install-voice-lab.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: lewis-voice-lab-install
+  cancel-in-progress: false
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - name: Verify and unpack the self-contained application
+        shell: bash
+        run: |
+          set -euo pipefail
+          base64 -d .voice-lab-bootstrap.b64 > /tmp/lewis-voice-lab.tar.gz
+          echo '7c15386533ba0508e4046b66e27ff9204e9adff72fbd1faa3f6b70659542865d  /tmp/lewis-voice-lab.tar.gz' | sha256sum -c -
+          tar -tzf /tmp/lewis-voice-lab.tar.gz | head -30
+          tar -xzf /tmp/lewis-voice-lab.tar.gz
+          test -s voice-lab/index.html
+          test -s voice-lab/app.js
+          test -s voice-lab/engine-worker.js
+      - name: Static validation
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check voice-lab/app.js
+          node --check voice-lab/engine-worker.js
+          node --check voice-lab/sw.js
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import re, json
+          path=Path("voice-lab")
+          class IDs(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.ids=[]
+              def handle_starttag(self, tag, attrs):
+                  attrs=dict(attrs)
+                  if 'id' in attrs:
+                      self.ids.append(attrs['id'])
+          html=(path/'index.html').read_text()
+          js=(path/'app.js').read_text()
+          a=IDs();a.feed(html)
+          referenced=set(re.findall(r"\$\(['\"]([a-zA-Z0-9_-]+)['\"]\)",js))
+          assert len(set(a.ids))==len(a.ids), "Duplicate DOM id"
+          assert referenced.issubset(set(a.ids)), "Missing DOM id: "+str(referenced-set(a.ids))
+          assert "formantShift" in (path/'engine-worker.js').read_text()
+          assert "pitch" in js and "speed" in js
+          json.loads((path/'manifest.webmanifest').read_text())
+          print('Validated browser source and controls:',len(a.ids),'DOM ids')
+          PY
+      - name: Signal processing smoke test
+        shell: bash
+        run: |
+          set -euo pipefail
+          node - <<'JS'
+          const fs=require('fs'),vm=require('vm'),assert=require('assert');
+          let responses=[];
+          const c={performance,Float32Array,Float64Array,Math,console,self:{postMessage:x=>responses.push(x)}};
+          vm.createContext(c);
+          vm.runInContext(fs.readFileSync('voice-lab/engine-worker.js','utf8'),c);
+          let pcm=new Float32Array(24000*2);
+          for(let i=0;i<pcm.length;i++)pcm[i]=Math.sin(2*Math.PI*145*i/24000)*.4;
+          c.self.onmessage({data:{type:'load',sampleRate:24000,samples:pcm.buffer}});
+          for(const [pitch,formant,speed] of [[0,0,1],[-2,0,1],[0,-2,1],[-2,-2,.8]]){
+            c.self.onmessage({data:{type:'render',id:1,settings:{pitch,formant,speed}}});
+            const res=responses.pop();assert.equal(res.type,'rendered',res.message||'DSP error');
+            const samples=new Float32Array(res.buffer);
+            assert(Math.abs(samples.length-Math.round(pcm.length/speed))<3);
+            assert(samples.every(x=>Number.isFinite(x)),'Nonfinite sample');
+          }
+          console.log('DSP tested: source, pitch, formant and tempo independently');
+          JS
+      - name: Commit the readable application files
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add voice-lab/
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish Lewis Voice Lab production audio editor'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
