@@ -76,8 +76,24 @@ def main() -> None:
             vid = voice["id"]
             filename = OUT / f"{vid}.mp3"
             try:
-                if filename.exists():
-                    filename.unlink()
+                # Reuse previously committed, validated samples. This lets a
+                # follow-up build render only languages whose dictionaries
+                # failed on the previous pass, rather than rerendering 49 clips.
+                if filename.exists() and filename.stat().st_size > 8000:
+                    try:
+                        probe = subprocess.check_output([
+                            "ffprobe", "-v", "error", "-show_entries",
+                            "format=duration", "-of",
+                            "default=noprint_wrappers=1:nokey=1", str(filename)
+                        ], text=True)
+                        previous_duration = float(probe.strip())
+                        if MIN_DURATION < previous_duration < MAX_DURATION:
+                            result["available"].append(vid)
+                            print(f"REUSE {vid} {previous_duration:.2f}s", flush=True)
+                            continue
+                    except Exception:
+                        pass
+                filename.unlink(missing_ok=True)
                 chunks = [
                     np.asarray(audio, dtype=np.float32).reshape(-1)
                     for _graphemes, _phonemes, audio in pipeline(
