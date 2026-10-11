@@ -1,0 +1,69 @@
+name: Build Kokoro voice auditions
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - voice-lab/voice-catalog.json
+      - voice-lab/tools/render_voice_library.py
+      - .github/workflows/render-voice-library.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: render-voice-library
+  cancel-in-progress: false
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install audio synthesizer and language dictionaries
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg espeak-ng
+          python -m pip install --upgrade pip
+          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install 'kokoro==0.9.4' 'numpy>=1.26' 'soundfile>=0.12' 'misaki[ja,zh]'
+      - name: Produce and validate every available Kokoro voice
+        run: |
+          python -u voice-lab/tools/render_voice_library.py
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path('voice-lab/voice-samples')
+          data=json.loads((root/'manifest.json').read_text())
+          assert data['completed']
+          assert len(data['available']) + len(data['failed']) == 54
+          for v in data['available']:
+              assert (root/(v+'.mp3')).stat().st_size > 8000
+          print('Voice samples:',len(data['available']), 'unavailable:',data['failed'])
+          PY
+      - name: Commit validated audio library
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add voice-lab/voice-samples/
+          if ! git diff --cached --quiet; then
+            git commit -m "Render verified Kokoro voice audition library"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - name: Upload generated voice auditions
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Kokoro-Voice-Samples
+          path: |
+            voice-lab/voice-samples/
+          if-no-files-found: warn
