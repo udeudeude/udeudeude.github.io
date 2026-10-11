@@ -25,6 +25,141 @@ const SOURCES = {
     url: SAMPLE_ROOT + 'brother-name-auditions-02/auditions/brother-names-02/01-rubicon.mp3',
   },
 };
+
+const VOICE_CATALOG_URL = './voice-catalog.json';
+const VOICE_SAMPLE_MANIFEST_URL = './voice-samples/manifest.json';
+const VOICE_SAMPLE_ROOT = './voice-samples/';
+let voiceCatalog = null;
+let availableVoiceIds = null;
+let filteredVoices = [];
+let voiceLoading = false;
+function currentVoiceInfo() {
+  const id = $('voiceSelect')?.value;
+  for (const group of (voiceCatalog?.groups||[])) {
+    const voice = group.voices.find(v=>v.id===id);
+    if (voice) return {group,voice};
+  }
+  return null;
+}
+function eligibleVoices() {
+  const language = $('languageSelect').value;
+  const profile = $('genderSelect').value;
+  return (voiceCatalog?.groups||[]).flatMap(group =>
+    (language==='all'||language===group.code)
+      ? group.voices.filter(voice => profile==='all'||voice.gender===profile)
+        .map(voice=>({...voice,groupCode:group.code,groupLabel:group.label}))
+      : []
+  );
+}
+function chooseAndRenderVoiceBrowser(preserve=true) {
+  if (!voiceCatalog)return;
+  const previous = preserve ? $('voiceSelect').value : voiceCatalog.defaultVoice;
+  filteredVoices=eligibleVoices();
+  const select=$('voiceSelect');
+  select.replaceChildren();
+  const language=$('languageSelect').value, gender=$('genderSelect').value;
+  for (const group of voiceCatalog.groups) {
+    const included=filteredVoices.filter(v=>v.groupCode===group.code);
+    if (!included.length)continue;
+    for (const profile of ['f','m']) {
+      const candidates=included.filter(v=>v.gender===profile);
+      if (!candidates.length)continue;
+      const optgroup=document.createElement('optgroup');
+      optgroup.label=group.label+' · '+(profile==='f'?'Feminine':'Masculine');
+      for(const voice of candidates) {
+        const option=document.createElement('option');
+        option.value=voice.id;
+        option.textContent=voice.name + (availableVoiceIds&&!availableVoiceIds.has(voice.id)?' · not available':'');
+        // Non-rendered voices are shown but not offered as working audio.
+        if(availableVoiceIds&&!availableVoiceIds.has(voice.id))option.disabled=true;
+        optgroup.append(option);
+      }
+      select.append(optgroup);
+    }
+  }
+  const compatible=filteredVoices.filter(v=>!availableVoiceIds||availableVoiceIds.has(v.id));
+  const chosen=compatible.find(v=>v.id===previous) || compatible.find(v=>v.id===voiceCatalog.defaultVoice) || compatible[0];
+  if(chosen)select.value=chosen.id;
+  select.disabled=!chosen;
+  $('voiceCount').textContent=filteredVoices.length+' / '+voiceCatalog.groups.reduce((n,g)=>n+g.voices.length,0)+' voices';
+  updateVoiceBrowserState();
+}
+function updateVoiceBrowserState() {
+  const id=$('voiceSelect').value;
+  const choices=filteredVoices.filter(v=>!availableVoiceIds||availableVoiceIds.has(v.id));
+  const idx=choices.findIndex(v=>v.id===id);
+  $('voicePosition').textContent=idx>=0?(' · '+(idx+1)+' of '+choices.length+' playable'):' · no playable samples';
+  $('prevVoice').disabled=voiceLoading||idx<0||choices.length<2;
+  $('nextVoice').disabled=voiceLoading||idx<0||choices.length<2;
+  $('auditionVoice').disabled=voiceLoading||idx<0;
+  const info=currentVoiceInfo();
+  if(info) $('voiceSampleText').textContent=info.group.label+' · '+(info.voice.gender==='f'?'Feminine':'Masculine')+
+    '. Spoken script: “'+info.group.sample+'”'+(availableVoiceIds&&!availableVoiceIds.has(id)?' (audio unavailable)':'');
+}
+function browseVoices(delta) {
+  const list=filteredVoices.filter(v=>!availableVoiceIds||availableVoiceIds.has(v.id));
+  const n=list.length;
+  if(!n)return;
+  const pos=list.findIndex(v=>v.id===$('voiceSelect').value);
+  $('voiceSelect').value=list[(pos+delta+n)%n].id;
+  updateVoiceBrowserState();
+}
+async function initializeVoiceBrowser() {
+  try {
+    const response=await fetch(VOICE_CATALOG_URL,{cache:'no-cache'});
+    if(!response.ok)throw new Error('Voice catalog HTTP '+response.status);
+    voiceCatalog=await response.json();
+    if(!voiceCatalog.groups?.length)throw new Error('Empty voice catalog');
+    const language=$('languageSelect');
+    language.replaceChildren(new Option('All languages / accents','all'));
+    for(const group of voiceCatalog.groups)language.add(new Option(group.label,group.code));
+    language.value='b';
+    $('genderSelect').value='all';
+    language.disabled=false;$('genderSelect').disabled=false;
+    chooseAndRenderVoiceBrowser(false);
+    try {
+      const m=await fetch(VOICE_SAMPLE_MANIFEST_URL,{cache:'no-store'});
+      if(!m.ok)throw Error('Samples not yet published');
+      const data=await m.json();
+      if(!data.completed||!Array.isArray(data.available))throw Error('Samples still rendering');
+      availableVoiceIds=new Set(data.available);
+      chooseAndRenderVoiceBrowser(true);
+      const count=availableVoiceIds.size;
+      $('voiceAvailability').textContent=count+' / 54 recordings ready';
+    }catch(e){
+      // Source selector remains usable with the existing Lewis audition clips.
+      $('voiceAvailability').textContent='Voice recordings are being prepared';
+      availableVoiceIds=new Set();
+      chooseAndRenderVoiceBrowser(true);
+    }
+  }catch(e){
+    $('voiceAvailability').textContent='Voice catalog unavailable';
+    setMessage('Could not load the voice catalog: '+e.message,true);
+  }
+}
+async function loadLibraryVoice(){
+  const info=currentVoiceInfo();
+  if(!info||voiceLoading||busyLoading)return;
+  if(availableVoiceIds&&!availableVoiceIds.has(info.voice.id)){
+    setMessage('That voice recording is not yet available. Try an existing Lewis sample.',true);
+    return;
+  }
+  voiceLoading=true;busyLoading=true;updateVoiceBrowserState();
+  setStatus('Loading '+info.voice.name+'…');
+  try{
+    const response=await fetch(VOICE_SAMPLE_ROOT+encodeURIComponent(info.voice.id)+'.mp3');
+    if(!response.ok)throw Error('Audio not found (HTTP '+response.status+')');
+    const bytes=await response.arrayBuffer();
+    $('clipStart').value='0';
+    await decodeOriginal(bytes,info.voice.name+' · '+info.group.label);
+    $('sampleSelect').value='voice-library';
+    setMessage(info.voice.name+' ('+info.group.label+') ready. Apply voice settings or compare A/B.');
+  }catch(e){
+    setStatus('Voice sample unavailable','error');
+    setMessage('Could not load '+info.voice.name+': '+e.message,true);
+  }finally{voiceLoading=false;busyLoading=false;updateVoiceBrowserState();}
+}
+
 const DEFAULTS = Object.freeze({
   pitch: 0, formant: 0, speed: 1,
   bass: 0, presence: 0, air: 0, highpass: 70,
@@ -353,6 +488,7 @@ async function cropAndLoad(){
 }
 async function loadSelected(){
   const choice=$('sampleSelect').value;
+  if(choice==='voice-library'){await loadLibraryVoice();return;}
   if(choice==='upload'){$('upload').click();return;}
   const source=SOURCES[choice];if(!source)return;
   if(busyLoading)return;
@@ -461,6 +597,12 @@ function bindInputs(){
   }
   $('applyVoice').addEventListener('click',requestVoiceRender);
   $('sampleSelect').addEventListener('change',loadSelected);
+  $('languageSelect').addEventListener('change',()=>chooseAndRenderVoiceBrowser(true));
+  $('genderSelect').addEventListener('change',()=>chooseAndRenderVoiceBrowser(true));
+  $('voiceSelect').addEventListener('change',updateVoiceBrowserState);
+  $('prevVoice').addEventListener('click',()=>browseVoices(-1));
+  $('nextVoice').addEventListener('click',()=>browseVoices(1));
+  $('auditionVoice').addEventListener('click',loadLibraryVoice);
   $('upload').addEventListener('change',e=>loadUploaded(e.target.files?.[0]));
   $('clipStart').addEventListener('change',()=>cropAndLoad().catch(e=>setMessage(e.message,true)));
   $('clipLength').addEventListener('change',()=>cropAndLoad().catch(e=>setMessage(e.message,true)));
@@ -525,6 +667,7 @@ function bindInputs(){
 }
 
 bindInputs();
+initializeVoiceBrowser();
 setStatus('Loading Lewis…');
-loadSelected().then(()=>{if(rawPcm)setMessage('Lewis is ready. Press Play, or select a preset to change his voice.');});
+loadSelected().then(()=>{if(rawPcm)setMessage('The reference Lewis sample is ready. Select another Kokoro voice above, or use the existing sliders.');});
 if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{});}
