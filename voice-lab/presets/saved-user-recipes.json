@@ -1,0 +1,57 @@
+{
+  "name": "Lewis Voice Lab",
+  "format": "saved-voice-recipes",
+  "version": 1,
+  "saved_on": "2026-10-11",
+  "notes": "Two original user-supplied configurations preserved exactly. They are audition presets, not an approved default for Th’die’s Cast.",
+  "presets": [
+    {
+      "id": "savedDeepDry",
+      "label": "Saved 01 · Deep & dry",
+      "source": "user-provided",
+      "recipe": {
+        "name": "Lewis Voice Lab",
+        "version": 1,
+        "settings": {
+          "pitch": -1.5,
+          "formant": -1.15,
+          "speed": 0.88,
+          "bass": 12,
+          "presence": -5,
+          "air": 5,
+          "highpass": 30,
+          "compression": 1,
+          "threshold": -36,
+          "reverb": 0,
+          "echo": 0,
+          "echoTime": 80,
+          "output": 0
+        }
+      }
+    },
+    {
+      "id": "savedNaturalRoom",
+      "label": "Saved 02 · Natural pitch, light room",
+      "source": "user-provided",
+      "recipe": {
+        "name": "Lewis Voice Lab",
+        "version": 1,
+        "settings": {
+          "pitch": 0,
+          "formant": -1.25,
+          "speed": 1,
+          "bass": 12,
+          "presence": -5,
+          "air": 5,
+          "highpass": 30,
+          "compression": 1,
+          "threshold": -36,
+          "reverb": 8,
+          "echo": 4,
+          "echoTime": 80,
+          "output": 0
+        }
+      }
+    }
+  ]
+}
