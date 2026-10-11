@@ -4,6 +4,18 @@ A **producer-only** audio-processing tool for *Th’die’s Cast*. It is **not**
 
 Open `https://udeudeude.github.io/voice-lab/` in Safari or another modern browser. No account or server-side audio processing.
 
+## Saved for later
+
+The app is a permanent folder in `udeudeude/udeudeude.github.io` at `voice-lab/` and is also linked from the main [Ude Projects directory](https://udeudeude.github.io/). To keep it on iPhone, open the site in Safari, tap **Share → Add to Home Screen**; the installation is optional. The program's service worker caches the basic interface, though remote audition clips require network access.
+
+Two user-supplied recipes from 2026-10-11 are included as **built-in presets** and preserved exactly as [JSON](./presets/saved-user-recipes.json):
+
+- **Saved 01 · Deep & dry:** pitch -1.5, formant -1.15, speed 0.88; bass +12, presence -5, air +5; highpass 30; compression 1, threshold -36; no room or echo; echo time 80, output 0.
+- **Saved 02 · Natural pitch, light room:** pitch 0, formant -1.25, speed 1.00; same tonal and dynamic controls; reverb 8, echo 4; echo time 80, output 0.
+
+These are not a final approved narrator sound. The formant slider uses **0.05-semitone steps** so both original values (-1.15 and -1.25) remain expressible. Unlike the one-slot optional browser-local save, the two built-ins survive browser clears and can be recovered from GitHub.
+
+
 ## What it does
 
 - Load an existing public Lewis test sample or choose a local audio file (max 22 MB; use short clips on phones).
