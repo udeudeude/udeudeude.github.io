@@ -132,6 +132,11 @@ assert.ok(browserJS.includes("const language = $('languageSelect').value;") && b
 assert.ok(browserJS.includes("language==='all'||language===group.code") && browserJS.includes("profile==='all'||voice.gender===profile"),'No forced language-first or gender-first dependency');
 assert.ok(browserJS.includes('loadLibraryVoice') && browserJS.includes('voice-samples/manifest.json'),'Browser loads pre-rendered genuine Kokoro voice recordings');
 assert.ok(allVoices.some(v=>v.id==='bm_lewis'),'Lewis remains selectable');
+assert.ok(browserJS.includes('const language = $(\'languageSelect\').value;') && browserJS.includes('const profile = $(\'genderSelect\').value;'),'Both filters are used to derive the voice selection');
+assert.ok(browserJS.includes("initializeVoiceBrowser();") && browserJS.includes('browseVoices'),'The voice browser initializes and supports previous/next');
+assert.ok(browserJS.includes("await decodeOriginal(bytes,info.voice.name"),'Selecting a voice feeds the existing audio editor');
+assert.ok(read('voice-lab/sw.js').includes('lewis-voice-lab-shell-v3'),'Updated mobile app shell cache is used');
+
 
 assert.ok(lab.includes('data-preset="savedDeepDry"') && lab.includes('data-preset="savedNaturalRoom"'), 'Both user recipes are selectable in Voice Lab');
 assert.ok(lab.includes('id="formant" min="-5" max="5" step="0.05"'), 'Formant control can represent user-supplied precision');
