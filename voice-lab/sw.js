@@ -1,6 +1,6 @@
 /* Cache only the small lab shell, never uploaded audio or third-party samples. */
-const CACHE='lewis-voice-lab-shell-v2';
-const ASSETS=['./','./index.html','./style.css','./app.js','./engine-worker.js','./icon.svg','./manifest.webmanifest'];
+const CACHE='lewis-voice-lab-shell-v3';
+const ASSETS=['./','./index.html','./style.css','./app.js','./engine-worker.js','./icon.svg','./manifest.webmanifest','./voice-catalog.json'];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting()));
 });
