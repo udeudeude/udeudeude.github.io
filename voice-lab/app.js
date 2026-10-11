@@ -113,7 +113,7 @@ async function initializeVoiceBrowser() {
     const language=$('languageSelect');
     language.replaceChildren(new Option('All languages / accents','all'));
     for(const group of voiceCatalog.groups)language.add(new Option(group.label,group.code));
-    language.value='b';
+    language.value='all';
     $('genderSelect').value='all';
     language.disabled=false;$('genderSelect').disabled=false;
     chooseAndRenderVoiceBrowser(false);
