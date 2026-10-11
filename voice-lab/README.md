@@ -1,4 +1,4 @@
-# Lewis Voice Lab
+# Kokoro Voice Lab (formerly Lewis Voice Lab)
 
 A **producer-only** audio-processing tool for *Th’die’s Cast*. It is **not** a gameplay companion or a condition for listening to the podcast.
 
@@ -16,9 +16,17 @@ Two user-supplied recipes from 2026-10-11 are included as **built-in presets** a
 These are not a final approved narrator sound. The formant slider uses **0.05-semitone steps** so both original values (-1.15 and -1.25) remain expressible. Unlike the one-slot optional browser-local save, the two built-ins survive browser clears and can be recovered from GitHub.
 
 
+## Voice library and faceted browsing
+
+The app now catalogs **all 54 Kokoro-82M voices in nine language/accent groups**. Choose **language/accent** or **gender presentation** in either order; both default to independent filters, with “All languages” and “All genders” options. The remaining voice selector is grouped by both accent and profile. Previous/next buttons cycle through currently filtered available recordings.
+
+The original Lewis test recordings remain under **Other sources**, and your saved Lewis voice presets remain unchanged. The [source voice catalog](./voice-catalog.json) is committed in the project and [Kokoro sample recordings](./voice-samples/) are generated offline by [this reproducible script](./tools/render_voice_library.py). Unavailable/non-rendered voices remain identified as such; the app does not pretend pitch-shifted Lewis is a distinct Kokoro voice. The language-specific sample sentence is held constant for all voices of that language/accent; samples in other languages use translated text.
+
+This is **pre-rendered audition audio**, not live arbitrary text-to-speech. User audio is still processed locally. No audio files are uploaded to our server.
+
 ## What it does
 
-- Load an existing public Lewis test sample or choose a local audio file (max 22 MB; use short clips on phones).
+- Load any available Kokoro voice audition, an earlier Lewis test sample, or a local audio file (max 22 MB; use short clips on phones).
 - Select an 8–30-second excerpt of the input to keep preview generation responsive.
 - Move independent **pitch** (semitones), **speaking speed** (time stretch), and **formant envelope** (semitones) controls, then select **Apply voice changes** to render off the main thread.
 - Listen to **A / original** and **B / processed**, including looping, seeking and waveform display.
