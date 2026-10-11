@@ -87,7 +87,7 @@ assert.ok(projectCategories.get('asheville-golocal-maps').includes('asheville'),
 assert.ok(projectCategories.get('orchestral-maneuvers-dark').includes('asheville'), 'Asheville FM is Asheville-related');
 assert.ok(projectCategories.get('anaglyph-friends').includes('print') && projectCategories.get('anaglyph-friends').includes('visual'), 'Multi-category membership works');
 
-assert.equal(cards.length, 18, 'All 18 curated projects are present');
+assert.equal(cards.length, 19, 'All 19 curated projects are present');
 assert.ok(!categorySet.has('devices'), 'Obsolete Devices category was removed');
 assert.ok(!projectCategories.get('lighthouse').includes('hardware'), 'LightHouse is not in hardware-specific projects');
 assert.ok(projectCategories.get('sorting-cards').includes('print'), 'Sorting with Cards is printable work');
@@ -112,13 +112,25 @@ assert.ok(moire?.includes('https://moire-lab.onrender.com/'), 'Moiré Lab has di
 assert.ok(pnp?.includes('release is still pending'), 'PnP-o-matic makes no false release claim');
 assert.ok(escape?.includes('app-v0.7.0') && !escape.includes('/audio/'), 'Escape Pod Cast links to Mac release, not an episode feed');
 
+const voiceLabCard = cards.find(card => card[1] === 'lewis-voice-lab')?.[3];
+assert.ok(voiceLabCard?.includes('https://udeudeude.github.io/voice-lab/'), 'Voice Lab is discoverable from the home page');
+assert.ok(projectCategories.get('lewis-voice-lab').includes('audio'), 'Voice Lab is classified under Sound');
+assert.ok(projectCategories.get('lewis-voice-lab').includes('tabletop'), 'Voice Lab is relevant to tabletop production');
+const lab = read('voice-lab/index.html');
+const recipes = JSON.parse(read('voice-lab/presets/saved-user-recipes.json'));
+assert.ok(lab.includes('data-preset="savedDeepDry"') && lab.includes('data-preset="savedNaturalRoom"'), 'Both user recipes are selectable in Voice Lab');
+assert.ok(lab.includes('id="formant" min="-5" max="5" step="0.05"'), 'Formant control can represent user-supplied precision');
+assert.equal(recipes.presets.length, 2, 'Both user-defined settings profiles are permanently archived');
+assert.deepEqual(recipes.presets.map(p => p.recipe.settings.formant), [-1.15, -1.25], 'Exact formant values are preserved');
+assert.deepEqual(recipes.presets.map(p => p.recipe.settings.reverb), [0, 8], 'Both room choices remain distinct');
+
 const curatedOrder = [
   'anaglyph-friends', 'print-pocketmod', 'lighthouse', 'wisdom-watch',
   'living-patterns', 'tales-from-the-loop-toolkit',
   'starfinder-homebrewery-toolkit', 'pnp-o-matic', 'moire-lab', 'asheville-golocal-maps',
   'orchestral-maneuvers-dark', 'escape-pod-cast', 'touchbarpalooza',
   'sorting-cards', 'biofeedback-play', 'tv-b-goner', 'ai-kindle',
-  'supercollider'
+  'supercollider', 'lewis-voice-lab'
 ];
 assert.deepEqual(keys, curatedOrder, 'Preserve the intentional project order');
 const populatedStarfinder = 'https://homebrewery.naturalcrit.com/share/u41Swqyrcj1W';
