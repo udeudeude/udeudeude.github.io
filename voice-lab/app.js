@@ -641,7 +641,7 @@ function bindInputs(){
   }));
   $('downloadWav').addEventListener('click',exportWav);
   $('copyRecipe').addEventListener('click',async()=>{
-    const data=JSON.stringify({name:'Lewis Voice Lab',version:1,settings},null,2);
+    const data=JSON.stringify({name:'Kokoro Voice Lab',version:1,settings},null,2);
     try{await navigator.clipboard.writeText(data);setMessage('Current recipe copied to clipboard.');}
     catch{setMessage('Clipboard access unavailable here. You can save a preset locally instead.',true);}
   });
