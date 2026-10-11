@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#151b23">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="description" content="Adjust Lewis's pitch, speaking speed, formants, EQ and atmosphere independently. An experimental private, browser-based podcast production tool.">
-  <title>Lewis Voice Lab · Th’die’s Cast</title>
+  <meta name="description" content="Experiment with Kokoro voices: filter by language or gender, then adjust pitch, formants, speed and effects. An experimental private, browser-based podcast production tool.">
+  <title>Kokoro Voice Lab · Th’die’s Cast</title>
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./style.css">
@@ -17,17 +17,47 @@
 <div class="shell">
   <header class="header">
     <div class="eyebrow"><span class="orb"></span> TH’DIE’S CAST · PRODUCTION TOOLS</div>
-    <h1>Lewis <span>Voice Lab</span></h1>
-    <p>Discover a narrator's character one adjustment at a time. Independent voice, timbre and room controls, entirely in your browser.</p>
+    <h1>Kokoro <span>Voice Lab</span></h1>
+    <p>Explore Kokoro voices by language or gender in either order. Then shape pitch, timbre and room effects, entirely in your browser.</p>
     <div class="notice">This is a <strong>production experiment</strong>, not a companion app or an episode of Th’die’s Cast. No login or audio upload to a server.</div>
   </header>
 
   <section class="panel player-panel" aria-label="Sample and playback">
     <div class="panel-head"><h2>01 <span>Listen & compare</span></h2><div class="live-status" id="loadStatus" aria-live="polite">Initializing…</div></div>
+    <div class="voice-browser" aria-labelledby="voiceBrowseHeading">
+      <div class="voice-browser-head">
+        <h3 id="voiceBrowseHeading">Kokoro voice library <span class="count" id="voiceCount">54 voices</span></h3>
+        <span id="voiceAvailability" role="status" aria-live="polite">Checking samples…</span>
+      </div>
+      <p class="microtext">Choose language or gender in either order. Both filters work independently. Different accents within the same language use comparable spoken passages.</p>
+      <div class="voice-browser-grid">
+        <div>
+          <label class="field-label" for="languageSelect">Language / accent</label>
+          <select id="languageSelect" disabled><option value="all">All languages / accents</option></select>
+        </div>
+        <div>
+          <label class="field-label" for="genderSelect">Voice profile</label>
+          <select id="genderSelect" disabled>
+            <option value="all">All genders</option>
+            <option value="f">Feminine</option>
+            <option value="m">Masculine</option>
+          </select>
+        </div>
+      </div>
+      <label class="field-label" for="voiceSelect">Voice <span id="voicePosition" class="voice-position"></span></label>
+      <select id="voiceSelect" disabled><option>Loading voice catalogue…</option></select>
+      <div class="voice-browser-actions">
+        <button type="button" class="secondary small" id="prevVoice" disabled>‹ Previous</button>
+        <button type="button" class="secondary small" id="nextVoice" disabled>Next ›</button>
+        <button type="button" class="main-action" id="auditionVoice" disabled>▶ Load selected voice</button>
+      </div>
+      <p class="microtext" id="voiceSampleText">Every voice in one language or accent reads the same sentence. Other languages use localized text. These are genuine Kokoro recordings, not processed versions of Lewis.</p>
+    </div>
     <div class="source-grid">
-      <div><label class="field-label" for="sampleSelect">Source recording</label>
+      <div><label class="field-label" for="sampleSelect">Other sources (Lewis takes or your own files)</label>
         <select id="sampleSelect">
-          <option value="berengar-reference">Lewis · Brother Berengar passage</option>
+          <option value="voice-library">Selected Kokoro library voice</option>
+          <option value="berengar-reference" selected>Lewis · Brother Berengar passage</option>
           <option value="berengar-intro">Lewis · Brother Berengar auditions</option>
           <option value="godric-intro">Lewis · Brother Godric auditions</option>
           <option value="rubicon-intro">Lewis · Brother Rubicon auditions</option>
