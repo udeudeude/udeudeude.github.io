@@ -58,7 +58,7 @@
     <p class="section-intro">These are three <strong>independent</strong> controls. Pitch is the note; formants are the vowel resonances; tempo is the speaking rate. The tempo slider edits recorded audio; it does not regenerate Kokoro’s delivery or rewrite his spoken words.</p>
     <div class="controls" id="voiceControls">
       <div class="control" data-setting="pitch" data-unit="st"><div class="control-head"><label for="pitch">Pitch <span class="info" title="Raises or lowers fundamental frequency without changing duration">ⓘ</span></label><output for="pitch">0 st</output></div><input type="range" id="pitch" min="-6" max="4" step="0.25" value="0"><div class="ends"><span>Lower</span><span>Higher</span></div></div>
-      <div class="control" data-setting="formant" data-unit="st"><div class="control-head"><label for="formant">Formant shift <span class="info" title="Moves speech spectral envelope peaks without intentionally changing the fundamental pitch">ⓘ</span></label><output for="formant">0 st</output></div><input type="range" id="formant" min="-5" max="5" step="0.25" value="0"><div class="ends"><span>Darker / larger vocal tract</span><span>Brighter / smaller</span></div></div>
+      <div class="control" data-setting="formant" data-unit="st"><div class="control-head"><label for="formant">Formant shift <span class="info" title="Moves speech spectral envelope peaks without intentionally changing the fundamental pitch">ⓘ</span></label><output for="formant">0 st</output></div><input type="range" id="formant" min="-5" max="5" step="0.05" value="0"><div class="ends"><span>Darker / larger vocal tract</span><span>Brighter / smaller</span></div></div>
       <div class="control" data-setting="speed" data-unit="x"><div class="control-head"><label for="speed">Speaking speed <span class="info" title="Time stretch while preserving pitch">ⓘ</span></label><output for="speed">1.00×</output></div><input type="range" id="speed" min="0.70" max="1.35" step="0.01" value="1"><div class="ends"><span>Slower</span><span>Faster</span></div></div>
     </div>
     <div class="actions"><button class="main-action" id="applyVoice" disabled>Apply voice changes</button><span class="microtext" id="processingNote">Processing a 12-second sample may take a few seconds on iPhone.</span></div>
@@ -88,6 +88,8 @@
   <section class="panel" aria-label="Presets and output">
     <div class="panel-head"><h2>04 <span>Presets & export</span></h2></div>
     <div class="presets" id="presets" role="group" aria-label="Voice preset selections">
+      <button type="button" data-preset="savedDeepDry">Saved 01 · Deep &amp; dry</button>
+      <button type="button" data-preset="savedNaturalRoom">Saved 02 · Natural pitch, light room</button>
       <button type="button" data-preset="natural">Natural Lewis</button>
       <button type="button" data-preset="elder">The Elder</button>
       <button type="button" data-preset="fireside">Fireside</button>
@@ -100,7 +102,8 @@
       <button id="saveRecipe" class="secondary">Save preset locally</button>
       <button id="loadRecipe" class="secondary">Restore saved preset</button>
     </div>
-    <p class="microtext">The WAV includes the current effects. Audio stays in your browser; only your settings are saved locally when you ask. On iPhone, use the Share menu to save the WAV to Files.</p>
+    <p class="microtext">Your two named “Saved” presets are permanently included in this app and <a href="./presets/saved-user-recipes.json" download>backed up as JSON on GitHub</a>, so clearing browser data won't erase them. Additional “Save preset locally” storage is specific to this browser and device.</p>
+    <p class="microtext">The WAV includes the current effects. Audio stays in your browser; only your settings are saved locally when you ask. On iPhone, use the Share menu to save the WAV to Files. To keep this app handy, open it in Safari and choose Share → Add to Home Screen.</p>
   </section>
 
   <section class="panel learning" aria-label="What each control means">
