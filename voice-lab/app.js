@@ -32,6 +32,18 @@ const DEFAULTS = Object.freeze({
   reverb: 0, echo: 0, echoTime: 240, output: 0,
 });
 const PRESETS = {
+  savedDeepDry: {
+    pitch: -1.5, formant: -1.15, speed: 0.88,
+    bass: 12, presence: -5, air: 5, highpass: 30,
+    compression: 1, threshold: -36,
+    reverb: 0, echo: 0, echoTime: 80, output: 0,
+  },
+  savedNaturalRoom: {
+    pitch: 0, formant: -1.25, speed: 1,
+    bass: 12, presence: -5, air: 5, highpass: 30,
+    compression: 1, threshold: -36,
+    reverb: 8, echo: 4, echoTime: 80, output: 0,
+  },
   natural: {...DEFAULTS},
   elder: {...DEFAULTS, pitch: -1.5, formant: -1.15, speed: .88, bass: 1.5, presence: -1, compression: 1.8},
   fireside: {...DEFAULTS, pitch: -.75, formant: -.6, speed: .92, bass: 2.5, presence: 1.5, compression: 2.2, threshold: -24, reverb: 9},
