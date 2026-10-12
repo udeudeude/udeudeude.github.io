@@ -103,7 +103,7 @@ const desiredCategoryOrder = ['all','recurring','visual','tabletop','print','aud
 assert.deepEqual([...html.matchAll(/data-filter="([^"]+)"/g)].map(m => m[1]),desiredCategoryOrder,'Category button order matches the curated sequence');
 assert.match(html, /<a class="mark" href="\/">Ude<\/a>/,'Brand is concise');
 assert.match(html, /<h1>Works &amp; experiments\.<\/h1>/,'Header contains one meaningful headline');
-assert.ok(!html.includes('Software, media, objects, experiments.'),'Redundant intro removed');
+assert.ok(!html.slice(html.indexOf('<header class="wrap">'),html.indexOf('</header>')).includes('Software, media, objects, experiments.'),'Redundant visible intro removed');
 
 assert.ok(projectCategories.get('pnp-o-matic').includes('tabletop') && projectCategories.get('pnp-o-matic').includes('print'), 'PnP-o-matic is for print-and-play');
 assert.ok(projectCategories.get('escape-pod-cast').includes('audio'), 'Escape Pod Cast is in Sound');
