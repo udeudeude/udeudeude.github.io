@@ -2,7 +2,9 @@
 
 A **producer-only** audio-processing tool for *Th’die’s Cast*. It is **not** a gameplay companion or a condition for listening to the podcast.
 
-Open `https://udeudeude.github.io/voice-lab/` in Safari or another modern browser. No account or server-side audio processing.
+Open `https://udeudeude.github.io/voice-lab/?release=kokoro-54-v2` in Safari or another modern browser. The release-specific address bypasses older Safari cache entries. No account or server-side audio processing.
+
+**October 2026 Safari cache fix:** We switched the static assets to versioned URLs, and the service worker now fetches a new app version from the network when online, using its cache only as an offline fallback. The selected Kokoro library voice is the default audio source, and changing language, gender, or voice loads its recording automatically. The previous Lewis-first audio behavior was confusing and has been replaced.
 
 ## Saved for later
 
