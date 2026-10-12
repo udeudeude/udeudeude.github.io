@@ -121,11 +121,7 @@ async function initializeVoiceBrowser() {
     $('genderSelect').value='all';
     language.disabled=false;$('genderSelect').disabled=false;
     chooseAndRenderVoiceBrowser(false);
-    // Show a genuinely different voice on first visit instead of default Lewis.
-    if(eligibleVoices().some(v=>v.id==='af_heart')) {
-      $('voiceSelect').value='af_heart';
-      updateVoiceBrowserState();
-    }
+    // The catalogue defaults to British Alice: immediately audibly distinct from Lewis.
     try {
       const m=await fetch(VOICE_SAMPLE_MANIFEST_URL,{cache:'no-store'});
       if(!m.ok)throw Error('Samples not yet published');
