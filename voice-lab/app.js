@@ -26,9 +26,12 @@ const SOURCES = {
   },
 };
 
-const VOICE_CATALOG_URL = './voice-catalog.json?rev=kokoro-54-v2';
-const VOICE_SAMPLE_MANIFEST_URL = './voice-samples/manifest.json';
-const VOICE_SAMPLE_ROOT = './voice-samples/';
+// Resolve assets relative to this module, not the HTML page. This keeps
+// the alternate cache-free entry point connected to the same audio library.
+const LAB_ROOT = new URL('./', import.meta.url);
+const VOICE_CATALOG_URL = new URL('voice-catalog.json?rev=kokoro-54-v3', LAB_ROOT).href;
+const VOICE_SAMPLE_MANIFEST_URL = new URL('voice-samples/manifest.json', LAB_ROOT).href;
+const VOICE_SAMPLE_ROOT = new URL('voice-samples/', LAB_ROOT).href;
 let voiceCatalog = null;
 let availableVoiceIds = null;
 let filteredVoices = [];
@@ -118,6 +121,11 @@ async function initializeVoiceBrowser() {
     $('genderSelect').value='all';
     language.disabled=false;$('genderSelect').disabled=false;
     chooseAndRenderVoiceBrowser(false);
+    // Show a genuinely different voice on first visit instead of default Lewis.
+    if(eligibleVoices().some(v=>v.id==='af_heart')) {
+      $('voiceSelect').value='af_heart';
+      updateVoiceBrowserState();
+    }
     try {
       const m=await fetch(VOICE_SAMPLE_MANIFEST_URL,{cache:'no-store'});
       if(!m.ok)throw Error('Samples not yet published');
@@ -409,7 +417,7 @@ async function switchSide(side){
 
 function workerLoad(pcm){
   if(!worker){
-    worker=new Worker('./engine-worker.js?rev=kokoro-54-v2');
+    worker=new Worker(new URL('engine-worker.js?rev=kokoro-54-v3', LAB_ROOT));
     worker.onmessage=receiveWorker;
     worker.onerror=e=>{setMessage(`Voice DSP worker error: ${e.message}`,true);taskRunning=false;};
   }
@@ -686,4 +694,6 @@ initializeVoiceBrowser().then(ready=>{
   $('sampleSelect').value='berengar-reference';
   return loadSelected();
 }).catch(error=>setMessage('Voice library initialization failed: '+error.message,true));
-if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{});}
+if('serviceWorker' in navigator && location.pathname.startsWith(LAB_ROOT.pathname)) {
+  navigator.serviceWorker.register(new URL('sw.js', LAB_ROOT)).catch(()=>{});
+}
