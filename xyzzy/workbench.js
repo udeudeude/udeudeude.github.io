@@ -243,6 +243,83 @@
       all.filter(p=>p.group==='local').length + ' locally added)';
   }
 
+  function renderBacklog(project) {
+    const section = node('section','backlog');
+    const sourced = Array.isArray(project.tasks) ? project.tasks : [];
+    const userTasks = Array.isArray(customTodos[project.id]) ? customTodos[project.id] : [];
+    const done = new Set(Array.isArray(completed[project.id]) ? completed[project.id] : []);
+    const total = sourced.length + userTasks.length;
+    const open = sourced.filter((item,i)=>!done.has('source-'+i)).length +
+      userTasks.filter(item=>!done.has(item.id)).length;
+    section.append(node('h3','', 'Backlog / to-dos · ' + open + (total ? ' open of ' + total : ' recorded')));
+    if (total) {
+      const list = node('ul','backlog-items');
+      const entries = [
+        ...sourced.map((text,i)=>({id:'source-'+i,text,editable:false})),
+        ...userTasks.map(item=>({...item,editable:true}))
+      ];
+      for(const item of entries) {
+        const li=node('li');
+        const label=node('label');
+        const check=node('input');
+        check.type='checkbox';
+        check.checked=done.has(item.id);
+        check.setAttribute('aria-label','Complete: '+item.text);
+        check.addEventListener('change',()=>{
+          if(check.checked) done.add(item.id);
+          else done.delete(item.id);
+          completed[project.id]=[...done];
+          save();refresh();
+        });
+        const wording=node('span',check.checked?'done':'',item.text);
+        label.append(check,wording);
+        li.append(label);
+        if(item.editable){
+          const remove=node('button','remove-task','×');
+          remove.type='button';remove.title='Remove this locally saved task';
+          remove.setAttribute('aria-label','Remove task: '+item.text);
+          remove.addEventListener('click',()=>{
+            customTodos[project.id]=(customTodos[project.id]||[]).filter(x=>x.id!==item.id);
+            completed[project.id]=(completed[project.id]||[]).filter(x=>x!==item.id);
+            save();refresh();
+          });
+          li.append(remove);
+        }
+        list.append(li);
+      }
+      section.append(list);
+    } else {
+      section.append(node('p','backlog-empty','No recorded to-dos yet. Add one below or open the project’s issue tracker.'));
+    }
+    const tools=node('div','backlog-tools');
+    const form=node('form');
+    const input=node('input');input.name='todo';input.type='text';
+    input.required=true;input.maxLength=300;
+    input.placeholder='Add a private to-do';
+    input.setAttribute('aria-label','Add a to-do for '+project.name);
+    const button=node('button','','Add');button.type='submit';
+    form.append(input,button);
+    form.addEventListener('submit',event=>{
+      event.preventDefault();
+      const text=input.value.trim();
+      if(!text)return;
+      if(!customTodos[project.id])customTodos[project.id]=[];
+      customTodos[project.id].push({
+        id:'custom-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2),
+        text:text.slice(0,300)
+      });
+      save();message.textContent='To-do saved in this browser for '+project.name+'.';
+      refresh();
+    });
+    tools.append(form);
+    const repo = (project.repos||[]).find(href=>href.includes('github.com/'));
+    if(repo){
+      addLink(tools,'GitHub issues ↗',repo+'/issues');
+    }
+    section.append(tools);
+    return section;
+  }
+
   function renderCard(project) {
     const card = node('article','tile');
     if(project.visual){
