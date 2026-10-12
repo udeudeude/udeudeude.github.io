@@ -28,7 +28,7 @@ const SOURCES = {
 
 // Resolve assets relative to this module, not the HTML page. This keeps
 // the alternate cache-free entry point connected to the same audio library.
-const LAB_ROOT = new URL('./', import.meta.url);
+const LAB_ROOT = new URL('./', document.querySelector('script[src*="app.js"]')?.src || location.href);
 const VOICE_CATALOG_URL = new URL('voice-catalog.json?rev=kokoro-54-v3', LAB_ROOT).href;
 const VOICE_SAMPLE_MANIFEST_URL = new URL('voice-samples/manifest.json', LAB_ROOT).href;
 const VOICE_SAMPLE_ROOT = new URL('voice-samples/', LAB_ROOT).href;
