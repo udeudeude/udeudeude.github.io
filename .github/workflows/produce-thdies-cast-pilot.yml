@@ -1,0 +1,119 @@
+name: Publish Thdie's Cast five-episode pilot
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.thdies-cast-pilot-source.b64'
+      - '.github/workflows/produce-thdies-cast-pilot.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: thdies-cast-pilot-production
+  cancel-in-progress: false
+
+jobs:
+  produce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 95
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: thdies-cast/production/requirements.txt
+      - name: Unpack source and check manuscript provenance
+        run: |
+          set -euo pipefail
+          base64 -d .thdies-cast-pilot-source.b64 > /tmp/thdies-cast-pilot-source.tar.gz
+          echo '5c59b23932494c2d043a0eef8dd6135a272323a2bc1dd54a865d0f947f262288  /tmp/thdies-cast-pilot-source.tar.gz' | sha256sum -c -
+          tar -tzf /tmp/thdies-cast-pilot-source.tar.gz
+          tar -xzf /tmp/thdies-cast-pilot-source.tar.gz
+          python -m py_compile thdies-cast/production/render_pilot_season.py
+          test "$(grep -c '^### [0-9][0-9] | ' thdies-cast/production/wilderness_encounters.md)" -eq 80
+      - name: Install synthesis and sound tools
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg espeak-ng
+          python -m pip install --upgrade pip
+          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -r thdies-cast/production/requirements.txt
+          ffmpeg -hide_banner -filters | grep rubberband
+      - name: Render five complete episodes, cover and Apple-compatible RSS
+        run: |
+          set -euo pipefail
+          python thdies-cast/production/render_pilot_season.py
+      - name: Validate media, manifest and enclosure metadata
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          import xml.etree.ElementTree as ET
+          from PIL import Image
+          root=Path('thdies-cast')
+          feed=ET.parse(root/'feed.xml').getroot()
+          episodes=feed.findall('./channel/item')
+          assert len(episodes)==5, 'Exactly five episodes in RSS'
+          meta=json.loads((root/'pilot-manifest.json').read_text())
+          assert meta['host_character']=='Brother Rubicon'
+          settings=meta['saved_voice_settings']
+          assert settings['pitch']==0 and settings['formant']==-1.25
+          assert settings['speed']==1 and settings['bass']==12
+          assert settings['reverb']==8 and settings['echo']==4
+          entries=meta['episodes']
+          assert entries['01-d20.mp3']['outcome_count']==360
+          assert entries['02-2d6.mp3']['outcome_count']==300
+          assert entries['03-d100.mp3']['outcome_count']==300
+          assert entries['04-wilderness-oracle.mp3']['encounters']==80
+          assert entries['04-wilderness-oracle.mp3']['spoken_titles'] is False
+          assert entries['05-ten-minutes-to-disaster.mp3']['end_cue_start_seconds']==600
+          pixels=Image.open(root/'cover.png')
+          assert pixels.size==(1800,1800) and pixels.mode=='RGB'
+          ns='{http://www.itunes.com/dtds/podcast-1.0.dtd}'
+          for episode in episodes:
+            enclosure=episode.find('enclosure')
+            assert enclosure is not None
+            url=enclosure.attrib['url']
+            assert url.startswith('https://udeudeude.github.io/thdies-cast/audio/')
+            filename=url.split('/')[-1]
+            target=root/'audio'/filename
+            assert target.exists() and target.stat().st_size>100000
+            assert int(enclosure.attrib['length'])==target.stat().st_size
+            assert enclosure.attrib['type']=='audio/mpeg'
+            assert episode.find(ns+'duration') is not None
+          files=list((root/'audio').glob('*.mp3'))
+          assert len(files)==5 and sum(x.stat().st_size for x in files)<450*1024*1024
+          print('Validated five playable enclosures:',[(p.name,round(p.stat().st_size/1048576,2)) for p in files])
+          PY
+          for track in thdies-cast/audio/*.mp3; do
+            ffprobe -v error -show_entries format=duration,size -of csv=p=0 "$track"
+          done
+      - name: Publish pilot media and feed to GitHub Pages source branch
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add thdies-cast/production/ thdies-cast/audio/*.mp3 thdies-cast/feed.xml thdies-cast/index.html thdies-cast/cover.png thdies-cast/pilot-manifest.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish five narrated Thdie's Cast podcast pilot episodes and RSS feed"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - name: Back up production log and RSS artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Thdies-Cast-Pilot-Season
+          path: |
+            thdies-cast/feed.xml
+            thdies-cast/pilot-manifest.json
+            thdies-cast/cover.png
+          if-no-files-found: warn
