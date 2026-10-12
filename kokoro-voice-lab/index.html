@@ -20,7 +20,7 @@
   </header>
 
   <section class="panel player-panel" aria-label="Sample and playback">
-    <div class="panel-head"><h2>01 <span>Listen & compare</span></h2><div class="live-status sr-only" id="loadStatus" aria-live="polite"></div></div>
+    <div class="panel-head"><h2><span>Listen</span></h2><div class="live-status sr-only" id="loadStatus" aria-live="polite"></div></div>
     <div class="voice-browser" aria-label="Kokoro voice selection">
       <span class="sr-only" id="voiceBrowseHeading">Kokoro voice library</span>
       <span class="sr-only" id="voiceCount">54 voices</span>
@@ -78,12 +78,12 @@
       <output id="timeDisplay" class="timer" aria-label="Playback position">0:00 / 0:00</output>
     </div>
     <input type="range" id="seek" min="0" max="1000" step="1" value="0" aria-label="Seek position in the current recording">
-    <div class="ab-row"><span class="field-label">Instant A/B comparison</span><div class="ab-group" role="group" aria-label="Compare original and processed audio"><button id="btnA" class="ab active" aria-pressed="true">A · Original</button><button id="btnB" class="ab" aria-pressed="false">B · Processed</button></div></div>
+    <div class="ab-row"><div class="ab-group" role="group" aria-label="Compare original and processed audio"><button id="btnA" class="ab active" aria-pressed="true">A · Original</button><button id="btnB" class="ab" aria-pressed="false">B · Processed</button></div></div>
     <p class="hint sr-only" id="renderStatus" aria-live="polite"></p>
   </section>
 
   <section class="panel" id="voicePanel" aria-labelledby="voiceHeading">
-    <div class="panel-head"><h2 id="voiceHeading">02 <span>Voice & vocal tract</span></h2><button class="small" id="resetVoice">Reset voice</button></div>
+    <div class="panel-head"><h2 id="voiceHeading"><span>Voice</span></h2><button class="small" id="resetVoice">Reset voice</button></div>
     <div class="controls" id="voiceControls">
       <div class="control" data-setting="pitch" data-unit="st"><div class="control-head"><label for="pitch">Pitch <span class="info" title="Raises or lowers fundamental frequency without changing duration">ⓘ</span></label><output for="pitch">0 st</output></div><input type="range" id="pitch" min="-6" max="4" step="0.25" value="0"><div class="ends"><span>Lower</span><span>Higher</span></div></div>
       <div class="control" data-setting="formant" data-unit="st"><div class="control-head"><label for="formant">Formant shift <span class="info" title="Moves speech spectral envelope peaks without intentionally changing the fundamental pitch">ⓘ</span></label><output for="formant">0 st</output></div><input type="range" id="formant" min="-5" max="5" step="0.05" value="0"><div class="ends"><span>Darker / larger vocal tract</span><span>Brighter / smaller</span></div></div>
@@ -93,7 +93,7 @@
   </section>
 
   <section class="panel" aria-label="Tone, dynamics and acoustic space">
-    <div class="panel-head"><h2>03 <span>Color, dynamics & room</span></h2><button class="small" id="resetEffects">Reset effects</button></div>
+    <div class="panel-head"><h2><span>Effects</span></h2><button class="small" id="resetEffects">Reset effects</button></div>
     <details open><summary>Equalization <span>Five useful filters</span></summary><div class="controls two-column">
       <div class="control"><div class="control-head"><label for="highpass">Low cut</label><output for="highpass">70 Hz</output></div><input id="highpass" type="range" min="30" max="180" step="5" value="70"><div class="ends"><span>Full bass</span><span>Reduce rumble</span></div></div>
       <div class="control"><div class="control-head"><label for="bass">Body (180 Hz)</label><output for="bass">0 dB</output></div><input id="bass" type="range" min="-12" max="12" step="0.5" value="0"><div class="ends"><span>Lean</span><span>Warm</span></div></div>
@@ -113,7 +113,7 @@
   </section>
 
   <section class="panel" aria-label="Presets and output">
-    <div class="panel-head"><h2>04 <span>Presets & export</span></h2></div>
+    <div class="panel-head"><h2><span>Presets & export</span></h2></div>
     <div class="presets" id="presets" role="group" aria-label="Voice preset selections">
       <button type="button" data-preset="savedDeepDry">Saved 01 · Deep &amp; dry</button>
       <button type="button" data-preset="savedNaturalRoom">Saved 02 · Natural pitch, light room</button>
@@ -131,15 +131,6 @@
     </div>
   </section>
 
-  <details class="panel learning" aria-label="What each control means"><summary>Reference</summary>
-    <div class="panel-head"><h2>05 <span>Reference</span></h2></div>
-    <div class="mini-grid">
-      <div><h3>Pitch</h3><p>How quickly a voice's source vibrates. Changes its musical height.</p></div>
-      <div><h3>Formants</h3><p>Frequency areas emphasized by a vocal tract. They distinguish vowels and shape perceived voice size.</p></div>
-      <div><h3>Tempo</h3><p>How fast the words pass. It can change without forcing the pitch upward or downward.</p></div>
-      <div><h3>EQ</h3><p>Broadly boosts or cuts existing frequencies. It doesn't actively move the voice's original vowel resonances.</p></div>
-    </div>
-  </details>
 </div>
 </body>
 </html>
