@@ -143,7 +143,10 @@ assert.ok(read('voice-lab/sw.js').includes('kokoro-voice-lab-shell-v7'),'Updated
 assert.ok(read('voice-lab/sw.js').includes('fetch(req).then(response=>'),'Live interface is fetched network-first to prevent stuck older versions');
 assert.ok(lab.includes('app.js?rev=voice-lab-compact-v1'),'Current JavaScript bypasses stale Safari service-worker asset caches');
 assert.ok(lab.includes('style.css?rev=voice-lab-compact-v1'),'Current stylesheet bypasses stale Safari service-worker asset caches');
-assert.ok(lab.includes('54 recordings · October 2026 edition'),'Visible version badge distinguishes the new UI from old Lewis-only interface');
+assert.ok(!lab.includes('release-marker') && !freshLab.includes('release-marker'),'Unnecessary edition labels are absent');
+assert.ok(lab.includes('class="sr-only" id="voiceAvailability"'),'Routine availability is not visually intrusive');
+assert.ok(lab.includes('<details class="extra-audio">') && freshLab.includes('<details class="extra-audio">'),'Other audio is collapsed by default');
+assert.ok(!lab.includes('<footer>') && !freshLab.includes('<footer>'),'Repetitive app footer is removed');
 assert.equal(voiceCatalog.defaultVoice,'bf_alice','First recorded sample demonstrates another voice instead of Lewis');
 assert.ok(lab.includes('<option value="voice-library" selected>'),'The voice library is the primary audio source');
 assert.ok(browserJS.includes("initializeVoiceBrowser().then(ready=>") && browserJS.includes('return loadLibraryVoice();'),'Initial voice loads automatically');
