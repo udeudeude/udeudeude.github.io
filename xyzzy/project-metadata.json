@@ -1,0 +1,395 @@
+{
+  "version": 1,
+  "sourceNotes": "Project README files and the portfolio TODO.md, inspected 2026-10-12. Task summaries are manually curated, not live issue states.",
+  "projects": {
+    "living-patterns": {
+      "name": null,
+      "links": [
+        {
+          "label": "Subscribe (RSS)",
+          "url": "https://udeudeude.github.io/Living-Patterns-Podcast/feed.xml"
+        },
+        {
+          "label": "Production notes",
+          "url": "https://github.com/udeudeude/Living-Patterns-Podcast/blob/main/PRODUCTION.md"
+        },
+        {
+          "label": "Editorial plan",
+          "url": "https://github.com/udeudeude/Living-Patterns-Podcast/blob/main/EDITORIAL_PLAN.md"
+        }
+      ],
+      "tasks": [
+        "Review and refine upcoming Living Patterns episodes and editorial plan."
+      ]
+    },
+    "orchestral-maneuvers-dark": {
+      "name": null,
+      "links": [
+        {
+          "label": "Subscribe (RSS)",
+          "url": "https://om-weekly-podcast.workspace-310067.chatgpt.site/feed.xml"
+        }
+      ],
+      "tasks": [
+        "Consider a durable podcast hosting URL and feed."
+      ]
+    },
+    "wisdom-watch": {
+      "name": null,
+      "links": [],
+      "tasks": [
+        "Verify calendar subscriptions and ongoing releases across common calendar apps."
+      ]
+    },
+    "lighthouse": {
+      "name": null,
+      "links": [
+        {
+          "label": "Web app",
+          "url": "https://udeudeude.github.io/LightHouse/"
+        }
+      ],
+      "tasks": [
+        "Replace provisional art with photos of the physical game in use."
+      ]
+    },
+    "anaglyph-friends": {
+      "name": null,
+      "links": [
+        {
+          "label": "Mac releases",
+          "url": "https://github.com/udeudeude/Anaglyph-and-Friends/releases"
+        },
+        {
+          "label": "Hosted web app",
+          "url": "https://anaglyph-and-friends.onrender.com/"
+        }
+      ],
+      "tasks": [
+        "Add real sample output photographs or screenshots for the 3D formats."
+      ]
+    },
+    "print-pocketmod": {
+      "name": null,
+      "links": [
+        {
+          "label": "Releases",
+          "url": "https://github.com/udeudeude/Print-as-PocketMod-for-Mac/releases"
+        }
+      ],
+      "tasks": [
+        "Photograph a printed, folded PocketMod and check paper output."
+      ]
+    },
+    "tales-from-the-loop-toolkit": {
+      "name": null,
+      "links": [
+        {
+          "label": "Toolkit instructions",
+          "url": "/tales-from-the-loop/"
+        },
+        {
+          "label": "Read example",
+          "url": "https://homebrewery.naturalcrit.com/share/1mDaK9DdiNQZ"
+        },
+        {
+          "label": "Sample mystery",
+          "url": "https://homebrewery.naturalcrit.com/share/JMsfKInsRizr"
+        }
+      ],
+      "tasks": [
+        "Add authentic finished Homebrewery page examples."
+      ]
+    },
+    "starfinder-homebrewery-toolkit": {
+      "name": null,
+      "links": [
+        {
+          "label": "Read the populated toolkit",
+          "url": "https://homebrewery.naturalcrit.com/share/u41Swqyrcj1W"
+        },
+        {
+          "label": "Toolkit source file",
+          "url": "/starfinder/downloads/starfinder-homebrewery-toolkit-v7.md"
+        }
+      ],
+      "tasks": [
+        "Add rendered examples of custom Starfinder pages."
+      ]
+    },
+    "pnp-o-matic": {
+      "name": null,
+      "links": [
+        {
+          "label": "Detailed backlog",
+          "url": "https://github.com/udeudeude/PnP-o-matic/blob/main/BACKLOG.md"
+        },
+        {
+          "label": "Mac verification checklist",
+          "url": "https://github.com/udeudeude/PnP-o-matic/blob/main/BACKLOG.md"
+        }
+      ],
+      "tasks": [
+        "Verify front/back registration on actual duplex printers.",
+        "Inspect layouts on 13-inch and 15-inch Mac windows.",
+        "Publish an installer release after physical testing."
+      ]
+    },
+    "asheville-golocal-maps": {
+      "name": null,
+      "links": [
+        {
+          "label": "Google Maps setup guide",
+          "url": "/golocal/"
+        }
+      ],
+      "tasks": [
+        "Rebuild shared GoLocal list under separate project Google account.",
+        "Check locations and links before releasing public saved-list URL."
+      ]
+    },
+    "escape-pod-cast": {
+      "name": null,
+      "links": [
+        {
+          "label": "Latest Mac releases",
+          "url": "https://github.com/udeudeude/Escape-Pod-Cast/releases"
+        },
+        {
+          "label": "Development backlog",
+          "url": "https://github.com/udeudeude/Escape-Pod-Cast/blob/main/BACKLOG.md"
+        },
+        {
+          "label": "Mac test checklist",
+          "url": "https://github.com/udeudeude/Escape-Pod-Cast/blob/main/MAC-CHECKS.md"
+        }
+      ],
+      "tasks": [
+        "Review remaining items in the native Mac test checklist.",
+        "Review the project backlog before the next release."
+      ]
+    },
+    "touchbarpalooza": {
+      "name": null,
+      "links": [
+        {
+          "label": "Latest downloads",
+          "url": "https://github.com/udeudeude/TouchBarpalooza/releases"
+        },
+        {
+          "label": "Distribution notes",
+          "url": "https://github.com/udeudeude/TouchBarpalooza/blob/main/DISTRIBUTION.md"
+        }
+      ],
+      "tasks": [
+        "Photograph or record Touch Bar running on real hardware."
+      ]
+    },
+    "sorting-cards": {
+      "name": null,
+      "links": [],
+      "tasks": [
+        "Prepare a printable example and hands-on demonstration."
+      ]
+    },
+    "biofeedback-play": {
+      "name": null,
+      "links": [],
+      "tasks": [
+        "Test Muse connection reliability with the physical headband.",
+        "Review battery and sensor contact feedback in the UI.",
+        "Capture real EEG and sensor views for publication."
+      ]
+    },
+    "tv-b-goner": {
+      "name": null,
+      "links": [
+        {
+          "label": "Open web controller",
+          "url": "https://udeudeude.github.io/TV-b-goner/"
+        }
+      ],
+      "tasks": [
+        "Test the headphone-jack IR emitter with additional devices.",
+        "Expand unsupported IR protocol coverage as needed."
+      ]
+    },
+    "ai-kindle": {
+      "name": null,
+      "links": [],
+      "tasks": [
+        "Publish a practical account of what works on the Kindle."
+      ]
+    },
+    "supercollider": {
+      "name": null,
+      "links": [],
+      "tasks": [
+        "Publish playable audio from SuperCollider experiments."
+      ]
+    },
+    "lewis-voice-lab": {
+      "name": null,
+      "links": [
+        {
+          "label": "Voice Lab web app",
+          "url": "https://udeudeude.github.io/kokoro-voice-lab/"
+        },
+        {
+          "label": "Voice preset source",
+          "url": "https://github.com/udeudeude/udeudeude.github.io/tree/main/voice-lab/presets"
+        }
+      ],
+      "tasks": []
+    },
+    "moire-lab": {
+      "name": "Moiré Lab",
+      "links": [
+        {
+          "label": "Online workshop",
+          "url": "https://moire-lab.onrender.com/"
+        },
+        {
+          "label": "Source and experiments",
+          "url": "https://github.com/udeudeude/Moire-Lab"
+        },
+        {
+          "label": "Open backlog",
+          "url": "https://github.com/udeudeude/Moire-Lab/blob/main/README.md"
+        }
+      ],
+      "tasks": [
+        "Develop an editable book-spread layout and acetate registration workflow.",
+        "Add printable PDF output, beyond SVG experiments.",
+        "Photograph physical paper-and-acetate tests."
+      ]
+    },
+    "repo-th-die-s-cast": {
+      "name": "Th’die’s Cast",
+      "links": [
+        {
+          "label": "Listen to the pilot episodes",
+          "url": "https://udeudeude.github.io/thdies-cast/"
+        },
+        {
+          "label": "Subscribe (RSS)",
+          "url": "https://udeudeude.github.io/thdies-cast/feed.xml"
+        },
+        {
+          "label": "Pilot master source",
+          "url": "https://github.com/udeudeude/udeudeude.github.io/tree/main/thdies-cast"
+        },
+        {
+          "label": "Show Bible",
+          "url": "https://github.com/udeudeude/Th-die-s-Cast/blob/main/docs/SHOW_BIBLE.md"
+        },
+        {
+          "label": "Episode catalog",
+          "url": "https://github.com/udeudeude/Th-die-s-Cast/blob/main/docs/EPISODE_CATALOG.md"
+        }
+      ],
+      "tasks": [
+        "Complete the planned episode catalog and rights checks.",
+        "Review the companion-app size research backlog."
+      ]
+    },
+    "repo-play-by-ear-gamecast": {
+      "name": "Play by Ear · GameCast",
+      "links": [
+        {
+          "label": "Subscribe to test feed (RSS)",
+          "url": "https://play-by-ear-gamecast-lab.onrender.com/feed.xml"
+        }
+      ],
+      "tasks": [
+        "Check episode artwork and chapter timing on iOS 18.",
+        "Test Lock Screen images, offline play and stereo-separated listening.",
+        "Investigate podcast timestamp links and branching behavior."
+      ]
+    },
+    "repo-pocket-operations-mobile-depot": {
+      "name": "Pocket Operations Mobile Depot",
+      "links": [
+        {
+          "label": "Web app",
+          "url": "https://udeudeude.github.io/Pocket-Operations-Mobile-Depot/"
+        },
+        {
+          "label": "PO-35 Bridge",
+          "url": "https://udeudeude.github.io/Pocket-Operations-Mobile-Depot/po35-bridge/"
+        },
+        {
+          "label": "Bridge research",
+          "url": "https://github.com/udeudeude/Pocket-Operations-Mobile-Depot/blob/main/po35-bridge/RESEARCH.md"
+        }
+      ],
+      "tasks": [
+        "Validate two-channel PO-35 backup captures using proper stereo audio hardware.",
+        "Verify a recorded WAV by successfully restoring it to the PO-35."
+      ]
+    },
+    "repo-pocket-operations-manual": {
+      "name": "Pocket Operations Manual",
+      "links": [
+        {
+          "label": "Interactive PO-35 Speak simulator",
+          "url": "https://udeudeude.github.io/Pocket-Operations-Manual/"
+        },
+        {
+          "label": "Fidelity audit",
+          "url": "https://github.com/udeudeude/Pocket-Operations-Manual/blob/main/docs/FIDELITY.md"
+        }
+      ],
+      "tasks": [
+        "Audit unimplemented PO-35 hardware functions against the physical instrument."
+      ]
+    },
+    "repo-incredible-expanding-gospel": {
+      "name": "Incredible Expanding Gospel",
+      "links": [
+        {
+          "label": "Master chronology",
+          "url": "https://github.com/udeudeude/Incredible-Expanding-Gospel/blob/main/chronology.md"
+        },
+        {
+          "label": "Event schema",
+          "url": "https://github.com/udeudeude/Incredible-Expanding-Gospel/blob/main/events/TEMPLATE.md"
+        }
+      ],
+      "tasks": [
+        "Finalize the event-file schema before expanding the individual chronology files."
+      ]
+    },
+    "repo-bright-lines": {
+      "name": "Bright Lines",
+      "links": [],
+      "tasks": []
+    },
+    "repo-blue-driving": {
+      "name": "Blue Driving",
+      "links": [],
+      "tasks": []
+    },
+    "repo-udeudeude-github-io": {
+      "name": "Portfolio site",
+      "links": [
+        {
+          "label": "Public homepage",
+          "url": "/"
+        },
+        {
+          "label": "Site TODO",
+          "url": "https://github.com/udeudeude/udeudeude.github.io/blob/main/TODO.md"
+        },
+        {
+          "label": "Personal workbench",
+          "url": "/xyzzy/"
+        }
+      ],
+      "tasks": [
+        "Continue authentic project-media gathering.",
+        "Verify new releases and project links periodically."
+      ]
+    }
+  }
+}
