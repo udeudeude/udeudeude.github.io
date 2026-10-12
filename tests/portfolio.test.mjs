@@ -135,7 +135,8 @@ assert.ok(allVoices.some(v=>v.id==='bm_lewis'),'Lewis remains selectable');
 assert.ok(browserJS.includes('const language = $(\'languageSelect\').value;') && browserJS.includes('const profile = $(\'genderSelect\').value;'),'Both filters are used to derive the voice selection');
 assert.ok(browserJS.includes("initializeVoiceBrowser();") && browserJS.includes('browseVoices'),'The voice browser initializes and supports previous/next');
 assert.ok(browserJS.includes("await decodeOriginal(bytes,info.voice.name"),'Selecting a voice feeds the existing audio editor');
-assert.ok(read('voice-lab/sw.js').includes('lewis-voice-lab-shell-v3'),'Updated mobile app shell cache is used');
+assert.ok(read('voice-lab/sw.js').includes('lewis-voice-lab-shell-v4'),'Updated mobile app shell cache is used');
+assert.ok(read('voice-lab/sw.js').includes('SHELL_URLS.has(req.url)'),'Dynamic voice MP3s and manifest are not cached in the offline shell');
 
 
 assert.ok(lab.includes('data-preset="savedDeepDry"') && lab.includes('data-preset="savedNaturalRoom"'), 'Both user recipes are selectable in Voice Lab');
