@@ -1,3 +1,18 @@
+## October 12, 2026 access and unlisted workbench
+
+- [x] Keep requirements separate from interest categories.
+- [x] Add immediate phone-use and browser-only views.
+- [x] Add toggles to exclude Mac, phone, printer and specialist-hardware requirements.
+- [x] Explain equipment needs on every public project card.
+- [x] Preserve shareable URL filters and project deep links.
+- [x] Build an unlinked, noindex project workbench from all curated work plus public GitHub repositories.
+- [x] Add local-only private repo/project tiles and editable ChatGPT, Work and Codex links.
+- [x] Add local backup export/import; do not publish private conversation links.
+- [ ] Populate per-project ChatGPT and Codex links by copying their direct URLs from the user's own ChatGPT sessions.
+- [ ] Add the private gear-harness repository via the local addition form if desired; never seed it in the public snapshot.
+- [ ] Consider proper authentication or a private host if cloud-synced links and access control become necessary.
+- [ ] Revisit readiness labels as apps gain new browser editions or public demos.
+
 # Portfolio TODO
 
 ## October 8, 2026 category and project additions

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta name="googlebot" content="noindex,nofollow,noarchive,nosnippet">
+  <meta name="theme-color" content="#09141d">
+  <title>Workbench / Ude Projects</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <style>
+    :root{color-scheme:dark;--bg:#09141d;--panel:#17354a;--line:#ffffff28;--text:#effaff;--quiet:#aec8d4;--accent:#a7e5ee}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    .wrap{width:min(1190px,calc(100% - 26px));margin:0 auto}
+    header{padding:30px 0 20px;border-bottom:1px solid var(--line)}
+    .eyebrow{font-size:.76rem;text-transform:uppercase;letter-spacing:.13em;font-weight:800;color:var(--accent)}
+    h1{font-size:clamp(2.6rem,7vw,5.4rem);line-height:1;margin:10px 0;letter-spacing:-.065em}
+    .subtitle{color:var(--quiet);max-width:74ch;margin:12px 0 0}
+    .warning{margin:19px 0 8px;border-left:3px solid var(--accent);padding:7px 0 7px 14px;color:var(--quiet);font-size:.84rem}
+    main{padding:20px 0 50px}
+    a{color:#d0f2f7;text-underline-offset:3px}
+    button,input,select{font:inherit}
+    button{cursor:pointer}
+    a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #c5f3fd;outline-offset:3px}
+    .toolbar{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:0 0 14px}
+    .toolbar input[type=search]{flex:1 1 230px;min-width:0}
+    input,select{background:#0b2230;color:var(--text);border:1px solid #799aaa80;border-radius:7px;padding:11px 12px;min-height:44px}
+    button,.action{border:1px solid #ffffff54;color:var(--text);background:#25475c;border-radius:7px;padding:10px 12px;min-height:44px;text-decoration:none;font-size:.83rem;font-weight:730}
+    button:hover,.action:hover{background:#2e5a70}
+    button[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:#082532}
+    .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:11px 0}
+    .meta{color:var(--quiet);font-size:.8rem;margin:7px 0 18px}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .tile{background:var(--panel);border-radius:11px;overflow:hidden;min-width:0;border:1px solid #ffffff0e;display:flex;flex-direction:column}
+    .visual{height:128px;overflow:hidden;display:grid;place-items:center;background:#244b60}
+    .visual svg,.visual img{width:100%;height:100%;object-fit:cover;display:block}
+    .fallback{font-weight:900;font-size:3rem;color:#cce7ef;background:repeating-linear-gradient(135deg,#204960,#204960 20px,#1d3e54 20px,#1d3e54 38px)}
+    .inside{padding:17px;display:flex;flex:1;flex-direction:column}
+    .kind{color:#c1dce5;text-transform:uppercase;font-size:.67rem;letter-spacing:.13em;font-weight:800}
+    h2{font-size:1.28rem;line-height:1.13;letter-spacing:-.03em;margin:8px 0 11px}
+    .summary{font-size:.83rem;color:#e6f2f7b9;margin:0 0 13px;flex:1}
+    .links{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:8px}
+    .links a{padding:8px 10px;border:1px solid #ffffff3a;border-radius:6px;text-decoration:none;background:#ffffff13;font-size:.78rem;min-height:38px;display:inline-flex;align-items:center;overflow-wrap:anywhere}
+    details{border-top:1px solid #ffffff25;padding-top:10px;margin-top:9px}
+    summary{cursor:pointer;list-style:revert;min-height:38px;font-weight:750;font-size:.84rem}
+    .personal{margin:6px 0}
+    .personal li{padding:4px 0;font-size:.83rem;overflow-wrap:anywhere}
+    .personal li button{margin-left:7px;min-height:29px;padding:3px 7px;font-size:.72rem}
+    form.edit-links{display:grid;gap:8px;margin:7px 0}
+    .edit-links input,.edit-links select{width:100%}
+    .edit-links label{font-size:.74rem;color:var(--quiet)}
+    .edit-links .row{display:grid;grid-template-columns:120px 1fr;gap:7px}
+    .add-project{border:1px solid var(--line);border-radius:8px;padding:14px;margin:12px 0 18px}
+    .add-project summary{font-size:.95rem}
+    .add-project form{display:grid;gap:8px;margin-top:10px}
+    .add-project form input{width:100%}
+    .tools{margin-top:15px;display:flex;gap:9px;flex-wrap:wrap}
+    .tools button{background:#203848}
+    .small{color:var(--quiet);font-size:.76rem}
+    #message{font-size:.82rem;color:#b9edf2;min-height:1.4rem}
+    footer{padding:14px 0 36px;color:var(--quiet);font-size:.76rem}
+    @media(max-width:890px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:620px){.grid{grid-template-columns:1fr}.visual{height:142px}.wrap{width:calc(100% - 22px)}}
+  </style>
+</head>
+<body>
+<header class="wrap">
+  <div class="eyebrow">Unlisted project workspace</div>
+  <h1>Workbench.</h1>
+  <p class="subtitle">Curated projects, the rest of the public GitHub repositories, and your own private working links, in one place.</p>
+  <p class="warning"><strong>Unlisted is not password-protected.</strong> Anyone who learns this URL can open this page. Your added private repositories, ChatGPT conversations, Work and Codex URLs are saved only in this browser, never uploaded to the public repository. Do not paste passwords or access tokens.</p>
+</header>
+<main class="wrap">
+  <div class="toolbar">
+    <input id="search" type="search" placeholder="Find projects, repos, tools…" aria-label="Search your project workbench">
+    <button id="export" type="button">Export personal links</button>
+    <button id="import-trigger" type="button">Import backup</button>
+    <input id="import-file" type="file" accept=".json,application/json" hidden>
+  </div>
+  <div class="tabs" role="group" aria-label="Project type">
+    <button data-view="all" aria-pressed="true">Everything</button>
+    <button data-view="curated" aria-pressed="false">Curated projects</button>
+    <button data-view="repos" aria-pressed="false">Other repositories</button>
+    <button data-view="local" aria-pressed="false">Personal additions</button>
+  </div>
+  <details class="add-project">
+    <summary>Add a project or private repository on this device</summary>
+    <p class="small">Items added here stay in this browser. This is also how to include a private repository without publishing its name in GitHub Pages.</p>
+    <form id="custom-form">
+      <input name="name" placeholder="Project name" aria-label="Project name" required maxlength="120">
+      <input name="url" type="url" placeholder="https://github.com/… (optional)" aria-label="Project or repository URL">
+      <input name="description" placeholder="Short note (optional)" aria-label="Short description" maxlength="300">
+      <button type="submit">Add locally</button>
+    </form>
+  </details>
+  <p class="meta" id="result-count" aria-live="polite">Loading project index…</p>
+  <p id="message" role="status" aria-live="polite"></p>
+  <section class="grid" id="projects" aria-label="All workbench projects"></section>
+  <p class="small" style="margin-top:20px">This dashboard automatically checks GitHub for new <em>public</em> repositories, with a saved snapshot as fallback. The public portfolio determines its curated tiles. A ChatGPT chat, Work document, or Codex task becomes a direct link here after you paste its URL into the corresponding project.</p>
+  <div class="tools"><button id="clear-data" type="button">Clear locally stored links and additions</button></div>
+</main>
+<footer class="wrap">Personal links are not synchronized between browsers. Export a backup if you want to move them to another device. Keep that backup private.</footer>
+<script src="/xyzzy/workbench.js" defer></script>
+</body>
+</html>

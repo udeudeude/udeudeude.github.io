@@ -19,5 +19,7 @@ jobs:
         run: npm install --no-save --no-package-lock --no-audit --no-fund playwright
       - name: Validate mobile screenshot layout at iPhone width
         run: node tests/mobile-gallery.test.mjs
+      - name: Validate device filters and unlisted workbench
+        run: node tests/access-workbench.test.mjs
       - name: Test Kokoro Voice Lab voice switching at iPhone width
         run: node tests/voice-lab-mobile.test.mjs
