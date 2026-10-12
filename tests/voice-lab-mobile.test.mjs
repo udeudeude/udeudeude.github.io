@@ -61,6 +61,24 @@ try{
   const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>window.innerWidth+2);
   assert.equal(overflow,false,'Voice browser fits an iPhone-width viewport');
   assert.deepEqual(errors,[],'No browser JavaScript exceptions');
+
+  // Real-world cache recovery path: this fresh document lives outside the
+  // old /voice-lab/ service-worker scope but shares the current editor code.
+  const fresh=await browser.newPage({
+    viewport:{width:390,height:844},isMobile:true,hasTouch:true,
+    deviceScaleFactor:1,reducedMotion:'reduce',serviceWorkers:'block'
+  });
+  const freshErrors=[];
+  fresh.on('pageerror',error=>freshErrors.push(error.message));
+  await fresh.goto('http://127.0.0.1:4186/kokoro-voice-lab/',{waitUntil:'domcontentloaded'});
+  await fresh.waitForFunction(()=>document.querySelector('#voiceAvailability')?.textContent?.includes('54 / 54'),{timeout:30000});
+  await fresh.waitForFunction(()=>document.querySelector('#fileHelp')?.textContent?.includes('Alice'),{timeout:30000});
+  assert.equal(await fresh.locator('#voiceSelect').inputValue(),'bf_alice','Fresh entry loads Alice instead of Lewis');
+  await fresh.locator('#voiceSelect').selectOption('bm_george');
+  await fresh.waitForFunction(()=>document.querySelector('#fileHelp')?.textContent?.includes('George'),{timeout:30000});
+  assert.deepEqual(freshErrors,[],'Fresh cache-recovery entry has no JavaScript exceptions');
+  await fresh.close();
+  console.log('Verified clean /kokoro-voice-lab/ URL and non-Lewis native voice switching.');
   await browser.close();browser=null;
   console.log('Kokoro voice browsing smoke test passed: 54 playable voices, gender-first and language-first filters, automatic Alice and George MP3 loading.');
 }finally{
