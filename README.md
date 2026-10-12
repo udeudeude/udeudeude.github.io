@@ -94,6 +94,16 @@ The workbench can add private repository projects and multiple **ChatGPT chat**,
 
 Important limitations: an unlisted static GitHub Pages URL is not an authentication mechanism. Search-engine `noindex` is advisory, not security. Only the locally entered links and private project records avoid public hosting; any bundled HTML, JavaScript, and public repo names remain visible to anyone who discovers the route. Imported backups contain private links and must be protected.
 
+### Workbench links and backlog
+
+`xyzzy/project-metadata.json` supplements the 18 curated public tiles and additional public repositories with known **subscription feeds**, **live demos**, **app releases**, reference downloads and **sourced outstanding tasks**. The title of the tabletop-utility podcast is spelled **Th’die’s Cast**. The workbench provides direct RSS subscriptions for Living Patterns, Orchestral Maneuvers in the Dark, Th’die’s Cast and the experimental Play by Ear · GameCast.
+
+The public portfolio is the starting point for any links already offered there. Workbench metadata adds useful repository-specific actions and pending future public-tile links without incorrectly labeling incomplete software as released. GitHub Issues and Releases pages remain available for repository-based work, even when an issue list has not been populated.
+
+Every workbench tile displays a **Backlog / to-dos** section. Pre-filled items were summarized from the portfolio TODO and project README/BACKLOG notes on 2026-10-12; they are *not* a live issue synchronization. Where no public tasks are documented, the card explicitly says so. You can add tasks and tick off both the imported summaries and private tasks locally. Local task and completion records are stored separately in browser localStorage and are included in **version 2** of the workbench's private JSON backup. Older version 1 backups continue to import.
+
+The workbench header contains a link back to the public homepage. The lengthy introductory and privacy-warning paragraphs have been removed; the site remains unlisted but not password-protected.
+
 ## Content and credits
 
 The works are the point. ChatGPT is one of the media used to make them.
