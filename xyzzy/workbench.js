@@ -155,17 +155,16 @@
     const meta = projectMetadata[project.id] || {};
     if (typeof meta.name === 'string' && meta.name) project.name = meta.name;
     project.tasks = Array.isArray(meta.tasks) ? meta.tasks.filter(x=>typeof x==='string').slice(0,30) : [];
-    const all = [...(project.links||[]), ...(Array.isArray(meta.links)?meta.links:[])];
+    const ordinary = project.links||[];
+    const explicitlyCurated = Array.isArray(meta.links)?meta.links:[];
     const clean = new Map();
-    for(const candidate of all) {
-      if (!candidate || !candidate.url || !candidate.label) continue;
-      let url;
-      try { url = new URL(candidate.url, location.origin + '/').href; } catch { continue; }
-      if (!['https:', 'http:', 'webcal:'].includes(new URL(url).protocol)) continue;
-      if (!clean.has(url)) clean.set(url, {label:candidate.label, url});
-      // Give the explicit subscription/action label precedence over generic "Podcast feed".
-      if (/subscribe|web app|simulator|download/i.test(candidate.label)) {
-        clean.set(url, {label:candidate.label, url});
+    for(const [group, items] of [[false,ordinary],[true,explicitlyCurated]]) {
+      for(const candidate of items) {
+        if (!candidate || !candidate.url || !candidate.label) continue;
+        let url;
+        try { url = new URL(candidate.url, location.origin + '/').href; } catch { continue; }
+        if (!['https:', 'http:', 'webcal:'].includes(new URL(url).protocol)) continue;
+        if (!clean.has(url) || group) clean.set(url, {label:candidate.label, url});
       }
     }
     project.links = [...clean.values()];
