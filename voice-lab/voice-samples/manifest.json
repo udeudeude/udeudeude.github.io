@@ -42,6 +42,11 @@
     "hm_psi",
     "if_sara",
     "im_nicola",
+    "jf_alpha",
+    "jf_gongitsune",
+    "jf_nezumi",
+    "jf_tebukuro",
+    "jm_kumo",
     "pf_dora",
     "pm_alex",
     "pm_santa",
@@ -54,13 +59,7 @@
     "zm_yunxia",
     "zm_yunyang"
   ],
-  "failed": {
-    "jf_alpha": "Language initialization: \nFailed initializing MeCab. Please see the README for possible solutions:\n\n    https://github.com/polm/fugashi\n\nIf you are still having trouble, please file an issue here, and include the\nERROR DETAILS below:\n\n    https://github.com/polm/fugashi/issues\n\nissueを英語で書く必要はありません。\n\n------------------- ERROR DETAILS ------------------------\narguments: [b'fugashi', b'-C', b'-r', b'/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/unidic/dicdir/mecabrc', b'-d', b'/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/unidic/dicdir']\nparam.cpp(69) [ifs] no such file or directory: /opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/unidic/dicdir/mecabrc\n----------------------------------------------------------\n",
-    "jf_gongitsune": "Language initialization: \nFailed initializing MeCab. Please see the README for possible solutions:\n\n    https://github.com/polm/fugashi\n\nIf you are still having trouble, please file an issue here, and include the\nERROR DETAILS below:\n\n    https://github.com/polm/fugashi/issues\n\nissueを英語で書く必要はありません。\n\n------------------- ERROR DETAILS ------------------------\narguments: [b'fugashi', b'-C', b'-r', b'/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/unidic/dicdir/mecabrc', b'-d', b'/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/unidic/dicdir']\nparam.cpp(69) [ifs] no such file or directory: /opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/unidic/dicdir/mecabrc\n----------------------------------------------------------\n",
-    "jf_nezumi": "Language initialization: \nFailed initializing MeCab. Please see the README for possible solutions:\n\n    https://github.com/polm/fugashi\n\nIf you are still having trouble, please file an issue here, and include the\nERROR DETAILS below:\n\n    https://github.com/polm/fugashi/issues\n\nissueを英語で書く必要はありません。\n\n------------------- ERROR DETAILS ------------------------\narguments: [b'fugashi', b'-C', b'-r', b'/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/unidic/dicdir/mecabrc', b'-d', b'/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/unidic/dicdir']\nparam.cpp(69) [ifs] no such file or directory: /opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/unidic/dicdir/mecabrc\n----------------------------------------------------------\n",
-    "jf_tebukuro": "Language initialization: \nFailed initializing MeCab. Please see the README for possible solutions:\n\n    https://github.com/polm/fugashi\n\nIf you are still having trouble, please file an issue here, and include the\nERROR DETAILS below:\n\n    https://github.com/polm/fugashi/issues\n\nissueを英語で書く必要はありません。\n\n------------------- ERROR DETAILS ------------------------\narguments: [b'fugashi', b'-C', b'-r', b'/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/unidic/dicdir/mecabrc', b'-d', b'/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/unidic/dicdir']\nparam.cpp(69) [ifs] no such file or directory: /opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/unidic/dicdir/mecabrc\n----------------------------------------------------------\n",
-    "jm_kumo": "Language initialization: \nFailed initializing MeCab. Please see the README for possible solutions:\n\n    https://github.com/polm/fugashi\n\nIf you are still having trouble, please file an issue here, and include the\nERROR DETAILS below:\n\n    https://github.com/polm/fugashi/issues\n\nissueを英語で書く必要はありません。\n\n------------------- ERROR DETAILS ------------------------\narguments: [b'fugashi', b'-C', b'-r', b'/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/unidic/dicdir/mecabrc', b'-d', b'/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/unidic/dicdir']\nparam.cpp(69) [ifs] no such file or directory: /opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/unidic/dicdir/mecabrc\n----------------------------------------------------------\n"
-  },
+  "failed": {},
   "completed": true,
-  "availableCount": 49
+  "availableCount": 54
 }
