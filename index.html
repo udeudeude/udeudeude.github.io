@@ -45,6 +45,13 @@
     .filter-button:hover{background:#1a4253}
     .filter-button[aria-pressed="true"]{background:#d6f0f6;border-color:#d6f0f6;color:#09202b}
     .filter-summary{margin:9px 0 0;color:var(--muted);font-size:.75rem;min-height:1rem}
+    .avoid-fieldset{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;margin:13px 0 0;padding:10px 0 0;border:0;border-top:1px solid #ffffff22;min-width:0}
+    .avoid-fieldset legend{font-size:.75rem;color:var(--muted);font-weight:750;padding:0 6px 0 0}
+    .avoid-fieldset label{display:inline-flex;align-items:center;gap:7px;min-height:40px;font-size:.81rem;cursor:pointer}
+    .avoid-fieldset input{accent-color:#9de0eb;width:17px;height:17px}
+    .filter-tip{margin:8px 0 0;color:var(--muted);font-size:.74rem;line-height:1.4;max-width:85ch}
+    .access-note{font-size:.78rem!important;border-left:2px solid #c5e6eb88;padding-left:11px;color:#eff9fccc!important}
+    .access-note strong{color:#eff9fc}
     .tile-count{position:absolute;right:11px;bottom:11px;font-size:.66rem;font-weight:700;color:#eef7fbc7;letter-spacing:0;line-height:1.2;font-variant-numeric:tabular-nums;pointer-events:none}
     .tile-count[hidden]{display:none!important}
     .project:not(.open):hover,.project:not(.open):focus-within{transform:translateY(-3px);box-shadow:0 12px 28px #00000030}
@@ -133,9 +140,25 @@
     </div>
     <p class="filter-summary" id="filter-summary" role="status" aria-live="polite"></p>
   </section>
+  <section class="filter-bar access-filters" aria-label="Device and equipment filters">
+    <p class="filter-label">What can I use right now?</p>
+    <div class="filters" role="group" aria-label="Ways to experience projects">
+      <button class="filter-button" type="button" data-access-filter="all" aria-pressed="true">Any setup</button>
+      <button class="filter-button" type="button" data-access-filter="phone" aria-pressed="false">Try now on my phone</button>
+      <button class="filter-button" type="button" data-access-filter="browser" aria-pressed="false">Browser, no extra equipment</button>
+    </div>
+    <fieldset class="avoid-fieldset">
+      <legend>Hide projects that require</legend>
+      <label><input type="checkbox" data-exclude="mac"> Mac</label>
+      <label><input type="checkbox" data-exclude="phone"> Phone</label>
+      <label><input type="checkbox" data-exclude="printer"> Printer</label>
+      <label><input type="checkbox" data-exclude="hardware"> Special hardware</label>
+    </fieldset>
+    <p class="filter-tip">Choose an interest above, then filter by equipment independently. Optional printing or Mac downloads don’t disqualify a working web version.</p>
+  </section>
   <section class="grid" id="project-grid" aria-label="Projects">
 
-    <article class="project c3" data-key="anaglyph-friends" data-rank="1" data-categories="visual print">
+    <article class="project c3" data-key="anaglyph-friends" data-rank="1" data-categories="visual print" data-phone-ready="1" data-browser-ready="1" data-needs="" data-access-note="Use the online version on a phone or computer. Mac downloads and printing are optional.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -152,12 +175,13 @@
         <p>Turns one photograph and an AI depth map into anaglyphs, stereograms, lenticular prints, phantograms, wiggle-grams, viewer formats, View-Master reels, and other 3D experiments.</p>
         <div class="gallery"><img src="/assets/screenshots/anaglyph-web.webp" alt="Genuine hosted Anaglyph and Friends 3D Studio workspace before a source image is selected" width="1000" height="750" loading="lazy" decoding="async"></div>
         <p>The hosted edition can take a little while to wake after inactivity. If it initially shows a temporary service error, try again shortly.</p>
+        <p class="access-note"><strong>To use:</strong> Use the online version on a phone or computer. Mac downloads and printing are optional.</p>
         <div class="links"><a href="https://anaglyph-and-friends.onrender.com/">Online version</a><a href="https://github.com/udeudeude/Anaglyph-and-Friends/releases/latest/download/Anaglyph-and-Friends-intel.zip" download>Download for Mac · Intel</a><a href="https://github.com/udeudeude/Anaglyph-and-Friends/releases/latest/download/Anaglyph-and-Friends-apple-silicon.zip" download>Download for Mac · Apple Silicon</a><a href="https://github.com/udeudeude/Anaglyph-and-Friends">Project &amp; source</a></div>
         <details style="margin-top:16px"><summary>Mac download instructions</summary><p>Includes Python and the V2 depth model. No Terminal setup; images stay on your Mac and V2 works offline. Unzip, drag the app into Applications, then open it. Keep its small control window open while using the browser; use Quit when finished.</p><p>Apple menu → About This Mac identifies Intel versus an Apple M-series chip. Cloud-tested on macOS 15 Intel and macOS 14 Apple Silicon; older versions are not yet verified.</p><p>This first package is not Apple-notarized. If blocked, follow <a href="https://support.apple.com/102445">Apple’s Open Anyway instructions</a>. Do not disable Gatekeeper globally. <a href="https://github.com/udeudeude/Anaglyph-and-Friends/releases/latest">Release notes &amp; checksums</a>.</p></details>
       </div>
     </article>
 
-    <article class="project c10" data-key="print-pocketmod" data-rank="2" data-categories="print">
+    <article class="project c10" data-key="print-pocketmod" data-rank="2" data-categories="print" data-phone-ready="0" data-browser-ready="0" data-needs="mac printer" data-access-note="Requires a Mac running macOS 13 or later and a printer to make a paper PocketMod.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -176,11 +200,12 @@
       </button>
       <div class="expand">
         <p>A macOS 13+ Print-dialog utility for Intel and Apple Silicon Macs. It rearranges ordinary documents into foldable eight-page PocketMods and opens the imposed sheet in Preview.</p>
+        <p class="access-note"><strong>To use:</strong> Requires a Mac running macOS 13 or later and a printer to make a paper PocketMod.</p>
         <div class="links"><a href="https://github.com/udeudeude/Print-as-PocketMod-for-Mac/releases/download/v0.2.6/Print-as-PocketMod-for-Mac-v0.2.6.zip" download>Download</a><a href="https://github.com/udeudeude/Print-as-PocketMod-for-Mac">GitHub</a></div>
       </div>
     </article>
 
-    <article class="project c2" data-key="lighthouse" data-rank="3" data-categories="tabletop">
+    <article class="project c2" data-key="lighthouse" data-rank="3" data-categories="tabletop" data-phone-ready="0" data-browser-ready="0" data-needs="hardware" data-access-note="Web app plus physical Looney Pyramids for play. A touchscreen tablet is the intended surface.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -196,11 +221,12 @@
       <div class="expand">
         <p>An illuminated touchscreen play surface for physical Looney Pyramids, with calibrated geometry, stacks and nests, board underlays, toys, saves, and remote sessions where one table can be controlled by multiple devices.</p>
         <div class="gallery"><img src="/assets/screenshots/lighthouse-web.webp" alt="Real LightHouse browser screenshot showing the physical pyramid size calibration screen" width="1000" height="750" loading="lazy" decoding="async"></div>
+        <p class="access-note"><strong>To use:</strong> Web app plus physical Looney Pyramids for play. A touchscreen tablet is the intended surface.</p>
         <div class="links"><a href="https://udeudeude.github.io/LightHouse/">Try it</a><a href="https://github.com/udeudeude/LightHouse">GitHub</a></div>
       </div>
     </article>
 
-    <article class="project c1" data-key="wisdom-watch" data-rank="4" data-categories="learning recurring">
+    <article class="project c1" data-key="wisdom-watch" data-rank="4" data-categories="learning recurring" data-phone-ready="1" data-browser-ready="0" data-needs="" data-access-note="Subscribe using a calendar app on your phone, Mac, or another compatible device.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -218,6 +244,7 @@
       </button>
       <div class="expand">
         <p>Late-night calendar entries from thinkers worth meeting before tomorrow's logistics. Subscribe once and the entries appear in your calendar.</p>
+        <p class="access-note"><strong>To use:</strong> Subscribe using a calendar app on your phone, Mac, or another compatible device.</p>
         <div class="links">
           <a href="webcal://raw.githubusercontent.com/udeudeude/1AM-wisdom/main/wisdom.ics">Subscribe</a>
           <a href="https://raw.githubusercontent.com/udeudeude/1AM-wisdom/main/wisdom.ics">Download calendar</a>
@@ -226,7 +253,7 @@
       </div>
     </article>
 
-    <article class="project c5" data-key="living-patterns" data-rank="5" data-categories="audio learning recurring">
+    <article class="project c5" data-key="living-patterns" data-rank="5" data-categories="audio learning recurring" data-phone-ready="1" data-browser-ready="1" data-needs="" data-access-note="Listen immediately in a web browser, including on your phone.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual"><img src="https://raw.githubusercontent.com/udeudeude/Living-Patterns-Podcast/main/living-patterns-cover.jpg" alt="Living Patterns podcast cover art" width="800" height="600" decoding="async"></div>
         <div class="caption"><div class="status">Live publication</div><h2>Living Patterns</h2></div><span class="tile-count" hidden aria-hidden="true"></span>
@@ -234,11 +261,12 @@
       <div class="expand">
         <p>Short audio reflections on living structure, repair, participation, and place.</p>
         <div class="gallery"><img src="https://raw.githubusercontent.com/udeudeude/Living-Patterns-Podcast/main/living-patterns-cover.jpg" alt="Living Patterns cover" loading="lazy" decoding="async"><img src="/assets/screenshots/living-patterns-site.webp" alt="Genuine Living Patterns webpage showing its opening text and cover" width="1000" height="750" loading="lazy" decoding="async"></div>
+        <p class="access-note"><strong>To use:</strong> Listen immediately in a web browser, including on your phone.</p>
         <div class="links"><a href="https://udeudeude.github.io/Living-Patterns-Podcast/">Listen</a><a href="https://github.com/udeudeude/Living-Patterns-Podcast">GitHub</a></div>
       </div>
     </article>
 
-    <article class="project c6" data-key="tales-from-the-loop-toolkit" data-rank="6" data-categories="tabletop print">
+    <article class="project c6" data-key="tales-from-the-loop-toolkit" data-rank="6" data-categories="tabletop print" data-phone-ready="1" data-browser-ready="1" data-needs="" data-access-note="Read examples immediately in a browser. Editing is easier with a keyboard or larger screen; printing is optional.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <img src="/assets/screenshots/tales-from-the-loop-guide.webp" alt="" width="1000" height="750" loading="lazy" decoding="async">
@@ -248,11 +276,12 @@
       <div class="expand">
         <p>A ten-page Homebrewery toolkit for mysteries, characters, handouts, and illustrated reference sheets. Warm paper, orange chapter rails, and a full set of reusable text and layout components, including a clue-flow map, title page, and original fictional organization logos, with a finished mystery to try.</p>
         <p>Thank you to <a href="https://naturalcrit.com/">NaturalCrit</a> and <a href="https://homebrewery.naturalcrit.com/">Homebrewery</a> for their fine work making beautifully formatted RPG pages possible.</p>
+        <p class="access-note"><strong>To use:</strong> Read examples immediately in a browser. Editing is easier with a keyboard or larger screen; printing is optional.</p>
         <div class="links"><a href="/tales-from-the-loop/">Toolkit &amp; how to use it</a><a href="https://homebrewery.naturalcrit.com/share/1mDaK9DdiNQZ">View template</a><a href="https://homebrewery.naturalcrit.com/share/JMsfKInsRizr">Sample mystery</a></div>
       </div>
     </article>
 
-    <article class="project c13" data-key="starfinder-homebrewery-toolkit" data-rank="7" data-categories="tabletop print">
+    <article class="project c13" data-key="starfinder-homebrewery-toolkit" data-rank="7" data-categories="tabletop print" data-phone-ready="1" data-browser-ready="1" data-needs="" data-access-note="View the populated Homebrewery pages on your phone. Editing works best on a computer; printing is optional.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <img src="/assets/screenshots/starfinder-guide.webp" alt="" width="1000" height="750" loading="lazy" decoding="async">
@@ -261,11 +290,12 @@
       </button>
       <div class="expand">
         <p>A Starfinder Second Edition authoring toolkit for Homebrewery: published-book-inspired page architecture, creatures and gear, mission tools, hacking maps, cinematic starship scenes, research and chase structures, plus practical recipes for incorporating large-format and transparent art.</p>
+        <p class="access-note"><strong>To use:</strong> View the populated Homebrewery pages on your phone. Editing works best on a computer; printing is optional.</p>
         <div class="links"><a href="https://homebrewery.naturalcrit.com/share/u41Swqyrcj1W" target="_blank" rel="noopener noreferrer">View populated Homebrewery example</a><a href="/starfinder/">Toolkit &amp; how to use it</a><a href="/starfinder/downloads/starfinder-homebrewery-toolkit-v7.md" download>Download v7 source</a><a href="https://homebrewery.naturalcrit.com/new/u41Swqyrcj1W" target="_blank" rel="noopener noreferrer">Clone &amp; edit toolkit</a></div>
       </div>
     </article>
 
-    <article class="project c16" data-key="pnp-o-matic" data-rank="8" data-categories="tabletop print">
+    <article class="project c16" data-key="pnp-o-matic" data-rank="8" data-categories="tabletop print" data-phone-ready="0" data-browser-ready="0" data-needs="mac printer" data-access-note="Development-stage Mac utility for print-and-play cards. A printer is needed for physical output; no public app release yet.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -289,11 +319,12 @@
       </button>
       <div class="expand">
         <p>A native macOS layout tool for print-and-play cards. Arrange fronts and backs on 3×3 sheets, mirror backs for duplex printing, choose card sizes and bleed, and export PDFs with optional cut guides. The code and test suite are public; a ready-to-download release is still pending real-printer checks.</p>
+        <p class="access-note"><strong>To use:</strong> Development-stage Mac utility for print-and-play cards. A printer is needed for physical output; no public app release yet.</p>
         <div class="links"><a href="https://github.com/udeudeude/PnP-o-matic">Project &amp; development status</a></div>
       </div>
     </article>
 
-    <article class="project c15" data-key="moire-lab" data-rank="9" data-categories="visual print">
+    <article class="project c15" data-key="moire-lab" data-rank="9" data-categories="visual print" data-phone-ready="1" data-browser-ready="1" data-needs="" data-access-note="Experiment with moiré patterns in your phone browser. A printer and acetate are optional for physical overlays.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <img src="/assets/screenshots/moire-lab.webp" alt="" width="1000" height="750" loading="lazy" decoding="async">
@@ -306,11 +337,12 @@
           <img src="/assets/screenshots/moire-lab-interface.webp" alt="Actual Moiré Lab workbench showing overlaid vector gratings" width="1200" height="900" loading="lazy" decoding="async">
           <img src="/assets/screenshots/moire-lab-barrier.webp" alt="Actual barrier-grid Turning Wheel experiment with vertical opaque stripes" width="1000" height="750" loading="lazy" decoding="async">
         </div>
+        <p class="access-note"><strong>To use:</strong> Experiment with moiré patterns in your phone browser. A printer and acetate are optional for physical overlays.</p>
         <div class="links"><a href="https://moire-lab.onrender.com/">Try it</a><a href="https://github.com/udeudeude/Moire-Lab">GitHub</a></div>
       </div>
     </article>
 
-    <article class="project c6" data-key="asheville-golocal-maps" data-rank="10" data-categories="asheville">
+    <article class="project c6" data-key="asheville-golocal-maps" data-rank="10" data-categories="asheville" data-phone-ready="0" data-browser-ready="0" data-needs="" data-access-note="Public information and setup instructions only. A ready-to-save Google Maps list is not published yet.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -326,11 +358,12 @@
       </button>
       <div class="expand">
         <p>A Google Maps Saved-list project for exploring hundreds of Asheville Go Local businesses in the same map you already use on your phone. The project page explains how to add a shared list to Google Maps; the public list link still needs to be published.</p>
+        <p class="access-note"><strong>To use:</strong> Public information and setup instructions only. A ready-to-save Google Maps list is not published yet.</p>
         <div class="links"><a href="/golocal/">Add to Google Maps: instructions</a><a href="https://golocalasheville.com/directory/">Official Go Local directory</a></div>
       </div>
     </article>
 
-    <article class="project c14" data-key="orchestral-maneuvers-dark" data-rank="11" data-categories="asheville audio recurring">
+    <article class="project c14" data-key="orchestral-maneuvers-dark" data-rank="11" data-categories="asheville audio recurring" data-phone-ready="1" data-browser-ready="1" data-needs="" data-access-note="Listen or subscribe on your phone or in a web browser.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -351,11 +384,12 @@
       </button>
       <div class="expand">
         <p>A subscribable podcast feed built from the weekly two-hour Asheville FM show, turning the broadcasts into something easy to follow in a podcast app.</p>
+        <p class="access-note"><strong>To use:</strong> Listen or subscribe on your phone or in a web browser.</p>
         <div class="links"><a href="https://om-weekly-podcast.workspace-310067.chatgpt.site/">Listen</a><a href="https://om-weekly-podcast.workspace-310067.chatgpt.site/feed.xml">Podcast feed</a><a href="https://ashevillefm.org/show/orchestral-maneuvers-in-the-dark/">Asheville FM show</a></div>
       </div>
     </article>
 
-    <article class="project c17" data-key="escape-pod-cast" data-rank="12" data-categories="hardware audio">
+    <article class="project c17" data-key="escape-pod-cast" data-rank="12" data-categories="hardware audio" data-phone-ready="0" data-browser-ready="0" data-needs="mac" data-access-note="Requires the downloadable macOS publishing application.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -375,11 +409,12 @@
       </button>
       <div class="expand">
         <p>Drop permitted audio or supported YouTube links onto a Mac app and publish episodes to your own Apple Podcasts feed, using GitHub Pages and temporary Release-asset hosting. No additional hosting subscription is required. Each installation creates its own feed; there is no shared public episode library.</p>
+        <p class="access-note"><strong>To use:</strong> Requires the downloadable macOS publishing application.</p>
         <div class="links"><a href="https://github.com/udeudeude/Escape-Pod-Cast/releases/tag/app-v0.7.0">Download for Mac</a><a href="https://github.com/udeudeude/Escape-Pod-Cast">Setup &amp; source</a></div>
       </div>
     </article>
 
-    <article class="project c4" data-key="touchbarpalooza" data-rank="13" data-categories="hardware audio">
+    <article class="project c4" data-key="touchbarpalooza" data-rank="13" data-categories="hardware audio" data-phone-ready="0" data-browser-ready="0" data-needs="mac hardware" data-access-note="Requires a compatible MacBook Pro with a physical Touch Bar.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -396,11 +431,12 @@
       </button>
       <div class="expand">
         <p>Games and tools built specifically for the MacBook Pro Touch Bar, including Lemmings, Pong, Snake, Breakout, Life, Mario, clipboard tools, audio visualization, MIDI, KITT, and more. The release also includes poki sitelen, a separate Touch Bar toki pona study app. Built for Macs with a physical Touch Bar and distributed as unsigned experimental software.</p>
+        <p class="access-note"><strong>To use:</strong> Requires a compatible MacBook Pro with a physical Touch Bar.</p>
         <div class="links"><a href="https://github.com/udeudeude/TouchBarpalooza/releases/download/v0.3.0/TouchBarpalooza-0.3-unsigned.dmg">TouchBarpalooza DMG</a><a href="https://github.com/udeudeude/TouchBarpalooza/releases/download/v0.3.0/TouchBarpalooza-0.3-unsigned.zip">ZIP</a><a href="https://github.com/udeudeude/TouchBarpalooza/releases/download/v0.3.0/poki-sitelen-0.1-unsigned.dmg">poki sitelen DMG</a><a href="https://github.com/udeudeude/TouchBarpalooza/releases/download/v0.3.0/poki-sitelen-0.1-unsigned.zip">ZIP</a><a href="https://github.com/udeudeude/TouchBarpalooza/releases/tag/v0.3.0">Release notes</a><a href="https://github.com/udeudeude/TouchBarpalooza">GitHub</a></div>
       </div>
     </article>
 
-    <article class="project c7" data-key="sorting-cards" data-rank="14" data-categories="tabletop learning print">
+    <article class="project c7" data-key="sorting-cards" data-rank="14" data-categories="tabletop learning print" data-phone-ready="0" data-browser-ready="0" data-needs="hardware" data-access-note="Hands-on exercises require a deck of playing cards. A printer can be useful but is optional.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -413,11 +449,12 @@
       </button>
       <div class="expand">
         <p>A hands-on course for learning sorting algorithms with an ordinary deck, comparing computational efficiency with efficiency for human hands.</p>
+        <p class="access-note"><strong>To use:</strong> Hands-on exercises require a deck of playing cards. A printer can be useful but is optional.</p>
         <div class="links"><a href="https://github.com/udeudeude/Sorting-Algorithms-with-Playing-Cards">Manuscript project</a></div>
       </div>
     </article>
 
-    <article class="project c12" data-key="biofeedback-play" data-rank="15" data-categories="hardware audio">
+    <article class="project c12" data-key="biofeedback-play" data-rank="15" data-categories="hardware audio" data-phone-ready="0" data-browser-ready="0" data-needs="mac hardware" data-access-note="Local desktop workspace requiring compatible physiological-signal sensors; current setup is Mac-focused.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -435,11 +472,12 @@
       </button>
       <div class="expand">
         <p>A device-agnostic workspace for live physiological signals, visual feedback, audio sonification, recording, diagnostics, derived metrics, and creative-control output. Current devices include Lightstone, emWave, and the 2014 Muse.</p>
+        <p class="access-note"><strong>To use:</strong> Local desktop workspace requiring compatible physiological-signal sensors; current setup is Mac-focused.</p>
         <div class="links"><a href="https://github.com/udeudeude/Biofeedback-Play">GitHub</a></div>
       </div>
     </article>
 
-    <article class="project c11" data-key="tv-b-goner" data-rank="16" data-categories="hardware">
+    <article class="project c11" data-key="tv-b-goner" data-rank="16" data-categories="hardware" data-phone-ready="0" data-browser-ready="0" data-needs="phone hardware" data-access-note="Runs as an iPhone web app, but needs a compatible audio-to-IR emitter to control a TV.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -458,11 +496,12 @@
       <div class="expand">
         <p>An iPhone-oriented audio-to-infrared TV power-code sweeper for the little headphone-jack IR emitter. It can favor explicit OFF commands, sweep broader power codes, import Flipper IR files, and rebuild its TV-code database automatically.</p>
         <div class="gallery"><img src="/assets/screenshots/tv-b-goner.webp" alt="Real TV-b-goner interface before IR codes have been imported, showing power controls and code counters" width="1000" height="750" loading="lazy" decoding="async"></div>
+        <p class="access-note"><strong>To use:</strong> Runs as an iPhone web app, but needs a compatible audio-to-IR emitter to control a TV.</p>
         <div class="links"><a href="https://udeudeude.github.io/TV-b-goner/">Try it</a><a href="https://github.com/udeudeude/TV-b-goner">GitHub</a></div>
       </div>
     </article>
 
-    <article class="project c8" data-key="ai-kindle" data-rank="17" data-categories="hardware learning">
+    <article class="project c8" data-key="ai-kindle" data-rank="17" data-categories="hardware learning" data-phone-ready="0" data-browser-ready="0" data-needs="hardware" data-access-note="Experimental work for an older Kindle e-reader with custom software.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -478,11 +517,12 @@
       </button>
       <div class="expand">
         <p>Repurposing an older Kindle with KOReader, browser and plugin experiments, and access to modern AI services from an e-ink reader.</p>
+        <p class="access-note"><strong>To use:</strong> Experimental work for an older Kindle e-reader with custom software.</p>
         <div class="links"><a href="https://github.com/udeudeude/AI-on-Kindle">Project page</a></div>
       </div>
     </article>
 
-    <article class="project c9" data-key="supercollider" data-rank="18" data-categories="audio">
+    <article class="project c9" data-key="supercollider" data-rank="18" data-categories="audio" data-phone-ready="0" data-browser-ready="0" data-needs="" data-access-note="Requires a desktop SuperCollider installation; no publicly playable audio collection yet.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -495,10 +535,11 @@
       </button>
       <div class="expand">
         <p>Music and sound experiments created in SuperCollider. Recordings and playable examples are being prepared; no published tracks are linked yet.</p>
-      </div>
+      <p class="access-note"><strong>To use:</strong> Requires a desktop SuperCollider installation; no publicly playable audio collection yet.</p>
+        </div>
     </article>
 
-    <article class="project c14" data-key="lewis-voice-lab" data-rank="19" data-categories="audio tabletop learning">
+    <article class="project c14" data-key="lewis-voice-lab" data-rank="19" data-categories="audio tabletop learning" data-phone-ready="1" data-browser-ready="1" data-needs="" data-access-note="Use the voice workshop directly in a modern phone or desktop web browser.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -521,6 +562,7 @@
       <div class="expand">
         <p>A phone-friendly workshop to audition Kokoro voices by language or gender in either order, then independently adjust pitch, vowel formants, speed, EQ, dynamics and room effects. Includes the two permanently saved Lewis presets.</p>
         <p>Production tool for Th’die’s Cast, not an app required to play the podcast. Available in Safari and optionally on the iPhone Home Screen.</p>
+        <p class="access-note"><strong>To use:</strong> Use the voice workshop directly in a modern phone or desktop web browser.</p>
         <div class="links"><a href="https://udeudeude.github.io/kokoro-voice-lab/">Open Voice Lab</a><a href="https://github.com/udeudeude/udeudeude.github.io/tree/main/voice-lab">Source &amp; saved presets</a></div>
       </div>
     </article>
@@ -533,7 +575,11 @@
 (() => {
   const grid = document.getElementById('project-grid');
   const projects = [...grid.querySelectorAll('.project')];
-  const buttons = [...document.querySelectorAll('.filter-button')];
+  const buttons = [...document.querySelectorAll('.filter-button[data-filter]')];
+  const accessButtons = [...document.querySelectorAll('[data-access-filter]')];
+  const exclusions = [...document.querySelectorAll('[data-exclude]')];
+  const allowedAccess = new Set(accessButtons.map(button => button.dataset.accessFilter));
+  const allowedExcludes = new Set(exclusions.map(input => input.dataset.exclude));
   const summary = document.getElementById('filter-summary');
   const allowed = new Set(buttons.map(button => button.dataset.filter));
   const counterBase = 'https://abacus.jasoncameron.dev';
@@ -562,8 +608,18 @@
     try { return byId.get(decodeURIComponent(location.hash.slice(1))) || null; }
     catch (_) { return null; }
   }
-  function matches(project, category) {
-    return category === 'all' || project.dataset.categories.split(' ').includes(category);
+  function matches(project, category, access, hiddenNeeds) {
+    if (category !== 'all' && !project.dataset.categories.split(' ').includes(category)) return false;
+    if (access === 'phone' && project.dataset.phoneReady !== '1') return false;
+    if (access === 'browser' && project.dataset.browserReady !== '1') return false;
+    const needs = project.dataset.needs.split(' ').filter(Boolean);
+    return !needs.some(need => hiddenNeeds.has(need));
+  }
+  function readFilters() {
+    const params = new URLSearchParams(location.search);
+    const access = allowedAccess.has(params.get('access')) ? params.get('access') : 'all';
+    const hidden = new Set((params.get('hide') || '').split(',').filter(x => allowedExcludes.has(x)));
+    return {access, hidden};
   }
 
   function syncFromAddress(scroll = false) {
@@ -576,19 +632,24 @@
       history.replaceState(null, '', url);
     }
     if (!allowed.has(category)) category = 'all';
+    let {access, hidden} = readFilters();
     const active = activeProject();
 
-    // Never allow a direct project link to point at a hidden card.
-    if (active && !matches(active, category)) {
+    // Direct links open the intended card even when stale filters would hide it.
+    if (active && !matches(active, category, access, hidden)) {
       category = 'all';
+      access = 'all';
+      hidden = new Set();
       const url = new URL(location.href);
       url.searchParams.delete('category');
+      url.searchParams.delete('access');
+      url.searchParams.delete('hide');
       history.replaceState(null, '', url);
     }
 
     let visible = 0;
     for (const project of projects) {
-      const show = matches(project, category);
+      const show = matches(project, category, access, hidden);
       project.hidden = !show;
       if (show) visible += 1;
       const open = show && project === active;
@@ -601,6 +662,10 @@
     for (const button of buttons) {
       button.setAttribute('aria-pressed', String(button.dataset.filter === category));
     }
+    for (const button of accessButtons) {
+      button.setAttribute('aria-pressed', String(button.dataset.accessFilter === access));
+    }
+    for (const input of exclusions) input.checked = hidden.has(input.dataset.exclude);
     summary.textContent = visible === projects.length
       ? projects.length + ' projects'
       : visible + ' matching ' + (visible === 1 ? 'project' : 'projects');
@@ -656,7 +721,33 @@
       const url = new URL(location.href);
       if (category === 'all') url.searchParams.delete('category');
       else url.searchParams.set('category', category);
-      if (activeProject() && !matches(activeProject(), category)) url.hash = '';
+      const current = readFilters();
+      if (activeProject() && !matches(activeProject(), category, current.access, current.hidden)) url.hash = '';
+      history.pushState(null, '', url);
+      syncFromAddress();
+    });
+  }
+  for (const button of accessButtons) {
+    button.addEventListener('click', () => {
+      if (button.getAttribute('aria-pressed') === 'true') return;
+      const url = new URL(location.href);
+      const access = button.dataset.accessFilter;
+      if (access === 'all') url.searchParams.delete('access');
+      else url.searchParams.set('access', access);
+      const category = new URLSearchParams(location.search).get('category') || 'all';
+      if (activeProject() && !matches(activeProject(), category, access, readFilters().hidden)) url.hash = '';
+      history.pushState(null, '', url);
+      syncFromAddress();
+    });
+  }
+  for (const input of exclusions) {
+    input.addEventListener('change', () => {
+      const hidden = new Set(exclusions.filter(check => check.checked).map(check => check.dataset.exclude));
+      const url = new URL(location.href);
+      if (hidden.size) url.searchParams.set('hide', [...hidden].join(','));
+      else url.searchParams.delete('hide');
+      const category = new URLSearchParams(location.search).get('category') || 'all';
+      if (activeProject() && !matches(activeProject(), category, readFilters().access, hidden)) url.hash = '';
       history.pushState(null, '', url);
       syncFromAddress();
     });
