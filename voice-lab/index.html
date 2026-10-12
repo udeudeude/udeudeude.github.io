@@ -10,14 +10,15 @@
   <title>Kokoro Voice Lab · Th’die’s Cast</title>
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./style.css">
-  <script src="./app.js" type="module" defer></script>
+  <link rel="stylesheet" href="./style.css?rev=kokoro-54-v2">
+  <script src="./app.js?rev=kokoro-54-v2" type="module" defer></script>
 </head>
 <body>
 <div class="shell">
   <header class="header">
     <div class="eyebrow"><span class="orb"></span> TH’DIE’S CAST · PRODUCTION TOOLS</div>
     <h1>Kokoro <span>Voice Lab</span></h1>
+    <p class="release-marker">Voice catalogue · 54 recordings · October 2026 edition</p>
     <p>Explore Kokoro voices by language or gender in either order. Then shape pitch, timbre and room effects, entirely in your browser.</p>
     <div class="notice">This is a <strong>production experiment</strong>, not a companion app or an episode of Th’die’s Cast. No login or audio upload to a server.</div>
   </header>
@@ -29,7 +30,7 @@
         <h3 id="voiceBrowseHeading">Kokoro voice library <span class="count" id="voiceCount">54 voices</span></h3>
         <span id="voiceAvailability" role="status" aria-live="polite">Checking samples…</span>
       </div>
-      <p class="microtext">Choose language or gender in either order. Both filters work independently. Different accents within the same language use comparable spoken passages.</p>
+      <p class="microtext">Choose language or gender in either order. Selecting a voice loads it automatically. Tap <strong>Play</strong> below to hear it.</p>
       <div class="voice-browser-grid">
         <div>
           <label class="field-label" for="languageSelect">Language / accent</label>
@@ -49,15 +50,15 @@
       <div class="voice-browser-actions">
         <button type="button" class="secondary small" id="prevVoice" disabled>‹ Previous</button>
         <button type="button" class="secondary small" id="nextVoice" disabled>Next ›</button>
-        <button type="button" class="main-action" id="auditionVoice" disabled>▶ Load selected voice</button>
+        <button type="button" class="main-action" id="auditionVoice" disabled>▶ Replay selected voice</button>
       </div>
       <p class="microtext" id="voiceSampleText">Every voice in one language or accent reads the same sentence. Other languages use localized text. These are genuine Kokoro recordings, not processed versions of Lewis.</p>
     </div>
     <div class="source-grid">
-      <div><label class="field-label" for="sampleSelect">Other sources (Lewis takes or your own files)</label>
+      <div><label class="field-label" for="sampleSelect">Optional: other Lewis recordings or your own files</label>
         <select id="sampleSelect">
-          <option value="voice-library">Selected Kokoro library voice</option>
-          <option value="berengar-reference" selected>Lewis · Brother Berengar passage</option>
+          <option value="voice-library" selected>Selected Kokoro library voice</option>
+          <option value="berengar-reference">Lewis · Brother Berengar passage</option>
           <option value="berengar-intro">Lewis · Brother Berengar auditions</option>
           <option value="godric-intro">Lewis · Brother Godric auditions</option>
           <option value="rubicon-intro">Lewis · Brother Rubicon auditions</option>
