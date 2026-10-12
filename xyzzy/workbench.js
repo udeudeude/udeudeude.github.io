@@ -144,16 +144,32 @@
         p.repos.push(repoUrl);
         p.links.push({label:'GitHub: ' + repo.name, url:repoUrl});
       } else {
+        // A temporarily uncurated project keeps its original ID, so saved
+        // ChatGPT/Codex links follow it between public and workbench-only views.
+        const moire = repo.name === 'Moire-Lab';
+        let visual = null;
+        if (moire) {
+          visual = node('div','visual');
+          const img = node('img');
+          img.src = '/assets/screenshots/moire-lab.webp';
+          img.alt = 'Actual moiré drawing from the optical workshop';
+          visual.append(img);
+        }
         extras.push({
-          id:'repo-' + slug(repo.name), name:repo.name.replace(/-/g, ' '),
-          description:repo.description || 'GitHub project; open the repository for README, source and activity.',
-          status:'Additional public repository', group:'repos', rank:999, categories:'',
-          visual:null, publicUrl:'', repos:[repoUrl],
-          links:[{label:'Repository',url:repoUrl},
+          id:target || 'repo-' + slug(repo.name),
+          name:moire ? 'Moiré Lab' : repo.name.replace(/-/g, ' '),
+          description:moire
+            ? 'True moiré, barrier-grid animation and printable SVG experiments. Currently kept out of the public portfolio while it is developed.'
+            : (repo.description || 'GitHub project; open the repository for README, source and activity.'),
+          status:moire ? 'Workbench only · optical experiments' : 'Additional public repository',
+          group:'repos', rank:999, categories:moire?'visual print':'',
+          visual, publicUrl:'', repos:[repoUrl],
+          links:[...(moire ? [{label:'Open web workshop',url:'https://moire-lab.onrender.com/'}] : []),
+            {label:'Repository',url:repoUrl},
             {label:'Issues',url:repoUrl+'/issues'},
             {label:'Pull requests',url:repoUrl+'/pulls'},
             {label:'Actions',url:repoUrl+'/actions'},
-            ...(repo.homepage && httpsLink(repo.homepage) ? [{label:'Live / homepage',url:repo.homepage}] : [])]
+            ...(!moire && repo.homepage && httpsLink(repo.homepage) ? [{label:'Live / homepage',url:repo.homepage}] : [])]
         });
       }
     }
