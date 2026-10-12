@@ -51,7 +51,6 @@ for (const [key, filename] of [
 }
 
 for (const [key, image] of [
-  ['moire-lab', 'moire-lab.webp'],
   ['tales-from-the-loop-toolkit', 'tales-from-the-loop-guide.webp'],
   ['starfinder-homebrewery-toolkit', 'starfinder-guide.webp']
 ]) {
@@ -87,7 +86,7 @@ assert.ok(projectCategories.get('asheville-golocal-maps').includes('asheville'),
 assert.ok(projectCategories.get('orchestral-maneuvers-dark').includes('asheville'), 'Asheville FM is Asheville-related');
 assert.ok(projectCategories.get('anaglyph-friends').includes('print') && projectCategories.get('anaglyph-friends').includes('visual'), 'Multi-category membership works');
 
-assert.equal(cards.length, 19, 'All 19 curated projects are present');
+assert.equal(cards.length, 18, 'All 18 currently curated projects are present');
 assert.ok(!categorySet.has('devices'), 'Obsolete Devices category was removed');
 assert.ok(!projectCategories.get('lighthouse').includes('hardware'), 'LightHouse is not in hardware-specific projects');
 assert.ok(projectCategories.get('sorting-cards').includes('print'), 'Sorting with Cards is printable work');
@@ -96,7 +95,16 @@ for (const key of ['wisdom-watch', 'living-patterns', 'orchestral-maneuvers-dark
   assert.ok(projectCategories.get(key).includes('recurring'), key + ' belongs to Recurring');
 }
 assert.ok(!projectCategories.get('escape-pod-cast').includes('recurring'), 'Podcast publishing utility is not itself recurring published content');
-assert.ok(projectCategories.get('moire-lab').includes('visual') && projectCategories.get('moire-lab').includes('print'), 'Moiré Lab is visual and print-oriented');
+assert.ok(!keys.includes('moire-lab'), 'Moiré Lab remains outside the public exhibition');
+assert.ok(!html.includes('data-access-filter='), 'Redundant access-mode buttons are removed');
+assert.ok(!html.includes('filter-tip'), 'Equipment explanation paragraph removed');
+assert.ok(html.indexOf('id="filter-summary"') > html.indexOf('data-exclude="hardware"'), 'Qualifying-project count appears beneath equipment checkboxes');
+const desiredCategoryOrder = ['all','recurring','visual','tabletop','print','audio','hardware','asheville','learning'];
+assert.deepEqual([...html.matchAll(/data-filter="([^"]+)"/g)].map(m => m[1]),desiredCategoryOrder,'Category button order matches the curated sequence');
+assert.match(html, /<a class="mark" href="\/">Ude<\/a>/,'Brand is concise');
+assert.match(html, /<h1>Works &amp; experiments\.<\/h1>/,'Header contains one meaningful headline');
+assert.ok(!html.includes('Software, media, objects, experiments.'),'Redundant intro removed');
+
 assert.ok(projectCategories.get('pnp-o-matic').includes('tabletop') && projectCategories.get('pnp-o-matic').includes('print'), 'PnP-o-matic is for print-and-play');
 assert.ok(projectCategories.get('escape-pod-cast').includes('audio'), 'Escape Pod Cast is in Sound');
 const labels = [...html.matchAll(/<button class="filter-button"[^>]*data-filter="([^"]+)"[^>]*>([^<]+)/g)]
@@ -105,10 +113,8 @@ assert.equal(new Map(labels).get('hardware'), 'Hardware specific', 'Hardware lab
 assert.equal(new Map(labels).get('print'), 'Print', 'Print label is correct');
 assert.equal(new Map(labels).get('audio'), 'Sound', 'Sound label is correct');
 assert.equal(new Map(labels).get('recurring'), 'Recurring', 'Recurring label is correct');
-const moire = cards.find(card => card[1] === 'moire-lab')?.[3];
 const pnp = cards.find(card => card[1] === 'pnp-o-matic')?.[3];
 const escape = cards.find(card => card[1] === 'escape-pod-cast')?.[3];
-assert.ok(moire?.includes('https://moire-lab.onrender.com/'), 'Moiré Lab has direct live app link');
 assert.ok(pnp?.includes('release is still pending'), 'PnP-o-matic makes no false release claim');
 assert.ok(escape?.includes('app-v0.7.0') && !escape.includes('/audio/'), 'Escape Pod Cast links to Mac release, not an episode feed');
 
@@ -170,7 +176,7 @@ assert.deepEqual(recipes.presets.map(p => p.recipe.settings.reverb), [0, 8], 'Bo
 const curatedOrder = [
   'anaglyph-friends', 'print-pocketmod', 'lighthouse', 'wisdom-watch',
   'living-patterns', 'tales-from-the-loop-toolkit',
-  'starfinder-homebrewery-toolkit', 'pnp-o-matic', 'moire-lab', 'asheville-golocal-maps',
+  'starfinder-homebrewery-toolkit', 'pnp-o-matic', 'asheville-golocal-maps',
   'orchestral-maneuvers-dark', 'escape-pod-cast', 'touchbarpalooza',
   'sorting-cards', 'biofeedback-play', 'tv-b-goner', 'ai-kindle',
   'supercollider', 'lewis-voice-lab'
