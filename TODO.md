@@ -1,3 +1,15 @@
+## October 12, 2026 workbench links and backlog
+
+- [x] Remove requested introductory and unlisted-page warning paragraphs from /xyzzy.
+- [x] Add homepage navigation to the workbench header.
+- [x] Restore exact title “Th’die’s Cast”.
+- [x] Add RSS subscription links to published and experimental podcasts.
+- [x] Add verified web app, download, release, reference and guide links to the workbench.
+- [x] Show project backlog visibly on every tile, with sourced seed tasks or an explicit empty state.
+- [x] Add browser-local to-dos and completion tracking with versioned backup/import.
+- [ ] Review project metadata and backlog summaries against future repository updates.
+- [ ] Consider optional GitHub Issues integration if the manually curated task snapshots become stale.
+
 ## October 12, 2026 presentation refinements
 
 - [x] Remove the three quick-action access buttons but retain equipment exclusions.
