@@ -26,6 +26,7 @@ This is the **portfolio repository**, not the source repository for LightHouse o
 - TV-b-goner
 - AI on Kindle
 - SuperCollider studies
+- Kokoro Voice Lab
 
 ## Repository guide
 
@@ -77,6 +78,22 @@ The Go Local Maps experiment previously generated a Google Maps Saved list of 41
 ## Optional funding
 
 The website and software remain free to explore, with no advertising, feature gates, or donation popups. Funding services can be evaluated separately. Do not publish a payment link until a real account is configured and the creator approves the wording.
+
+## Access and equipment filtering
+
+The public homepage now has an independent **Ways to use** filter: **Any setup**, **Try now on my phone**, or **Browser, no extra equipment**. There are independent checkboxes to hide projects that require a **Mac**, **phone**, **printer**, or **special hardware**. These intersect with (rather than replace) category choices.
+
+Every public tile declares `data-phone-ready`, `data-browser-ready`, `data-needs`, and a short `data-access-note` that explains its actual requirements. Optional outputs (printing Moiré sheets) and alternative Mac downloads (Anaglyph & Friends) are not treated as requirements for trying the online version. An iPhone web interface that still requires an IR emitter (TV-b-goner) is **not** marked as immediately usable with just a phone.
+
+The selected access mode is shareable with `?access=phone` or `?access=browser`; equipment exclusions are listed in `?hide=mac,printer`. Combined filters are evaluated together. They do not change the editorial order or increment project counters.
+
+## Unlisted workbench
+
+A separate, unlinked, `noindex` workspace is included for the creator. It mirrors curated projects from the public HTML and obtains additional **public** repositories from the GitHub API, falling back to a checked-in list when GitHub is unavailable. Repo issue/PR/action links appear alongside public demo links.
+
+The workbench can add private repository projects and multiple **ChatGPT chat**, **Work**, **Codex**, and other direct URLs per tile. **Those links are entered by the creator and stored solely in that browser's localStorage, not in GitHub source.** The page offers export/import JSON backups to transfer them to another browser. There is no ChatGPT API or authenticated connector in this static webpage to enumerate the user's private conversations automatically.
+
+Important limitations: an unlisted static GitHub Pages URL is not an authentication mechanism. Search-engine `noindex` is advisory, not security. Only the locally entered links and private project records avoid public hosting; any bundled HTML, JavaScript, and public repo names remain visible to anyone who discovers the route. Imported backups contain private links and must be protected.
 
 ## Content and credits
 
