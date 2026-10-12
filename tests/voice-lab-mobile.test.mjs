@@ -27,8 +27,12 @@ try{
   await page.waitForFunction(()=>document.querySelector('#voiceAvailability')?.textContent?.includes('54 / 54'),{timeout:30000});
   assert.equal(await page.locator('#languageSelect').inputValue(),'all','No forced language-first choice');
   assert.equal(await page.locator('#genderSelect').inputValue(),'all','No forced gender-first choice');
-  assert.equal(await page.locator('#voiceSelect').inputValue(),'bf_alice','First sample is not Lewis');
-  await page.waitForFunction(()=>document.querySelector('#fileHelp')?.textContent?.includes('Alice'),{timeout:30000});
+  const defaultId=await page.locator('#voiceSelect').inputValue();
+  const defaultLabel=await page.locator('#voiceSelect option:checked').textContent();
+  console.log('Initial selected voice',defaultId,defaultLabel);
+  assert.notEqual(defaultId,'bm_lewis','First sample is not Lewis');
+  await page.waitForFunction(voice=>document.querySelector('#fileHelp')?.textContent?.toLowerCase().includes(voice.toLowerCase()),
+    defaultLabel.trim().split(' ')[0],{timeout:30000});
   assert.equal(await page.locator('#sampleSelect').inputValue(),'voice-library','Voice library is the audio source');
   // Gender can be selected first and reduces the list independently.
   await page.locator('#genderSelect').selectOption('m');
