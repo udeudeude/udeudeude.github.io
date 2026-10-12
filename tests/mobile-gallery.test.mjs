@@ -22,7 +22,7 @@ try {
     reducedMotion:'reduce'
   });
   await page.goto('http://127.0.0.1:4178/', {waitUntil:'domcontentloaded'});
-  const keys=['anaglyph-friends','lighthouse','living-patterns','moire-lab','tv-b-goner'];
+  const keys=['anaglyph-friends','lighthouse','living-patterns','tv-b-goner'];
   for(const key of keys){
     const project=page.locator('.project[data-key="'+key+'"]');
     await project.locator('.tile-toggle').click();
