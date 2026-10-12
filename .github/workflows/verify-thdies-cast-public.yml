@@ -1,0 +1,51 @@
+name: Verify public Thdies Cast podcast subscriptions
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/verify-thdies-cast-public.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-public-feed:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Fetch the public podcast RSS and cover over HTTPS
+        run: |
+          set -euo pipefail
+          base='https://udeudeude.github.io/thdies-cast'
+          curl -fsSL --retry 6 --retry-delay 10 --retry-all-errors "$base/feed.xml" -o /tmp/thdies-public-feed.xml
+          curl -fsSL --retry 6 --retry-delay 10 --retry-all-errors "$base/cover.png" -o /tmp/thdies-public-cover.png
+          test "$(wc -c < /tmp/thdies-public-cover.png)" -gt 5000
+      - name: Confirm each RSS enclosure is publicly fetchable with MP3 bytes
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import urllib.request,xml.etree.ElementTree as ET
+          feed=ET.parse('/tmp/thdies-public-feed.xml')
+          items=feed.findall('./channel/item')
+          assert len(items)==5, len(items)
+          for ep in items:
+              title=ep.findtext('title')
+              enclosure=ep.find('enclosure')
+              assert enclosure is not None
+              url=enclosure.attrib['url']
+              assert url.startswith('https://udeudeude.github.io/thdies-cast/audio/')
+              assert enclosure.attrib['type']=='audio/mpeg'
+              assert int(enclosure.attrib['length'])>100000
+              req=urllib.request.Request(url,headers={'Range':'bytes=0-1023','User-Agent':'PodcastFeedValidator/1.0'})
+              with urllib.request.urlopen(req,timeout=45) as r:
+                  status=r.status
+                  data=r.read(1200)
+                  content_type=r.headers.get('Content-Type','')
+                  print(f'{title}: HTTP {status} type={content_type} bytes={len(data)} url={url}',flush=True)
+                  assert status in (200,206),status
+                  assert data.startswith(b'ID3') or data[:1]==b'\xff' or data.find(b'\xff\xfb')>=0 or data.find(b'\xff\xf3')>=0, 'Not valid MP3 content'
+                  assert 'audio' in content_type or 'octet-stream' in content_type, 'Unexpected enclosure content type'
+          print('PUBLIC RSS AND ALL FIVE MP3 ENCLOSURES VERIFIED',flush=True)
+          PY
