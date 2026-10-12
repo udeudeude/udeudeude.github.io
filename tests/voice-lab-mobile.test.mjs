@@ -25,7 +25,13 @@ try{
   assert.ok((await page.title()).includes('Kokoro Voice Lab'));
   await page.locator('#languageSelect').waitFor({state:'visible'});
   await page.waitForFunction(()=>document.querySelector('#voiceAvailability')?.textContent?.includes('54 / 54'),{timeout:30000});
-  assert.equal(await page.locator('#languageSelect').inputValue(),'all','No forced language-first choice');
+  assert.equal(await page.locator('.header p').count(),0,'No explanatory hero paragraphs');
+  assert.equal(await page.locator('footer').count(),0,'No repeating app footer');
+  assert.equal(await page.locator('.extra-audio').evaluate(el=>el.open),false,'Other recordings remain collapsed');
+  const statusStyles=await page.locator('#voiceAvailability').evaluate(el=>({width:el.getBoundingClientRect().width,clip:getComputedStyle(el).clip}));
+  assert.ok(statusStyles.width<=2,'Voice availability is visually hidden but remains accessible');
+  assert.equal(await page.locator('#genderSelect').getAttribute('aria-label'),'Voice profile','Filters retain accessible names');
+    assert.equal(await page.locator('#languageSelect').inputValue(),'all','No forced language-first choice');
   assert.equal(await page.locator('#genderSelect').inputValue(),'all','No forced gender-first choice');
   const defaultId=await page.locator('#voiceSelect').inputValue();
   const defaultLabel=await page.locator('#voiceSelect option:checked').textContent();
