@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "engine": "Kokoro-82M v1.0",
-  "defaultVoice": "bm_lewis",
+  "defaultVoice": "bf_alice",
   "samplePolicy": "Identical script within each language/accent; localized equivalents across languages. Unmodified base voices at speed 1.0.",
   "groups": [
     {
