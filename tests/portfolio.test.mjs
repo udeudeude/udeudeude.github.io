@@ -133,7 +133,7 @@ assert.ok(browserJS.includes("language==='all'||language===group.code") && brows
 assert.ok(browserJS.includes('loadLibraryVoice') && browserJS.includes('voice-samples/manifest.json'),'Browser loads pre-rendered genuine Kokoro voice recordings');
 assert.ok(allVoices.some(v=>v.id==='bm_lewis'),'Lewis remains selectable');
 assert.ok(browserJS.includes('const language = $(\'languageSelect\').value;') && browserJS.includes('const profile = $(\'genderSelect\').value;'),'Both filters are used to derive the voice selection');
-assert.ok(browserJS.includes("initializeVoiceBrowser();") && browserJS.includes('browseVoices'),'The voice browser initializes and supports previous/next');
+assert.ok(browserJS.includes("initializeVoiceBrowser().then(ready=>") && browserJS.includes('browseVoices'),'The voice browser initializes and supports previous/next');
 assert.ok(browserJS.includes("await decodeOriginal(bytes,info.voice.name"),'Selecting a voice feeds the existing audio editor');
 assert.ok(read('voice-lab/sw.js').includes('kokoro-voice-lab-shell-v5'),'Updated mobile app shell cache is used');
 assert.ok(read('voice-lab/sw.js').includes('fetch(req).then(response=>'),'Live interface is fetched network-first to prevent stuck older versions');
