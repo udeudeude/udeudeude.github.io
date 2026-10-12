@@ -242,7 +242,7 @@ function formatSeconds(t) {
   return `${Math.floor(n/60)}:${String(n%60).padStart(2,'0')}`;
 }
 function setStatus(message,kind='') {
-  const node=$('loadStatus'); node.textContent=message; node.className='live-status sr-only '+kind;
+  const node=$('loadStatus'); node.textContent=message; node.className='live-status '+kind;
 }
 function setMessage(message,isError=false) {
   const node=$('renderStatus'); node.textContent=message; node.classList.toggle('error',isError);
