@@ -1,3 +1,13 @@
+## October 12, 2026 presentation refinements
+
+- [x] Remove the three quick-action access buttons but retain equipment exclusions.
+- [x] Put “What can I use right now?” and “Hide projects that require” on one heading row.
+- [x] Show the qualifying count below the equipment checkboxes, not beneath the category buttons.
+- [x] Reorder category buttons: All, Recurring, 3D & images, Tabletop, Print, Sound, Hardware, Asheville, Learning.
+- [x] Replace redundant masthead copy with “Ude” and “Works & experiments.”
+- [x] Hold Moiré Lab out of the public grid while retaining the source, screenshots, and workbench entry.
+- [ ] Decide when Moiré Lab is ready for public exhibition again.
+
 ## October 12, 2026 access and unlisted workbench
 
 - [x] Keep requirements separate from interest categories.
