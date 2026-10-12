@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#151b23">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="Experiment with Kokoro voices: filter by language or gender, then adjust pitch, formants, speed and effects. An experimental private, browser-based podcast production tool.">
+  <title>Kokoro Voice Lab · Th’die’s Cast</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="/voice-lab/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/voice-lab/style.css?rev=kokoro-54-v3">
+  <script src="/voice-lab/app.js?rev=kokoro-54-v3" type="module" defer></script>
+</head>
+<body>
+<div class="shell">
+  <header class="header">
+    <div class="eyebrow"><span class="orb"></span> TH’DIE’S CAST · PRODUCTION TOOLS</div>
+    <h1>Kokoro <span>Voice Lab</span></h1>
+    <p class="release-marker">Voice catalogue · 54 recordings · Fresh edition (cache-free)</p>
+    <p>Explore Kokoro voices by language or gender in either order. Then shape pitch, timbre and room effects, entirely in your browser.</p>
+    <div class="notice"><strong>Fresh entry point:</strong> This address bypasses earlier Lewis-only browser caches. You should see separate Language, Gender, and Voice selectors above the audio player.</div>
+    <div class="notice">This is a <strong>production experiment</strong>, not a companion app or an episode of Th’die’s Cast. No login or audio upload to a server.</div>
+  </header>
+
+  <section class="panel player-panel" aria-label="Sample and playback">
+    <div class="panel-head"><h2>01 <span>Listen & compare</span></h2><div class="live-status" id="loadStatus" aria-live="polite">Initializing…</div></div>
+    <div class="voice-browser" aria-labelledby="voiceBrowseHeading">
+      <div class="voice-browser-head">
+        <h3 id="voiceBrowseHeading">Kokoro voice library <span class="count" id="voiceCount">54 voices</span></h3>
+        <span id="voiceAvailability" role="status" aria-live="polite">Checking samples…</span>
+      </div>
+      <p class="microtext">Choose language or gender in either order. Selecting a voice loads it automatically. Tap <strong>Play</strong> below to hear it.</p>
+      <div class="voice-browser-grid">
+        <div>
+          <label class="field-label" for="languageSelect">Language / accent</label>
+          <select id="languageSelect" disabled><option value="all">All languages / accents</option></select>
+        </div>
+        <div>
+          <label class="field-label" for="genderSelect">Voice profile</label>
+          <select id="genderSelect" disabled>
+            <option value="all">All genders</option>
+            <option value="f">Feminine</option>
+            <option value="m">Masculine</option>
+          </select>
+        </div>
+      </div>
+      <label class="field-label" for="voiceSelect">Voice <span id="voicePosition" class="voice-position"></span></label>
+      <select id="voiceSelect" disabled><option>Loading voice catalogue…</option></select>
+      <div class="voice-browser-actions">
+        <button type="button" class="secondary small" id="prevVoice" disabled>‹ Previous</button>
+        <button type="button" class="secondary small" id="nextVoice" disabled>Next ›</button>
+        <button type="button" class="main-action" id="auditionVoice" disabled>▶ Replay selected voice</button>
+      </div>
+      <p class="microtext" id="voiceSampleText">Every voice in one language or accent reads the same sentence. Other languages use localized text. These are genuine Kokoro recordings, not processed versions of Lewis.</p>
+    </div>
+    <div class="source-grid">
+      <div><label class="field-label" for="sampleSelect">Optional: other Lewis recordings or your own files</label>
+        <select id="sampleSelect">
+          <option value="voice-library" selected>Selected Kokoro library voice</option>
+          <option value="berengar-reference">Lewis · Brother Berengar passage</option>
+          <option value="berengar-intro">Lewis · Brother Berengar auditions</option>
+          <option value="godric-intro">Lewis · Brother Godric auditions</option>
+          <option value="rubicon-intro">Lewis · Brother Rubicon auditions</option>
+          <option value="upload">My audio file…</option>
+        </select></div>
+      <div><label class="field-label" for="upload">Or load audio from Files</label>
+        <input type="file" id="upload" accept="audio/*,.wav,.mp3,.m4a,.aac,.ogg,.flac" aria-label="Choose an audio file from this device"></div>
+    </div>
+    <div id="fileHelp" class="microtext">The sample is downloaded only for listening. Files you choose stay on your device.</div>
+    <div class="clip-grid">
+      <label>Excerpt start <span class="compact"><input id="clipStart" type="number" min="0" max="9999" value="0" step="0.5" inputmode="decimal"> seconds</span></label>
+      <label>Excerpt length <span class="compact"><select id="clipLength" aria-label="Excerpt length"><option value="8">8 s</option><option value="12" selected>12 s</option><option value="20">20 s</option><option value="30">30 s</option></select></span></label>
+    </div>
+    <canvas id="wave" height="94" aria-label="Voice recording waveform" role="img"></canvas>
+    <div class="transport">
+      <button id="playBtn" class="main-action" disabled aria-label="Play or pause audio">▶ Play</button>
+      <button id="restartBtn" class="secondary" disabled aria-label="Restart audition">↶ Restart</button>
+      <button id="loopBtn" class="secondary" aria-pressed="true">↻ Loop on</button>
+      <output id="timeDisplay" class="timer" aria-label="Playback position">0:00 / 0:00</output>
+    </div>
+    <input type="range" id="seek" min="0" max="1000" step="1" value="0" aria-label="Seek position in the current recording">
+    <div class="ab-row"><span class="field-label">Instant A/B comparison</span><div class="ab-group" role="group" aria-label="Compare original and processed audio"><button id="btnA" class="ab active" aria-pressed="true">A · Original</button><button id="btnB" class="ab" aria-pressed="false">B · Processed</button></div></div>
+    <p class="hint" id="renderStatus" aria-live="polite">Move the voice sliders, then choose Apply voice changes. Tone and room sliders work during playback.</p>
+  </section>
+
+  <section class="panel" id="voicePanel" aria-labelledby="voiceHeading">
+    <div class="panel-head"><h2 id="voiceHeading">02 <span>Voice & vocal tract</span></h2><button class="small" id="resetVoice">Reset voice</button></div>
+    <p class="section-intro">These are three <strong>independent</strong> controls. Pitch is the note; formants are the vowel resonances; tempo is the speaking rate. The tempo slider edits recorded audio; it does not regenerate Kokoro’s delivery or rewrite his spoken words.</p>
+    <div class="controls" id="voiceControls">
+      <div class="control" data-setting="pitch" data-unit="st"><div class="control-head"><label for="pitch">Pitch <span class="info" title="Raises or lowers fundamental frequency without changing duration">ⓘ</span></label><output for="pitch">0 st</output></div><input type="range" id="pitch" min="-6" max="4" step="0.25" value="0"><div class="ends"><span>Lower</span><span>Higher</span></div></div>
+      <div class="control" data-setting="formant" data-unit="st"><div class="control-head"><label for="formant">Formant shift <span class="info" title="Moves speech spectral envelope peaks without intentionally changing the fundamental pitch">ⓘ</span></label><output for="formant">0 st</output></div><input type="range" id="formant" min="-5" max="5" step="0.05" value="0"><div class="ends"><span>Darker / larger vocal tract</span><span>Brighter / smaller</span></div></div>
+      <div class="control" data-setting="speed" data-unit="x"><div class="control-head"><label for="speed">Speaking speed <span class="info" title="Time stretch while preserving pitch">ⓘ</span></label><output for="speed">1.00×</output></div><input type="range" id="speed" min="0.70" max="1.35" step="0.01" value="1"><div class="ends"><span>Slower</span><span>Faster</span></div></div>
+    </div>
+    <div class="actions"><button class="main-action" id="applyVoice" disabled>Apply voice changes</button><span class="microtext" id="processingNote">Processing a 12-second sample may take a few seconds on iPhone.</span></div>
+  </section>
+
+  <section class="panel" aria-label="Tone, dynamics and acoustic space">
+    <div class="panel-head"><h2>03 <span>Color, dynamics & room</span></h2><button class="small" id="resetEffects">Reset effects</button></div>
+    <p class="section-intro">These sliders work <strong>live</strong> while the sample plays. EQ changes loudness at frequencies, not true vocal formant locations.</p>
+    <details open><summary>Equalization <span>Five useful filters</span></summary><div class="controls two-column">
+      <div class="control"><div class="control-head"><label for="highpass">Low cut</label><output for="highpass">70 Hz</output></div><input id="highpass" type="range" min="30" max="180" step="5" value="70"><div class="ends"><span>Full bass</span><span>Reduce rumble</span></div></div>
+      <div class="control"><div class="control-head"><label for="bass">Body (180 Hz)</label><output for="bass">0 dB</output></div><input id="bass" type="range" min="-12" max="12" step="0.5" value="0"><div class="ends"><span>Lean</span><span>Warm</span></div></div>
+      <div class="control"><div class="control-head"><label for="presence">Presence (2.4 kHz)</label><output for="presence">0 dB</output></div><input id="presence" type="range" min="-12" max="12" step="0.5" value="0"><div class="ends"><span>Soft</span><span>Forward</span></div></div>
+      <div class="control"><div class="control-head"><label for="air">Air (5.6 kHz)</label><output for="air">0 dB</output></div><input id="air" type="range" min="-12" max="12" step="0.5" value="0"><div class="ends"><span>Dusky</span><span>Bright</span></div></div>
+      </div></details>
+    <details><summary>Dynamics <span>Compression and output</span></summary><div class="controls two-column">
+      <div class="control"><div class="control-head"><label for="compression">Compression ratio</label><output for="compression">1.0:1</output></div><input id="compression" type="range" min="1" max="7" step="0.25" value="1"><div class="ends"><span>Natural</span><span>Levelled</span></div></div>
+      <div class="control"><div class="control-head"><label for="threshold">Compressor threshold</label><output for="threshold">−22 dB</output></div><input id="threshold" type="range" min="-36" max="-8" step="1" value="-22"><div class="ends"><span>More compression</span><span>Less</span></div></div>
+      <div class="control"><div class="control-head"><label for="output">Output volume</label><output for="output">0 dB</output></div><input id="output" type="range" min="-18" max="6" step="0.5" value="0"><div class="ends"><span>Quieter</span><span>Louder</span></div></div>
+      </div></details>
+    <details><summary>Space & atmosphere <span>Reverb and echo</span></summary><div class="controls two-column">
+      <div class="control"><div class="control-head"><label for="reverb">Room / reverb</label><output for="reverb">0%</output></div><input id="reverb" type="range" min="0" max="60" step="1" value="0"><div class="ends"><span>Dry</span><span>Hall</span></div></div>
+      <div class="control"><div class="control-head"><label for="echo">Echo level</label><output for="echo">0%</output></div><input id="echo" type="range" min="0" max="50" step="1" value="0"><div class="ends"><span>None</span><span>Echoing</span></div></div>
+      <div class="control"><div class="control-head"><label for="echoTime">Echo delay</label><output for="echoTime">240 ms</output></div><input id="echoTime" type="range" min="80" max="600" step="10" value="240"><div class="ends"><span>Short</span><span>Long</span></div></div>
+      </div></details>
+  </section>
+
+  <section class="panel" aria-label="Presets and output">
+    <div class="panel-head"><h2>04 <span>Presets & export</span></h2></div>
+    <div class="presets" id="presets" role="group" aria-label="Voice preset selections">
+      <button type="button" data-preset="savedDeepDry">Saved 01 · Deep &amp; dry</button>
+      <button type="button" data-preset="savedNaturalRoom">Saved 02 · Natural pitch, light room</button>
+      <button type="button" data-preset="natural">Natural Lewis</button>
+      <button type="button" data-preset="elder">The Elder</button>
+      <button type="button" data-preset="fireside">Fireside</button>
+      <button type="button" data-preset="abbey">Stone Abbey</button>
+      <button type="button" data-preset="oracular">The Oracle</button>
+    </div>
+    <div class="actions wrap">
+      <button id="downloadWav" class="main-action" disabled>↓ Download processed WAV</button>
+      <button id="copyRecipe" class="secondary">Copy settings</button>
+      <button id="saveRecipe" class="secondary">Save preset locally</button>
+      <button id="loadRecipe" class="secondary">Restore saved preset</button>
+    </div>
+    <p class="microtext">Your two named “Saved” presets are permanently included in this app and <a href="./presets/saved-user-recipes.json" download>backed up as JSON on GitHub</a>, so clearing browser data won't erase them. Additional “Save preset locally” storage is specific to this browser and device.</p>
+    <p class="microtext">The WAV includes the current effects. Audio stays in your browser; only your settings are saved locally when you ask. On iPhone, use the Share menu to save the WAV to Files. To keep this app handy, open it in Safari and choose Share → Add to Home Screen.</p>
+  </section>
+
+  <section class="panel learning" aria-label="What each control means">
+    <div class="panel-head"><h2>05 <span>What am I hearing?</span></h2></div>
+    <div class="mini-grid">
+      <div><h3>Pitch</h3><p>How quickly a voice's source vibrates. Changes its musical height.</p></div>
+      <div><h3>Formants</h3><p>Frequency areas emphasized by a vocal tract. They distinguish vowels and shape perceived voice size.</p></div>
+      <div><h3>Tempo</h3><p>How fast the words pass. It can change without forcing the pitch upward or downward.</p></div>
+      <div><h3>EQ</h3><p>Broadly boosts or cuts existing frequencies. It doesn't actively move the voice's original vowel resonances.</p></div>
+    </div>
+    <p class="microtext"><strong>Under the hood:</strong> The voice-shaping preview uses an independent time-stretch/repitch stage and a cepstral spectral-envelope shifter. It is experimental; big changes can sound synthetic or smeared, especially on fricatives. For final episode masters we can reproduce your chosen settings with higher-quality studio processing.</p>
+  </section>
+  <footer><p><strong>Lewis Voice Lab</strong> · A separate production utility for Th’die’s Cast. Audio from the <a href="https://github.com/udeudeude/Th-die-s-Cast">project's authorized voice auditions</a>. No added gameplay app required for the podcast.</p></footer>
+</div>
+</body>
+</html>
