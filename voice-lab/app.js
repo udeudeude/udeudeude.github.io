@@ -26,13 +26,15 @@ const SOURCES = {
   },
 };
 
-const VOICE_CATALOG_URL = './voice-catalog.json';
+const VOICE_CATALOG_URL = './voice-catalog.json?rev=kokoro-54-v2';
 const VOICE_SAMPLE_MANIFEST_URL = './voice-samples/manifest.json';
 const VOICE_SAMPLE_ROOT = './voice-samples/';
 let voiceCatalog = null;
 let availableVoiceIds = null;
 let filteredVoices = [];
 let voiceLoading = false;
+let voiceLoadQueued = false;
+let loadedVoiceId = null;
 function currentVoiceInfo() {
   const id = $('voiceSelect')?.value;
   for (const group of (voiceCatalog?.groups||[])) {
@@ -57,7 +59,6 @@ function chooseAndRenderVoiceBrowser(preserve=true) {
   filteredVoices=eligibleVoices();
   const select=$('voiceSelect');
   select.replaceChildren();
-  const language=$('languageSelect').value, gender=$('genderSelect').value;
   for (const group of voiceCatalog.groups) {
     const included=filteredVoices.filter(v=>v.groupCode===group.code);
     if (!included.length)continue;
@@ -132,18 +133,23 @@ async function initializeVoiceBrowser() {
       availableVoiceIds=new Set();
       chooseAndRenderVoiceBrowser(true);
     }
+    return true;
   }catch(e){
     $('voiceAvailability').textContent='Voice catalog unavailable';
     setMessage('Could not load the voice catalog: '+e.message,true);
+    return false;
   }
 }
-async function loadLibraryVoice(){
+async function loadLibraryVoice(force=false){
   const info=currentVoiceInfo();
-  if(!info||voiceLoading||busyLoading)return;
+  if(!info)return;
+  if(voiceLoading||busyLoading){voiceLoadQueued=true;return;}
+  if(!force && loadedVoiceId===info.voice.id && $('sampleSelect').value==='voice-library')return;
   if(availableVoiceIds&&!availableVoiceIds.has(info.voice.id)){
     setMessage('That voice recording is not yet available. Try an existing Lewis sample.',true);
     return;
   }
+  const requestedId=info.voice.id;
   voiceLoading=true;busyLoading=true;updateVoiceBrowserState();
   setStatus('Loading '+info.voice.name+'…');
   try{
@@ -152,12 +158,19 @@ async function loadLibraryVoice(){
     const bytes=await response.arrayBuffer();
     $('clipStart').value='0';
     await decodeOriginal(bytes,info.voice.name+' · '+info.group.label);
+    loadedVoiceId=requestedId;
     $('sampleSelect').value='voice-library';
     setMessage(info.voice.name+' ('+info.group.label+') ready. Apply voice settings or compare A/B.');
   }catch(e){
     setStatus('Voice sample unavailable','error');
     setMessage('Could not load '+info.voice.name+': '+e.message,true);
-  }finally{voiceLoading=false;busyLoading=false;updateVoiceBrowserState();}
+  }finally{
+    voiceLoading=false;busyLoading=false;updateVoiceBrowserState();
+    if(voiceLoadQueued){
+      voiceLoadQueued=false;
+      if(currentVoiceInfo()?.voice.id!==requestedId)loadLibraryVoice();
+    }
+  }
 }
 
 const DEFAULTS = Object.freeze({
@@ -396,7 +409,7 @@ async function switchSide(side){
 
 function workerLoad(pcm){
   if(!worker){
-    worker=new Worker('./engine-worker.js');
+    worker=new Worker('./engine-worker.js?rev=kokoro-54-v2');
     worker.onmessage=receiveWorker;
     worker.onerror=e=>{setMessage(`Voice DSP worker error: ${e.message}`,true);taskRunning=false;};
   }
@@ -597,12 +610,12 @@ function bindInputs(){
   }
   $('applyVoice').addEventListener('click',requestVoiceRender);
   $('sampleSelect').addEventListener('change',loadSelected);
-  $('languageSelect').addEventListener('change',()=>chooseAndRenderVoiceBrowser(true));
-  $('genderSelect').addEventListener('change',()=>chooseAndRenderVoiceBrowser(true));
-  $('voiceSelect').addEventListener('change',updateVoiceBrowserState);
-  $('prevVoice').addEventListener('click',()=>browseVoices(-1));
-  $('nextVoice').addEventListener('click',()=>browseVoices(1));
-  $('auditionVoice').addEventListener('click',loadLibraryVoice);
+  $('languageSelect').addEventListener('change',()=>{chooseAndRenderVoiceBrowser(true);loadLibraryVoice();});
+  $('genderSelect').addEventListener('change',()=>{chooseAndRenderVoiceBrowser(true);loadLibraryVoice();});
+  $('voiceSelect').addEventListener('change',()=>{updateVoiceBrowserState();loadLibraryVoice();});
+  $('prevVoice').addEventListener('click',()=>{browseVoices(-1);loadLibraryVoice();});
+  $('nextVoice').addEventListener('click',()=>{browseVoices(1);loadLibraryVoice();});
+  $('auditionVoice').addEventListener('click',()=>loadLibraryVoice(true));
   $('upload').addEventListener('change',e=>loadUploaded(e.target.files?.[0]));
   $('clipStart').addEventListener('change',()=>cropAndLoad().catch(e=>setMessage(e.message,true)));
   $('clipLength').addEventListener('change',()=>cropAndLoad().catch(e=>setMessage(e.message,true)));
@@ -667,7 +680,10 @@ function bindInputs(){
 }
 
 bindInputs();
-initializeVoiceBrowser();
-setStatus('Loading Lewis…');
-loadSelected().then(()=>{if(rawPcm)setMessage('The reference Lewis sample is ready. Select another Kokoro voice above, or use the existing sliders.');});
+setStatus('Loading the Kokoro voice catalogue…');
+initializeVoiceBrowser().then(ready=>{
+  if(ready)return loadLibraryVoice();
+  $('sampleSelect').value='berengar-reference';
+  return loadSelected();
+}).catch(error=>setMessage('Voice library initialization failed: '+error.message,true));
 if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{});}
