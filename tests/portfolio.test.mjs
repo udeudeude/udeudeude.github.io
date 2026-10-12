@@ -135,7 +135,15 @@ assert.ok(allVoices.some(v=>v.id==='bm_lewis'),'Lewis remains selectable');
 assert.ok(browserJS.includes('const language = $(\'languageSelect\').value;') && browserJS.includes('const profile = $(\'genderSelect\').value;'),'Both filters are used to derive the voice selection');
 assert.ok(browserJS.includes("initializeVoiceBrowser();") && browserJS.includes('browseVoices'),'The voice browser initializes and supports previous/next');
 assert.ok(browserJS.includes("await decodeOriginal(bytes,info.voice.name"),'Selecting a voice feeds the existing audio editor');
-assert.ok(read('voice-lab/sw.js').includes('lewis-voice-lab-shell-v4'),'Updated mobile app shell cache is used');
+assert.ok(read('voice-lab/sw.js').includes('kokoro-voice-lab-shell-v5'),'Updated mobile app shell cache is used');
+assert.ok(read('voice-lab/sw.js').includes('fetch(req).then(response=>'),'Live interface is fetched network-first to prevent stuck older versions');
+assert.ok(lab.includes('app.js?rev=kokoro-54-v2'),'Current JavaScript bypasses stale Safari service-worker asset caches');
+assert.ok(lab.includes('style.css?rev=kokoro-54-v2'),'Current stylesheet bypasses stale Safari service-worker asset caches');
+assert.ok(lab.includes('54 recordings · October 2026 edition'),'Visible version badge distinguishes the new UI from old Lewis-only interface');
+assert.equal(voiceCatalog.defaultVoice,'bf_alice','First recorded sample demonstrates another voice instead of Lewis');
+assert.ok(lab.includes('<option value="voice-library" selected>'),'The voice library is the primary audio source');
+assert.ok(browserJS.includes("initializeVoiceBrowser().then(ready=>") && browserJS.includes('return loadLibraryVoice();'),'Initial voice loads automatically');
+assert.ok(browserJS.includes("loadLibraryVoice();});"),'Changing voice/filter loads its audio automatically');
 assert.ok(read('voice-lab/sw.js').includes('SHELL_URLS.has(req.url)'),'Dynamic voice MP3s and manifest are not cached in the offline shell');
 
 
