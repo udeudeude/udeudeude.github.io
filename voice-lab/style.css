@@ -17,3 +17,24 @@
 @media(max-width:575px){.voice-browser{padding:12px 11px}.voice-browser-grid{grid-template-columns:1fr;gap:8px}.voice-browser-actions .main-action{flex:1 1 100%;margin-left:0}.voice-browser-head h3{font-size:.94rem}}
 
 .release-marker{color:#dfc28e;font-size:.79rem;letter-spacing:.04em;margin:1px 0 12px;font-weight:650}
+
+
+/* Compact editing surface: descriptive text remains available to screen readers. */
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.sr-only:focus-visible{position:static!important;width:auto!important;height:auto!important;clip:auto!important;overflow:visible!important;margin:0!important}
+#renderStatus.error,#loadStatus.error{position:static!important;width:auto!important;height:auto!important;clip:auto!important;overflow:visible!important;white-space:normal!important;margin:9px 0!important;padding:8px 11px!important}
+.header{padding-bottom:9px}
+.header h1{font-size:clamp(2.0rem,7vw,3.45rem);margin:6px 0 13px}
+.voice-browser{padding:0;margin:0 0 12px;border:0;border-radius:0;background:transparent}
+.voice-browser-grid{margin:0 0 9px;gap:8px}
+.voice-browser>select{margin:0}
+.voice-browser-actions{margin:8px 0 0;gap:8px}
+.voice-browser-actions button{min-height:34px;min-width:44px;font-size:1.15rem;line-height:1;padding:5px 12px}
+.voice-browser-actions #auditionVoice{display:none}
+.extra-audio{border:0;padding:0;margin:0 0 10px}
+.extra-audio summary{font-size:.79rem;font-weight:500;color:var(--muted);justify-content:flex-start}
+.extra-audio summary::before{font-size:.79rem;margin-right:2px}
+.extra-audio .source-grid{margin-top:10px}
+.panel-head{margin-bottom:11px}
+#renderStatus:not(.error){box-shadow:none}
+@media(max-width:575px){.voice-browser{padding:0}.voice-browser-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:0 0 9px}.voice-browser-actions .main-action{flex:0 0 auto}.header h1{margin:6px 0 8px}}
