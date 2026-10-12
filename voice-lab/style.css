@@ -15,3 +15,5 @@
 .voice-browser-actions .main-action{margin-left:auto}
 .voice-browser select:disabled{opacity:.55}
 @media(max-width:575px){.voice-browser{padding:12px 11px}.voice-browser-grid{grid-template-columns:1fr;gap:8px}.voice-browser-actions .main-action{flex:1 1 100%;margin-left:0}.voice-browser-head h3{font-size:.94rem}}
+
+.release-marker{color:#dfc28e;font-size:.79rem;letter-spacing:.04em;margin:1px 0 12px;font-weight:650}
