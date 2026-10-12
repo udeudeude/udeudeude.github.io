@@ -2,8 +2,8 @@
  * Cache is a fallback for offline editing, never a source of stale releases.
  * Voice audition MP3s and availability manifest are never cached.
  */
-const CACHE='kokoro-voice-lab-shell-v5';
-const REV='?rev=kokoro-54-v2';
+const CACHE='kokoro-voice-lab-shell-v6';
+const REV='?rev=kokoro-54-v3';
 const ASSETS=['./','./index.html','./style.css'+REV,'./app.js'+REV,
   './engine-worker.js'+REV,'./icon.svg','./manifest.webmanifest','./voice-catalog.json'+REV];
 const SHELL_URLS=new Set(ASSETS.map(p=>new URL(p,self.registration.scope).href));
