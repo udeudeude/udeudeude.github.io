@@ -7,6 +7,18 @@ const html=fs.readFileSync('index.html','utf8');
 const dashboard=fs.readFileSync('xyzzy/index.html','utf8');
 const workbench=fs.readFileSync('xyzzy/workbench.js','utf8');
 const snapshot=JSON.parse(fs.readFileSync('xyzzy/repositories.json','utf8'));
+const metadata=JSON.parse(fs.readFileSync('xyzzy/project-metadata.json','utf8'));
+assert.equal(metadata.version,1,'Curated project metadata schema is versioned');
+assert.equal(metadata.projects['repo-th-die-s-cast'].name,'Th’die’s Cast','Correct podcast title with both apostrophes');
+for(const [key,url] of [
+  ['living-patterns','https://udeudeude.github.io/Living-Patterns-Podcast/feed.xml'],
+  ['orchestral-maneuvers-dark','https://om-weekly-podcast.workspace-310067.chatgpt.site/feed.xml'],
+  ['repo-th-die-s-cast','https://udeudeude.github.io/thdies-cast/feed.xml'],
+  ['repo-play-by-ear-gamecast','https://play-by-ear-gamecast-lab.onrender.com/feed.xml']
+]) {
+ assert.ok(metadata.projects[key].links.some(x=>x.url===url),'Podcast subscription is recorded for '+key);
+}
+
 assert.equal((html.match(/data-phone-ready="/g)||[]).length,18,'All public projects have a phone-readiness flag');
 assert.equal((html.match(/data-browser-ready="/g)||[]).length,18,'All public projects have browser-readiness flags');
 assert.equal((html.match(/data-needs="/g)||[]).length,18,'All public projects declare required equipment');
@@ -19,6 +31,11 @@ assert.deepEqual([...html.matchAll(/data-filter="([^"]+)"/g)].map(m => m[1]),
 assert.ok(!html.includes('data-key="moire-lab"'),'Moiré Lab removed from public portfolio');
 assert.ok(!html.includes('href="/xyzzy/"'),'No entry point to the private workbench on the public homepage');
 assert.ok(dashboard.includes('noindex,nofollow'),'Unlisted workspace discourages search indexing');
+assert.ok(dashboard.includes('href="/"') && dashboard.includes('← Ude Projects'),'Homepage link in the workbench header');
+assert.ok(!dashboard.includes('Curated projects, the rest of the public GitHub repositories'),'Long subtitle removed');
+assert.ok(!dashboard.includes('Unlisted is not password-protected.'),'Long security notice removed from header');
+assert.ok(workbench.includes('STORE_TODOS') && workbench.includes('renderBacklog'),'Workbench supports persistent to-do management');
+
 assert.ok(!dashboard.includes('chatgpt.com/c/') || dashboard.includes('placeholder'),'No personal chat link baked into dashboard');
 assert.ok(!JSON.stringify(snapshot).includes('gear-harness'),'Private repository excluded from public snapshot');
 assert.ok(snapshot.repositories.length>=20,'Repository snapshot has the known public repos');
@@ -82,7 +99,7 @@ try {
  assert.ok(await x.getByText('Incredible Expanding Gospel',{exact:false}).count()>0,'Non-curated repo visible');
 assert.ok(await x.getByRole('heading',{name:'Moiré Lab'}).count()>0,'Moiré Lab remains available in the unlisted workbench');
 const moireCard=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Moiré Lab'})});
-assert.ok(await moireCard.getByRole('link',{name:'Open web workshop'}).count()>0,'Moiré still links to its working web app');
+assert.ok(await moireCard.getByRole('link',{name:'Online workshop'}).count()>0,'Moiré still links to its working web app');
 assert.equal(await moireCard.getByRole('link',{name:'Public tile'}).count(),0,'Unpublished Moiré has no public-portfolio shortcut');
  assert.ok(!(await x.locator('body').innerText()).includes('gear-harness'),'Private repository is not included publicly');
  const first=x.locator('.tile').first();
@@ -96,7 +113,38 @@ assert.equal(await moireCard.getByRole('link',{name:'Public tile'}).count(),0,'U
  await x.waitForFunction(()=>document.getElementById('result-count')?.textContent?.includes('projects shown'),null,{timeout:16000});
  assert.ok(await x.getByText('A saved working conversation').count(),'Private ChatGPT link survives reload on same browser');
  assert.ok(!fs.readFileSync('xyzzy/index.html','utf8').includes('example-user-only'),'Local conversation not added to published file');
- console.log('Access filters and unlisted workbench passed: 18 curated, 23 public repos, locally persisted working links.');
+ const shownCount=await x.locator('.tile').count();
+ assert.equal(await x.locator('.tile .backlog h3').count(),shownCount,'Every tile visibly includes backlog heading');
+ assert.equal(await x.locator('.tile .backlog input[name="todo"]').count(),shownCount,'Every tile has an add-to-do control');
+ const thdie=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Th’die’s Cast'})});
+ assert.equal(await thdie.count(),1,'Correct podcast display spelling');
+ assert.ok(await thdie.getByRole('link',{name:'Subscribe (RSS)'}).count(),'Th’die’s Cast has a direct subscription link');
+ assert.ok(await thdie.getByRole('link',{name:'Listen to the pilot episodes'}).count(),'Podcast has episode listener link');
+ const gameCast=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Play by Ear · GameCast'})});
+ assert.ok(await gameCast.getByRole('link',{name:'Subscribe to test feed (RSS)'}).count(),'GameCast has subscription URL');
+ const living=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Living Patterns'})});
+ assert.ok(await living.getByRole('link',{name:'Subscribe (RSS)'}).count(),'Living Patterns has direct RSS link');
+ const orchestral=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Orchestral Maneuvers in the Dark'})});
+ assert.ok(await orchestral.getByRole('link',{name:'Subscribe (RSS)'}).count(),'Orchestral show has RSS link');
+ const po35=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Pocket Operations Manual'})});
+ assert.ok(await po35.getByRole('link',{name:'Interactive PO-35 Speak simulator'}).count(),'Non-curated web simulator linked');
+ const depot=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Pocket Operations Mobile Depot'})});
+ assert.ok(await depot.getByRole('link',{name:'PO-35 Bridge'}).count(),'PO-35 utility is linked');
+ assert.ok(await moireCard.getByRole('link',{name:'Online workshop'}).count(),'Moiré workshop online action appears');
+ const escape=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Escape Pod Cast'})});
+ assert.ok(await escape.getByRole('link',{name:'Latest Mac releases'}).count(),'Mac downloads offered in workbench');
+ const backlog=first.locator('.backlog');
+ await backlog.locator('input[name="todo"]').fill('A task saved privately on this device');
+ await backlog.locator('button[type="submit"]').click();
+ assert.ok(await x.getByText('A task saved privately on this device').count(),'Personal to-do visible after save');
+ await x.reload();
+ await x.waitForFunction(()=>document.getElementById('result-count')?.textContent?.includes('projects shown'),null,{timeout:16000});
+ assert.ok(await x.getByText('A task saved privately on this device').count(),'Personal to-do persists across reload');
+ const task=x.locator('.tile').first().locator('.backlog-items li').filter({hasText:'A task saved privately on this device'});
+ await task.locator('input[type="checkbox"]').check();
+ assert.ok(await x.locator('.tile').first().getByText('A task saved privately on this device').first().evaluate(el=>el.classList.contains('done')),'Completed personal task renders as done');
+
+ console.log('Access filters and unlisted workbench passed: 18 curated, public extras, podcast subscriptions and locally persisted links/to-dos.');
  await context.close();
 } finally {
  if(browser)await browser.close();

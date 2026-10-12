@@ -3,6 +3,8 @@
   const OWNER = 'udeudeude';
   const STORE_LINKS = 'ude-workbench-links-v1';
   const STORE_LOCAL = 'ude-workbench-projects-v1';
+  const STORE_TODOS = 'ude-workbench-todos-v1';
+  const STORE_DONE = 'ude-workbench-done-v1';
   const validKinds = new Set(['ChatGPT', 'Work', 'Codex', 'Other']);
   const knownRepoProject = {
     'LightHouse':'lighthouse',
@@ -29,6 +31,9 @@
   let items = [];
   let links = load(STORE_LINKS, {});
   let localProjects = load(STORE_LOCAL, []);
+  let customTodos = load(STORE_TODOS, {});
+  let completed = load(STORE_DONE, {});
+  let projectMetadata = {};
 
   function load(key, fallback) {
     try {
@@ -40,6 +45,8 @@
     try {
       localStorage.setItem(STORE_LINKS, JSON.stringify(links));
       localStorage.setItem(STORE_LOCAL, JSON.stringify(localProjects));
+      localStorage.setItem(STORE_TODOS, JSON.stringify(customTodos));
+      localStorage.setItem(STORE_DONE, JSON.stringify(completed));
       return true;
     } catch {
       message.textContent = 'Local storage is unavailable. Export your changes before leaving.';
@@ -131,8 +138,42 @@
     };
   }
 
+  async function loadMetadata() {
+    try {
+      const response = await fetch('/xyzzy/project-metadata.json', {cache:'no-cache'});
+      if (!response.ok) throw new Error('No metadata file');
+      const data = await response.json();
+      if (data.version !== 1 || !data.projects || typeof data.projects !== 'object') return {};
+      return data.projects;
+    } catch {
+      message.textContent = 'Curated link and backlog metadata could not be loaded.';
+      return {};
+    }
+  }
+
+  function enriched(project) {
+    const meta = projectMetadata[project.id] || {};
+    if (typeof meta.name === 'string' && meta.name) project.name = meta.name;
+    project.tasks = Array.isArray(meta.tasks) ? meta.tasks.filter(x=>typeof x==='string').slice(0,30) : [];
+    const ordinary = project.links||[];
+    const explicitlyCurated = Array.isArray(meta.links)?meta.links:[];
+    const clean = new Map();
+    for(const [group, items] of [[false,ordinary],[true,explicitlyCurated]]) {
+      for(const candidate of items) {
+        if (!candidate || !candidate.url || !candidate.label) continue;
+        let url;
+        try { url = new URL(candidate.url, location.origin + '/').href; } catch { continue; }
+        if (!['https:', 'http:', 'webcal:'].includes(new URL(url).protocol)) continue;
+        if (!clean.has(url) || group) clean.set(url, {label:candidate.label, url});
+      }
+    }
+    project.links = [...clean.values()];
+    return project;
+  }
+
   async function initialize() {
-    const [curated, repos] = await Promise.all([publishedProjects(), publicRepositories()]);
+    const [curated, repos, metadata] = await Promise.all([publishedProjects(), publicRepositories(), loadMetadata()]);
+    projectMetadata = metadata;
     const mapped = new Map(curated.map(p => [p.id, p]));
     const extras = [];
     for (const repo of repos) {
@@ -143,6 +184,8 @@
         const p = mapped.get(target);
         p.repos.push(repoUrl);
         p.links.push({label:'GitHub: ' + repo.name, url:repoUrl});
+        p.links.push({label:'Issues / backlog',url:repoUrl+'/issues'});
+        p.links.push({label:'Releases / downloads',url:repoUrl+'/releases'});
       } else {
         // A temporarily uncurated project keeps its original ID, so saved
         // ChatGPT/Codex links follow it between public and workbench-only views.
@@ -169,12 +212,13 @@
             {label:'Issues',url:repoUrl+'/issues'},
             {label:'Pull requests',url:repoUrl+'/pulls'},
             {label:'Actions',url:repoUrl+'/actions'},
+            {label:'Releases / downloads',url:repoUrl+'/releases'},
             ...(!moire && repo.homepage && httpsLink(repo.homepage) ? [{label:'Live / homepage',url:repo.homepage}] : [])]
         });
       }
     }
     items = [...curated.sort((a,b)=>a.rank-b.rank),
-      ...extras.sort((a,b)=>a.name.localeCompare(b.name))];
+      ...extras.sort((a,b)=>a.name.localeCompare(b.name))].map(enriched);
     refresh();
   }
 
@@ -196,6 +240,83 @@
       all.filter(p=>p.group==='curated').length + ' curated, ' +
       all.filter(p=>p.group==='repos').length + ' extra public repositories, ' +
       all.filter(p=>p.group==='local').length + ' locally added)';
+  }
+
+  function renderBacklog(project) {
+    const section = node('section','backlog');
+    const sourced = Array.isArray(project.tasks) ? project.tasks : [];
+    const userTasks = Array.isArray(customTodos[project.id]) ? customTodos[project.id] : [];
+    const done = new Set(Array.isArray(completed[project.id]) ? completed[project.id] : []);
+    const total = sourced.length + userTasks.length;
+    const open = sourced.filter((item,i)=>!done.has('source-'+i)).length +
+      userTasks.filter(item=>!done.has(item.id)).length;
+    section.append(node('h3','', 'Backlog / to-dos · ' + open + (total ? ' open of ' + total : ' recorded')));
+    if (total) {
+      const list = node('ul','backlog-items');
+      const entries = [
+        ...sourced.map((text,i)=>({id:'source-'+i,text,editable:false})),
+        ...userTasks.map(item=>({...item,editable:true}))
+      ];
+      for(const item of entries) {
+        const li=node('li');
+        const label=node('label');
+        const check=node('input');
+        check.type='checkbox';
+        check.checked=done.has(item.id);
+        check.setAttribute('aria-label','Complete: '+item.text);
+        check.addEventListener('change',()=>{
+          if(check.checked) done.add(item.id);
+          else done.delete(item.id);
+          completed[project.id]=[...done];
+          save();refresh();
+        });
+        const wording=node('span',check.checked?'done':'',item.text);
+        label.append(check,wording);
+        li.append(label);
+        if(item.editable){
+          const remove=node('button','remove-task','×');
+          remove.type='button';remove.title='Remove this locally saved task';
+          remove.setAttribute('aria-label','Remove task: '+item.text);
+          remove.addEventListener('click',()=>{
+            customTodos[project.id]=(customTodos[project.id]||[]).filter(x=>x.id!==item.id);
+            completed[project.id]=(completed[project.id]||[]).filter(x=>x!==item.id);
+            save();refresh();
+          });
+          li.append(remove);
+        }
+        list.append(li);
+      }
+      section.append(list);
+    } else {
+      section.append(node('p','backlog-empty','No recorded to-dos yet. Add one below or open the project’s issue tracker.'));
+    }
+    const tools=node('div','backlog-tools');
+    const form=node('form');
+    const input=node('input');input.name='todo';input.type='text';
+    input.required=true;input.maxLength=300;
+    input.placeholder='Add a private to-do';
+    input.setAttribute('aria-label','Add a to-do for '+project.name);
+    const button=node('button','','Add');button.type='submit';
+    form.append(input,button);
+    form.addEventListener('submit',event=>{
+      event.preventDefault();
+      const text=input.value.trim();
+      if(!text)return;
+      if(!customTodos[project.id])customTodos[project.id]=[];
+      customTodos[project.id].push({
+        id:'custom-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2),
+        text:text.slice(0,300)
+      });
+      save();message.textContent='To-do saved in this browser for '+project.name+'.';
+      refresh();
+    });
+    tools.append(form);
+    const repo = (project.repos||[]).find(href=>href.includes('github.com/'));
+    if(repo){
+      addLink(tools,'GitHub issues ↗',repo+'/issues');
+    }
+    section.append(tools);
+    return section;
   }
 
   function renderCard(project) {
@@ -222,6 +343,7 @@
       addLink(mainLinks,source.label,uri);
     }
     body.append(mainLinks);
+    body.append(renderBacklog(project));
 
     const saved = node('div','');
     const ownLinks = Array.isArray(links[project.id]) ? links[project.id] : [];
@@ -279,7 +401,10 @@
       remove.addEventListener('click',()=>{
         if(!confirm('Remove '+project.name+' from this browser?'))return;
         localProjects=localProjects.filter(p=>p.id!==project.id);
-        delete links[project.id];save();refresh();
+        delete links[project.id];
+        delete customTodos[project.id];
+        delete completed[project.id];
+        save();refresh();
       });
       body.append(remove);
     }
@@ -312,7 +437,8 @@
   });
 
   document.getElementById('export').addEventListener('click',()=>{
-    const payload={version:1,exportedAt:new Date().toISOString(),links,projects:localProjects};
+    const payload={version:2,exportedAt:new Date().toISOString(),links,projects:localProjects,
+      todos:customTodos,done:completed};
     const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
     const url=URL.createObjectURL(blob);
     const a=document.createElement('a');a.href=url;a.download='ude-workbench-private-backup.json';
@@ -327,7 +453,8 @@
     try{
       if(file.size>2000000)throw new Error('Backup is too large');
       const payload=JSON.parse(await file.text());
-      if(payload.version!==1 || !payload.links || !Array.isArray(payload.projects))throw new Error('Not a valid workbench backup');
+      if(![1,2].includes(payload.version) || !payload.links || !Array.isArray(payload.projects))
+        throw new Error('Not a valid workbench backup');
       const clean={};
       for(const [key,entries] of Object.entries(payload.links)){
         if(key.length>140 || !Array.isArray(entries))continue;
@@ -344,7 +471,24 @@
         description:String(x.description||'').slice(0,300)
       })).filter(x=>x.name);
       if(!confirm('Replace this browser’s personal links and additions with the imported backup?'))return;
-      links=clean;localProjects=projects;save();refresh();
+      const importedTodos = {};
+      const importedDone = {};
+      if (payload.version === 2 && payload.todos && typeof payload.todos === 'object') {
+        for(const [key,entries] of Object.entries(payload.todos)){
+          if(key.length>140 || !Array.isArray(entries))continue;
+          importedTodos[key]=entries.slice(0,100).filter(v=>v && typeof v.text==='string').map(v=>({
+            id:String(v.id||'custom').slice(0,110),text:v.text.slice(0,300)
+          }));
+        }
+      }
+      if(payload.version===2 && payload.done && typeof payload.done==='object'){
+        for(const [key,values] of Object.entries(payload.done)){
+          if(key.length>140 || !Array.isArray(values))continue;
+          importedDone[key]=values.filter(v=>typeof v==='string').slice(0,200).map(v=>v.slice(0,110));
+        }
+      }
+      links=clean;localProjects=projects;customTodos=importedTodos;completed=importedDone;
+      save();refresh();
       message.textContent='Private backup imported into this browser.';
     } catch(error){
       message.textContent='Could not import: '+error.message;
@@ -352,7 +496,7 @@
   });
   document.getElementById('clear-data').addEventListener('click',()=>{
     if(!confirm('Permanently clear locally saved project links and additions on this browser?'))return;
-    links={};localProjects=[];save();refresh();
+    links={};localProjects=[];customTodos={};completed={};save();refresh();
     message.textContent='Local additions cleared.';
   });
   initialize().catch(error=>{message.textContent='Could not load the project index: '+error.message;});
