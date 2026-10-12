@@ -118,7 +118,7 @@ assert.ok(projectCategories.get('lewis-voice-lab').includes('audio'), 'Voice Lab
 assert.ok(projectCategories.get('lewis-voice-lab').includes('tabletop'), 'Voice Lab is relevant to tabletop production');
 const lab = read('voice-lab/index.html');
 const freshLab=read('kokoro-voice-lab/index.html');
-assert.ok(freshLab.includes('src="/voice-lab/app.js?rev=kokoro-54-v3"'), 'Cache-free entry loads current shared app JS');
+assert.ok(freshLab.includes('src="/voice-lab/app.js?rev=voice-lab-compact-v1"'), 'Cache-free entry loads current shared app JS');
 assert.ok(freshLab.includes('id="languageSelect"') && freshLab.includes('id="genderSelect"'), 'Fresh entry exposes both independent Kokoro filters');
 
 const recipes = JSON.parse(read('voice-lab/presets/saved-user-recipes.json'));
@@ -131,7 +131,7 @@ assert.equal(allVoices.length,54,'All 54 native Kokoro speakers are catalogued')
 assert.equal(new Set(allVoices.map(v=>v.id)).size,54,'Voice IDs are unique');
 assert.ok(allVoices.every(v=>v.id.startsWith(v.groupCode+v.gender+'_')),'Native voice identifiers match language and profile');
 assert.ok(lab.includes('id="languageSelect"') && lab.includes('id="genderSelect"') && lab.includes('id="voiceSelect"'),'Language, gender and speaker have independent selectors');
-assert.ok(lab.includes('All languages / accents') && lab.includes('All genders'),'Unrestricted filter choices exist');
+assert.ok(lab.includes('All languages') && lab.includes('All genders'),'Unrestricted filter choices exist');
 assert.ok(browserJS.includes("const language = $('languageSelect').value;") && browserJS.includes("const profile = $('genderSelect').value;"),'Voice selection respects both facets independently');
 assert.ok(browserJS.includes("language==='all'||language===group.code") && browserJS.includes("profile==='all'||voice.gender===profile"),'No forced language-first or gender-first dependency');
 assert.ok(browserJS.includes('loadLibraryVoice') && browserJS.includes('voice-samples/manifest.json'),'Browser loads pre-rendered genuine Kokoro voice recordings');
@@ -139,10 +139,10 @@ assert.ok(allVoices.some(v=>v.id==='bm_lewis'),'Lewis remains selectable');
 assert.ok(browserJS.includes('const language = $(\'languageSelect\').value;') && browserJS.includes('const profile = $(\'genderSelect\').value;'),'Both filters are used to derive the voice selection');
 assert.ok(browserJS.includes("initializeVoiceBrowser().then(ready=>") && browserJS.includes('browseVoices'),'The voice browser initializes and supports previous/next');
 assert.ok(browserJS.includes("await decodeOriginal(bytes,info.voice.name"),'Selecting a voice feeds the existing audio editor');
-assert.ok(read('voice-lab/sw.js').includes('kokoro-voice-lab-shell-v6'),'Updated mobile app shell cache is used');
+assert.ok(read('voice-lab/sw.js').includes('kokoro-voice-lab-shell-v7'),'Updated mobile app shell cache is used');
 assert.ok(read('voice-lab/sw.js').includes('fetch(req).then(response=>'),'Live interface is fetched network-first to prevent stuck older versions');
-assert.ok(lab.includes('app.js?rev=kokoro-54-v3'),'Current JavaScript bypasses stale Safari service-worker asset caches');
-assert.ok(lab.includes('style.css?rev=kokoro-54-v3'),'Current stylesheet bypasses stale Safari service-worker asset caches');
+assert.ok(lab.includes('app.js?rev=voice-lab-compact-v1'),'Current JavaScript bypasses stale Safari service-worker asset caches');
+assert.ok(lab.includes('style.css?rev=voice-lab-compact-v1'),'Current stylesheet bypasses stale Safari service-worker asset caches');
 assert.ok(lab.includes('54 recordings · October 2026 edition'),'Visible version badge distinguishes the new UI from old Lewis-only interface');
 assert.equal(voiceCatalog.defaultVoice,'bf_alice','First recorded sample demonstrates another voice instead of Lewis');
 assert.ok(lab.includes('<option value="voice-library" selected>'),'The voice library is the primary audio source');
