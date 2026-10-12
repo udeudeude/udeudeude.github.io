@@ -16,7 +16,6 @@ This is the **portfolio repository**, not the source repository for LightHouse o
 - Tales from the Loop Homebrewery Toolkit
 - Starfinder 2e Homebrewery Toolkit
 - PnP-o-matic
-- Moiré Lab
 - Asheville GoLocal Card + Google Maps
 - Orchestral Maneuvers in the Dark
 - Escape Pod Cast
@@ -51,7 +50,7 @@ The homepage is static HTML, CSS, and JavaScript, hosted on GitHub Pages. Each p
 
 Projects use a space-separated `data-categories` attribute; a work can belong to several categories without appearing as separate tiles. Categories are chosen with the buttons above the grid, which update a shareable `?category=...` URL and hide irrelevant cards. If an open card does not match a new filter, it closes.
 
-The current categories are **Asheville**, **Tabletop & RPGs**, **Hardware specific**, **Print**, **Sound**, **3D & images**, **Learning & ideas**, and **Recurring**. Recurring describes subscriptions and periodically published content (1AM Wisdom Watch, Living Patterns, and Orchestral Maneuvers in the Dark), not utilities that happen to create podcasts. LightHouse is tabletop but intentionally not Hardware specific. PnP-o-matic belongs to Print and tabletop, and Moiré Lab belongs to Print and 3D & images.
+The current categories are **Asheville**, **Tabletop & RPGs**, **Hardware specific**, **Print**, **Sound**, **3D & images**, **Learning & ideas**, and **Recurring**. Recurring describes subscriptions and periodically published content (1AM Wisdom Watch, Living Patterns, and Orchestral Maneuvers in the Dark), not utilities that happen to create podcasts. LightHouse is tabletop but intentionally not Hardware specific. PnP-o-matic belongs to Print and tabletop, while Moiré Lab is temporarily held out of the public collection.
 
 `data-rank` sets an editorial estimate of likely visitor interest: accessible web demos and useful tools are listed ahead of niche hardware experiments and works without published examples. This is a subjective opening hypothesis, not an audience measurement, and filtering retains that same relative order.
 
@@ -81,15 +80,15 @@ The website and software remain free to explore, with no advertising, feature ga
 
 ## Access and equipment filtering
 
-The public homepage now has an independent **Ways to use** filter: **Any setup**, **Try now on my phone**, or **Browser, no extra equipment**. There are independent checkboxes to hide projects that require a **Mac**, **phone**, **printer**, or **special hardware**. These intersect with (rather than replace) category choices.
+The public homepage offers four independent **Hide projects that require** checkboxes: Mac, phone, printer, and special hardware. These work together with the interest categories. The qualifying project count is shown directly beneath the equipment controls.
 
-Every public tile declares `data-phone-ready`, `data-browser-ready`, `data-needs`, and a short `data-access-note` that explains its actual requirements. Optional outputs (printing Moiré sheets) and alternative Mac downloads (Anaglyph & Friends) are not treated as requirements for trying the online version. An iPhone web interface that still requires an IR emitter (TV-b-goner) is **not** marked as immediately usable with just a phone.
-
-The selected access mode is shareable with `?access=phone` or `?access=browser`; equipment exclusions are listed in `?hide=mac,printer`. Combined filters are evaluated together. They do not change the editorial order or increment project counters.
+Every tile declares a short equipment-requirements note. Optional output devices and secondary platform editions are not treated as prerequisites for using the online version. Equipment exclusions can be bookmarked with `?hide=mac,printer`. The former quick-action access-mode buttons have been removed to keep the page simple.
 
 ## Unlisted workbench
 
 A separate, unlinked, `noindex` workspace is included for the creator. It mirrors curated projects from the public HTML and obtains additional **public** repositories from the GitHub API, falling back to a checked-in list when GitHub is unavailable. Repo issue/PR/action links appear alongside public demo links.
+
+Moiré Lab is temporarily excluded from the public homepage but remains in the workbench as an additional repository with its web-app and source links. Previously saved per-project personal links remain attached using the same project identifier.
 
 The workbench can add private repository projects and multiple **ChatGPT chat**, **Work**, **Codex**, and other direct URLs per tile. **Those links are entered by the creator and stored solely in that browser's localStorage, not in GitHub source.** The page offers export/import JSON backups to transfer them to another browser. There is no ChatGPT API or authenticated connector in this static webpage to enumerate the user's private conversations automatically.
 

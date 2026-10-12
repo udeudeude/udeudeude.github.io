@@ -30,9 +30,7 @@
     header{padding:24px 0 22px}
     nav{display:flex;justify-content:space-between;align-items:center;gap:16px}
     .mark{font-weight:850;letter-spacing:.08em;text-transform:uppercase;font-size:.74rem;text-decoration:none}
-    .medium{color:var(--muted);font-size:.72rem}
-    h1{margin:34px 0 4px;font-size:clamp(2.5rem,7vw,5.5rem);line-height:.92;letter-spacing:-.055em}
-    .intro{margin:0;color:var(--muted);font-size:.9rem}
+    h1{margin:30px 0 4px;font-size:clamp(2.4rem,6vw,4.8rem);line-height:.97;letter-spacing:-.055em}
     main{padding:12px 0 54px}
     .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap);align-items:start}
     .project{min-width:0;border-radius:12px;overflow:hidden;transition:transform .22s cubic-bezier(.2,.8,.2,1),box-shadow .22s ease;position:relative;box-shadow:0 1px 0 #ffffff10}
@@ -45,11 +43,13 @@
     .filter-button:hover{background:#1a4253}
     .filter-button[aria-pressed="true"]{background:#d6f0f6;border-color:#d6f0f6;color:#09202b}
     .filter-summary{margin:9px 0 0;color:var(--muted);font-size:.75rem;min-height:1rem}
-    .avoid-fieldset{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;margin:13px 0 0;padding:10px 0 0;border:0;border-top:1px solid #ffffff22;min-width:0}
-    .avoid-fieldset legend{font-size:.75rem;color:var(--muted);font-weight:750;padding:0 6px 0 0}
-    .avoid-fieldset label{display:inline-flex;align-items:center;gap:7px;min-height:40px;font-size:.81rem;cursor:pointer}
-    .avoid-fieldset input{accent-color:#9de0eb;width:17px;height:17px}
-    .filter-tip{margin:8px 0 0;color:var(--muted);font-size:.74rem;line-height:1.4;max-width:85ch}
+    .access-heading{display:flex;align-items:baseline;flex-wrap:wrap;column-gap:22px;row-gap:6px;margin-bottom:5px}
+    .access-heading .filter-label{margin:0}
+    .exclusion-caption{font-size:.76rem;color:var(--muted);font-weight:700}
+    .equipment-options{display:flex;flex-wrap:wrap;gap:3px 19px;align-items:center}
+    .equipment-options label{display:inline-flex;align-items:center;gap:7px;min-height:40px;font-size:.81rem;cursor:pointer}
+    .equipment-options input{accent-color:#9de0eb;width:17px;height:17px}
+    .access-filters .filter-summary{margin:5px 0 0}
     .access-note{font-size:.78rem!important;border-left:2px solid #c5e6eb88;padding-left:11px;color:#eff9fccc!important}
     .access-note strong{color:#eff9fc}
     .tile-count{position:absolute;right:11px;bottom:11px;font-size:.66rem;font-weight:700;color:#eef7fbc7;letter-spacing:0;line-height:1.2;font-variant-numeric:tabular-nums;pointer-events:none}
@@ -117,11 +117,9 @@
 <a class="skip-link" href="#project-grid">Skip to projects</a>
 <header class="wrap">
   <nav>
-    <a class="mark" href="/">Ude Projects</a>
-    <span class="medium">Works &amp; experiments</span>
+    <a class="mark" href="/">Ude</a>
   </nav>
-  <h1>Projects.</h1>
-  <p class="intro">Software, media, objects, experiments.</p>
+  <h1>Works &amp; experiments.</h1>
 </header>
 
 <main class="wrap">
@@ -129,32 +127,28 @@
     <p class="filter-label">Browse by interest</p>
     <div class="filters" role="group" aria-label="Filter projects">
       <button class="filter-button" type="button" data-filter="all" aria-pressed="true">All projects</button>
-      <button class="filter-button" type="button" data-filter="asheville" aria-pressed="false">Asheville</button>
+      <button class="filter-button" type="button" data-filter="recurring" aria-pressed="false">Recurring</button>
+      <button class="filter-button" type="button" data-filter="visual" aria-pressed="false">3D &amp; images</button>
       <button class="filter-button" type="button" data-filter="tabletop" aria-pressed="false">Tabletop &amp; RPGs</button>
-      <button class="filter-button" type="button" data-filter="hardware" aria-pressed="false">Hardware specific</button>
       <button class="filter-button" type="button" data-filter="print" aria-pressed="false">Print</button>
       <button class="filter-button" type="button" data-filter="audio" aria-pressed="false">Sound</button>
-      <button class="filter-button" type="button" data-filter="visual" aria-pressed="false">3D &amp; images</button>
+      <button class="filter-button" type="button" data-filter="hardware" aria-pressed="false">Hardware specific</button>
+      <button class="filter-button" type="button" data-filter="asheville" aria-pressed="false">Asheville</button>
       <button class="filter-button" type="button" data-filter="learning" aria-pressed="false">Learning &amp; ideas</button>
-      <button class="filter-button" type="button" data-filter="recurring" aria-pressed="false">Recurring</button>
     </div>
-    <p class="filter-summary" id="filter-summary" role="status" aria-live="polite"></p>
   </section>
   <section class="filter-bar access-filters" aria-label="Device and equipment filters">
-    <p class="filter-label">What can I use right now?</p>
-    <div class="filters" role="group" aria-label="Ways to experience projects">
-      <button class="filter-button" type="button" data-access-filter="all" aria-pressed="true">Any setup</button>
-      <button class="filter-button" type="button" data-access-filter="phone" aria-pressed="false">Try now on my phone</button>
-      <button class="filter-button" type="button" data-access-filter="browser" aria-pressed="false">Browser, no extra equipment</button>
+    <div class="access-heading">
+      <p class="filter-label">What can I use right now?</p>
+      <span class="exclusion-caption" id="exclusion-caption">Hide projects that require</span>
     </div>
-    <fieldset class="avoid-fieldset">
-      <legend>Hide projects that require</legend>
+    <div class="equipment-options" role="group" aria-labelledby="exclusion-caption">
       <label><input type="checkbox" data-exclude="mac"> Mac</label>
       <label><input type="checkbox" data-exclude="phone"> Phone</label>
       <label><input type="checkbox" data-exclude="printer"> Printer</label>
       <label><input type="checkbox" data-exclude="hardware"> Special hardware</label>
-    </fieldset>
-    <p class="filter-tip">Choose an interest above, then filter by equipment independently. Optional printing or Mac downloads don’t disqualify a working web version.</p>
+    </div>
+    <p class="filter-summary" id="filter-summary" role="status" aria-live="polite"></p>
   </section>
   <section class="grid" id="project-grid" aria-label="Projects">
 
@@ -324,25 +318,8 @@
       </div>
     </article>
 
-    <article class="project c15" data-key="moire-lab" data-rank="9" data-categories="visual print" data-phone-ready="1" data-browser-ready="1" data-needs="" data-access-note="Experiment with moiré patterns in your phone browser. A printer and acetate are optional for physical overlays.">
-      <button class="tile-toggle" aria-expanded="false">
-        <div class="visual" aria-hidden="true">
-          <img src="/assets/screenshots/moire-lab.webp" alt="" width="1000" height="750" loading="lazy" decoding="async">
-        </div>
-        <div class="caption"><div class="status">Live optical workshop</div><h2>Moiré Lab</h2></div><span class="tile-count" hidden aria-hidden="true"></span>
-      </button>
-      <div class="expand">
-        <p>A phone-friendly optical playground for true moiré motion and barrier-grid animation. Experiment with overlapping SVG gratings, then export matched printable artwork and transparent overlays, with registration marks and calibration sheets. A physical moving-picture book is the longer-term goal.</p>
-        <div class="gallery">
-          <img src="/assets/screenshots/moire-lab-interface.webp" alt="Actual Moiré Lab workbench showing overlaid vector gratings" width="1200" height="900" loading="lazy" decoding="async">
-          <img src="/assets/screenshots/moire-lab-barrier.webp" alt="Actual barrier-grid Turning Wheel experiment with vertical opaque stripes" width="1000" height="750" loading="lazy" decoding="async">
-        </div>
-        <p class="access-note"><strong>To use:</strong> Experiment with moiré patterns in your phone browser. A printer and acetate are optional for physical overlays.</p>
-        <div class="links"><a href="https://moire-lab.onrender.com/">Try it</a><a href="https://github.com/udeudeude/Moire-Lab">GitHub</a></div>
-      </div>
-    </article>
 
-    <article class="project c6" data-key="asheville-golocal-maps" data-rank="10" data-categories="asheville" data-phone-ready="0" data-browser-ready="0" data-needs="" data-access-note="Public information and setup instructions only. A ready-to-save Google Maps list is not published yet.">
+    <article class="project c6" data-key="asheville-golocal-maps" data-rank="9" data-categories="asheville" data-phone-ready="0" data-browser-ready="0" data-needs="" data-access-note="Public information and setup instructions only. A ready-to-save Google Maps list is not published yet.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -363,7 +340,7 @@
       </div>
     </article>
 
-    <article class="project c14" data-key="orchestral-maneuvers-dark" data-rank="11" data-categories="asheville audio recurring" data-phone-ready="1" data-browser-ready="1" data-needs="" data-access-note="Listen or subscribe on your phone or in a web browser.">
+    <article class="project c14" data-key="orchestral-maneuvers-dark" data-rank="10" data-categories="asheville audio recurring" data-phone-ready="1" data-browser-ready="1" data-needs="" data-access-note="Listen or subscribe on your phone or in a web browser.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -389,7 +366,7 @@
       </div>
     </article>
 
-    <article class="project c17" data-key="escape-pod-cast" data-rank="12" data-categories="hardware audio" data-phone-ready="0" data-browser-ready="0" data-needs="mac" data-access-note="Requires the downloadable macOS publishing application.">
+    <article class="project c17" data-key="escape-pod-cast" data-rank="11" data-categories="hardware audio" data-phone-ready="0" data-browser-ready="0" data-needs="mac" data-access-note="Requires the downloadable macOS publishing application.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -414,7 +391,7 @@
       </div>
     </article>
 
-    <article class="project c4" data-key="touchbarpalooza" data-rank="13" data-categories="hardware audio" data-phone-ready="0" data-browser-ready="0" data-needs="mac hardware" data-access-note="Requires a compatible MacBook Pro with a physical Touch Bar.">
+    <article class="project c4" data-key="touchbarpalooza" data-rank="12" data-categories="hardware audio" data-phone-ready="0" data-browser-ready="0" data-needs="mac hardware" data-access-note="Requires a compatible MacBook Pro with a physical Touch Bar.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -436,7 +413,7 @@
       </div>
     </article>
 
-    <article class="project c7" data-key="sorting-cards" data-rank="14" data-categories="tabletop learning print" data-phone-ready="0" data-browser-ready="0" data-needs="hardware" data-access-note="Hands-on exercises require a deck of playing cards. A printer can be useful but is optional.">
+    <article class="project c7" data-key="sorting-cards" data-rank="13" data-categories="tabletop learning print" data-phone-ready="0" data-browser-ready="0" data-needs="hardware" data-access-note="Hands-on exercises require a deck of playing cards. A printer can be useful but is optional.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -454,7 +431,7 @@
       </div>
     </article>
 
-    <article class="project c12" data-key="biofeedback-play" data-rank="15" data-categories="hardware audio" data-phone-ready="0" data-browser-ready="0" data-needs="mac hardware" data-access-note="Local desktop workspace requiring compatible physiological-signal sensors; current setup is Mac-focused.">
+    <article class="project c12" data-key="biofeedback-play" data-rank="14" data-categories="hardware audio" data-phone-ready="0" data-browser-ready="0" data-needs="mac hardware" data-access-note="Local desktop workspace requiring compatible physiological-signal sensors; current setup is Mac-focused.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -477,7 +454,7 @@
       </div>
     </article>
 
-    <article class="project c11" data-key="tv-b-goner" data-rank="16" data-categories="hardware" data-phone-ready="0" data-browser-ready="0" data-needs="phone hardware" data-access-note="Runs as an iPhone web app, but needs a compatible audio-to-IR emitter to control a TV.">
+    <article class="project c11" data-key="tv-b-goner" data-rank="15" data-categories="hardware" data-phone-ready="0" data-browser-ready="0" data-needs="phone hardware" data-access-note="Runs as an iPhone web app, but needs a compatible audio-to-IR emitter to control a TV.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -501,7 +478,7 @@
       </div>
     </article>
 
-    <article class="project c8" data-key="ai-kindle" data-rank="17" data-categories="hardware learning" data-phone-ready="0" data-browser-ready="0" data-needs="hardware" data-access-note="Experimental work for an older Kindle e-reader with custom software.">
+    <article class="project c8" data-key="ai-kindle" data-rank="16" data-categories="hardware learning" data-phone-ready="0" data-browser-ready="0" data-needs="hardware" data-access-note="Experimental work for an older Kindle e-reader with custom software.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -522,7 +499,7 @@
       </div>
     </article>
 
-    <article class="project c9" data-key="supercollider" data-rank="18" data-categories="audio" data-phone-ready="0" data-browser-ready="0" data-needs="" data-access-note="Requires a desktop SuperCollider installation; no publicly playable audio collection yet.">
+    <article class="project c9" data-key="supercollider" data-rank="17" data-categories="audio" data-phone-ready="0" data-browser-ready="0" data-needs="" data-access-note="Requires a desktop SuperCollider installation; no publicly playable audio collection yet.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -539,7 +516,7 @@
         </div>
     </article>
 
-    <article class="project c14" data-key="lewis-voice-lab" data-rank="19" data-categories="audio tabletop learning" data-phone-ready="1" data-browser-ready="1" data-needs="" data-access-note="Use the voice workshop directly in a modern phone or desktop web browser.">
+    <article class="project c14" data-key="lewis-voice-lab" data-rank="18" data-categories="audio tabletop learning" data-phone-ready="1" data-browser-ready="1" data-needs="" data-access-note="Use the voice workshop directly in a modern phone or desktop web browser.">
       <button class="tile-toggle" aria-expanded="false">
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
@@ -576,9 +553,7 @@
   const grid = document.getElementById('project-grid');
   const projects = [...grid.querySelectorAll('.project')];
   const buttons = [...document.querySelectorAll('.filter-button[data-filter]')];
-  const accessButtons = [...document.querySelectorAll('[data-access-filter]')];
   const exclusions = [...document.querySelectorAll('[data-exclude]')];
-  const allowedAccess = new Set(accessButtons.map(button => button.dataset.accessFilter));
   const allowedExcludes = new Set(exclusions.map(input => input.dataset.exclude));
   const summary = document.getElementById('filter-summary');
   const allowed = new Set(buttons.map(button => button.dataset.filter));
@@ -608,18 +583,14 @@
     try { return byId.get(decodeURIComponent(location.hash.slice(1))) || null; }
     catch (_) { return null; }
   }
-  function matches(project, category, access, hiddenNeeds) {
+  function matches(project, category, hiddenNeeds) {
     if (category !== 'all' && !project.dataset.categories.split(' ').includes(category)) return false;
-    if (access === 'phone' && project.dataset.phoneReady !== '1') return false;
-    if (access === 'browser' && project.dataset.browserReady !== '1') return false;
     const needs = project.dataset.needs.split(' ').filter(Boolean);
     return !needs.some(need => hiddenNeeds.has(need));
   }
-  function readFilters() {
+  function readHiddenNeeds() {
     const params = new URLSearchParams(location.search);
-    const access = allowedAccess.has(params.get('access')) ? params.get('access') : 'all';
-    const hidden = new Set((params.get('hide') || '').split(',').filter(x => allowedExcludes.has(x)));
-    return {access, hidden};
+    return new Set((params.get('hide') || '').split(',').filter(x => allowedExcludes.has(x)));
   }
 
   function syncFromAddress(scroll = false) {
@@ -632,24 +603,22 @@
       history.replaceState(null, '', url);
     }
     if (!allowed.has(category)) category = 'all';
-    let {access, hidden} = readFilters();
+    let hidden = readHiddenNeeds();
     const active = activeProject();
 
     // Direct links open the intended card even when stale filters would hide it.
-    if (active && !matches(active, category, access, hidden)) {
+    if (active && !matches(active, category, hidden)) {
       category = 'all';
-      access = 'all';
       hidden = new Set();
       const url = new URL(location.href);
       url.searchParams.delete('category');
-      url.searchParams.delete('access');
       url.searchParams.delete('hide');
       history.replaceState(null, '', url);
     }
 
     let visible = 0;
     for (const project of projects) {
-      const show = matches(project, category, access, hidden);
+      const show = matches(project, category, hidden);
       project.hidden = !show;
       if (show) visible += 1;
       const open = show && project === active;
@@ -661,9 +630,6 @@
     }
     for (const button of buttons) {
       button.setAttribute('aria-pressed', String(button.dataset.filter === category));
-    }
-    for (const button of accessButtons) {
-      button.setAttribute('aria-pressed', String(button.dataset.accessFilter === access));
     }
     for (const input of exclusions) input.checked = hidden.has(input.dataset.exclude);
     summary.textContent = visible === projects.length
@@ -721,21 +687,7 @@
       const url = new URL(location.href);
       if (category === 'all') url.searchParams.delete('category');
       else url.searchParams.set('category', category);
-      const current = readFilters();
-      if (activeProject() && !matches(activeProject(), category, current.access, current.hidden)) url.hash = '';
-      history.pushState(null, '', url);
-      syncFromAddress();
-    });
-  }
-  for (const button of accessButtons) {
-    button.addEventListener('click', () => {
-      if (button.getAttribute('aria-pressed') === 'true') return;
-      const url = new URL(location.href);
-      const access = button.dataset.accessFilter;
-      if (access === 'all') url.searchParams.delete('access');
-      else url.searchParams.set('access', access);
-      const category = new URLSearchParams(location.search).get('category') || 'all';
-      if (activeProject() && !matches(activeProject(), category, access, readFilters().hidden)) url.hash = '';
+      if (activeProject() && !matches(activeProject(), category, readHiddenNeeds())) url.hash = '';
       history.pushState(null, '', url);
       syncFromAddress();
     });
@@ -747,7 +699,7 @@
       if (hidden.size) url.searchParams.set('hide', [...hidden].join(','));
       else url.searchParams.delete('hide');
       const category = new URLSearchParams(location.search).get('category') || 'all';
-      if (activeProject() && !matches(activeProject(), category, readFilters().access, hidden)) url.hash = '';
+      if (activeProject() && !matches(activeProject(), category, hidden)) url.hash = '';
       history.pushState(null, '', url);
       syncFromAddress();
     });
