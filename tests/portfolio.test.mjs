@@ -31,6 +31,9 @@ for (const arch of ['intel', 'apple-silicon']) {
 assert.ok(anaglyph.includes('not Apple-notarized'), 'Signing disclaimer remains');
 assert.ok(html.includes('href="/golocal/"'), 'GoLocal has an actionable project note');
 assert.ok(html.includes('href="/favicon.svg"'), 'Site links to its favicon');
+assert.ok(html.includes('id="clear-filters"') && html.includes('id="empty-results"'),'Portfolio offers recovery from restrictive filters');
+assert.ok(html.includes('resetEmpty.addEventListener'),'Empty-state filter reset is interactive');
+
 assert.ok(/\.gallery img\{[^}]*height:auto/.test(html), 'Gallery images override intrinsic pixel height from HTML attributes');
 assert.ok(/\.gallery img\{[^}]*object-fit:contain/.test(html), 'Gallery images show the whole screenshot without destructive cropping');
 assert.ok(/@media\(max-width:650px\)[\s\S]*?\.gallery\{grid-template-columns:minmax\(0,1fr\)\}/.test(html), 'Gallery uses one readable column on phones');
