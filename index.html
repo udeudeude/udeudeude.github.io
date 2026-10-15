@@ -50,6 +50,13 @@
     .equipment-options label{display:inline-flex;align-items:center;gap:7px;min-height:40px;font-size:.81rem;cursor:pointer}
     .equipment-options input{accent-color:#9de0eb;width:17px;height:17px}
     .access-filters .filter-summary{margin:5px 0 0}
+    .filter-results{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:5px}
+    .filter-results .filter-summary{margin:0}
+    #clear-filters,.empty-results button{font:inherit;font-size:.76rem;color:#e4f8fd;background:transparent;border:1px solid #d4f0fa66;border-radius:7px;padding:7px 10px;cursor:pointer}
+    #clear-filters[hidden],.empty-results[hidden]{display:none}
+    .empty-results{color:var(--muted);border:1px dashed #d4f0fa55;border-radius:10px;padding:22px;margin:16px 0;font-size:.9rem}
+    .empty-results button{margin-left:3px}
+
     .access-note{font-size:.78rem!important;border-left:2px solid #c5e6eb88;padding-left:11px;color:#eff9fccc!important}
     .access-note strong{color:#eff9fc}
     .tile-count{position:absolute;right:11px;bottom:11px;font-size:.66rem;font-weight:700;color:#eef7fbc7;letter-spacing:0;line-height:1.2;font-variant-numeric:tabular-nums;pointer-events:none}
@@ -148,8 +155,12 @@
       <label><input type="checkbox" data-exclude="printer"> Printer</label>
       <label><input type="checkbox" data-exclude="hardware"> Special hardware</label>
     </div>
-    <p class="filter-summary" id="filter-summary" role="status" aria-live="polite"></p>
+    <div class="filter-results">
+      <p class="filter-summary" id="filter-summary" role="status" aria-live="polite"></p>
+      <button id="clear-filters" type="button" hidden>Clear filters</button>
+    </div>
   </section>
+  <p class="empty-results" id="empty-results" hidden>No projects match this combination. Change a category or <button type="button" id="reset-empty">clear all filters</button>.</p>
   <section class="grid" id="project-grid" aria-label="Projects">
 
     <article class="project c3" data-key="anaglyph-friends" data-rank="1" data-categories="visual print" data-phone-ready="1" data-browser-ready="1" data-needs="" data-access-note="Use the online version on a phone or computer. Mac downloads and printing are optional.">
@@ -556,6 +567,9 @@
   const exclusions = [...document.querySelectorAll('[data-exclude]')];
   const allowedExcludes = new Set(exclusions.map(input => input.dataset.exclude));
   const summary = document.getElementById('filter-summary');
+  const reset = document.getElementById('clear-filters');
+  const resetEmpty = document.getElementById('reset-empty');
+  const empty = document.getElementById('empty-results');
   const allowed = new Set(buttons.map(button => button.dataset.filter));
   const counterBase = 'https://abacus.jasoncameron.dev';
   const counterNamespace = 'udeudeude-portfolio-2026-v1';
@@ -635,6 +649,9 @@
     summary.textContent = visible === projects.length
       ? projects.length + ' projects'
       : visible + ' matching ' + (visible === 1 ? 'project' : 'projects');
+    const activeFilters = category !== 'all' || hidden.size > 0;
+    reset.hidden = !activeFilters;
+    empty.hidden = visible !== 0;
 
     if (active && scroll) {
       requestAnimationFrame(() => {
@@ -704,6 +721,15 @@
       syncFromAddress();
     });
   }
+  function clearFilters() {
+    const url = new URL(location.href);
+    url.searchParams.delete('category');
+    url.searchParams.delete('hide');
+    history.pushState(null, '', url);
+    syncFromAddress();
+  }
+  reset.addEventListener('click', clearFilters);
+  resetEmpty.addEventListener('click', clearFilters);
   window.addEventListener('popstate', () => syncFromAddress(true));
   window.addEventListener('hashchange', () => syncFromAddress(true));
   document.addEventListener('keydown', event => {
