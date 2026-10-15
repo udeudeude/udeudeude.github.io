@@ -1,3 +1,14 @@
+## October 15, 2026 usability and reliability pass
+
+- [x] Add a contextual public "Clear filters" action and an explanation when no projects match.
+- [x] Keep category and equipment filters shareable through the URL.
+- [x] Search workbench project actions and backlog tasks, including locally added tasks.
+- [x] Restore keyboard focus and scroll position after checking off workbench tasks.
+- [x] Restore task-input focus after adding a to-do.
+- [x] Decode HTML entity-escaped URLs in the weekly link checker before network requests.
+- [ ] Continue checking whether project descriptions, releases and app-availability labels match the current repositories.
+- [ ] Periodically refresh sourced workbench backlogs without overwriting browser-local task completion.
+
 ## October 12, 2026 workbench links and backlog
 
 - [x] Remove requested introductory and unlisted-page warning paragraphs from /xyzzy.

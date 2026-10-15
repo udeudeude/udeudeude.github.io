@@ -83,6 +83,15 @@ try {
  assert.ok(keys.includes('living-patterns'),'Ready-to-listen projects remain when equipment hidden');
  await page.locator('[data-exclude="hardware"]').uncheck();
  assert.equal(await visible(),18,'Unchecking exclusions restores all 18 public projects');
+ assert.equal(await page.locator('#clear-filters').isVisible(),false,'Reset link hidden without active filters');
+ await page.locator('[data-filter="visual"]').click();
+ await page.locator('[data-exclude="mac"]').check();
+ assert.equal(await page.locator('#clear-filters').isVisible(),true,'Reset link appears with filters');
+ await page.locator('#clear-filters').click();
+ assert.equal(await visible(),18,'Clear filters restores the full portfolio');
+ assert.equal(await page.locator('[data-exclude="mac"]').isChecked(),false,'Clear filters resets equipment');
+ assert.ok(!page.url().includes('hide=')&&!page.url().includes('category='),'Clear filters removes query state');
+
  const headings=await page.locator('.access-heading').evaluate(el=>[...el.children].map(x=>x.getBoundingClientRect().top));
  assert.ok(Math.abs(headings[0]-headings[1])<28,'At phone width the two labels stay on one heading row');
 
@@ -143,6 +152,11 @@ assert.equal(await moireCard.getByRole('link',{name:'Public tile'}).count(),0,'U
  const task=x.locator('.tile').first().locator('.backlog-items li').filter({hasText:'A task saved privately on this device'});
  await task.locator('input[type="checkbox"]').check();
  assert.ok(await x.locator('.tile').first().getByText('A task saved privately on this device').first().evaluate(el=>el.classList.contains('done')),'Completed personal task renders as done');
+ assert.ok(await x.locator('.tile').first().locator('input[type="checkbox"]:focus').count()>0,'Task completion restores keyboard focus');
+ await x.locator('#search').fill('A task saved privately on this device');
+ assert.equal(await x.locator('.tile').count(),1,'Search finds locally saved backlog items');
+ await x.locator('#search').fill('');
+
 
  console.log('Access filters and unlisted workbench passed: 18 curated, public extras, podcast subscriptions and locally persisted links/to-dos.');
  await context.close();

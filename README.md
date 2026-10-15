@@ -104,6 +104,12 @@ Every workbench tile displays a **Backlog / to-dos** section. Pre-filled items w
 
 The workbench header contains a link back to the public homepage. The lengthy introductory and privacy-warning paragraphs have been removed; the site remains unlisted but not password-protected.
 
+## October 15, 2026 site improvements
+
+The public filter interface now provides **Clear filters** when a selection is active, plus a useful reset action when category and equipment settings produce zero matching projects. These controls preserve existing shareable URL behavior and keep all 18 curated projects in their editorial order.
+
+The unlisted workbench search also matches project-action labels and sourced or locally entered backlog text. Checking or adding a task now preserves keyboard focus and scroll position after updating the local checklist. The weekly link checker decodes HTML ampersand entities before checking the actual browser target, avoiding misleading false 404s.
+
 ## Content and credits
 
 The works are the point. ChatGPT is one of the media used to make them.

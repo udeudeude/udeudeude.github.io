@@ -227,15 +227,25 @@
     return [...items, ...locals];
   }
 
-  function refresh() {
+  function refresh(focus = null) {
     const term = search.value.trim().toLowerCase();
     const all = currentProjects();
-    grid.replaceChildren();
     const shown = all.filter(p => {
       if (view !== 'all' && p.group !== view) return false;
-      return !term || [p.name,p.description,p.status,p.categories,...(p.repos||[])].join(' ').toLowerCase().includes(term);
+      const todoText = [...(p.tasks||[]),
+        ...((customTodos[p.id]||[]).map(t=>t.text))].join(' ');
+      return !term || [p.name,p.description,p.status,p.categories,todoText,
+        ...(p.repos||[]),...(p.links||[]).map(l=>l.label)].join(' ').toLowerCase().includes(term);
     });
+    const scrollY = window.scrollY;
+    grid.replaceChildren();
     shown.forEach(project => grid.append(renderCard(project)));
+    if (focus) {
+      const card = [...grid.querySelectorAll('.tile')].find(el=>el.dataset.projectId===focus.id);
+      const target = card?.querySelector(focus.selector);
+      if (target) target.focus({preventScroll:true});
+      window.scrollTo(0,scrollY);
+    }
     count.textContent = shown.length + ' projects shown · ' + all.length + ' total (' +
       all.filter(p=>p.group==='curated').length + ' curated, ' +
       all.filter(p=>p.group==='repos').length + ' extra public repositories, ' +
@@ -268,8 +278,9 @@
           if(check.checked) done.add(item.id);
           else done.delete(item.id);
           completed[project.id]=[...done];
-          save();refresh();
+          save();refresh({id:project.id,selector:'input[data-task-id="'+item.id+'"]'});
         });
+        check.dataset.taskId=item.id;
         const wording=node('span',check.checked?'done':'',item.text);
         label.append(check,wording);
         li.append(label);
@@ -308,7 +319,7 @@
         text:text.slice(0,300)
       });
       save();message.textContent='To-do saved in this browser for '+project.name+'.';
-      refresh();
+      refresh({id:project.id,selector:'input[name="todo"]'});
     });
     tools.append(form);
     const repo = (project.repos||[]).find(href=>href.includes('github.com/'));
@@ -321,6 +332,7 @@
 
   function renderCard(project) {
     const card = node('article','tile');
+    card.dataset.projectId = project.id;
     if(project.visual){
       const visual = project.visual.cloneNode(true);
       for (const image of visual.querySelectorAll('img')) {

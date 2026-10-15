@@ -5,7 +5,7 @@ const pages = ['index.html', 'golocal/index.html', 'starfinder/index.html', 'tal
 const urls = [...new Set(pages.flatMap(page => {
   const html = fs.readFileSync(page, 'utf8');
   return [...html.matchAll(/\b(?:href|src)="([^"]+)"/g)]
-    .map(m => m[1])
+    .map(m => m[1].replace(/&amp;/g, '&').replace(/&#38;|&#x26;/gi, '&'))
     .filter(url => /^https?:\/\//.test(url));
 }))].sort();
 
