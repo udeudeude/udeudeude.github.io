@@ -1,0 +1,123 @@
+name: Produce balanced dice-method podcast auditions
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'thdies-cast/production/render_balanced_dice.py'
+      - '.github/workflows/produce-balanced-dice.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: thdies-cast-balanced-dice
+  cancel-in-progress: false
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install voice model and audio tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg espeak-ng
+          python -m pip install --upgrade pip
+          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -r thdies-cast/production/requirements.txt
+          ffmpeg -hide_banner -filters | grep rubberband
+      - name: Validate algorithmic fairness before expensive rendering
+        run: |
+          set -euo pipefail
+          python -m py_compile thdies-cast/production/render_balanced_dice.py
+          python thdies-cast/production/render_balanced_dice.py --check-only
+          sha256sum thdies-cast/audio/0[1-5]-*.mp3 > /tmp/original-five.sha256
+      - name: Narrate and mix five complete probability auditions
+        run: |
+          set -euo pipefail
+          python thdies-cast/production/render_balanced_dice.py
+      - name: Check MP3 enclosures, fairness, and previous episodes
+        shell: bash
+        run: |
+          set -euo pipefail
+          sha256sum -c /tmp/original-five.sha256
+          python - <<'PY'
+          import json
+          import math
+          import xml.etree.ElementTree as ET
+          from collections import Counter
+          from pathlib import Path
+          root=Path('thdies-cast')
+          meta=json.loads((root/'dice-methods'/'manifest.json').read_text())
+          eps=meta['episodes']
+          assert len(eps)==5
+          rss=ET.parse(root/'feed.xml')
+          items=rss.findall('./channel/item')
+          assert len(items)==10, 'Keep original five podcast episodes, append five auditions'
+          assert len(set(x.findtext('guid') for x in items))==10
+          expected=[360,360,400,360,300]
+          for number,((filename,record),count) in enumerate(zip(eps.items(),expected),start=6):
+              assert record['episode']==number and record['outcome_count']==count
+              assert record['results_duration_seconds'] in (1800,2000)
+              assert record['postroll_pre_coda_pause_seconds']<.5
+              assert record['intro_is_provisional']
+              media=root/'audio'/filename
+              assert media.stat().st_size>1000000
+              matching=[item for item in items if item.find('enclosure') is not None and item.find('enclosure').get('url','').endswith('/'+filename)]
+              assert len(matching)==1
+              item=matching[0]
+              enclosure=item.find('enclosure')
+              assert enclosure.get('type')=='audio/mpeg'
+              assert int(enclosure.get('length'))==media.stat().st_size
+              assert len(item.findtext('description'))>650
+              assert (root/record['full_show_notes_path']).stat().st_size>650
+          a=eps['06-d20-shuffled-sets.mp3']['ordered_outcomes']
+          b=eps['07-d20-giant-shuffle.mp3']['ordered_outcomes']
+          c=eps['08-d20-pair-balanced.mp3']['ordered_outcomes']
+          d=eps['09-2d6-balanced.mp3']['ordered_outcomes']
+          e=eps['10-d100-balanced.mp3']['ordered_outcomes']
+          assert Counter(a)==Counter({i:18 for i in range(1,21)})
+          assert all(sorted(a[i:i+20])==list(range(1,21)) for i in range(0,360,20))
+          assert Counter(b)==Counter({i:18 for i in range(1,21)})
+          assert Counter(c)==Counter({i:20 for i in range(1,21)})
+          assert len(set((c[i],c[(i+1)%400]) for i in range(400)))==400
+          assert Counter(d)==Counter({(i,j):10 for i in range(1,7) for j in range(1,7)})
+          assert Counter(i+j for i,j in d)==Counter({s:10*(6-abs(7-s)) for s in range(2,13)})
+          assert Counter(e)==Counter({i:3 for i in range(1,101)})
+          print('Validated five audition episodes, original five unchanged, 10 feed entries, exact math',flush=True)
+          PY
+          for track in thdies-cast/audio/{06,07,08,09,10}-*.mp3; do
+            ffprobe -v error -show_entries format=duration,size -of csv=p=0 "$track"
+          done
+      - name: Commit new audition files and extended subscription feed
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add thdies-cast/audio/{06,07,08,09,10}-*.mp3 thdies-cast/dice-methods/ thdies-cast/feed.xml
+          if ! git diff --cached --quiet; then
+            git commit -m "Release three D20 methods and balanced 2D6 D100 audition episodes"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - name: Retain build manifest and show notes
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Thdies-Dice-Methods-Auditions
+          path: |
+            thdies-cast/dice-methods/manifest.json
+            thdies-cast/dice-methods/show-notes/
+            thdies-cast/feed.xml
+          if-no-files-found: warn
