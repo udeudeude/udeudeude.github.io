@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#102b37">
+<title>Health Paperwork · Apple Health export & print</title>
+<style>
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#1b343d;background:#f4f4ee;font-synthesis:none}*{box-sizing:border-box}body{margin:0}button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}.wrap{max-width:1040px;margin:0 auto;padding:0 22px}.mast{background:#102b37;color:#ecf5ed;padding:16px 0}.headrow{display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{display:flex;align-items:center;gap:12px;letter-spacing:.1em;font-size:12px;font-weight:550}.brand b{font-weight:850}.mark{display:grid;place-items:center;background:#cce4ca;color:#102b37;width:32px;height:32px;border-radius:9px;font-size:25px;font-weight:400}.privacy{color:#d9e8d8;font-size:12px}.hero{padding:60px 0 36px}.hero h1{font-family:Georgia,serif;font-weight:400;letter-spacing:-.047em;font-size:clamp(44px,7vw,76px);line-height:1.03;margin:10px 0 22px}.hero h1 em{color:#557e69;font-weight:400}.hero p{font-size:17px;color:#506166;max-width:640px;line-height:1.6}.eyebrow,.step{font-size:11px;letter-spacing:.16em;font-weight:800;color:#668878}.card,.panel{background:#fff;border:1px solid #d9e2d9;border-radius:18px;padding:27px;margin:17px 0;box-shadow:0 4px 20px #14342609}.import-row{display:flex;align-items:center;justify-content:space-between;gap:25px}.import-row>div{max-width:650px}h2{font-size:23px;letter-spacing:-.025em;margin:8px 0 10px}p{line-height:1.55}.importer p,.panel p{color:#56676b}.file-button,.primary,.secondary{display:inline-flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid #102b37;padding:13px 20px;font-size:14px;font-weight:700;white-space:nowrap;transition:transform .12s}.file-button,.primary{background:#102b37;color:white}.file-button input{position:absolute;opacity:0;width:0;height:0}.secondary{background:white;color:#102b37}.file-button:active,.primary:active,.secondary:active{transform:scale(.98)}.hint,.footnote{font-size:13px;color:#748182!important}.progress-track{height:8px;background:#ebede9;border-radius:99px;overflow:hidden;margin-top:19px}#progress-bar{height:100%;width:0;background:#6c9b85;transition:width .12s}.status{font-size:13px;margin:8px 0 0}.alert{border-radius:10px;padding:12px 15px;color:#863b34!important;background:#fff0e8;border:1px solid #ffcdbf}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:27px 0}.stat{border-radius:14px;background:#e6ece4;padding:22px}.stat span{display:block;font-size:10px;font-weight:800;letter-spacing:.12em;color:#607769}.stat strong{display:block;font-size:35px;letter-spacing:-.05em;margin-top:4px}.tabbar{display:flex;gap:8px;overflow-x:auto;margin:22px 0 0}.tab{background:transparent;border:0;border-bottom:3px solid transparent;padding:13px 18px;white-space:nowrap;font-weight:700;color:#687778}.tab.active{border-color:#1b463d;color:#102b37}.panel{border-radius:0 0 17px 17px;margin-top:0}.filters{display:flex;flex-wrap:wrap;gap:16px;margin:21px 0}.filters label{display:flex;flex-direction:column;font-size:12px;font-weight:700;gap:6px;color:#5a6c6a;flex:1;min-width:155px}.filters input{padding:12px;border:1px solid #c9d8d1;border-radius:8px;max-width:100%;color:#18363b;background:white}.select-row{display:flex;align-items:center;gap:12px;margin:14px 0;flex-wrap:wrap}.select-row span{margin-left:auto;font-size:13px;color:#657674}.subtle{color:#2e6350;background:#edf4ec;border:0;border-radius:7px;padding:8px 11px;font-size:12px;font-weight:700}.typelist{border:1px solid #dee7df;border-radius:10px;max-height:365px;overflow:auto}.type-row{padding:13px 14px;display:flex;gap:14px;align-items:center;border-bottom:1px solid #e9efea;cursor:pointer}.type-row:last-child{border-bottom:0}.type-row:hover{background:#f7f9f5}.type-row input{accent-color:#1b5f49;width:18px;height:18px;flex-shrink:0}.type-row .text{min-width:0;flex:1}.type-row .name{font-weight:660;overflow-wrap:anywhere}.type-row .detail{font-size:12px;color:#86918a;margin-top:3px}.type-row .count{color:#647a70;font-size:13px;font-variant-numeric:tabular-nums}.actions{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}.two-col{display:grid;grid-template-columns:1fr 1fr;gap:25px}footer{font-size:11px;letter-spacing:.1em;color:#86938a;padding:28px 0 55px}@media(max-width:650px){.hero{padding:36px 0 25px}.hero p{font-size:15px}.import-row{align-items:stretch;flex-direction:column}.file-button{width:100%}.card,.panel{padding:18px}.privacy{display:none}.stat{padding:15px}.stat strong{font-size:26px}.stat span{font-size:9px}.tab{padding:12px 8px;font-size:13px}.two-col{grid-template-columns:1fr}}
+#print-root{display:none}
+@page{size:letter;margin:13mm}
+@media print{body{background:white;color:#152933}.mast,main{display:none!important}#print-root{display:block!important}#print-root *{print-color-adjust:exact;-webkit-print-color-adjust:exact}.print-page{break-after:page;page-break-after:always;font:12px Arial,sans-serif;color:#17272d}.print-page:last-child{break-after:auto;page-break-after:auto}.print-head{border-bottom:2px solid #244d4c;padding-bottom:8mm;margin-bottom:6mm}.print-title{font-size:23px;font-weight:700;margin-bottom:5px}.print-sub{font-size:12px;color:#55666b}.print-grid{width:100%;border-collapse:collapse;font-size:10px}.print-grid td,.print-grid th{padding:6px;border-bottom:1px solid #d6e0db;text-align:left;word-break:break-word}.print-grid th{background:#eaf2ec}.print-meta{font-size:12px;margin-bottom:12px}.ecg-strip{width:180mm;height:35mm;display:block;margin:0 auto 1.1mm}.print-warning{border-top:1px solid #ccd5ce;padding-top:3mm;margin-top:5mm;font-size:9px;color:#55646b}.print-page{min-height:245mm}.print-num{font-size:10px;color:#596566;position:relative;text-align:right;margin-top:8px}}
+
+</style><script defer>
+/* Health Paperwork v0.1. No dependencies, network calls, analytics or persistent storage. */
+'use strict';
+const $ = id => document.getElementById(id);
+const decoder = new TextDecoder();
+const encoder = new TextEncoder();
+const state = { source: null, xml: null, ecgs: [], types: new Map(), chosen: new Set(), chosenECG: new Set(), processing: false };
+const LIMIT_CSV = 200000;
+const HTAGS = /<(Record|Workout|ActivitySummary|Correlation|ClinicalRecord)\b([^>]*)>/g;
+const dateString = s => (s || '').slice(0, 10);
+const friendly = s => s.replace(/^(HKQuantityTypeIdentifier|HKCategoryTypeIdentifier|HKCorrelationTypeIdentifier|HKDataTypeIdentifier)/, '').replace(/([a-z])([A-Z])/g, '$1 $2').replace(/([A-Z])([A-Z][a-z])/g, '$1 $2') || s;
+const isDateIn = (s, a, b) => { const d = dateString(s); return (!a || (d && d >= a)) && (!b || (d && d <= b)); };
+const escapeHTML = x => String(x ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const xmlDecode = v => (v||'').replace(/&(amp|lt|gt|quot|apos|#\d+|#x[0-9a-f]+);/gi, (m, c) => {
+  if (c[0] === '#') { const n = c[1].toLowerCase() === 'x' ? parseInt(c.slice(2),16) : Number(c.slice(1)); return n >= 0 && n <= 0x10ffff ? String.fromCodePoint(n) : m; }
+  return {amp:'&',lt:'<',gt:'>',quot:'"',apos:"'"}[c] || m;
+});
+function parseAttrs(text) { const out = {}; for (const m of text.matchAll(/([\w:.-]+)="([^"]*)"/g)) out[m[1]] = xmlDecode(m[2]); return out; }
+const number = n => Number(n).toLocaleString('en-US');
+function progress(p, msg) { $('progress-wrap').hidden = false; $('progress-bar').style.width = `${Math.max(0,Math.min(100,p))}%`; $('progress-label').textContent = msg; }
+function alertMessage(s) { $('alert').hidden = !s; $('alert').textContent = s || ''; }
+function setBusy(b) { state.processing = b; document.querySelectorAll('.actions button, #source').forEach(e => e.disabled = b); if(!b) updateButtons(); }
+function safeU64(v, off) { const n = Number(v.getBigUint64(off, true)); if(!Number.isSafeInteger(n)) throw Error('This ZIP uses offsets larger than JavaScript can safely read.'); return n; }
+function readU64at(buf, off) {return safeU64(new DataView(buf.buffer,buf.byteOffset,buf.byteLength),off);}
+
+/* Minimal streaming ZIP reader: supports stored, deflate and ZIP64. Never expands export.xml in memory. */
+async function openZip(file) {
+  const tailStart = Math.max(0,file.size - 65557);
+  const tail = new Uint8Array(await file.slice(tailStart).arrayBuffer());
+  const td = new DataView(tail.buffer);
+  let e = -1;
+  for(let i=tail.length-22; i>=0; i--) { if(td.getUint32(i,true)===0x06054b50 && i+22+td.getUint16(i+20,true)<=tail.length) {e=i;break;} }
+  if(e<0) throw Error('No ZIP central directory found. Choose a valid Apple Health export.zip.');
+  let size = td.getUint32(e+12,true), offset=td.getUint32(e+16,true), count=td.getUint16(e+10,true);
+  if(size===0xffffffff || offset===0xffffffff || count===0xffff) {
+    if(e<20 || td.getUint32(e-20,true)!==0x07064b50) throw Error('Invalid ZIP64 directory locator.');
+    const pos=readU64at(tail,e-20+8);
+    const z=new DataView(await file.slice(pos,pos+56).arrayBuffer());
+    if(z.getUint32(0,true)!==0x06064b50) throw Error('Invalid ZIP64 directory.');
+    count=safeU64(z,32); size=safeU64(z,40);offset=safeU64(z,48);
+  }
+  if(size>40*1024*1024) throw Error('ZIP file directory is unusually large (over 40 MB).');
+  const cd=new Uint8Array(await file.slice(offset,offset+size).arrayBuffer());
+  const dv=new DataView(cd.buffer);const entries=[]; let i=0;
+  while(i+46<=cd.length && entries.length<count) {
+    if(dv.getUint32(i,true)!==0x02014b50) throw Error('Corrupt ZIP central directory.');
+    const flags=dv.getUint16(i+8,true), method=dv.getUint16(i+10,true);
+    let comp=dv.getUint32(i+20,true), uncomp=dv.getUint32(i+24,true), local=dv.getUint32(i+42,true);
+    const nlen=dv.getUint16(i+28,true),elen=dv.getUint16(i+30,true),clen=dv.getUint16(i+32,true);
+    const end=i+46+nlen+elen+clen;
+    if(end>cd.length) throw Error('Corrupt ZIP file name / extra field.');
+    const name=decoder.decode(cd.subarray(i+46,i+46+nlen));
+    let p=i+46+nlen;
+    while(p+4<=i+46+nlen+elen) {
+      const id=dv.getUint16(p,true),len=dv.getUint16(p+2,true);p+=4;
+      if(p+len>i+46+nlen+elen) throw Error('Corrupt ZIP extra field.');
+      if(id===1) {let q=p;if(uncomp===0xffffffff){uncomp=readU64at(cd,q);q+=8;}if(comp===0xffffffff){comp=readU64at(cd,q);q+=8;}if(local===0xffffffff){local=readU64at(cd,q);q+=8;}}
+      p+=len;
+    }
+    if([comp,uncomp,local].some(x=>x===0xffffffff)) throw Error('Missing ZIP64 length information.');
+    if(flags&1) throw Error('Password-encrypted ZIP files are not supported.');
+    if(!name.endsWith('/')) entries.push({name, comp,uncomp,local,method,file});
+    i=end;
+  }
+  return entries;
+}
+async function entryStream(entry) {
+  if(entry.direct) return entry.file.stream();
+  const h=new DataView(await entry.file.slice(entry.local,entry.local+30).arrayBuffer());
+  if(h.byteLength<30||h.getUint32(0,true)!==0x04034b50)throw Error(`Invalid local ZIP header: ${entry.name}`);
+  const start=entry.local+30+h.getUint16(26,true)+h.getUint16(28,true);
+  const stream=entry.file.slice(start,start+entry.comp).stream();
+  if(entry.method===0)return stream;
+  if(entry.method===8){if(typeof DecompressionStream!=='function') throw Error('Your browser does not support ZIP decompression. Update Safari.');return stream.pipeThrough(new DecompressionStream('deflate-raw'));}
+  throw Error(`Unsupported ZIP compression method ${entry.method}: ${entry.name}`);
+}
+async function readEntryPrefix(entry, max=16384) {
+  const stream=await entryStream(entry);const reader=stream.getReader();let seen=0;const chunks=[];
+  try { while(seen<max){const {value,done}=await reader.read();if(done)break;const take=value.subarray(0,max-seen);seen+=take.length;chunks.push(take);} } finally {await reader.cancel().catch(()=>{});} 
+  const out=new Uint8Array(seen);let offset=0;for(const c of chunks){out.set(c,offset);offset+=c.length;}return decoder.decode(out);
+}
+async function readEntryText(entry, max=25*1024*1024) {
+  if(entry.uncomp>max)throw Error(`File ${entry.name} is too large for full-text loading.`);
+  const stream=await entryStream(entry);const chunks=[];let len=0;
+  for await(const chunk of stream) {len+=chunk.length;if(len>max)throw Error(`File ${entry.name} exceeded size limit.`);chunks.push(chunk);}
+  const joined=new Uint8Array(len);let p=0;for(const c of chunks){joined.set(c,p);p+=c.length;}
+  return decoder.decode(joined);
+}
+async function walkXML(entry, onTag, onProgress) {
+  const stream=await entryStream(entry);const reader=stream.getReader();const td=new TextDecoder();
+  let carry='',decompressed=0,tags=0,lastUpdate=0;
+  while(true){const {value,done}=await reader.read();if(done)break;
+    decompressed+=value.byteLength;carry+=td.decode(value,{stream:true});
+    const last=carry.lastIndexOf('>');
+    if(last<0){if(carry.length>8*1024*1024)throw Error('XML tag over 8 MB cannot be parsed safely.');continue;}
+    const part=carry.slice(0,last+1);carry=carry.slice(last+1);
+    HTAGS.lastIndex=0;let m;while((m=HTAGS.exec(part))!==null){tags++;onTag(m[1],parseAttrs(m[2]));}
+    if(decompressed-lastUpdate>2*1024*1024){lastUpdate=decompressed;if(onProgress)onProgress(decompressed/(entry.uncomp||decompressed)*100,tags);await new Promise(r=>setTimeout(r,0));}
+  }
+  if(carry.trim().length && !carry.trim().startsWith('</')) throw Error('XML appears truncated.');
+  return tags;
+}
+function typeId(tag,attr){return tag==='Record'||tag==='Correlation'||tag==='ClinicalRecord' ? attr.type || tag : tag;}
+async function loadFile(file) {
+  if(!file)return;
+  alertMessage('');$('workspace').hidden=true;state.source=file;state.types.clear();state.chosen.clear();state.chosenECG.clear();state.ecgs=[];state.xml=null;
+  setBusy(true);progress(1,'Opening archive…');
+  try{
+    let entries;
+    if(/\.zip$/i.test(file.name)||file.type==='application/zip')entries=await openZip(file);
+    else entries=[{name:file.name,uncomp:file.size,direct:true,file}];
+    state.xml=entries.find(e=>/\bexport\.xml$/i.test(e.name));
+    state.ecgs=entries.filter(e=>/\.csv$/i.test(e.name) && (e.name.includes('electrocardiograms/')||/^(ecg|electrocardiogram)/i.test(e.name.split('/').pop()))).map((e,i)=>({...e,id:i}));
+    if(!state.xml && !state.ecgs.length)throw Error('Could not find export.xml or Apple Watch ECG CSV files in this file.');
+    if(state.ecgs.length){for(let i=0;i<state.ecgs.length;i++){try{const prefix=await readEntryPrefix(state.ecgs[i]);const line=prefix.split(/\r?\n/).find(s=>/^(Recorded Date|Recording Date|Date Recorded),/i.test(s));if(line)state.ecgs[i].recorded=splitCSVLine(line).slice(1).join(',').trim();}catch{} if(i%15===0)await new Promise(r=>setTimeout(r,0));}}
+    if(state.xml){progress(2,'Scanning health record types. Large exports can take a while…');
+      await walkXML(state.xml,(tag,a)=>{
+        const id=typeId(tag,a);let t=state.types.get(id);const date=dateString(a.startDate||a.date||a.creationDate);
+        if(!t){t={id,count:0,first:date,last:date,unit:a.unit||''};state.types.set(id,t);}
+        t.count++;if(date){if(!t.first||date<t.first)t.first=date;if(!t.last||date>t.last)t.last=date;}
+      },(pct,count)=>progress(3+pct*.94,`Scanning records: ${number(count)} examined (${Math.round(pct)}%)`));
+    }
+    $('type-count').textContent=number(state.types.size);
+    $('record-count').textContent=number([...state.types.values()].reduce((s,t)=>s+t.count,0));
+    $('ecg-count').textContent=number(state.ecgs.length);
+    renderTypes();renderECGs();$('workspace').hidden=false;
+    progress(100,`${number(state.types.size)} types and ${number(state.ecgs.length)} ECG files found. Ready.`);
+    if(!state.xml) switchTab('ecgs');
+  }catch(err){alertMessage(err.message||String(err));progress(0,'Unable to open this file.');}
+  finally{setBusy(false);}
+}
+function renderTypes(){
+ const q=$('type-search').value.toLowerCase();const list=[...state.types.values()].sort((a,b)=>b.count-a.count||a.id.localeCompare(b.id));
+ const filtered=list.filter(x=>friendly(x.id).toLowerCase().includes(q));
+ $('types').replaceChildren();for(const x of filtered){
+  const l=document.createElement('label');l.className='type-row';const box=document.createElement('input');box.type='checkbox';box.checked=state.chosen.has(x.id);box.addEventListener('change',()=>{box.checked?state.chosen.add(x.id):state.chosen.delete(x.id);updateButtons();});
+  const content=document.createElement('div');content.className='text';const title=document.createElement('div');title.className='name';title.textContent=friendly(x.id);const sub=document.createElement('div');sub.className='detail';sub.textContent=[x.unit,x.first&&`${x.first}–${x.last}`].filter(Boolean).join(' · ');content.append(title,sub);
+  const count=document.createElement('span');count.className='count';count.textContent=number(x.count);l.append(box,content,count);$('types').append(l);
+ }
+ if(!filtered.length)$('types').textContent='No matching types found.';
+ updateButtons();
+}
+function inferFilenameDate(name){let m=name.match(/(20\d\d)[_-](\d\d)[_-](\d\d)/);return m?`${m[1]}-${m[2]}-${m[3]}`:'';}
+function ecgFiltered(){return state.ecgs.filter(e=>isDateIn(e.recorded || inferFilenameDate(e.name),$('ecg-from').value,$('ecg-to').value));}
+function renderECGs(){
+ $('ecg-list').replaceChildren();const list=ecgFiltered();for(const e of list){
+  const l=document.createElement('label');l.className='type-row';const c=document.createElement('input');c.type='checkbox';c.checked=state.chosenECG.has(e.id);c.addEventListener('change',()=>{c.checked?state.chosenECG.add(e.id):state.chosenECG.delete(e.id);updateButtons();});
+  const d=document.createElement('div');d.className='text';const t=document.createElement('div');t.className='name';t.textContent=e.name.split('/').pop();const sub=document.createElement('div');sub.className='detail';sub.textContent=e.recorded||inferFilenameDate(e.name)||'Date in file';d.append(t,sub);l.append(c,d);$('ecg-list').append(l);
+ }
+ if(!list.length)$('ecg-list').textContent='No ECG files within this date range.';
+ updateButtons();
+}
+function updateButtons(){ $('selected-count').textContent=`${state.chosen.size} selected`;const n=state.chosenECG.size;$('ecg-selected').textContent=`${n} selected`;for(const id of ['csv-button','report-button']) $(id).disabled=state.processing||!state.xml||!state.chosen.size;for(const id of ['ecg-preview','ecg-csv'])$(id).disabled=state.processing||!n; }
+function switchTab(which){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===which));for(const n of ['metrics','ecgs','about'])$(n+'-panel').hidden=n!==which;}
+function csvCell(s){const text=String(s??'');return /[",\r\n]/.test(text)?'"'+text.replace(/"/g,'""')+'"':text;}
+function saveBlob(blob,filename){const u=URL.createObjectURL(blob);const a=document.createElement('a');a.href=u;a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),60000);}
+function matchData(tag,a){return state.chosen.has(typeId(tag,a)) && isDateIn(a.startDate||a.date||a.creationDate,$('from-date').value,$('to-date').value);}
+async function exportCSV(){
+ setBusy(true);alertMessage('');try{
+  progress(0,'Preparing CSV…');let count=0;
+  const rows=['type,startDate,endDate,creationDate,value,unit,sourceName,sourceVersion,device,attributes'];
+  await walkXML(state.xml,(tag,a)=>{if(!matchData(tag,a))return;
+    if(count>=LIMIT_CSV)return;count++;
+    const known=['type','startDate','endDate','creationDate','date','value','unit','sourceName','sourceVersion','device'];const extras={};for(const k in a)if(!known.includes(k))extras[k]=a[k];
+    rows.push([typeId(tag,a),a.startDate||a.date,a.endDate,a.creationDate,a.value,a.unit,a.sourceName,a.sourceVersion,a.device,JSON.stringify(extras)].map(csvCell).join(','));
+  },(pct,n)=>progress(pct,`Extracting rows from ${number(n)} scanned records…`));
+  saveBlob(new Blob([rows.join('\r\n')],{type:'text/csv;charset=utf-8'}),'apple-health-selected.csv');
+  progress(100,`Exported ${number(count)} rows.`);
+  if(count>=LIMIT_CSV)alertMessage(`This browser version caps a CSV file at ${number(LIMIT_CSV)} rows to protect phone memory. Narrow the date range and export additional batches.`);
+ }catch(e){alertMessage(e.message||String(e));}finally{setBusy(false);}
+}
+function printPage(body){$('print-root').innerHTML=body;window.print();}
+async function printMetrics(){
+ setBusy(true);alertMessage('');try{
+  progress(0,'Preparing measurement summaries…');const info=new Map();for(const id of state.chosen)info.set(id,{count:0,values:[],sum:0,n:0,min:Infinity,max:-Infinity,unit:''});
+  await walkXML(state.xml,(tag,a)=>{if(!matchData(tag,a))return;const id=typeId(tag,a),r=info.get(id);r.count++;r.unit=a.unit||r.unit;
+    const v=Number(a.value);if(a.value!==undefined&&a.value!==''&&Number.isFinite(v)){r.sum+=v;r.n++;r.min=Math.min(r.min,v);r.max=Math.max(r.max,v);}
+    r.values.push({date:a.startDate||a.date||'',value:a.value||'',source:a.sourceName||'',unit:a.unit||''});if(r.values.length>28)r.values.shift();
+  },(pct)=>progress(pct,`Building summaries (${Math.floor(pct)}%)`));
+  let html='';for(const [id,r] of info){const summary=r.n?`Numeric measurements: ${number(r.n)} · Average: ${(r.sum/r.n).toFixed(2)} ${escapeHTML(r.unit)} · Min: ${r.min.toFixed(2)} · Max: ${r.max.toFixed(2)}`:'Non-numeric or categorical readings';
+    html+=`<section class="print-page"><div class="print-head"><div class="print-title">${escapeHTML(friendly(id))}</div><div class="print-sub">Apple Health · ${number(r.count)} readings · ${new Date().toLocaleDateString()}</div></div><p class="print-meta">${summary}</p><table class="print-grid"><thead><tr><th>Date</th><th>Value</th><th>Unit</th><th>Source</th></tr></thead><tbody>${r.values.reverse().map(v=>`<tr><td>${escapeHTML(v.date)}</td><td>${escapeHTML(v.value)}</td><td>${escapeHTML(v.unit)}</td><td>${escapeHTML(v.source)}</td></tr>`).join('')}</tbody></table><p class="print-warning">Showing up to 28 most recently encountered readings per type within chosen dates. Numeric summary includes all matching records; duplicates from multiple devices may be present. This is a data export, not a diagnosis.</p></section>`;
+  }
+  if(!html)throw Error('Select a data type and date range containing records.');progress(100,'Report ready.');printPage(html);
+ }catch(e){alertMessage(e.message||String(e));}finally{setBusy(false);}
+}
+/* CSV parser that handles quoted names and commas in metadata. */
+function splitCSVLine(line){const out=[];let cur='',quoted=false;for(let i=0;i<line.length;i++){const c=line[i];if(c==='"'){if(quoted&&line[i+1]==='"'){cur+='"';i++;}else quoted=!quoted;}else if(c===','&&!quoted){out.push(cur.trim());cur='';}else cur+=c;}out.push(cur.trim());return out;}
+function parseECG(text,entry){
+ const lines=text.replace(/^\ufeff/,'').split(/\r?\n/);const meta={};let header='',points=[],startIndex=-1;
+ for(let i=0;i<Math.min(65,lines.length);i++){const fields=splitCSVLine(lines[i]);if(fields.length>=2){const key=fields[0].trim();if(/^[a-zA-Z][a-zA-Z\s()\/.-]{2,45}$/.test(key))meta[key.toLowerCase().replace(/\s+/g,' ')]=fields.slice(1).join(',');}
+   if(/(?:sample|time|voltage|ecg|amplitude).*[,;].*(?:sample|time|voltage|ecg|amplitude)/i.test(lines[i])){header=lines[i];startIndex=i+1;break;}
+ }
+ if(startIndex<0){startIndex=lines.findIndex(l=>{const f=splitCSVLine(l);return f.length>=2 && f.slice(0,2).every(v=>v.trim()!==''&&Number.isFinite(Number(v)));});if(startIndex<0)throw Error(`${entry.name}: no recognizable ECG samples.`);}
+ const rows=[];for(let i=startIndex;i<lines.length;i++){const f=splitCSVLine(lines[i]);if(f.length<2)continue;const a=Number(f[0]),b=Number(f[1]);if(Number.isFinite(a)&&Number.isFinite(b))rows.push([a,b]);}
+ if(rows.length<20)throw Error(`${entry.name}: fewer than 20 valid waveform points.`);
+ const lower=header.toLowerCase(),xFirst=rows[0][0],xLast=rows.at(-1)[0];
+ let scaleTime=1,validTime=true;
+ if(/milliseconds|\bms\b/i.test(header))scaleTime=.001;
+ else if(/(?:sample\s*(?:number|index)|\bindex\b)/i.test(header)) {const hz=parseFloat(Object.entries(meta).find(([k])=>/frequency|sample rate/i.test(k))?.[1]||'');if(hz>10)scaleTime=1/hz;else validTime=false;}
+ else if(xLast-xFirst>600 && rows.length>300){const hz=parseFloat(Object.entries(meta).find(([k])=>/frequency|sample rate/i.test(k))?.[1]||'');if(hz>10)scaleTime=1/hz;else validTime=false;}
+ const unit=/\b(?:uv|µv|μv|microvolt)/i.test(lower)?0.001:/\bmv\b/i.test(lower)?1:null;
+ // Many Apple CSVs say "ECG (mV)". Without that label voltage remains uncalibrated.
+ points=rows.map(([t,v])=>({t:(t-xFirst)*scaleTime, v:unit===null?v:v*unit}));
+ const endTime=points.at(-1).t;
+ const recorded=Object.entries(meta).find(([k])=>/recorded date|recording date|date recorded|date of recording/i.test(k))?.[1]||inferFilenameDate(entry.name)||'';
+ const classification=Object.entries(meta).find(([k])=>/classification|result/i.test(k))?.[1]||'Not provided';
+ const heartrate=Object.entries(meta).find(([k])=>/average heart rate|heart rate/i.test(k))?.[1]||'';
+ const symptoms=Object.entries(meta).find(([k])=>/^symptoms?$/i.test(k))?.[1]||'';
+ return {recorded,classification,heartrate,symptoms,points,validTime,voltageUnit:unit!==null,seconds:endTime,filename:entry.name.split('/').pop()};
+}
+function ecgSVG(ecg,start,end,idx){
+ const W=180,H=35,level=17.5,hasScale=ecg.validTime&&ecg.voltageUnit;const mmps=hasScale?25:(W/Math.max(ecg.seconds,1));
+ const duration=end-start,visible=ecg.points.filter(p=>p.t>=start-.005&&p.t<=end+.005);
+ const peak=visible.reduce((m,p)=>Math.max(m,Math.abs(p.v)),0)||1;const yscale=ecg.voltageUnit?10:Math.min(13/peak,10);
+ const points=[];const bucketW=W/1200;let curr=-1,bucket=[];
+ function drain(){if(!bucket.length)return;let mi=bucket[0],ma=bucket[0];for(const p of bucket){if(p.v<mi.v)mi=p;if(p.v>ma.v)ma=p;}for(const p of [mi,ma].sort((a,b)=>a.t-b.t))points.push(p);bucket=[];}
+ for(const p of visible){const x=(p.t-start)*mmps;const b=Math.floor(x/bucketW);if(b!==curr){drain();curr=b;}bucket.push(p);}drain();
+ const path=points.map((p,i)=>`${i===0?'M':'L'}${((p.t-start)*mmps).toFixed(2)} ${(level-p.v*yscale).toFixed(2)}`).join(' ');
+ const gridId=`grid${idx}`,gridBigId=`heavy${idx}`,clipId=`clip${idx}`;
+ return `<svg class="ecg-strip" xmlns="http://www.w3.org/2000/svg" width="180mm" height="35mm" viewBox="0 0 ${W} ${H}" aria-label="ECG waveform from ${start.toFixed(1)} to ${end.toFixed(1)} seconds"><defs><pattern id="${gridId}" width="1" height="1" patternUnits="userSpaceOnUse"><path d="M 1 0 L 0 0 0 1" fill="none" stroke="#f6d2d2" stroke-width=".14"/></pattern><pattern id="${gridBigId}" width="5" height="5" patternUnits="userSpaceOnUse"><rect width="5" height="5" fill="url(#${gridId})"/><path d="M 5 0 L 0 0 0 5" fill="none" stroke="#e9a6a6" stroke-width=".2"/></pattern><clipPath id="${clipId}"><rect x="0" y="0" width="${W}" height="${H}"/></clipPath></defs><rect width="${W}" height="${H}" fill="url(#${gridBigId})"/><path d="${path}" stroke="#192a36" stroke-width=".24" fill="none" clip-path="url(#${clipId})" stroke-linecap="round" stroke-linejoin="round"/><rect x=".5" y=".5" width="20" height="4.6" fill="#fff" opacity=".92"/><text x="1.5" y="3.9" font-size="3.2" fill="#42515a">${start.toFixed(1)} s</text></svg>`;
+}
+async function loadECGs(){const out=[];const selected=state.ecgs.filter(e=>state.chosenECG.has(e.id));if(selected.length>150)throw Error('For reliable printing on a phone, export ECGs in batches of at most 150.');
+ for(let i=0;i<selected.length;i++){progress(i/selected.length*95,`Reading ECG ${i+1} of ${selected.length}: ${selected[i].name.split('/').pop()}`);const t=await readEntryText(selected[i]);const e=parseECG(t,selected[i]);selected[i].recorded=e.recorded;out.push(e);await new Promise(r=>setTimeout(r,0));}
+ return out.sort((a,b)=>String(a.recorded).localeCompare(String(b.recorded)));
+}
+async function printECGs(){
+ setBusy(true);alertMessage('');try{const ecgs=await loadECGs();let html='';let i=0;for(const e of ecgs){
+   const max=e.validTime?Math.max(e.seconds,.1):Math.max(e.seconds,1),span=e.validTime&&e.voltageUnit?7.2:Math.max(max/5,.01);
+   const rows=Math.min(7,Math.max(1,Math.ceil(max/span)));let traces='';for(let n=0;n<rows;n++)traces+=ecgSVG(e,n*span,Math.min((n+1)*span,max),i++);
+   const scale=e.voltageUnit&&e.validTime?'Grid: 25 mm/s · 10 mm/mV':`Display scaling only; ${!e.validTime?'time ':''}${!e.voltageUnit?'voltage ':''}units not verified from CSV`;
+   html+=`<section class="print-page"><div class="print-head"><div class="print-title">Apple Watch ECG</div><div class="print-sub">${escapeHTML(e.recorded)} · ${escapeHTML(e.classification)} ${e.heartrate?'· '+escapeHTML(e.heartrate)+' bpm':''}</div></div><div class="print-meta">${escapeHTML(e.filename)} ${e.symptoms?'· Symptoms: '+escapeHTML(e.symptoms):''}</div>${traces}<div class="print-warning">${escapeHTML(scale)}. Reconstructed from Apple Health CSV, not Apple's official PDF. Clinical assessment should use original source records.</div><div class="print-num">ECG ${html.match(/class="print-page"/g)?.length+1||1} / ${ecgs.length}</div></section>`;
+ }
+ progress(100,`${ecgs.length} ECG pages ready.`);printPage(html);
+ }catch(e){alertMessage(e.message||String(e));}finally{setBusy(false);}
+}
+async function exportECGIndex(){setBusy(true);alertMessage('');try{const ecgs=await loadECGs();const rows=['date,classification,averageHeartRate,symptoms,durationSeconds,samples,timeCalibrated,voltageCalibrated,filename'];for(const e of ecgs)rows.push([e.recorded,e.classification,e.heartrate,e.symptoms,e.seconds.toFixed(3),e.points.length,e.validTime,e.voltageUnit,e.filename].map(csvCell).join(','));saveBlob(new Blob([rows.join('\r\n')],{type:'text/csv;charset=utf-8'}),'ecg-index.csv');progress(100,`ECG index exported (${ecgs.length}).`);}catch(e){alertMessage(e.message||String(e));}finally{setBusy(false);}}
+$('source').addEventListener('change',e=>loadFile(e.target.files[0]));
+document.querySelectorAll('.tab').forEach(e=>e.addEventListener('click',()=>switchTab(e.dataset.tab)));
+$('type-search').addEventListener('input',renderTypes);
+$('select-visible').addEventListener('click',()=>{const q=$('type-search').value.toLowerCase();for(const t of state.types.values())if(friendly(t.id).toLowerCase().includes(q))state.chosen.add(t.id);renderTypes();});
+$('select-none').addEventListener('click',()=>{state.chosen.clear();renderTypes();});
+$('csv-button').addEventListener('click',exportCSV);$('report-button').addEventListener('click',printMetrics);
+$('ecg-from').addEventListener('change',renderECGs);$('ecg-to').addEventListener('change',renderECGs);
+$('ecg-all').addEventListener('click',()=>{ecgFiltered().forEach(e=>state.chosenECG.add(e.id));renderECGs();});
+$('ecg-none').addEventListener('click',()=>{state.chosenECG.clear();renderECGs();});
+$('ecg-preview').addEventListener('click',printECGs);$('ecg-csv').addEventListener('click',exportECGIndex);
+
+</script>
+</head><body>
+<header class="mast"><div class="wrap headrow"><div class="brand"><span class="mark">+</span><span>HEALTH <b>PAPERWORK</b></span></div><div class="privacy">Local processing · no uploads</div></div></header>
+<main class="wrap">
+<section class="hero"><span class="eyebrow">APPLE HEALTH / OPEN EXPORTER</span><h1>Health data, on paper.<br><em>On your terms.</em></h1><p>A free, local-first tool for Apple Health exports. Explore measurements, save CSV data, and print a stack of Apple Watch ECGs at once.</p></section>
+<section class="card importer" id="importer"><div class="step">01 / LOAD</div><div class="import-row"><div><h2>Choose your Apple Health export</h2><p>In Health, tap your profile → <strong>Export All Health Data</strong> → Save to Files. Choose the resulting ZIP here. You can also use an extracted <code>export.xml</code>, or an individual ECG CSV.</p></div><label class="file-button">Choose a file <input id="source" type="file" accept=".zip,.xml,.csv,application/zip,text/xml,text/csv" /></label></div><p class="hint">The file stays in this browser. No account, subscriptions, servers, or analytics.</p><div id="progress-wrap" hidden><div class="progress-track"><div id="progress-bar"></div></div><p class="status" role="status" id="progress-label"></p></div><p id="alert" class="alert" hidden role="alert"></p></section>
+<section id="workspace" hidden>
+<div class="stats"><div class="stat"><span>DATA TYPES</span><strong id="type-count">0</strong></div><div class="stat"><span>HEALTH RECORDS</span><strong id="record-count">0</strong></div><div class="stat"><span>ECG RECORDINGS</span><strong id="ecg-count">0</strong></div></div>
+<div class="tabbar" role="tablist"><button type="button" class="tab active" data-tab="metrics">Measurements</button><button type="button" class="tab" data-tab="ecgs">ECG print studio</button><button type="button" class="tab" data-tab="about">About this export</button></div>
+<section class="panel" id="metrics-panel"><div class="section-title"><div><div class="step">02 / SELECT</div><h2>Your health measurements</h2><p>Select any types to export rows as CSV or prepare a compact printable report.</p></div></div>
+<div class="filters"><label>From <input id="from-date" type="date" /></label><label>Through <input id="to-date" type="date" /></label><label>Find a data type <input id="type-search" type="search" placeholder="e.g. heart, steps, sleep" /></label></div>
+<div class="select-row"><button id="select-visible" type="button" class="subtle">Select visible</button><button id="select-none" type="button" class="subtle">Clear selection</button><span id="selected-count">0 selected</span></div>
+<div id="types" class="typelist"></div>
+<div class="actions"><button id="csv-button" type="button" class="primary" disabled>Export selected CSV</button><button id="report-button" type="button" class="secondary" disabled>Print measurement report</button></div><p class="footnote">CSV includes raw dates, values, units and sources. For very large selections, narrow the dates to avoid exhausting iPhone memory. Printable reports show up to the latest 28 measurements per type.</p></section>
+<section class="panel" id="ecgs-panel" hidden><div class="step">02 / PRINT</div><h2>Apple Watch ECGs, together</h2><p id="ecg-intro">Each ECG CSV in the archive can become a waveform page. Choose recordings, then print or save a PDF from the iPhone share/print sheet.</p>
+<div class="filters"><label>From <input id="ecg-from" type="date" /></label><label>Through <input id="ecg-to" type="date" /></label></div>
+<div class="select-row"><button id="ecg-all" class="subtle" type="button">Select all shown</button><button id="ecg-none" class="subtle" type="button">Clear selection</button><span id="ecg-selected">0 selected</span></div>
+<div id="ecg-list" class="typelist"></div>
+<div class="actions"><button id="ecg-preview" class="primary" type="button" disabled>Prepare printable ECGs</button><button id="ecg-csv" type="button" class="secondary" disabled>Export ECG index CSV</button></div><p class="footnote">Waveforms are reconstructed from the exported CSV. They are not Apple's original clinical PDF and should not replace it for diagnostic use. ECG print scale is marked only when the data includes a recognizable time/voltage unit.</p></section>
+<section class="panel" id="about-panel" hidden><h2>What this version supports</h2><div class="two-col"><p><b>Included</b><br>Standard Apple Health export ZIPs (including ZIP64), measurements, categories, workouts, activity summaries, correlations, ECG CSV waveform files, date filters and print layouts. XML is parsed a chunk at a time.</p><p><b>Not yet included</b><br>Direct HealthKit access (requires a native iOS app), clinical-record PDFs, route maps, metadata nested inside XML records, or automatic recurring exports.</p></div><p>Files are read in the browser only. Nothing is transmitted, indexed or stored by this page. Refreshing clears the session.</p></section>
+</section>
+<footer>HEALTH PAPERWORK · OPEN, LOCAL, FREE · v0.1</footer>
+</main>
+<div id="print-root" aria-hidden="true"></div>
+</body></html>
