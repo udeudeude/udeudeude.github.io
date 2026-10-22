@@ -10,6 +10,21 @@ const snapshot=JSON.parse(fs.readFileSync('xyzzy/repositories.json','utf8'));
 const metadata=JSON.parse(fs.readFileSync('xyzzy/project-metadata.json','utf8'));
 assert.equal(metadata.version,1,'Curated project metadata schema is versioned');
 assert.equal(metadata.projects['repo-th-die-s-cast'].name,'Th’die’s Cast','Correct podcast title with both apostrophes');
+for(const [key,label] of [
+ ['repo-maze-seedling-rejuvenation','Open web companion'],
+ ['repo-temporarily-leave-the-universe','Open web experience'],
+ ['repo-mpk249-universal-map','Download source ZIP'],
+ ['repo-sphero-laboratory','Mac startup and safety instructions'],
+ ['repo-key-scratch','Build / install guide'],
+ ['repo-escape-team-activate','No Such Room prototype']
+]) {
+ assert.ok(metadata.projects[key].links.some(link=>link.label===label),'Reviewed project resource: '+key);
+ assert.ok(metadata.projects[key].tasks.length>0,'New project has actionable work: '+key);
+}
+assert.equal(snapshot.repositories.length,29,'Offline snapshot includes all 29 public repositories');
+assert.ok(!JSON.stringify(snapshot).includes('gear-harness'),'Private repository absent from workbench snapshot');
+assert.ok(workbench.includes('payload.version===1'),'Legacy backup handling remains available');
+
 for(const [key,url] of [
   ['living-patterns','https://udeudeude.github.io/Living-Patterns-Podcast/feed.xml'],
   ['orchestral-maneuvers-dark','https://om-weekly-podcast.workspace-310067.chatgpt.site/feed.xml'],
@@ -111,6 +126,22 @@ const moireCard=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Moir
 assert.ok(await moireCard.getByRole('link',{name:'Online workshop'}).count()>0,'Moiré still links to its working web app');
 assert.equal(await moireCard.getByRole('link',{name:'Public tile'}).count(),0,'Unpublished Moiré has no public-portfolio shortcut');
  assert.ok(!(await x.locator('body').innerText()).includes('gear-harness'),'Private repository is not included publicly');
+ const newlyIndexed=[
+  ['MAZE · Seedling Rejuvenation','Open web companion'],
+  ['Temporarily Leave the Universe','Open web experience'],
+  ['MPK249 Universal Map','Download source ZIP'],
+  ['Sphero Laboratory','Mac startup and safety instructions'],
+  ['Ortholinear (Key Scratch)','Build / install guide'],
+  ['Escape Team Activate','No Such Room prototype']
+ ];
+ for(const [title,label] of newlyIndexed){
+   const card=x.locator('.tile').filter({has:x.getByRole('heading',{name:title,exact:true})});
+   assert.equal(await card.count(),1,title+' gets an independent workbench tile');
+   assert.equal(await card.getByRole('link',{name:label}).count(),1,title+' gets a verified action');
+   assert.ok((await card.locator('.backlog h3').textContent()).includes('open of'),title+' shows source-based to-dos');
+   assert.equal(await card.getByRole('link',{name:'Public tile'}).count(),0,title+' has not been promoted to the public portfolio');
+ }
+
  const first=x.locator('.tile').first();
  await first.locator('details summary').click();
  await first.locator('input[name="title"]').fill('A saved working conversation');
@@ -156,6 +187,30 @@ assert.equal(await moireCard.getByRole('link',{name:'Public tile'}).count(),0,'U
  await x.locator('#search').fill('A task saved privately on this device');
  assert.equal(await x.locator('.tile').count(),1,'Search finds locally saved backlog items');
  await x.locator('#search').fill('');
+ // Importing an older (v1) backup cannot erase a newer local to-do collection.
+ x.once('dialog',dialog=>dialog.accept());
+ await x.locator('#import-file').setInputFiles({
+   name:'old-private-backup.json',
+   mimeType:'application/json',
+   buffer:Buffer.from(JSON.stringify({version:1,links:{},projects:[]}))
+ });
+ await x.getByText('Older backup imported. Existing local to-dos were preserved.').waitFor();
+ assert.ok(await x.getByText('A task saved privately on this device').count(),'Old backup import preserves existing to-dos');
+ const desktop=await browser.newContext({viewport:{width:1280,height:820}});
+ const desk=await desktop.newPage();
+ await desk.route('https://api.github.com/**',route=>route.abort());
+ await desk.goto('http://127.0.0.1:4179/xyzzy/',{waitUntil:'domcontentloaded'});
+ await desk.waitForFunction(()=>document.getElementById('result-count')?.textContent?.includes('projects shown'));
+ const desktopLayout=await desk.evaluate(()=>({
+  viewport:window.innerWidth,scrollWidth:document.documentElement.scrollWidth,
+  columns:getComputedStyle(document.getElementById('projects')).gridTemplateColumns.split(' ').length
+ }));
+ assert.ok(desktopLayout.scrollWidth<=desktopLayout.viewport+2,'Workbench desktop layout does not overflow');
+ assert.equal(desktopLayout.columns,3,'Workbench desktop grid uses three columns');
+ await desk.locator('#search').fill('two-robot');
+ assert.equal(await desk.locator('.tile').count(),1,'Desktop search reaches newly indexed robotics backlog');
+ await desk.close();await desktop.close();
+
 
 
  console.log('Access filters and unlisted workbench passed: 18 curated, public extras, podcast subscriptions and locally persisted links/to-dos.');
