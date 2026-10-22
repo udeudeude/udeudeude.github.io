@@ -110,6 +110,16 @@ The public filter interface now provides **Clear filters** when a selection is a
 
 The unlisted workbench search also matches project-action labels and sourced or locally entered backlog text. Checking or adding a task now preserves keyboard focus and scroll position after updating the local checklist. The weekly link checker decodes HTML ampersand entities before checking the actual browser target, avoiding misleading false 404s.
 
+## October 22, 2026 unlisted-workbench audit
+
+The unlisted workbench snapshot now covers **29 public GitHub repositories** (plus the 18 curated portfolio tiles, with overlaps deduplicated). Six newly added public repositories have workbench-only entries with reviewed project status, credible resource links, and source-based tasks: MPK249 Universal Map, MAZE · Seedling Rejuvenation, Sphero Laboratory, Escape Team Activate, Temporarily Leave the Universe, and Ortholinear (Key Scratch).
+
+The workbench recognizes genuine repository media where it exists; the MAZE app icon and Ortholinear iPhone simulator screenshot are not fabricated preview images. Incomplete prototypes and hardware-dependent utilities are clearly labeled. No new repository was added to the public portfolio.
+
+Importing a **version 1** personal workbench backup now retains any newer local to-do and completion data, while version 2 imports still replace that data after the user's confirmation. Personal links and task state remain browser-local. The automated external-link checker confirms reported 404 and 410 HEAD responses with GET before treating them as broken, without changing public-site links.
+
+Public-site changes require editorial approval. Candidate promotions and link repairs were intentionally held back during this audit.
+
 ## Content and credits
 
 The works are the point. ChatGPT is one of the media used to make them.
