@@ -50,6 +50,13 @@
     .equipment-options label{display:inline-flex;align-items:center;gap:7px;min-height:40px;font-size:.81rem;cursor:pointer}
     .equipment-options input{accent-color:#9de0eb;width:17px;height:17px}
     .access-filters .filter-summary{margin:5px 0 0}
+    .workshop-bridge{margin:35px 0 8px;padding:20px 22px;border-top:1px solid #ffffff43;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:15px;color:#e3eff5}
+    .workshop-bridge .workshop-kicker{font-size:.7rem;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);font-weight:800;margin:0 0 3px}
+    .workshop-bridge h2{font-size:1.2rem;margin:0;letter-spacing:-.03em}
+    .workshop-bridge p:not(.workshop-kicker){margin:5px 0 0;color:var(--muted);font-size:.82rem}
+    .workshop-bridge a{display:inline-flex;align-items:center;min-height:44px;padding:8px 12px;border:1px solid #a4cbd955;border-radius:7px;text-decoration:none;font-size:.8rem;font-weight:750}
+    .workshop-bridge a:hover{background:#b4e4f219}
+
     .filter-results{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:5px}
     .filter-results .filter-summary{margin:0}
     #clear-filters,.empty-results button{font:inherit;font-size:.76rem;color:#e4f8fd;background:transparent;border:1px solid #d4f0fa66;border-radius:7px;padding:7px 10px;cursor:pointer}
@@ -556,6 +563,14 @@
     </article>
 
   </section>
+  <aside class="workshop-bridge" aria-labelledby="workshop-heading">
+    <div>
+      <p class="workshop-kicker">For the curious</p>
+      <h2 id="workshop-heading">Open Workshop</h2>
+      <p>Experiments, prototypes, and works still taking shape.</p>
+    </div>
+    <a href="/workshop/">Explore the workshop <span aria-hidden="true">↗</span></a>
+  </aside>
 </main>
 
 
