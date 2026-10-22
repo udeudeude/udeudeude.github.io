@@ -157,6 +157,16 @@
     if (project.group !== 'curated') {
       if (typeof meta.status === 'string' && meta.status) project.status = meta.status;
       if (typeof meta.description === 'string' && meta.description) project.description = meta.description;
+      if (!project.visual && typeof meta.image === 'string' &&
+          /^https:\/\/raw\.githubusercontent\.com\/udeudeude\//.test(meta.image)) {
+        const visual = node('div','visual');
+        const picture = node('img');
+        picture.src = meta.image;
+        picture.alt = meta.imageAlt || ('Image from ' + project.name + ' repository');
+        picture.loading = 'lazy';
+        visual.append(picture);
+        project.visual = visual;
+      }
     }
     project.tasks = Array.isArray(meta.tasks) ? meta.tasks.filter(x=>typeof x==='string').slice(0,30) : [];
     const ordinary = project.links||[];
