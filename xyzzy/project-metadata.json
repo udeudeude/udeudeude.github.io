@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "sourceNotes": "Project README files and the portfolio TODO.md, inspected 2026-10-12. Task summaries are manually curated, not live issue states.",
+  "sourceNotes": "Curated from project READMEs, prototype notes and GitHub repository state through 2026-10-22; tasks are a reviewed snapshot, not live GitHub Issues.",
   "projects": {
     "living-patterns": {
       "name": null,
@@ -389,6 +389,159 @@
       "tasks": [
         "Continue authentic project-media gathering.",
         "Verify new releases and project links periodically."
+      ]
+    },
+    "repo-mpk249-universal-map": {
+      "name": "MPK249 Universal Map",
+      "status": "Hardware-ready beta · requires live device testing",
+      "description": "Reusable Akai MPK249 mappings and templates for desktop synthesizers and Synth One on iOS. Offline tests pass, but the actual MPK249 and target devices have not been verified.",
+      "links": [
+        {
+          "label": "Setup instructions",
+          "url": "https://github.com/udeudeude/MPK249-Universal-Map/blob/main/START_HERE.md"
+        },
+        {
+          "label": "Download source ZIP",
+          "url": "https://github.com/udeudeude/MPK249-Universal-Map/archive/refs/heads/main.zip"
+        },
+        {
+          "label": "Mac installer instructions",
+          "url": "https://github.com/udeudeude/MPK249-Universal-Map/blob/main/README.md"
+        }
+      ],
+      "tasks": [
+        "Test a backed-up MPK249 hardware preset with the actual MIDI controller.",
+        "Verify mapping and safe installation on the Mac and iOS Synth One.",
+        "Confirm Bespoke and Vital integration on real target applications."
+      ]
+    },
+    "repo-maze-seedling-rejuvenation": {
+      "name": "MAZE · Seedling Rejuvenation",
+      "status": "Web companion · real-device testing incomplete",
+      "description": "An independent replacement companion for the discontinued Seedling marble maze app: construct an 18×18 maze, explore it, try Cardboard view, or assist scanning a physical board.",
+      "links": [
+        {
+          "label": "Open web companion",
+          "url": "https://udeudeude.github.io/Maze-Seedling-Rejuvenation/"
+        },
+        {
+          "label": "Device testing checklist",
+          "url": "https://github.com/udeudeude/Maze-Seedling-Rejuvenation/blob/main/QA-SMOKE.md"
+        },
+        {
+          "label": "Source / instructions",
+          "url": "https://github.com/udeudeude/Maze-Seedling-Rejuvenation"
+        }
+      ],
+      "tasks": [
+        "Verify real iPhone Safari navigation, touch controls, and persistence.",
+        "Test physical-maze photo scanning and manual correction.",
+        "Verify Cardboard motion control, offline mode and two-phone pairing on real devices."
+      ]
+    },
+    "repo-sphero-laboratory": {
+      "name": "Sphero Laboratory",
+      "status": "Mac + robot bridge · prototype",
+      "description": "Local-network browser controller for Sphero 2.0 and SPRK+ through a Mac Bluetooth bridge. Includes software demo mode; simultaneous real-robot operation remains unverified.",
+      "links": [
+        {
+          "label": "Mac startup and safety instructions",
+          "url": "https://github.com/udeudeude/Sphero-Laboratory/blob/main/README.md"
+        },
+        {
+          "label": "Download source ZIP",
+          "url": "https://github.com/udeudeude/Sphero-Laboratory/archive/refs/heads/main.zip"
+        },
+        {
+          "label": "Legacy serial adapter source",
+          "url": "https://github.com/udeudeude/Sphero-Laboratory/blob/main/legacy_serial.py"
+        }
+      ],
+      "tasks": [
+        "Verify SPRK+ Bluetooth discovery and movement on a Mac.",
+        "Test actual Sphero 2.0 legacy serial connection.",
+        "Test safe stopping and simultaneous two-robot operation.",
+        "Test iPhone Safari controls and battery/sensor reporting."
+      ]
+    },
+    "repo-escape-team-activate": {
+      "name": "Escape Team Activate",
+      "status": "Print-and-play puzzle prototypes · not published",
+      "description": "Original printable puzzle missions intended for Escape Team; one- and two-checkpoint prototypes exist as source notes, but no completed, playtested mission is released.",
+      "links": [
+        {
+          "label": "Three mission concepts",
+          "url": "https://github.com/udeudeude/Escape-Team-Activate/blob/main/docs/CONCEPTS.md"
+        },
+        {
+          "label": "Room Zero prototype",
+          "url": "https://github.com/udeudeude/Escape-Team-Activate/blob/main/prototype/house-01/README.md"
+        },
+        {
+          "label": "No Such Room prototype",
+          "url": "https://github.com/udeudeude/Escape-Team-Activate/blob/main/prototype/house-02/README.md"
+        },
+        {
+          "label": "Official mission editor",
+          "url": "https://www.escape-team.com/create"
+        }
+      ],
+      "tasks": [
+        "Finish a paper prototype with all necessary source and printable files in the repository.",
+        "Run blind paper playtests and verify answer logic.",
+        "Test a completed five-checkpoint mission in the official app."
+      ]
+    },
+    "repo-temporarily-leave-the-universe": {
+      "name": "Temporarily Leave the Universe",
+      "status": "Live web experiment",
+      "description": "A small, self-contained interactive terminal-like browser experience with a retro computer aesthetic. Minimal project documentation currently exists.",
+      "links": [
+        {
+          "label": "Open web experience",
+          "url": "https://udeudeude.github.io/Temporarily-Leave-the-Universe/"
+        },
+        {
+          "label": "Source / landing page",
+          "url": "https://github.com/udeudeude/Temporarily-Leave-the-Universe/blob/main/index.html"
+        }
+      ],
+      "tasks": [
+        "Document intended commands and user interactions in the README.",
+        "Test the interactive terminal on mobile Safari and with a keyboard.",
+        "Review accessibility of the cursor, color themes and touch input."
+      ]
+    },
+    "repo-key-scratch": {
+      "name": "Ortholinear (Key Scratch)",
+      "status": "Native iOS keyboard · source build",
+      "description": "An ortholinear iPhone/iPad keyboard with many languages, adjustable geometry, on-device glide typing, local text replacements, and a containing test app. Requires Xcode and device signing to install; no public App Store distribution is verified.",
+      "links": [
+        {
+          "label": "Build / install guide",
+          "url": "https://github.com/udeudeude/Key-Scratch/blob/main/README.md"
+        },
+        {
+          "label": "iPhone screenshot",
+          "url": "https://github.com/udeudeude/Key-Scratch/blob/main/docs/screenshots/app-store/iphone-home.png"
+        },
+        {
+          "label": "iPad screenshot",
+          "url": "https://github.com/udeudeude/Key-Scratch/blob/main/docs/screenshots/app-store/ipad-home.png"
+        },
+        {
+          "label": "Privacy policy",
+          "url": "https://github.com/udeudeude/Key-Scratch/blob/main/PRIVACY.md"
+        },
+        {
+          "label": "Project issues",
+          "url": "https://github.com/udeudeude/Key-Scratch/issues"
+        }
+      ],
+      "tasks": [
+        "Build and install on a real iPhone; test the system keyboard extension, glide typing and autocorrection.",
+        "Verify text replacement and notes behavior in several host apps.",
+        "Check iPad layouts and accessibility on physical hardware."
       ]
     }
   }
