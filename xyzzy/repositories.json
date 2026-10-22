@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-12",
+  "generated": "2026-10-22",
   "owner": "udeudeude",
   "repositories": [
     {
@@ -93,6 +93,30 @@
     {
       "name": "Play-by-Ear-GameCast",
       "url": "https://github.com/udeudeude/Play-by-Ear-GameCast"
+    },
+    {
+      "name": "MPK249-Universal-Map",
+      "url": "https://github.com/udeudeude/MPK249-Universal-Map"
+    },
+    {
+      "name": "Maze-Seedling-Rejuvenation",
+      "url": "https://github.com/udeudeude/Maze-Seedling-Rejuvenation"
+    },
+    {
+      "name": "Sphero-Laboratory",
+      "url": "https://github.com/udeudeude/Sphero-Laboratory"
+    },
+    {
+      "name": "Escape-Team-Activate",
+      "url": "https://github.com/udeudeude/Escape-Team-Activate"
+    },
+    {
+      "name": "Temporarily-Leave-the-Universe",
+      "url": "https://github.com/udeudeude/Temporarily-Leave-the-Universe"
+    },
+    {
+      "name": "Key-Scratch",
+      "url": "https://github.com/udeudeude/Key-Scratch"
     }
   ]
 }
