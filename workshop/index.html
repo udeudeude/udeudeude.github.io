@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Open Workshop: explore works in progress, prototypes, and experiments from Ude Projects.">
+  <meta name="theme-color" content="#0b1821">
+  <link rel="canonical" href="https://udeudeude.github.io/workshop/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <title>Open Workshop · Ude Projects</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0b1821;--card:#183347;--ink:#f1f9fd;--muted:#b6cad6;--highlight:#bde4eb;--line:#ffffff32}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;color:var(--ink);background:var(--bg);font:15px/1.5 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    .wrap{width:min(1100px,calc(100% - 30px));margin-inline:auto}
+    .skip{position:absolute;left:12px;top:-100px;background:#fff;color:#09202b;padding:12px;z-index:10}
+    .skip:focus{top:10px}
+    a{color:inherit;text-underline-offset:4px}
+    a:focus-visible,button:focus-visible{outline:3px solid #b7f1fa;outline-offset:3px}
+    header{padding:26px 0 20px;border-bottom:1px solid var(--line)}
+    .site-nav a{text-decoration:none;color:var(--highlight);font-size:.78rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;display:inline-block;min-height:40px;padding-top:8px}
+    .eyebrow{font-size:.73rem;text-transform:uppercase;letter-spacing:.14em;font-weight:800;color:var(--highlight);margin:34px 0 8px}
+    h1{font-size:clamp(2.9rem,8vw,6rem);line-height:.95;letter-spacing:-.064em;margin:0 0 20px}
+    .intro{color:var(--muted);max-width:65ch;font-size:clamp(1rem,2vw,1.15rem);line-height:1.6;margin:0 0 18px}
+    .note{font-size:.85rem;color:#d9eaf2;margin:0 0 10px}
+    main{padding:30px 0 50px}
+    .section-label{font-size:.78rem;font-weight:800;color:var(--muted);letter-spacing:.11em;text-transform:uppercase;margin:0 0 15px}
+    .projects{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;align-items:stretch}
+    .project{min-width:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card);display:flex;flex-direction:column}
+    .banner{height:155px;background:linear-gradient(140deg,#356078,#172f42);display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .banner img{display:block;width:100%;height:100%;object-fit:contain}
+    .banner.image{background:#1d3745;padding:10px}
+    .banner.terminal{background:#030b05;color:#8eee91;justify-content:flex-start;padding:24px;font:clamp(1.05rem,3vw,1.4rem)/1.4 "Courier New",monospace;letter-spacing:.01em}
+    .banner.terminal span{border-right:2px solid #8eee91;padding-right:5px}
+    .banner.graphic{color:#d5f5f7;font-size:clamp(2rem,5vw,3.6rem);font-weight:800;letter-spacing:-.09em}
+    .banner.paper{background:repeating-linear-gradient(30deg,#344b5f 0 16px,#294259 16px 30px);color:#f7ffff;font-size:2.2rem;letter-spacing:.07em}
+    .content{padding:18px;display:flex;flex-direction:column;flex:1;gap:11px}
+    .status{font-size:.71rem;text-transform:uppercase;letter-spacing:.1em;font-weight:800;color:#c2e6ed}
+    h2{margin:0;font-size:clamp(1.4rem,3vw,1.75rem);line-height:1.12;letter-spacing:-.04em}
+    .description{margin:0;color:#e1eff6;line-height:1.47}
+    .detail{font-size:.85rem;line-height:1.43;margin:0}
+    .detail strong{color:#fff}
+    .uncertain{border-left:2px solid #aac6d080;padding-left:10px;color:#e1eaf1}
+    .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:6px}
+    .tags span{border:1px solid #b1d0de44;border-radius:999px;padding:4px 9px;font-size:.72rem;color:#d6e8ef}
+    .actions{display:flex;flex-wrap:wrap;gap:9px;padding-top:3px}
+    .actions a{display:inline-flex;align-items:center;min-height:43px;padding:9px 12px;border-radius:7px;border:1px solid #e2f4fa74;text-decoration:none;font-size:.83rem;font-weight:750;overflow-wrap:anywhere}
+    .actions a:first-child{background:#dcf0f5;color:#0a2834;border-color:#dcf0f5}
+    .actions a:hover{filter:brightness(1.12)}
+    .footnote{margin:24px 0 0;color:var(--muted);font-size:.81rem;max-width:68ch}
+    footer{border-top:1px solid var(--line);padding:24px 0 45px;font-size:.83rem;color:var(--muted)}
+    footer a{color:#d9f1f8}
+    @media(max-width:690px){.projects{grid-template-columns:minmax(0,1fr)}.banner{height:140px}.content{padding:17px}header{padding-top:16px}main{padding-top:23px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  </style>
+</head>
+<body>
+<a href="#main" class="skip">Skip to projects</a>
+<header>
+  <div class="wrap">
+    <nav class="site-nav" aria-label="Site navigation"><a href="/">← Ude Projects</a></nav>
+    <p class="eyebrow">Works in progress · prototypes · experiments</p>
+    <h1>Open Workshop.</h1>
+    <p class="intro">Some things are worth exploring before they are finished. These are works you can poke at, study, build, test, or follow as they develop.</p>
+    <p class="note">Each project distinguishes what is available now from what is still uncertain. None requires signing in to view its source.</p>
+  </div>
+</header>
+<main id="main" class="wrap">
+  <p class="section-label">On the workbench · 6 projects</p>
+  <section class="projects" aria-label="Open workshop projects">
+
+    <article class="project" id="temporarily-leave-the-universe">
+      <div class="banner terminal" aria-hidden="true"><span>&gt; TEMPORARILY LEAVE THE UNIVERSE</span></div>
+      <div class="content">
+        <div class="status">Browser experiment · live</div>
+        <h2>Temporarily Leave the Universe</h2>
+        <p class="description">A self-contained, retro-computer-inspired interactive text experience.</p>
+        <p class="detail"><strong>Explore now:</strong> Open the live page and interact with its terminal-style interface.</p>
+        <p class="detail uncertain"><strong>Still developing:</strong> The command set is not yet documented; mobile keyboard and accessibility behavior need dedicated testing.</p>
+        <div class="tags"><span>Phone browser</span><span>Keyboard</span><span>Interactive</span></div>
+        <div class="actions">
+          <a href="https://udeudeude.github.io/Temporarily-Leave-the-Universe/">Open experiment</a>
+          <a href="https://github.com/udeudeude/Temporarily-Leave-the-Universe">Explore source</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="project" id="maze-seedling-rejuvenation">
+      <div class="banner image"><img src="https://raw.githubusercontent.com/udeudeude/Maze-Seedling-Rejuvenation/main/icon.svg" alt="Original icon from the MAZE project repository" loading="lazy"></div>
+      <div class="content">
+        <div class="status">Web companion · device testing in progress</div>
+        <h2>MAZE · Seedling Rejuvenation</h2>
+        <p class="description">An independent companion for the discontinued Seedling marble-maze application, with an 18 × 18 editor and first-person exploration.</p>
+        <p class="detail"><strong>Explore now:</strong> Try the editor and sample mazes in the browser.</p>
+        <p class="detail uncertain"><strong>Still developing:</strong> Physical-board photo scanning, motion-controlled stereoscopy, and two-phone pairing require real-device verification.</p>
+        <div class="tags"><span>Phone browser</span><span>Maze editor</span><span>Optional physical kit</span></div>
+        <div class="actions">
+          <a href="https://udeudeude.github.io/Maze-Seedling-Rejuvenation/">Open web companion</a>
+          <a href="https://github.com/udeudeude/Maze-Seedling-Rejuvenation/blob/main/QA-SMOKE.md">Testing checklist</a>
+          <a href="https://github.com/udeudeude/Maze-Seedling-Rejuvenation">Source</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="project" id="ortholinear">
+      <div class="banner image"><img src="https://raw.githubusercontent.com/udeudeude/Key-Scratch/main/docs/screenshots/app-store/iphone-home.png" alt="Actual iPhone simulator screenshot of the Ortholinear keyboard app" loading="lazy"></div>
+      <div class="content">
+        <div class="status">iPhone &amp; iPad keyboard · source build</div>
+        <h2>Ortholinear</h2>
+        <p class="description">An adjustable straight-row keyboard with multilingual layouts, on-device glide typing, and a test app.</p>
+        <p class="detail"><strong>Explore now:</strong> Read the source, inspect the real simulator captures, and build it with Xcode.</p>
+        <p class="detail uncertain"><strong>Still developing:</strong> Requires developer signing for installation and real-device keyboard testing. There is no verified App Store download.</p>
+        <div class="tags"><span>iPhone / iPad</span><span>Mac + Xcode to build</span><span>Source available</span></div>
+        <div class="actions">
+          <a href="https://github.com/udeudeude/Key-Scratch">Code and instructions</a>
+          <a href="https://github.com/udeudeude/Key-Scratch/blob/main/docs/screenshots/app-store/iphone-home.png">See simulator image</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="project" id="sphero-laboratory">
+      <div class="banner graphic" aria-hidden="true">↻ &nbsp; ◯ ◯</div>
+      <div class="content">
+        <div class="status">Local network · hardware prototype</div>
+        <h2>Sphero Laboratory</h2>
+        <p class="description">A touchscreen controller for Sphero 2.0 and SPRK+, with a Mac Bluetooth bridge and two-robot coordination tools.</p>
+        <p class="detail"><strong>Explore now:</strong> Run the software-only simulated-robot demo, or inspect the documented control architecture.</p>
+        <p class="detail uncertain"><strong>Still developing:</strong> Actual Bluetooth pairing, dual-robot control, and safety stopping need testing with the robots. The web controller requires a running Mac bridge.</p>
+        <div class="tags"><span>Mac</span><span>Phone controller</span><span>Robots for live use</span></div>
+        <div class="actions">
+          <a href="https://github.com/udeudeude/Sphero-Laboratory">Setup and source</a>
+          <a href="https://github.com/udeudeude/Sphero-Laboratory/archive/refs/heads/main.zip">Download code</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="project" id="mpk249-universal-map">
+      <div class="banner graphic" aria-hidden="true">◫ ◫ ◫</div>
+      <div class="content">
+        <div class="status">Music hardware · beta</div>
+        <h2>MPK249 Universal Map</h2>
+        <p class="description">Reusable controller mappings and starter instruments for the Akai MPK249, including SuperCollider, Vital, and VCV Rack.</p>
+        <p class="detail"><strong>Explore now:</strong> Download the files, inspect the mapping, and run installer preview or offline tests.</p>
+        <p class="detail uncertain"><strong>Still developing:</strong> The actual controller and target applications have not been fully verified together. Back up hardware presets before changing them.</p>
+        <div class="tags"><span>Mac</span><span>Music software</span><span>MPK249 for live use</span></div>
+        <div class="actions">
+          <a href="https://github.com/udeudeude/MPK249-Universal-Map/blob/main/START_HERE.md">Start here</a>
+          <a href="https://github.com/udeudeude/MPK249-Universal-Map/archive/refs/heads/main.zip">Download project</a>
+          <a href="https://github.com/udeudeude/MPK249-Universal-Map">Source</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="project" id="escape-team-activate">
+      <div class="banner paper" aria-hidden="true">05 | 18 | ?</div>
+      <div class="content">
+        <div class="status">Print-and-play · puzzle prototypes</div>
+        <h2>Escape Team Activate</h2>
+        <p class="description">Original paper-based mysteries using the Escape Team mission-editor format and physical deduction.</p>
+        <p class="detail"><strong>Explore now:</strong> Read the mission concepts and the two experimental puzzle designs.</p>
+        <p class="detail uncertain"><strong>Still developing:</strong> Printable prototypes and sealed solutions are not all committed to the repository. No finished, blind-playtested mission has been published.</p>
+        <div class="tags"><span>Reading</span><span>Print eventually</span><span>Game design</span></div>
+        <div class="actions">
+          <a href="https://github.com/udeudeude/Escape-Team-Activate/blob/main/docs/CONCEPTS.md">Explore ideas</a>
+          <a href="https://github.com/udeudeude/Escape-Team-Activate/blob/main/prototype/house-02/README.md">No Such Room</a>
+          <a href="https://github.com/udeudeude/Escape-Team-Activate">Source</a>
+        </div>
+      </div>
+    </article>
+
+  </section>
+  <p class="footnote">This is a deliberately selective workshop, not a complete repository directory. The public exhibition holds more self-contained work; this space welcomes exploration of things still taking shape.</p>
+</main>
+<footer><div class="wrap"><a href="/">← Back to Ude Projects</a></div></footer>
+</body>
+</html>
