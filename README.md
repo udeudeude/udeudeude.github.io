@@ -6,6 +6,14 @@ A visual index of software, sound, publishing tools, browser experiments, and ot
 
 This is the **portfolio repository**, not the source repository for LightHouse or any other individual app.
 
+## Proposed public-facing Open Workshop (not yet approved)
+
+The `proposal-open-workshop-three-tiers` branch stages an **unpublished** `/workshop/` page and a low-key invitation below the 18 existing public tiles. The proposal is intentionally **not merged** until the owner approves both the page design and its initial public project list.
+
+This creates three distinct levels: the curated homepage exhibition, a selective public Open Workshop of exploratory work, and the unlinked personal `/xyzzy/` dashboard. The workshop initially proposes Temporarily Leave the Universe, MAZE · Seedling Rejuvenation, Ortholinear, Sphero Laboratory, MPK249 Universal Map, and Escape Team Activate. Each card distinguishes immediately available actions from unfinished or unverified capabilities. These are **proposed placements, not publication decisions**.
+
+Run `node tests/workshop.test.mjs` after installing Playwright to check phone/desktop layouts, proposed roster, and link/navigation isolation. CI runs this alongside the existing portfolio checks. The private `/xyzzy/` page is never linked publicly.
+
 ## Works on the homepage
 
 - Anaglyph & Friends
