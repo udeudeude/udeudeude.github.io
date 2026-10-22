@@ -20,7 +20,9 @@ for (const url of urls) {
       signal: AbortSignal.timeout(12000)
     });
     let response = await probe('HEAD');
-    if ([403, 405, 501].includes(response.status)) response = await probe('GET');
+    // Some documentation servers reject HEAD with 404 although GET works.
+    // Confirm suspected missing resources before failing the scheduled audit.
+    if ([403, 404, 405, 410, 501].includes(response.status)) response = await probe('GET');
     status = String(response.status);
   } catch (err) {
     status = 'network warning: ' + (err?.name || 'error');
