@@ -437,7 +437,9 @@
         "Verify real iPhone Safari navigation, touch controls, and persistence.",
         "Test physical-maze photo scanning and manual correction.",
         "Verify Cardboard motion control, offline mode and two-phone pairing on real devices."
-      ]
+      ],
+      "image": "https://raw.githubusercontent.com/udeudeude/Maze-Seedling-Rejuvenation/main/icon.svg",
+      "imageAlt": "Original MAZE app icon from its repository"
     },
     "repo-sphero-laboratory": {
       "name": "Sphero Laboratory",
@@ -542,7 +544,9 @@
         "Build and install on a real iPhone; test the system keyboard extension, glide typing and autocorrection.",
         "Verify text replacement and notes behavior in several host apps.",
         "Check iPad layouts and accessibility on physical hardware."
-      ]
+      ],
+      "image": "https://raw.githubusercontent.com/udeudeude/Key-Scratch/main/docs/screenshots/app-store/iphone-home.png",
+      "imageAlt": "Actual Ortholinear keyboard iPhone simulator screenshot"
     }
   }
 }
