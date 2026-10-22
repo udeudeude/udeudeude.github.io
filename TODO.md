@@ -1,3 +1,12 @@
+## Open Workshop proposal awaiting explicit approval
+
+- [x] Create a distinct `/workshop/` page with a six-project working selection.
+- [x] Stage a low-visibility portfolio link without changing the public tile collection.
+- [x] Label what can be tried, what requires hardware, and what is unverified.
+- [x] Add mobile/desktop browser layout, navigation, and public/private separation tests.
+- [ ] Owner approval: decide whether the three-tier presentation and the proposed roster should become public.
+- [ ] Only after approval: merge the proposal and verify the live GitHub Pages deployment.
+
 ## October 22, 2026 portfolio and workbench audit
 
 - [x] Inspect the new GitHub repositories and distinguish runnable experiences from concepts or hardware prototypes.
