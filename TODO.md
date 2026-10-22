@@ -1,3 +1,18 @@
+## October 22, 2026 portfolio and workbench audit
+
+- [x] Inspect the new GitHub repositories and distinguish runnable experiences from concepts or hardware prototypes.
+- [x] Refresh the fallback snapshot of public repositories (29 repositories; exclude all private repositories).
+- [x] Add workbench-only entries and actionable documented to-dos for six recently created projects.
+- [x] Add trustworthy source links and the available original MAZE icon and Ortholinear simulator capture.
+- [x] Prevent older personal workbench backups from wiping existing local to-do data.
+- [x] Test the updated workbench at phone and desktop widths and test private data preservation.
+- [x] Recheck potential 404/410 responses with GET in the link checker.
+- [ ] **Approval required:** decide which workbench-only projects, if any, should be added to the public portfolio.
+- [ ] **Approval required:** repair or replace flagged Google Maps Help links on the public GoLocal guide after direct verification.
+- [ ] **Approval required:** evaluate public-project availability labels and changes to public imagery.
+- [ ] Verify physical-device support for MAZE, MPK249, Sphero Laboratory, and Ortholinear before promoting any hardware or app claims.
+- [ ] Update workbench source-derived task lists without changing the meaning of previously completed local checklist items.
+
 ## October 15, 2026 usability and reliability pass
 
 - [x] Add a contextual public "Clear filters" action and an explanation when no projects match.

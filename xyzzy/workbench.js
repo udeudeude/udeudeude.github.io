@@ -154,6 +154,20 @@
   function enriched(project) {
     const meta = projectMetadata[project.id] || {};
     if (typeof meta.name === 'string' && meta.name) project.name = meta.name;
+    if (project.group !== 'curated') {
+      if (typeof meta.status === 'string' && meta.status) project.status = meta.status;
+      if (typeof meta.description === 'string' && meta.description) project.description = meta.description;
+      if (!project.visual && typeof meta.image === 'string' &&
+          /^https:\/\/raw\.githubusercontent\.com\/udeudeude\//.test(meta.image)) {
+        const visual = node('div','visual');
+        const picture = node('img');
+        picture.src = meta.image;
+        picture.alt = meta.imageAlt || ('Image from ' + project.name + ' repository');
+        picture.loading = 'lazy';
+        visual.append(picture);
+        project.visual = visual;
+      }
+    }
     project.tasks = Array.isArray(meta.tasks) ? meta.tasks.filter(x=>typeof x==='string').slice(0,30) : [];
     const ordinary = project.links||[];
     const explicitlyCurated = Array.isArray(meta.links)?meta.links:[];
@@ -499,9 +513,16 @@
           importedDone[key]=values.filter(v=>typeof v==='string').slice(0,200).map(v=>v.slice(0,110));
         }
       }
-      links=clean;localProjects=projects;customTodos=importedTodos;completed=importedDone;
+      // Older v1 backups contain only links/projects. Never clear newer
+      // local to-do data merely because that older format lacks it.
+      links=clean;localProjects=projects;
+      if (payload.version===2) {
+        customTodos=importedTodos;completed=importedDone;
+      }
       save();refresh();
-      message.textContent='Private backup imported into this browser.';
+      message.textContent=payload.version===1
+        ? 'Older backup imported. Existing local to-dos were preserved.'
+        : 'Private backup imported into this browser.';
     } catch(error){
       message.textContent='Could not import: '+error.message;
     } finally {fileInput.value='';}
