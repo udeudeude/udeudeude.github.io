@@ -23,3 +23,5 @@ jobs:
         run: node tests/access-workbench.test.mjs
       - name: Test Kokoro Voice Lab voice switching at iPhone width
         run: node tests/voice-lab-mobile.test.mjs
+      - name: Test Open Workshop proposal at phone and desktop widths
+        run: node tests/workshop.test.mjs

@@ -6,6 +6,18 @@ A visual index of software, sound, publishing tools, browser experiments, and ot
 
 This is the **portfolio repository**, not the source repository for LightHouse or any other individual app.
 
+## Open Workshop: selective second public tier
+
+**Public page:** https://udeudeude.github.io/workshop/
+
+The project site now has three levels: the curated homepage exhibition, the selective public **Open Workshop** of exploratory and developing work, and the unlinked personal `/xyzzy/` dashboard. The Open Workshop is linked quietly below the public portfolio's 18 curated projects; it is a separate page, not a new public category.
+
+The owner approved publication on October 22, 2026 with **eight** projects: Temporarily Leave the Universe; MAZE · Seedling Rejuvenation; Ortholinear; Sphero Laboratory; MPK249 Universal Map; Escape Team Activate; Th’die’s Cast; and Pocket Operations Manual. No additional project was promoted to the curated exhibition.
+
+Each tile describes what a visitor can do now and what requires more testing or equipment. Th’die’s Cast offers a direct podcast subscription and pilot listener. Pocket Operations Manual links directly to its live simulator and documented fidelity differences. Genuine MAZE, Ortholinear, Th’die’s Cast and PO-35 source artwork is used where available.
+
+Run `node tests/workshop.test.mjs` with Playwright installed to verify phone/desktop layouts, the eight-project selection, and navigation/privacy boundaries. Automated CI runs this alongside existing portfolio checks.
+
 ## Works on the homepage
 
 - Anaglyph & Friends

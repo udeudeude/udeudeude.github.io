@@ -1,3 +1,12 @@
+## Open Workshop publication approved October 22, 2026
+
+- [x] Create a distinct `/workshop/` page with eight approved projects, including Th’die’s Cast and Pocket Operations Manual.
+- [x] Stage a low-visibility portfolio link without changing the public tile collection.
+- [x] Label what can be tried, what requires hardware, and what is unverified.
+- [x] Add mobile/desktop browser layout, navigation, and public/private separation tests.
+- [x] Owner approval: publish the three-tier presentation with the eight-project selection.
+- [x] Publish the approved Open Workshop; validate GitHub Pages deployment.
+
 ## October 22, 2026 portfolio and workbench audit
 
 - [x] Inspect the new GitHub repositories and distinguish runnable experiences from concepts or hardware prototypes.
