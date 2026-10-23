@@ -55,7 +55,7 @@ try {
         return {width:box.width,right:box.right,left:box.left};
       })
     }));
-    assert.equal(dimensions.cards.length,6,'All cards are rendered at '+width);
+    assert.equal(dimensions.cards.length,expected.length,'All approved cards are rendered at '+width);
     assert.ok(dimensions.scrollWidth<=dimensions.viewport+2,'No sideways scrolling at '+width);
     assert.equal(dimensions.columns,width===390?1:2,'Appropriate columns at '+width);
     assert.ok(dimensions.cards.every(b=>b.width>290 && b.right<=dimensions.viewport+2 && b.left>=-2),'Card bounds within viewport at '+width);
