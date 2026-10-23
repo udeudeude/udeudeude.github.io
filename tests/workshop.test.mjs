@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import { spawn } from 'node:child_process';
 import { chromium } from 'playwright';
 
-// This proposal stays on a PR branch until the owner approves public publication.
+// The workshop is released only through the approved GitHub Pages deployment.
 const home = fs.readFileSync('index.html','utf8');
 const workshop = fs.readFileSync('workshop/index.html','utf8');
 const expected = [
@@ -12,18 +12,24 @@ const expected = [
   'Ortholinear',
   'Sphero Laboratory',
   'MPK249 Universal Map',
-  'Escape Team Activate'
+  'Escape Team Activate',
+  'Th’die’s Cast',
+  'Pocket Operations Manual'
 ];
 assert.equal((home.match(/<article class="project /g)||[]).length,18,'Public exhibition keeps 18 curated tiles');
 assert.match(home, /href="\/workshop\/"/, 'Only one understated workshop destination added');
 assert.ok(!home.includes('href="/xyzzy/"'), 'Unlisted workbench remains unlinked from public homepage');
 assert.ok(!workshop.includes('href="/xyzzy/"'), 'Workshop does not reveal private workbench URL');
-assert.equal((workshop.match(/<article class="project"/g)||[]).length,expected.length,'Workshop includes exactly six proposed projects');
+assert.equal((workshop.match(/<article class="project"/g)||[]).length,expected.length,'Workshop includes all eight approved projects');
 assert.deepEqual([...workshop.matchAll(/<h2>([^<]+)<\/h2>/g)].map(m=>m[1]),expected,'Reviewed selection and order');
 assert.ok(workshop.includes('requires developer signing') || workshop.includes('Requires developer signing'), 'Source-built keyboard is honestly labeled');
 assert.ok(workshop.includes('No finished, blind-playtested mission'),'Unfinished puzzle work is not mislabeled as released');
 assert.ok(workshop.includes('real-device verification'), 'Device-dependent features are explicitly qualified');
 assert.ok(!workshop.includes('href="https://chatgpt.com/'), 'No personal working conversations embedded in public workshop');
+assert.ok(workshop.includes('href="/thdies-cast/feed.xml"'), 'Podcast subscription is available');
+assert.ok(workshop.includes('href="/thdies-cast/"'), 'Podcast episodes are available');
+assert.ok(workshop.includes('href="https://udeudeude.github.io/Pocket-Operations-Manual/"'), 'Playable PO-35 simulator linked');
+assert.ok(fs.existsSync('thdies-cast/cover.png'),'Podcast artwork exists in portfolio repository');
 
 const server=spawn('python3',['-m','http.server','4182','--bind','127.0.0.1'],{stdio:'ignore'});
 let browser;
