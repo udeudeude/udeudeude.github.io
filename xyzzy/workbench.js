@@ -22,7 +22,9 @@
     'GoLocal-on-a-Map-Asheville':'asheville-golocal-maps',
     'PnP-o-matic':'pnp-o-matic',
     'Moire-Lab':'moire-lab',
-    'Temporarily-Leave-the-Universe':'temporarily-leave-the-universe'
+    'Temporarily-Leave-the-Universe':'temporarily-leave-the-universe',
+    'Th-die-s-Cast':'thdies-cast',
+    'Play-by-Ear-GameCast':'repo-play-by-ear-gamecast'
   };
   const grid = document.getElementById('projects');
   const count = document.getElementById('result-count');
@@ -237,10 +239,23 @@
     if(changed) save();
   }
 
+  function migrateProjectId(oldId,newId) {
+    let changed=false;
+    for (const store of [links,customTodos,completed]) {
+      if (Array.isArray(store[oldId])) {
+        store[newId]=[...(Array.isArray(store[newId])?store[newId]:[]),...store[oldId]];
+        delete store[oldId];
+        changed=true;
+      }
+    }
+    if (changed) save();
+  }
+
   async function initialize() {
     const [curated, repos, metadata, workshop] = await Promise.all([publishedProjects(), publicRepositories(), loadMetadata(), workshopProjects()]);
     projectMetadata = metadata;
     migratePromotedProject();
+    migrateProjectId('repo-th-die-s-cast','thdies-cast');
     const mapped = new Map([...curated, ...workshop].map(p => [p.id, p]));
     const extras = [];
     for (const repo of repos) {
