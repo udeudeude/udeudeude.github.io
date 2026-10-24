@@ -51,7 +51,7 @@
     .footnote{margin:24px 0 0;color:var(--muted);font-size:.81rem;max-width:68ch}
     footer{border-top:1px solid var(--line);padding:24px 0 45px;font-size:.83rem;color:var(--muted)}
     footer a{color:#d9f1f8}
-    @media(max-width:690px){.projects{grid-template-columns:minmax(0,1fr)}.banner{height:140px}.content{padding:17px}header{padding-top:16px}main{padding-top:23px}}
+    @media(max-width:690px){.projects{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.banner{height:100px}.content{padding:10px}.actions a{padding:7px;font-size:.74rem}h2{font-size:1.1rem}header{padding-top:16px}main{padding-top:23px}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   </style>
 </head>
@@ -88,11 +88,11 @@
       </div>
     </article>
 
-    <article class="project" id="ortholinear">
-      <div class="banner image"><img src="https://raw.githubusercontent.com/udeudeude/Key-Scratch/main/docs/screenshots/app-store/iphone-home.png" alt="Actual iPhone simulator screenshot of the Ortholinear keyboard app" loading="lazy"></div>
+    <article class="project" id="key-scratch">
+      <div class="banner image"><img src="https://raw.githubusercontent.com/udeudeude/Key-Scratch/main/docs/screenshots/app-store/iphone-home.png" alt="Actual iPhone simulator screenshot of the Key Scratch keyboard app" loading="lazy"></div>
       <div class="content">
         <div class="status">iPhone &amp; iPad keyboard · source build</div>
-        <h2>Ortholinear</h2>
+        <h2>Key Scratch</h2>
         <p class="description">An adjustable straight-row keyboard with multilingual layouts, on-device glide typing, and a test app.</p>
         <p class="detail"><strong>Explore now:</strong> Read the source, inspect the real simulator captures, and build it with Xcode.</p>
         <p class="detail uncertain"><strong>Still developing:</strong> Requires developer signing for installation and real-device keyboard testing. There is no verified App Store download.</p>
@@ -189,7 +189,7 @@
     </article>
 
   </section>
-  <p class="footnote">This is a deliberately selective workshop, not a complete repository directory. The public exhibition holds more self-contained work; this space welcomes exploration of things still taking shape.</p>
+
 </main>
 <footer><div class="wrap"><a href="/">← Back to Ude Projects</a></div></footer>
 </body>
