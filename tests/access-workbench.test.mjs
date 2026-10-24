@@ -12,7 +12,7 @@ assert.equal(metadata.version,1,'Curated project metadata schema is versioned');
 assert.equal(metadata.projects['repo-th-die-s-cast'].name,'Th’die’s Cast','Correct podcast title with both apostrophes');
 for(const [key,label] of [
  ['repo-maze-seedling-rejuvenation','Open web companion'],
- ['repo-temporarily-leave-the-universe','Open web experience'],
+ ['temporarily-leave-the-universe','Open web experience'],
  ['repo-mpk249-universal-map','Download source ZIP'],
  ['repo-sphero-laboratory','Mac startup and safety instructions'],
  ['repo-key-scratch','Build / install guide'],
@@ -34,9 +34,9 @@ for(const [key,url] of [
  assert.ok(metadata.projects[key].links.some(x=>x.url===url),'Podcast subscription is recorded for '+key);
 }
 
-assert.equal((html.match(/data-phone-ready="/g)||[]).length,18,'All public projects have a phone-readiness flag');
-assert.equal((html.match(/data-browser-ready="/g)||[]).length,18,'All public projects have browser-readiness flags');
-assert.equal((html.match(/data-needs="/g)||[]).length,18,'All public projects declare required equipment');
+assert.equal((html.match(/data-phone-ready="/g)||[]).length,19,'All public projects have a phone-readiness flag');
+assert.equal((html.match(/data-browser-ready="/g)||[]).length,19,'All public projects have browser-readiness flags');
+assert.equal((html.match(/data-needs="/g)||[]).length,19,'All public projects declare required equipment');
 assert.ok(!html.includes('data-access-filter='),'Removed all three access-mode buttons');
 assert.ok(html.includes('What can I use right now?') && html.includes('Hide projects that require'),'Equipment prompt headings kept together');
 assert.ok(html.indexOf('id="filter-summary"') > html.indexOf('data-exclude="hardware"'),'Count follows last equipment checkbox');
@@ -72,7 +72,7 @@ try {
  await page.goto('http://127.0.0.1:4179/',{waitUntil:'domcontentloaded'});
  await page.locator('#filter-summary').waitFor({state:'visible'});
  const visible=()=>page.locator('#project-grid .project:visible').count();
- assert.equal(await visible(),18,'All curated projects visible by default');
+ assert.equal(await visible(),19,'All curated projects visible by default');
 
 
  // Equipment selection is independent of interest categories; counts follow it.
@@ -97,13 +97,13 @@ try {
  assert.ok(!keys.includes('lighthouse') && !keys.includes('tv-b-goner'),'Hardware-dependent projects can be hidden');
  assert.ok(keys.includes('living-patterns'),'Ready-to-listen projects remain when equipment hidden');
  await page.locator('[data-exclude="hardware"]').uncheck();
- assert.equal(await visible(),18,'Unchecking exclusions restores all 18 public projects');
+ assert.equal(await visible(),19,'Unchecking exclusions restores all 19 public projects');
  assert.equal(await page.locator('#clear-filters').isVisible(),false,'Reset link hidden without active filters');
  await page.locator('[data-filter="visual"]').click();
  await page.locator('[data-exclude="mac"]').check();
  assert.equal(await page.locator('#clear-filters').isVisible(),true,'Reset link appears with filters');
  await page.locator('#clear-filters').click();
- assert.equal(await visible(),18,'Clear filters restores the full portfolio');
+ assert.equal(await visible(),19,'Clear filters restores the full portfolio');
  assert.equal(await page.locator('[data-exclude="mac"]').isChecked(),false,'Clear filters resets equipment');
  assert.ok(!page.url().includes('hide=')&&!page.url().includes('category='),'Clear filters removes query state');
 
@@ -118,17 +118,20 @@ try {
    await x.waitForFunction(()=>document.getElementById('result-count')?.textContent?.includes('projects shown'),null,{timeout:16000});
  });
  const text=await x.locator('#result-count').textContent();
- assert.match(text,/18 curated/,'The workbench reflects the current 18 public cards');
+ assert.match(text,/19 curated/,'The workbench reflects the current 19 public cards');
  assert.match(text,/extra public repositories/,'Non-curated GitHub repos included');
  assert.ok(await x.getByText('Incredible Expanding Gospel',{exact:false}).count()>0,'Non-curated repo visible');
 assert.ok(await x.getByRole('heading',{name:'Moiré Lab'}).count()>0,'Moiré Lab remains available in the unlisted workbench');
+const promoted=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Temporarily Leave the Universe',exact:true})});
+assert.equal(await promoted.count(),1,'Promoted adventure appears exactly once in workbench');
+assert.equal(await promoted.getByRole('link',{name:'Public tile'}).count(),1,'Promoted adventure now links to exhibition');
+assert.equal(await promoted.getByRole('link',{name:'Open web experience'}).count(),1,'Adventure retains its metadata launch action');
 const moireCard=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Moiré Lab'})});
 assert.ok(await moireCard.getByRole('link',{name:'Online workshop'}).count()>0,'Moiré still links to its working web app');
 assert.equal(await moireCard.getByRole('link',{name:'Public tile'}).count(),0,'Unpublished Moiré has no public-portfolio shortcut');
  assert.ok(!(await x.locator('body').innerText()).includes('gear-harness'),'Private repository is not included publicly');
  const newlyIndexed=[
   ['MAZE · Seedling Rejuvenation','Open web companion'],
-  ['Temporarily Leave the Universe','Open web experience'],
   ['MPK249 Universal Map','Download source ZIP'],
   ['Sphero Laboratory','Mac startup and safety instructions'],
   ['Ortholinear (Key Scratch)','Build / install guide'],
@@ -213,7 +216,7 @@ assert.equal(await moireCard.getByRole('link',{name:'Public tile'}).count(),0,'U
 
 
 
- console.log('Access filters and unlisted workbench passed: 18 curated, public extras, podcast subscriptions and locally persisted links/to-dos.');
+ console.log('Access filters and unlisted workbench passed: 19 curated, public extras, podcast subscriptions and locally persisted links/to-dos.');
  await context.close();
 } finally {
  if(browser)await browser.close();
