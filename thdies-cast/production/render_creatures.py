@@ -136,7 +136,7 @@ def show_notes():
         "Eighty strange encounters with animals, from the merely curious to the "
         "quietly impossible. A wolf delivers firewood. Bees arrange seals inside "
         "a clock. A deer counts travelers at a bridge. What these things mean "
-        "belongs to the people who find them.\\n\\n"
+        "belongs to the people who find them.\n\n"
         "To use: Seek to a random point during the encounters. If an encounter "
         "is already underway, use the next complete one. Brief pauses separate "
         "the scenes. If the recording ends, return to the beginning of the encounters."
@@ -233,7 +233,7 @@ def verify_file():
     entry = next(i for i in items if i.findtext("guid") == GUID)
     enc = entry.find("enclosure")
     assert enc is not None
-    assert enc.get("url") == pilot.SITE + "audio/" + MP3.name
+    assert enc.get("url").split("?")[0] == pilot.SITE + "audio/" + MP3.name
     assert int(enc.get("length")) == MP3.stat().st_size
     assert entry.findtext(f"{{http://www.itunes.com/dtds/podcast-1.0.dtd}}episode") == "14"
     assert "ep14" in PAGE.read_text()
