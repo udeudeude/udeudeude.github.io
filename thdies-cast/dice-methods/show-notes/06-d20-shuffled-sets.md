@@ -14,10 +14,10 @@ FAIRNESS VERSUS INDEPENDENCE
 This is a prerecorded deterministic sequence, not a source of fresh live randomness. Exact balanced frequencies guarantee fair outcomes for a uniformly chosen time slot, but a continuous run of results need not have the independence of fresh dice throws. If each playback position is independently sampled uniformly over the result region, those sampled outcomes are independent despite the fixed recording. All experiments use fixed, documented pseudorandom seeds and can be reconstructed.
 
 PRODUCTION
-Narrated by Brother Rubicon using Kokoro's Lewis voice with the producer-selected Saved 02 treatment. The spoken method explanations are brief; the Brother Rubicon standard introduction is fixed and his observations vary by edition. A distinct whimsical closing coda follows the last valid roll, without a long silence. The coda is not an outcome.
+Narrated by Brother Rubicon using Kokoro's Lewis voice with the producer-selected Saved 02 treatment. The spoken introductions are intentionally brief, provisional explanations of the methods; the permanent character introduction has not been chosen. A distinct whimsical closing coda follows the last valid roll, without a long silence. The coda is not an outcome.
 
 This version has its own Brother Rubicon opening observation and a distinct closing coda; both come from this production edition. The standard introduction is always: I am Brother Rubicon. The die's cast.
 
-Specific opening: No one here agrees upon the first rule of the game. They are quite certain of the last. I am Brother Rubicon. The die's cast. Twenty faces, eighteen shuffled sets. Each set contains every number once. Seek to the next complete result.
+Specific opening: No one here agrees upon the first rule of the game. They are quite certain of the last. I am Brother Rubicon. The die's cast. Twenty faces, eighteen shuffled sets. Each set contains every number once. Seek to a random point during the dice rolls. Ignore any number already in progress. Your roll is the next number you hear from its beginning.
 
-The closing remark is best discovered at the end of the recording.
+A closing remark follows the last valid result, but is not revealed here.
