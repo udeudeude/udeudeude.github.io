@@ -99,6 +99,8 @@ def make_record(voice, entries, opening, closing, source_hash):
         w.write(pilot.blank(0.5))
         w.write(ending)
         w.write(pilot.blank(0.65))
+    import static_speech_gain
+    catalog_master = static_speech_gain.master_spoken_wav(wav, start, times[8])
     duration = pilot.emit_mp3(wav, MP3)
     assert MP3.stat().st_size > 250000
     assert len(times) == 80 and all(b > a for a,b in zip(times, times[1:]))
@@ -119,6 +121,7 @@ def make_record(voice, entries, opening, closing, source_hash):
         "longest_scene_speech_seconds": round(longest, 3),
         "total_seconds": round(duration, 3),
         "enclosure_bytes": MP3.stat().st_size,
+        "catalog_level_master": catalog_master,
         "voice_model": pilot.VOICE,
         "voice_tts_speed": pilot.KOKORO_RATE,
         "voice_treatment": pilot.SAVED_02,
