@@ -26,14 +26,14 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: Completed-balanced-dice-MP3s
-          run-id: 40054311173
+          run-id: 40059940041
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path: /tmp/rescued-balanced-dice/audio
       - name: Retrieve the matching validated RSS and show-note manifest
         uses: actions/download-artifact@v4
         with:
           name: expanded-rubicon-dice-season
-          run-id: 40054311173
+          run-id: 40059940041
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path: /tmp/rescued-balanced-dice/meta
       - name: Restore publication files at their canonical paths
