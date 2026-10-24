@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Open Workshop: explore works in progress, prototypes, and experiments from Ude Projects.">
+  <meta name="description" content="Studio: explore works in progress, prototypes, and experiments from Ude Projects.">
   <meta name="theme-color" content="#0b1821">
   <link rel="canonical" href="https://udeudeude.github.io/workshop/">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <title>Open Workshop · Ude Projects</title>
+  <title>Studio · Ude Projects</title>
   <style>
     :root{color-scheme:dark;--bg:#0b1821;--card:#183347;--ink:#f1f9fd;--muted:#b6cad6;--highlight:#bde4eb;--line:#ffffff32}
     *{box-sizing:border-box}
@@ -48,6 +48,13 @@
     .actions a{display:inline-flex;align-items:center;min-height:43px;padding:9px 12px;border-radius:7px;border:1px solid #e2f4fa74;text-decoration:none;font-size:.83rem;font-weight:750;overflow-wrap:anywhere}
     .actions a:first-child{background:#dcf0f5;color:#0a2834;border-color:#dcf0f5}
     .actions a:hover{filter:brightness(1.12)}
+    .expanded-content[hidden]{display:none}
+    .project{cursor:pointer;align-self:start}
+    .project:focus-visible{outline:3px solid #b7f1fa;outline-offset:3px}
+    .project .description{font-size:.86rem;line-height:1.35}
+    .project .content{gap:7px}
+    .project .banner{height:125px}
+    .project[aria-expanded="true"]{grid-column:span 2}
     .footnote{margin:24px 0 0;color:var(--muted);font-size:.81rem;max-width:68ch}
     footer{border-top:1px solid var(--line);padding:24px 0 45px;font-size:.83rem;color:var(--muted)}
     footer a{color:#d9f1f8}
@@ -61,14 +68,14 @@
   <div class="wrap">
     <nav class="site-nav" aria-label="Site navigation"><a href="/">← Ude Projects</a></nav>
     <p class="eyebrow">Works in progress · prototypes · experiments</p>
-    <h1>Open Workshop.</h1>
+    <h1>Studio.</h1>
     <p class="intro">Some things are worth exploring before they are finished. These are works you can poke at, study, build, test, or follow as they develop.</p>
-    <p class="note">Each project distinguishes what is available now from what is still uncertain. None requires signing in to view its source.</p>
+    
   </div>
 </header>
 <main id="main" class="wrap">
   <p class="section-label">On the workbench · 7 projects</p>
-  <section class="projects" aria-label="Open workshop projects">
+  <section class="projects" aria-label="Studio projects">
 
 
     <article class="project" id="maze-seedling-rejuvenation">
@@ -76,7 +83,7 @@
       <div class="content">
         <div class="status">Web companion · device testing in progress</div>
         <h2>MAZE · Seedling Rejuvenation</h2>
-        <p class="description">An independent companion for the discontinued Seedling marble-maze application, with an 18 × 18 editor and first-person exploration.</p>
+        <p class="description">An independent companion for the discontinued Seedling marble-maze application, with an 18 × 18 editor and first-person exploration.</p><div class="expanded-content" hidden>
         <p class="detail"><strong>Explore now:</strong> Try the editor and sample mazes in the browser.</p>
         <p class="detail uncertain"><strong>Still developing:</strong> Physical-board photo scanning, motion-controlled stereoscopy, and two-phone pairing require real-device verification.</p>
         <div class="tags"><span>Phone browser</span><span>Maze editor</span><span>Optional physical kit</span></div>
@@ -84,23 +91,17 @@
           <a href="https://udeudeude.github.io/Maze-Seedling-Rejuvenation/">Open web companion</a>
           <a href="https://github.com/udeudeude/Maze-Seedling-Rejuvenation/blob/main/QA-SMOKE.md">Testing checklist</a>
           <a href="https://github.com/udeudeude/Maze-Seedling-Rejuvenation">Source</a>
-        </div>
+        </div></div>
       </div>
     </article>
 
     <article class="project" id="key-scratch">
-      <div class="banner image"><img src="https://raw.githubusercontent.com/udeudeude/Key-Scratch/main/docs/screenshots/app-store/iphone-home.png" alt="Actual iPhone simulator screenshot of the Key Scratch keyboard app" loading="lazy"></div>
+      <div class="banner graphic" aria-hidden="true">⌨</div>
       <div class="content">
-        <div class="status">iPhone &amp; iPad keyboard · source build</div>
         <h2>Key Scratch</h2>
-        <p class="description">An adjustable straight-row keyboard with multilingual layouts, on-device glide typing, and a test app.</p>
-        <p class="detail"><strong>Explore now:</strong> Read the source, inspect the real simulator captures, and build it with Xcode.</p>
-        <p class="detail uncertain"><strong>Still developing:</strong> Requires developer signing for installation and real-device keyboard testing. There is no verified App Store download.</p>
-        <div class="tags"><span>iPhone / iPad</span><span>Mac + Xcode to build</span><span>Source available</span></div>
-        <div class="actions">
-          <a href="https://github.com/udeudeude/Key-Scratch">Code and instructions</a>
-          <a href="https://github.com/udeudeude/Key-Scratch/blob/main/docs/screenshots/app-store/iphone-home.png">See simulator image</a>
-        </div>
+        <p class="description">A keyboard experiment with a side panel for visible, reusable notes.</p><div class="expanded-content" hidden>
+        <div class="detail"><strong>In development:</strong> Spelling correction, text replacement and swipe typing are essential goals.</div>
+        <div class="actions"><a href="https://github.com/udeudeude/Key-Scratch">Project repository</a></div></div>
       </div>
     </article>
 
@@ -109,14 +110,14 @@
       <div class="content">
         <div class="status">Local network · hardware prototype</div>
         <h2>Sphero Laboratory</h2>
-        <p class="description">A touchscreen controller for Sphero 2.0 and SPRK+, with a Mac Bluetooth bridge and two-robot coordination tools.</p>
+        <p class="description">A touchscreen controller for Sphero 2.0 and SPRK+, with a Mac Bluetooth bridge and two-robot coordination tools.</p><div class="expanded-content" hidden>
         <p class="detail"><strong>Explore now:</strong> Run the software-only simulated-robot demo, or inspect the documented control architecture.</p>
         <p class="detail uncertain"><strong>Still developing:</strong> Actual Bluetooth pairing, dual-robot control, and safety stopping need testing with the robots. The web controller requires a running Mac bridge.</p>
         <div class="tags"><span>Mac</span><span>Phone controller</span><span>Robots for live use</span></div>
         <div class="actions">
           <a href="https://github.com/udeudeude/Sphero-Laboratory">Setup and source</a>
           <a href="https://github.com/udeudeude/Sphero-Laboratory/archive/refs/heads/main.zip">Download code</a>
-        </div>
+        </div></div>
       </div>
     </article>
 
@@ -125,7 +126,7 @@
       <div class="content">
         <div class="status">Music hardware · beta</div>
         <h2>MPK249 Universal Map</h2>
-        <p class="description">Reusable controller mappings and starter instruments for the Akai MPK249, including SuperCollider, Vital, and VCV Rack.</p>
+        <p class="description">Reusable controller mappings and starter instruments for the Akai MPK249, including SuperCollider, Vital, and VCV Rack.</p><div class="expanded-content" hidden>
         <p class="detail"><strong>Explore now:</strong> Download the files, inspect the mapping, and run installer preview or offline tests.</p>
         <p class="detail uncertain"><strong>Still developing:</strong> The actual controller and target applications have not been fully verified together. Back up hardware presets before changing them.</p>
         <div class="tags"><span>Mac</span><span>Music software</span><span>MPK249 for live use</span></div>
@@ -133,7 +134,7 @@
           <a href="https://github.com/udeudeude/MPK249-Universal-Map/blob/main/START_HERE.md">Start here</a>
           <a href="https://github.com/udeudeude/MPK249-Universal-Map/archive/refs/heads/main.zip">Download project</a>
           <a href="https://github.com/udeudeude/MPK249-Universal-Map">Source</a>
-        </div>
+        </div></div>
       </div>
     </article>
 
@@ -142,7 +143,7 @@
       <div class="content">
         <div class="status">Print-and-play · puzzle prototypes</div>
         <h2>Escape Team Activate</h2>
-        <p class="description">Original paper-based mysteries using the Escape Team mission-editor format and physical deduction.</p>
+        <p class="description">Original paper-based mysteries using the Escape Team mission-editor format and physical deduction.</p><div class="expanded-content" hidden>
         <p class="detail"><strong>Explore now:</strong> Read the mission concepts and the two experimental puzzle designs.</p>
         <p class="detail uncertain"><strong>Still developing:</strong> Printable prototypes and sealed solutions are not all committed to the repository. No finished, blind-playtested mission has been published.</p>
         <div class="tags"><span>Reading</span><span>Print eventually</span><span>Game design</span></div>
@@ -150,7 +151,7 @@
           <a href="https://github.com/udeudeude/Escape-Team-Activate/blob/main/docs/CONCEPTS.md">Explore ideas</a>
           <a href="https://github.com/udeudeude/Escape-Team-Activate/blob/main/prototype/house-02/README.md">No Such Room</a>
           <a href="https://github.com/udeudeude/Escape-Team-Activate">Source</a>
-        </div>
+        </div></div>
       </div>
     </article>
 
@@ -159,7 +160,7 @@
       <div class="content">
         <div class="status">Interactive synth manual · browser experiment</div>
         <h2>Pocket Operations Manual</h2>
-        <p class="description">A playable, interactive PO-35 Speak manual and simulator that lets visitors experiment with a pocket synthesizer interface in their browser.</p>
+        <p class="description">A playable, interactive PO-35 Speak manual and simulator that lets visitors experiment with a pocket synthesizer interface in their browser.</p><div class="expanded-content" hidden>
         <p class="detail"><strong>Explore now:</strong> Open the simulator directly on a phone or computer, without owning the physical instrument.</p>
         <p class="detail uncertain"><strong>Still developing:</strong> Some original hardware behaviors are approximated or not implemented; the fidelity audit tracks differences.</p>
         <div class="tags"><span>Phone browser</span><span>Sound</span><span>Hardware-inspired</span></div>
@@ -167,7 +168,7 @@
           <a href="https://udeudeude.github.io/Pocket-Operations-Manual/">Open simulator</a>
           <a href="https://github.com/udeudeude/Pocket-Operations-Manual/blob/main/docs/FIDELITY.md">Fidelity audit</a>
           <a href="https://github.com/udeudeude/Pocket-Operations-Manual">Explore source</a>
-        </div>
+        </div></div>
       </div>
     </article>
 
@@ -177,14 +178,35 @@
       <div class="content">
         <div class="status">Interactive audio · prototype</div>
         <h2>Play by Ear · GameCast</h2>
-        <p class="description">Experiments in playable podcasts, branching audio and spatial listening.</p>
+        <p class="description">Experiments in playable podcasts, branching audio and spatial listening.</p><div class="expanded-content" hidden>
         <div class="tags"><span>Audio</span><span>Podcast</span><span>Interactive fiction</span></div>
-        <div class="actions"><a href="https://play-by-ear-gamecast-lab.onrender.com/feed.xml">Test podcast feed</a><a href="https://github.com/udeudeude/Play-by-Ear-GameCast">Source</a></div>
+        <div class="actions"><a href="https://play-by-ear-gamecast-lab.onrender.com/feed.xml">Test podcast feed</a><a href="https://github.com/udeudeude/Play-by-Ear-GameCast">Source</a></div></div>
       </div>
     </article>
   </section>
 
 </main>
 <footer><div class="wrap"><a href="/">← Back to Ude Projects</a></div></footer>
+<script>
+  document.querySelectorAll('.projects .project').forEach(card=>{
+    const details=card.querySelector('.expanded-content');
+    if(!details)return;
+    card.tabIndex=0;
+    card.setAttribute('role','button');
+    card.setAttribute('aria-expanded','false');
+    const toggle=()=>{
+      details.hidden=!details.hidden;
+      card.setAttribute('aria-expanded',String(!details.hidden));
+    };
+    card.addEventListener('click',event=>{
+      if(event.target.closest('a,button,input'))return;
+      toggle();
+    });
+    card.addEventListener('keydown',event=>{
+      if(event.target!==card || !['Enter',' '].includes(event.key))return;
+      event.preventDefault();toggle();
+    });
+  });
+</script>
 </body>
 </html>
