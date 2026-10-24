@@ -264,35 +264,6 @@
         "Photograph physical paper-and-acetate tests."
       ]
     },
-    "repo-th-die-s-cast": {
-      "name": "Th’die’s Cast",
-      "links": [
-        {
-          "label": "Listen to the pilot episodes",
-          "url": "https://udeudeude.github.io/thdies-cast/"
-        },
-        {
-          "label": "Subscribe (RSS)",
-          "url": "https://udeudeude.github.io/thdies-cast/feed.xml"
-        },
-        {
-          "label": "Pilot master source",
-          "url": "https://github.com/udeudeude/udeudeude.github.io/tree/main/thdies-cast"
-        },
-        {
-          "label": "Show Bible",
-          "url": "https://github.com/udeudeude/Th-die-s-Cast/blob/main/docs/SHOW_BIBLE.md"
-        },
-        {
-          "label": "Episode catalog",
-          "url": "https://github.com/udeudeude/Th-die-s-Cast/blob/main/docs/EPISODE_CATALOG.md"
-        }
-      ],
-      "tasks": [
-        "Complete the planned episode catalog and rights checks.",
-        "Review the companion-app size research backlog."
-      ]
-    },
     "repo-play-by-ear-gamecast": {
       "name": "Play by Ear · GameCast",
       "links": [
@@ -495,7 +466,7 @@
       ]
     },
     "repo-key-scratch": {
-      "name": "Ortholinear (Key Scratch)",
+      "name": "Key Scratch",
       "status": "Native iOS keyboard · source build",
       "description": "An ortholinear iPhone/iPad keyboard with many languages, adjustable geometry, on-device glide typing, local text replacements, and a containing test app. Requires Xcode and device signing to install; no public App Store distribution is verified.",
       "links": [
@@ -526,7 +497,7 @@
         "Check iPad layouts and accessibility on physical hardware."
       ],
       "image": "https://raw.githubusercontent.com/udeudeude/Key-Scratch/main/docs/screenshots/app-store/iphone-home.png",
-      "imageAlt": "Actual Ortholinear keyboard iPhone simulator screenshot"
+      "imageAlt": "Key Scratch keyboard screenshot"
     },
     "temporarily-leave-the-universe": {
       "name": "Temporarily Leave the Universe",
@@ -546,6 +517,35 @@
         "Document intended commands and user interactions in the README.",
         "Test the interactive terminal on mobile Safari and with a keyboard.",
         "Review accessibility of the cursor, color themes and touch input."
+      ]
+    },
+    "thdies-cast": {
+      "name": "Th’die’s Cast",
+      "links": [
+        {
+          "label": "Listen to the pilot episodes",
+          "url": "https://udeudeude.github.io/thdies-cast/"
+        },
+        {
+          "label": "Subscribe (RSS)",
+          "url": "https://udeudeude.github.io/thdies-cast/feed.xml"
+        },
+        {
+          "label": "Pilot master source",
+          "url": "https://github.com/udeudeude/udeudeude.github.io/tree/main/thdies-cast"
+        },
+        {
+          "label": "Show Bible",
+          "url": "https://github.com/udeudeude/Th-die-s-Cast/blob/main/docs/SHOW_BIBLE.md"
+        },
+        {
+          "label": "Episode catalog",
+          "url": "https://github.com/udeudeude/Th-die-s-Cast/blob/main/docs/EPISODE_CATALOG.md"
+        }
+      ],
+      "tasks": [
+        "Complete the planned episode catalog and rights checks.",
+        "Review the companion-app size research backlog."
       ]
     }
   }
