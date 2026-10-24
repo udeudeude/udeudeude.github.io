@@ -1,0 +1,129 @@
+name: Remove redundant encounter instructions and identify each episode
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/refresh-encounter-intros.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: thdies-encounter-intro-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install established Brother Rubicon voice pipeline
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg espeak-ng
+          python -m pip install --upgrade pip
+          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -r thdies-cast/production/requirements.txt
+          ffmpeg -hide_banner -filters | grep rubberband
+      - name: Check scripts, count original episodes and preserve MP3 checksums
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile thdies-cast/production/{remove_encounter_wraparound,render_creatures,render_relics,final_encounter_mastering}.py
+          sha256sum thdies-cast/audio/*.mp3 > /tmp/thdies-before-15.sha256
+          test "$(wc -l < /tmp/thdies-before-15.sha256)" -eq 15
+          python - <<'PY'
+          import json,sys
+          sys.path.insert(0,'thdies-cast/production')
+          import render_creatures,render_relics
+          previous="If you reach the end, return to the first encounter after the introduction."
+          for mod in (render_creatures,render_relics):
+              info=json.loads(mod.MANIFEST.read_text())
+              assert info['encounters']==80 and info['neutral_chimes']==0
+              assert previous in info['functional_instructions']
+              assert previous not in mod.INSTRUCTION
+              assert mod.INSTRUCTION.startswith(f"This is {mod.TITLE}.")
+          print('PASS: 80 encounters each, no chimes, approved new spoken titles')
+          PY
+      - name: Re-record the two brief openings without changing any encounters
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -u thdies-cast/production/remove_encounter_wraparound.py
+      - name: Save completed replacement media and manifests even if publishing fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: thdies-clean-identified-encounter-intros
+          path: |
+            thdies-cast/audio/14-creatures-behaving-strangely.mp3
+            thdies-cast/audio/15-relics-and-curiosities.mp3
+            thdies-cast/creatures-manifest.json
+            thdies-cast/relics-manifest.json
+            thdies-cast/feed.xml
+            thdies-cast/index.html
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Verify only two existing audio episodes changed
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -Ev '14-creatures-behaving-strangely.mp3|15-relics-and-curiosities.mp3' /tmp/thdies-before-15.sha256 | sha256sum -c -
+          python - <<'PY'
+          import json,xml.etree.ElementTree as ET
+          from pathlib import Path
+          root=Path('thdies-cast')
+          old="If you reach the end, return to the first encounter after the introduction."
+          for n,name,slug in ((14,'Creatures Behaving Strangely','creatures'),(15,'Relics and Curiosities','relics')):
+              record=json.loads((root/f'{slug}-manifest.json').read_text())
+              assert record['encounters']==80 and record['neutral_chimes']==0
+              assert record['functional_instructions'].startswith(f'This is {name}.')
+              assert old not in record['functional_instructions']
+              assert record['intro_revision']=='20261024e'
+              assert record['unchanged_encounter_audio_correlation'] > .98
+          items=ET.parse(root/'feed.xml').findall('./channel/item')
+          assert len(items)==15 and len({i.findtext('guid') for i in items})==15
+          for i in items:
+              enc=i.find('enclosure')
+              file=enc.get('url').split('/')[-1].split('?')[0]
+              assert (root/'audio'/file).stat().st_size==int(enc.get('length'))
+          print('PASS: 15 existing episode identities retained, only two openings rerecorded')
+          PY
+      - name: Commit the verified revised audio without redoing all encounters
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add thdies-cast/audio/14-creatures-behaving-strangely.mp3 thdies-cast/audio/15-relics-and-curiosities.mp3 thdies-cast/creatures-manifest.json thdies-cast/relics-manifest.json thdies-cast/feed.xml thdies-cast/index.html
+          if git diff --cached --quiet; then
+            echo 'No changes required'
+            exit 0
+          fi
+          git commit -m 'Identify Creatures and Relics aloud and remove unnecessary wraparound instruction'
+          git stash push --include-untracked -m 'Clear temporary audio files before publication' || true
+          for try in 1 2 3 4; do
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep $((try * 2))
+          done
+          exit 1
+      - name: Confirm revised MP3s on main
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          for n in 14-creatures-behaving-strangely 15-relics-and-curiosities; do
+            git ls-tree -r --name-only origin/main | grep -Fx "thdies-cast/audio/$n.mp3"
+          done
