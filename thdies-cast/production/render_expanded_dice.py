@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Eight balanced dice editions: reuse existing Rubicon outcome audio, refresh narration.
 
-Never overwrite the five original MP3s. Their statistically imperfect
-prerecorded draws remain in the feed but are clearly described as archival.
+Never overwrite the five original MP3s. The first D20 is a valid balanced
+shuffled-set die; only the original unbalanced 2D6 and D100 are archival.
 New MP3s are independent episodes with distinct introductions and codas.
 """
 from __future__ import annotations
