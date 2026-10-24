@@ -4,6 +4,7 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/publish-relics.yml'
+      # Rebuilt after successful 14-episode audio correction; no other triggers.
   workflow_dispatch:
 
 permissions:
