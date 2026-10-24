@@ -33,13 +33,13 @@ jobs:
           sys.path.insert(0,'thdies-cast/production')
           import audit_audio_levels as a
           report=a.measure()
-          assert len(report)==14
+          assert len(report) in (14,15)
           failures=[]
           for row in report:
               n=row['episode']
               if n==5:
                   continue # Exact-timing music score, not dry spoken outcomes.
-              if not (6<=n<=13):
+              if not (6<=n<=15):
                   continue
               for section in ('intro','coda'):
                   delta=abs(row[f'{section}_gap_db'])
@@ -47,5 +47,5 @@ jobs:
                       failures.append((n,section,delta))
           print('Brother Rubicon intro/coda level QC failures:',failures,flush=True)
           assert not failures,failures
-          print('PASS: all eight balanced dice editions have comparable narration levels',flush=True)
+          print('PASS: balanced dice and encounter episodes have comparable narration levels',flush=True)
           PY
