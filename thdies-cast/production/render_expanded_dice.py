@@ -352,6 +352,14 @@ def rss_append(records):
     originals=channel.findall("item")
     assert len(originals)==5,f"Expected five original episodes; got {len(originals)}"
     mark_originals_as_archive(channel)
+    # Episode sequence belongs in <itunes:episode>, never the visible title.
+    # Also normalize the two non-dice original episodes, which are unchanged.
+    for item in originals:
+        title=item.find("title")
+        if title is not None and title.text and " · " in title.text:
+            first,rest=title.text.split(" · ",1)
+            if first.isdigit():
+                title.text=rest
     old_ids=[x.findtext("guid") for x in originals]
     def sub(parent,tag,text=None,attrs=None):
         e=ET.SubElement(parent,tag,attrs or {})
