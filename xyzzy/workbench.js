@@ -106,6 +106,34 @@
     }));
   }
 
+  async function workshopProjects() {
+    const response = await fetch('/workshop/', {cache:'no-cache'});
+    if (!response.ok) return [];
+    const html = new DOMParser().parseFromString(await response.text(), 'text/html');
+    return [...html.querySelectorAll('.projects .project')].map((card, rank) => {
+      const name = card.querySelector('h2')?.textContent?.trim() || card.id;
+      const visual = card.querySelector('.banner img');
+      let picture = null;
+      if (visual) {
+        picture = node('div', 'visual');
+        const img = node('img');
+        img.src = visual.src;
+        img.alt = visual.alt;
+        img.loading = 'lazy';
+        picture.append(img);
+      }
+      return {
+        id: card.id === 'key-scratch' ? 'repo-key-scratch' : 'repo-' + card.id,
+        name, description:card.querySelector('.description')?.textContent?.trim() || '',
+        status:card.querySelector('.status')?.textContent?.trim() || 'Open Workshop',
+        group:'workshop',rank:rank+1,categories:'',visual:picture,
+        publicUrl:location.origin+'/workshop/#'+card.id,
+        links:[...card.querySelectorAll('.actions a')].map(a=>({label:a.textContent.trim(),url:a.href})),
+        repos:[]
+      };
+    });
+  }
+
   async function publicRepositories() {
     const snapshotResponse = await fetch('/xyzzy/repositories.json', {cache:'no-cache'});
     const snapshot = snapshotResponse.ok ? (await snapshotResponse.json()).repositories : [];
@@ -210,14 +238,14 @@
   }
 
   async function initialize() {
-    const [curated, repos, metadata] = await Promise.all([publishedProjects(), publicRepositories(), loadMetadata()]);
+    const [curated, repos, metadata, workshop] = await Promise.all([publishedProjects(), publicRepositories(), loadMetadata(), workshopProjects()]);
     projectMetadata = metadata;
     migratePromotedProject();
-    const mapped = new Map(curated.map(p => [p.id, p]));
+    const mapped = new Map([...curated, ...workshop].map(p => [p.id, p]));
     const extras = [];
     for (const repo of repos) {
       // Public GitHub metadata only; a private repo is never in the published snapshot.
-      const target = knownRepoProject[repo.name];
+      const target = repo.name === 'Key-Scratch' ? 'repo-key-scratch' : knownRepoProject[repo.name];
       const repoUrl = httpsLink(repo.url) || 'https://github.com/' + OWNER + '/' + encodeURIComponent(repo.name);
       if (target && mapped.has(target)) {
         const p = mapped.get(target);
@@ -256,7 +284,7 @@
         });
       }
     }
-    items = [...curated.sort((a,b)=>a.rank-b.rank),
+    items = [...curated.sort((a,b)=>a.rank-b.rank), ...workshop,
       ...extras.sort((a,b)=>a.name.localeCompare(b.name))].map(enriched);
     refresh();
   }
@@ -286,7 +314,7 @@
       window.scrollTo(0,scrollY);
     }
     count.textContent = shown.length + ' projects shown · ' + all.length + ' total (' +
-      all.filter(p=>p.group==='curated').length + ' curated, ' +
+      all.filter(p=>p.group==='curated').length + ' exhibition, ' +\n      all.filter(p=>p.group==='workshop').length + ' workshop, ' +
       all.filter(p=>p.group==='repos').length + ' extra public repositories, ' +
       all.filter(p=>p.group==='local').length + ' locally added)';
   }
