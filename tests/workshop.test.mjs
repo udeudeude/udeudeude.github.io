@@ -22,7 +22,7 @@ assert.ok(!workshop.includes('href="/xyzzy/"'), 'Workshop does not reveal privat
 assert.ok(!workshop.includes('id="temporarily-leave-the-universe"'),'Promoted adventure is removed from workshop');
 assert.equal((workshop.match(/<article class="project"/g)||[]).length,expected.length,'Workshop keeps seven projects after exhibition promotion');
 assert.deepEqual([...workshop.matchAll(/<h2>([^<]+)<\/h2>/g)].map(m=>m[1]),expected,'Reviewed selection and order');
-assert.ok(workshop.includes('requires developer signing') || workshop.includes('Requires developer signing'), 'Source-built keyboard is honestly labeled');
+assert.ok(workshop.includes('visible, reusable notes'), 'Key Scratch describes the notes keyboard concept');
 assert.ok(workshop.includes('No finished, blind-playtested mission'),'Unfinished puzzle work is not mislabeled as released');
 assert.ok(workshop.includes('real-device verification'), 'Device-dependent features are explicitly qualified');
 assert.ok(!workshop.includes('href="https://chatgpt.com/'), 'No personal working conversations embedded in public workshop');
@@ -63,7 +63,7 @@ try {
 
     if(width===390){
       await page.goto('http://127.0.0.1:4182/',{waitUntil:'domcontentloaded'});
-      const workshopLink=page.getByRole('link',{name:/Explore the workshop/});
+      const workshopLink=page.getByRole('link',{name:/Explore the studio/});
       assert.equal(await workshopLink.count(),1,'Exactly one invitation beneath public portfolio');
       await workshopLink.click();
       await page.waitForURL('**/workshop/');
