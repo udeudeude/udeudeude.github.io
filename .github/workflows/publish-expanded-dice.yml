@@ -48,6 +48,21 @@ jobs:
         run: |
           set -euo pipefail
           python thdies-cast/production/render_expanded_dice.py
+      - name: Preserve completed MP3s even if a later validation step fails
+        uses: actions/upload-artifact@v4
+        with:
+          name: Completed-balanced-dice-MP3s
+          path: |
+            thdies-cast/audio/06-*.mp3
+            thdies-cast/audio/07-*.mp3
+            thdies-cast/audio/08-*.mp3
+            thdies-cast/audio/09-*.mp3
+            thdies-cast/audio/10-*.mp3
+            thdies-cast/audio/11-*.mp3
+            thdies-cast/audio/12-*.mp3
+            thdies-cast/audio/13-*.mp3
+          if-no-files-found: error
+          retention-days: 14
       - name: Verify full audio, mathematics, feed and archival preservation
         shell: bash
         run: |
@@ -73,7 +88,7 @@ jobs:
               assert m['outcome_count']==spec_counts[n]
               assert m['results_duration_seconds'] in (1800,2000)
               assert m['postroll_pre_coda_pause_seconds']<=0.001
-              assert 'I am Brother Rubicon. The die\\'s cast.' in m['spoken_intro_text']
+              assert "I am Brother Rubicon. The die's cast." in m['spoken_intro_text']
               source=root/'audio'/name
               assert source.is_file() and source.stat().st_size>1000000
               records=[item for item in items if item.find('enclosure') is not None and item.find('enclosure').get('url','').endswith('/'+name)]
