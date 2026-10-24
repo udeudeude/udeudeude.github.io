@@ -89,7 +89,7 @@ assert.ok(projectCategories.get('asheville-golocal-maps').includes('asheville'),
 assert.ok(projectCategories.get('orchestral-maneuvers-dark').includes('asheville'), 'Asheville FM is Asheville-related');
 assert.ok(projectCategories.get('anaglyph-friends').includes('print') && projectCategories.get('anaglyph-friends').includes('visual'), 'Multi-category membership works');
 
-assert.equal(cards.length, 18, 'All 18 currently curated projects are present');
+assert.equal(cards.length, 19, 'All 19 currently curated projects are present');
 assert.ok(!categorySet.has('devices'), 'Obsolete Devices category was removed');
 assert.ok(!projectCategories.get('lighthouse').includes('hardware'), 'LightHouse is not in hardware-specific projects');
 assert.ok(projectCategories.get('sorting-cards').includes('print'), 'Sorting with Cards is printable work');
@@ -99,6 +99,12 @@ for (const key of ['wisdom-watch', 'living-patterns', 'orchestral-maneuvers-dark
 }
 assert.ok(!projectCategories.get('escape-pod-cast').includes('recurring'), 'Podcast publishing utility is not itself recurring published content');
 assert.ok(!keys.includes('moire-lab'), 'Moiré Lab remains outside the public exhibition');
+const adventure = cards.find(card => card[1] === 'temporarily-leave-the-universe')?.[3];
+assert.ok(adventure?.includes('https://udeudeude.github.io/Temporarily-Leave-the-Universe/'), 'Adventure has direct browser-play link');
+assert.ok(adventure?.includes('assets/screenshots/temporarily-leave-universe-green.svg') && adventure?.includes('assets/screenshots/temporarily-leave-universe-purple.svg'), 'User-inspired visual previews are present');
+for (const p of ['assets/screenshots/temporarily-leave-universe-green.svg','assets/screenshots/temporarily-leave-universe-purple.svg']){
+  assert.ok(fs.existsSync(new URL(p, root)),p + ' image exists');
+}
 assert.ok(!html.includes('data-access-filter='), 'Redundant access-mode buttons are removed');
 assert.ok(!html.includes('filter-tip'), 'Equipment explanation paragraph removed');
 assert.ok(html.indexOf('id="filter-summary"') > html.indexOf('data-exclude="hardware"'), 'Qualifying-project count appears beneath equipment checkboxes');
@@ -182,7 +188,7 @@ const curatedOrder = [
   'starfinder-homebrewery-toolkit', 'pnp-o-matic', 'asheville-golocal-maps',
   'orchestral-maneuvers-dark', 'escape-pod-cast', 'touchbarpalooza',
   'sorting-cards', 'biofeedback-play', 'tv-b-goner', 'ai-kindle',
-  'supercollider', 'lewis-voice-lab'
+  'supercollider', 'lewis-voice-lab', 'temporarily-leave-the-universe'
 ];
 assert.deepEqual(keys, curatedOrder, 'Preserve the intentional project order');
 const populatedStarfinder = 'https://homebrewery.naturalcrit.com/share/u41Swqyrcj1W';
