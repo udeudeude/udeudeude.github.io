@@ -12,8 +12,8 @@ const expected = [
   'Sphero Laboratory',
   'MPK249 Universal Map',
   'Escape Team Activate',
-  'Play by Ear · GameCast',
-  'Pocket Operations Manual'
+  'Pocket Operations Manual',
+  'Play by Ear · GameCast'
 ];
 assert.equal((home.match(/<article class="project /g)||[]).length,20,'Public exhibition contains 20 curated tiles');
 assert.match(home, /href="\/workshop\/"/, 'Only one understated workshop destination added');
