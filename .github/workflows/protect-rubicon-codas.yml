@@ -1,4 +1,4 @@
-name: Keep Brother Rubicon's endings unspoiled
+name: Keep Brother Rubicon show notes consistent and unspoiled
 on:
   push:
     branches: [main]
@@ -27,37 +27,10 @@ jobs:
           import re
           import xml.etree.ElementTree as ET
           root=Path('thdies-cast')
-          source=root/'production/render_expanded_dice.py'
-          src=source.read_text()
-          old='"\\n\\nClosing coda: "+" / ".join(spec["coda"]))'
-          # Replace only the show-notes return string; keep the private/public
-          # technical manifest with the verbatim coda for reproducibility.
-          needle='"\\n\\nClosing coda: "+" / ".join(spec["coda"]))'
-          if needle in src:
-              src=src.replace(needle,'"\\n\\nA closing remark follows the last valid result, but is not revealed here.")')
-          else:
-              # The source's escaped newline string has literal backslashes.
-              needle='"\\n\\nClosing coda: "+" / ".join(spec["coda"]))'
-              if needle in src:
-                  src=src.replace(needle,'"\\n\\nA closing remark follows the last valid result, but is not revealed here.")')
-          # A safer line-level replacement, independent of the identical-looking
-          # escape representation in a shell heredoc.
-          lines=src.splitlines()
-          for i,line in enumerate(lines):
-              if 'Closing coda:' in line and 'spec["coda"]' in line:
-                  lines[i]='        "\\n\\nA closing remark follows the last valid result, but is not revealed here.")'
-          src="\n".join(lines)+"\n"
-          # Future notes shouldn't call the speaker's standard intro unselected.
-          src=src.replace(
-              "The spoken introductions are intentionally brief, provisional explanations of the methods; the permanent character introduction has not been chosen.",
-              "The spoken method explanations are brief; the Brother Rubicon standard introduction is fixed and his observations vary by edition."
-          )
-          source.write_text(src)
           notes=sorted((root/'dice-methods/show-notes').glob('*.md'))
           assert len(notes)==8
           for note in notes:
               txt=note.read_text()
-              assert "Closing coda:" in txt,note
               txt=re.sub(r'\n\nClosing coda:.*\Z',
                   '\n\nThe closing remark is best discovered at the end of the recording.\n',
                   txt,flags=re.S)
@@ -76,7 +49,7 @@ jobs:
               if not guid.startswith('urn:thdies-cast:balanced:'):
                   continue
               desc=item.find('description')
-              assert desc is not None and 'Closing coda:' in desc.text
+              assert desc is not None and desc.text
               desc.text=re.sub(r'\n\nClosing coda:.*\Z',
                   '\n\nThe closing remark is best discovered at the end of the recording.',
                   desc.text,flags=re.S)
@@ -95,7 +68,7 @@ jobs:
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add thdies-cast/production/render_expanded_dice.py thdies-cast/dice-methods/show-notes/ thdies-cast/feed.xml
+          git add thdies-cast/dice-methods/show-notes/ thdies-cast/feed.xml
           if ! git diff --cached --quiet; then
             git commit -m 'Keep Brother Rubicon end bits unspoiled in public podcast descriptions'
             git fetch origin main
