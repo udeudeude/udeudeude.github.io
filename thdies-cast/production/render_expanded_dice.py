@@ -228,7 +228,10 @@ def description(spec):
 
 def show_notes(spec):
     return (f"{spec['title']} · Balanced dice method, episode {spec['n']}\n\n"
-        +description(spec)+"\n\n"+balanced.COMMON+
+        +description(spec)+"\\n\\n"+balanced.COMMON.replace(
+            "The spoken introductions are intentionally brief, provisional explanations of the methods; the permanent character introduction has not been chosen.",
+            "Brother Rubicon's recurring introduction is fixed; the opening observation varies, and each edition explains its dice method briefly."
+        )+
         "\n\nThis version has its own Brother Rubicon opening observation and a "
         "distinct closing coda; both come from this production edition. The "
         "standard introduction is always: I am Brother Rubicon. The die's cast."
