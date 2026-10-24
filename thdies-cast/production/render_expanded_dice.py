@@ -228,7 +228,7 @@ def description(spec):
 
 def show_notes(spec):
     return (f"{spec['title']} · Balanced dice method, episode {spec['n']}\n\n"
-        +description(spec)+"\\n\\n"+balanced.COMMON.replace(
+        +description(spec)+"\n\n"+balanced.COMMON.replace(
             "The spoken introductions are intentionally brief, provisional explanations of the methods; the permanent character introduction has not been chosen.",
             "Brother Rubicon's recurring introduction is fixed; the opening observation varies, and each edition explains its dice method briefly."
         )+
