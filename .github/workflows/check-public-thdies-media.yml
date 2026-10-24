@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Check public podcast RSS and its 14 MP3 files
+      - name: Check public podcast RSS and its 15 MP3 files
         shell: bash
         run: |
           set -euo pipefail
@@ -36,8 +36,8 @@ jobs:
           assert status==200
           feed=ET.fromstring(data)
           items=feed.findall("./channel/item")
-          assert len(items)==14
-          assert len(set(x.findtext("guid") for x in items))==14
+          assert len(items)==15
+          assert len(set(x.findtext("guid") for x in items))==15
           titles=[x.findtext("title") for x in items]
           assert not any(t[:3].strip().isdigit() for t in titles),titles
           first=next(x for x in items if x.findtext("guid")=="urn:thdies-cast:pilot:01:v1")
@@ -53,5 +53,5 @@ jobs:
               assert status in (200,206),(url,status)
               assert data.startswith(b"ID3") or data[:1]==b"\xff" or b"\xff\xfb" in data,("Invalid MP3",url)
               print("MP3",url.rsplit("/",1)[-1],status,content,flush=True)
-          print("PUBLIC AUDIO PODCAST OK: 14 episodes and valid unnumbered titles",flush=True)
+          print("PUBLIC AUDIO PODCAST OK: 15 episodes and valid unnumbered titles",flush=True)
           PY
