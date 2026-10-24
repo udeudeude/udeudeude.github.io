@@ -76,7 +76,7 @@
     #message{font-size:.82rem;color:#b9edf2;min-height:1.4rem}
     footer{padding:14px 0 36px;color:var(--quiet);font-size:.76rem}
     @media(max-width:890px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    @media(max-width:620px){.grid{grid-template-columns:1fr}.visual{height:142px}.wrap{width:calc(100% - 22px)}}
+    @media(max-width:620px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.inside{padding:10px}.visual{height:100px}.wrap{width:calc(100% - 22px)}}
   </style>
 </head>
 <body>
@@ -111,7 +111,7 @@
   <p class="meta" id="result-count" aria-live="polite">Loading project index…</p>
   <p id="message" role="status" aria-live="polite"></p>
   <section class="grid" id="projects" aria-label="All workbench projects"></section>
-  <p class="small" style="margin-top:20px">This dashboard automatically checks GitHub for new <em>public</em> repositories, with a saved snapshot as fallback. The public portfolio determines its curated tiles. A ChatGPT chat, Work document, or Codex task becomes a direct link here after you paste its URL into the corresponding project.</p>
+  <p class="small" style="margin-top:20px">Add project links and tasks to any tile.</p>
   <div class="tools"><button id="clear-data" type="button">Clear locally stored links and additions</button></div>
 </main>
 <footer class="wrap">Personal links are not synchronized between browsers. Export a backup if you want to move them to another device. Keep that backup private.</footer>
