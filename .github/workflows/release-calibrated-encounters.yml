@@ -1,0 +1,104 @@
+name: Release final calibrated encounter masters from saved build
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/release-calibrated-encounters.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: thdies-calibrated-release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Restore three already mastered and validated MP3s from artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: final-encounter-volume-matched-masters
+          run-id: 40078464353
+          github-token: ${{ github.token }}
+          path: thdies-cast
+      - name: Verify restored files and update the three direct audio links
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          python -m pip install 'numpy>=1.26,<3'
+          python - <<'PY'
+          from pathlib import Path
+          import json,re,sys,xml.etree.ElementTree as ET
+          root=Path('thdies-cast')
+          sys.path.insert(0,str(root/'production'))
+          import remaster_library as master
+          from audit_audio_levels import active_voice_db
+          p=json.loads((root/'pilot-manifest.json').read_text())['episodes']['04-wilderness-oracle.mp3']
+          c=json.loads((root/'creatures-manifest.json').read_text())
+          r=json.loads((root/'relics-manifest.json').read_text())
+          assert p.get('new_chime_free_intro')
+          assert len(list((root/'audio').glob('*.mp3')))==15
+          assert all(m['encounters']==80 and m['neutral_chimes']==0 for m in (p,c,r))
+          assert abs(c['mastered_scene_level_db']-r['mastered_scene_level_db'])<2
+          assert abs(c['mastered_scene_level_db']-c['reference_level_db'])<2.5
+          feed=ET.parse(root/'feed.xml').findall('./channel/item')
+          assert len(feed)==15 and len({i.findtext('guid') for i in feed})==15
+          files=['04-wilderness-oracle.mp3','14-creatures-behaving-strangely.mp3','15-relics-and-curiosities.mp3']
+          for item in feed:
+              enc=item.find('enclosure')
+              file=enc.get('url').split('/')[-1].split('?')[0]
+              path=root/'audio'/file
+              assert int(enc.get('length'))==path.stat().st_size
+          page=root/'index.html'
+          src=page.read_text(encoding='utf-8')
+          for name in files:
+              src=re.sub(re.escape(name)+r'(?:\?revision=[A-Za-z0-9_-]+)?',name+'?revision=20261024d',src)
+          page.write_text(src,encoding='utf-8')
+          print('PASS: static volume matched in 3 encounter MP3s, 15 RSS items and unchanged earlier games',flush=True)
+          PY
+      - name: Commit and publish, retrying safely if main moves concurrently
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add thdies-cast/audio/{04-wilderness-oracle,14-creatures-behaving-strangely,15-relics-and-curiosities}.mp3 thdies-cast/pilot-manifest.json thdies-cast/creatures-manifest.json thdies-cast/relics-manifest.json thdies-cast/feed.xml thdies-cast/index.html
+          if git diff --cached --quiet; then
+            echo 'Already published'
+            exit 0
+          fi
+          git commit -m 'Publish corrected absolute voice levels across all three encounter oracles'
+          git stash push --include-untracked -m 'Clean runtime artifacts before push' || true
+          for attempt in 1 2 3 4; do
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then
+              echo 'All three new masters published'
+              exit 0
+            fi
+            sleep $((attempt * 2))
+          done
+          echo 'Could not publish after four safe fast-forward retries'
+          exit 1
+      - name: Confirm three mastered episode files on public branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          for file in 04-wilderness-oracle.mp3 14-creatures-behaving-strangely.mp3 15-relics-and-curiosities.mp3; do
+            git ls-tree -r --name-only origin/main | grep -Fx "thdies-cast/audio/$file"
+          done
