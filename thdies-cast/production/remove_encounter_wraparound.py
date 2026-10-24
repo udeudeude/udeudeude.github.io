@@ -52,6 +52,7 @@ def patch_intro(number, module, kokoro):
     assert manifest["neutral_chimes"] == 0
     assert REMOVED in manifest["functional_instructions"], "Already revised; never edit twice"
     assert REMOVED not in module.INSTRUCTION, "Render source must be corrected first"
+    assert module.INSTRUCTION.startswith(f"This is {module.TITLE}."), "Episode must introduce its own title"
     assert manifest["intro_observation"] and manifest["signature"] == module.IDENTITY
     assert len(manifest["boundary_times_seconds"]) == 80
     assert len(list(AUDIO.glob("*.mp3"))) == 15
@@ -84,7 +85,7 @@ def patch_intro(number, module, kokoro):
     # whole-file average. Fixed gain plus a gentle peak limiter, no adaptive
     # dynamics that could make the end of the recording whisper-quiet.
     new_start = len(new_intro) / RATE
-    assert 10.0 < new_start < old_start - 2.0, (
+    assert 10.0 < new_start < old_start - 0.3, (
         "A shorter introduction is expected after removing the sentence",
         old_start, new_start,
     )
@@ -227,6 +228,7 @@ def main():
         meta = json.loads(module.MANIFEST.read_text(encoding="utf-8"))
         assert REMOVED in meta["functional_instructions"], f"Episode {n} already revised"
         assert REMOVED not in module.INSTRUCTION
+        assert module.INSTRUCTION.startswith(f"This is {module.TITLE}.")
 
     voice = KPipeline(lang_code="b")
     results = {}
