@@ -1,10 +1,6 @@
 name: Publish Relics and Curiosities and correct Wilderness narration
+# Previously released on 2026-10-24; future rerenders require intentional manual dispatch.
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/publish-relics.yml'
-      # Rebuilt after successful 14-episode audio correction; no other triggers.
   workflow_dispatch:
 
 permissions:
