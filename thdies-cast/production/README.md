@@ -59,7 +59,7 @@ was [run 40073108602](https://github.com/udeudeude/udeudeude.github.io/actions/r
 the recovered artifact was published via
 [run 40073467958](https://github.com/udeudeude/udeudeude.github.io/actions/runs/40073467958).
 
-**Current encounter episodes:** Wilderness Oracle and Creatures Behaving Strangely
+**Current encounter episodes:** Wilderness Oracle, Creatures Behaving Strangely, and Relics and Curiosities
 each contain 80 independently usable encounters. They use brief natural breaks
 and no electronically generated boundary chimes. The original 35-second
 creature slots and original 0.27-second Wilderness chimes are retired.
@@ -78,3 +78,5 @@ Original five-episode builders are archival references and must not be used
 to overwrite the current 14-episode feed. Public podcast descriptions must
 not contain engineering jargon, model settings, arbitrary seek-distribution
 warnings, or spoilers for Rubicon's closing coda.
+
+**Episode 15 (October 24, 2026):** Relics and Curiosities has 80 original narrated scenes in the standard feed. Source: `relics_and_curiosities.md`; rendering: `render_relics.py`; episode manifest: `../relics-manifest.json`. The Wilderness spoken opening has been rerecorded to remove the instruction to wait for a chime, with the original 80 encounter scenes retained.
