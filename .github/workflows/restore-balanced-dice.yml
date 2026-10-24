@@ -126,5 +126,8 @@ jobs:
           git status --short
           if ! git diff --cached --quiet; then
             git commit -m 'Publish verified Brother Rubicon dice editions from retained production artifacts'
+            git stash push --include-untracked -m 'Temporary Python build products' || true
+            git fetch origin main
+            git rebase origin/main
             git push origin HEAD:main
           fi
