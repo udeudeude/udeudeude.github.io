@@ -110,7 +110,38 @@ try {
  const headings=await page.locator('.access-heading').evaluate(el=>[...el.children].map(x=>x.getBoundingClientRect().top));
  assert.ok(Math.abs(headings[0]-headings[1])<28,'At phone width the two labels stay on one heading row');
 
+ // The two newly illustrated portrait previews must load and be contained on a phone.
+ await page.locator('.project[data-key="temporarily-leave-the-universe"] .tile-toggle').click();
+ const images=page.locator('.project[data-key="temporarily-leave-the-universe"] .gallery img');
+ assert.equal(await images.count(),2,'Two provided-screen-inspired CRT previews exist');
+ const geometry=await images.evaluateAll(els=>els.map(el=>({
+   loaded:el.complete && el.naturalWidth>0,
+   width:el.getBoundingClientRect().width,
+   height:el.getBoundingClientRect().height,
+   maxHeight:parseFloat(getComputedStyle(el).maxHeight)
+ })));
+ assert.ok(geometry.every(x=>x.loaded && x.width>160 && x.height>150 && x.height<=x.maxHeight+2),
+  'Portrait media loads and fits mobile gallery without clipping');
+
  const x=await context.newPage();
+ // Simulate a prior owner's browser with local records saved under the original
+ // repository-only workbench ID. Promotion must migrate without discarding them.
+ await x.addInitScript(() => {
+   if(localStorage.getItem('migration-test-seeded')) return;
+   localStorage.setItem('migration-test-seeded','1');
+   localStorage.setItem('ude-workbench-links-v1',JSON.stringify({
+     'repo-temporarily-leave-the-universe':[{
+       id:'legacy-chat',kind:'ChatGPT',title:'Previous adventure conversation',
+       url:'https://chatgpt.com/c/legacy-adventure-chat'
+     }]
+   }));
+   localStorage.setItem('ude-workbench-todos-v1',JSON.stringify({
+     'repo-temporarily-leave-the-universe':[{id:'legacy-task',text:'Resume old adventure work'}]
+   }));
+   localStorage.setItem('ude-workbench-done-v1',JSON.stringify({
+     'repo-temporarily-leave-the-universe':['source-0']
+   }));
+ });
  // Keep tests deterministic and do not depend on GitHub API limits.
  await x.route('https://api.github.com/**',route=>route.abort());
  await x.goto('http://127.0.0.1:4179/xyzzy/',{waitUntil:'domcontentloaded'});
@@ -126,6 +157,17 @@ const promoted=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Tempo
 assert.equal(await promoted.count(),1,'Promoted adventure appears exactly once in workbench');
 assert.equal(await promoted.getByRole('link',{name:'Public tile'}).count(),1,'Promoted adventure now links to exhibition');
 assert.equal(await promoted.getByRole('link',{name:'Open web experience'}).count(),1,'Adventure retains its metadata launch action');
+ assert.equal(await promoted.getByRole('link',{name:'ChatGPT: Previous adventure conversation'}).count(),1,'Old personal chat survives promotion');
+ assert.ok(await promoted.getByText('Resume old adventure work').count(),'Old personal to-do survives promotion');
+ const migrated=await x.evaluate(()=>({
+    links:JSON.parse(localStorage.getItem('ude-workbench-links-v1')||'{}'),
+    tasks:JSON.parse(localStorage.getItem('ude-workbench-todos-v1')||'{}'),
+    done:JSON.parse(localStorage.getItem('ude-workbench-done-v1')||'{}')
+ }));
+ assert.equal(migrated.links['repo-temporarily-leave-the-universe'],undefined,'Old link key is migrated');
+ assert.equal(migrated.tasks['repo-temporarily-leave-the-universe'],undefined,'Old task key is migrated');
+ assert.ok(migrated.done['temporarily-leave-the-universe']?.includes('source-0'),'Previously checked source task remains checked');
+
 const moireCard=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Moiré Lab'})});
 assert.ok(await moireCard.getByRole('link',{name:'Online workshop'}).count()>0,'Moiré still links to its working web app');
 assert.equal(await moireCard.getByRole('link',{name:'Public tile'}).count(),0,'Unpublished Moiré has no public-portfolio shortcut');
