@@ -219,7 +219,7 @@ def show_notes(spec):
         "distinct closing coda; both come from this production edition. The "
         "standard introduction is always: I am Brother Rubicon. The die's cast."
         "\n\nSpecific opening: "+spec["intro"]+
-        "\n\nClosing coda: "+" / ".join(spec["coda"]))
+        "\n\nA closing remark follows the last valid result, but is not revealed here.")
 
 def make_audio(voice,spec,values,samples):
     idx=spec["n"]

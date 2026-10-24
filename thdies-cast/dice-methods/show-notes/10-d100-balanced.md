@@ -14,10 +14,10 @@ FAIRNESS VERSUS INDEPENDENCE
 This is a prerecorded deterministic sequence, not a source of fresh live randomness. Exact balanced frequencies guarantee fair outcomes for a uniformly chosen time slot, but a continuous run of results need not have the independence of fresh dice throws. If each playback position is independently sampled uniformly over the result region, those sampled outcomes are independent despite the fixed recording. All experiments use fixed, documented pseudorandom seeds and can be reconstructed.
 
 PRODUCTION
-Narrated by Brother Rubicon using Kokoro's Lewis voice with the producer-selected Saved 02 treatment. The spoken introductions are intentionally brief, provisional explanations of the methods; the permanent character introduction has not been chosen. A distinct whimsical closing coda follows the last valid roll, without a long silence. The coda is not an outcome.
+Narrated by Brother Rubicon using Kokoro's Lewis voice with the producer-selected Saved 02 treatment. The spoken method explanations are brief; the Brother Rubicon standard introduction is fixed and his observations vary by edition. A distinct whimsical closing coda follows the last valid roll, without a long silence. The coda is not an outcome.
 
 This version has its own Brother Rubicon opening observation and a distinct closing coda; both come from this production edition. The standard introduction is always: I am Brother Rubicon. The die's cast.
 
 Specific opening: There is a road through the wood which appears upon no map. Nevertheless, the milestones are carefully numbered. I am Brother Rubicon. The die's cast. One hundred faces, shuffled in three complete sets. Every number appears three times. Seek to the next complete result.
 
-Closing coda: I have numbered the doors from one to a hundred. / The exit, naturally, has no number.
+The closing remark is best discovered at the end of the recording.
