@@ -90,7 +90,9 @@ jobs:
           git add thdies-cast/dice-methods/illustrated-d20-light-house.mp4 thdies-cast/dice-methods/illustrated-d20-manifest.json thdies-cast/video-feed.xml
           if ! git diff --cached --quiet; then
             git commit -m 'Publish chapter-free LightHouse illustrated D20 video podcast'
-            git pull --rebase origin main
+            git stash push --include-untracked -m 'Temporary video build products' || true
+            git fetch origin main
+            git rebase origin/main
             git push origin HEAD:main
           fi
       - name: Save video metadata and preview frames
