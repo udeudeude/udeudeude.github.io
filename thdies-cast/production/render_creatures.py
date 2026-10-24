@@ -141,7 +141,7 @@ def show_notes():
         "belongs to the people who find them.\n\n"
         "To use: Seek to a random point during the encounters. If an encounter "
         "is already underway, use the next complete one. Brief pauses separate "
-        "the scenes. If the recording ends, return to the beginning of the encounters."
+        "the scenes."
     )
 
 def update_feed(record):
