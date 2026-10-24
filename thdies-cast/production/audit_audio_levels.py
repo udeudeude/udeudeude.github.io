@@ -17,9 +17,11 @@ RATE=24000
 PILOT=json.loads((ROOT/"pilot-manifest.json").read_text())["episodes"]
 BALANCED=json.loads((ROOT/"dice-methods/manifest.json").read_text())["new_episodes"]
 CREATURE=json.loads((ROOT/"creatures-manifest.json").read_text())
+RELICS_PATH=ROOT/"relics-manifest.json"
 
 def chunks():
-    for n in range(1,15):
+    max_episode=15 if (AUDIO/"15-relics-and-curiosities.mp3").exists() else 14
+    for n in range(1,max_episode+1):
         name=next(f for f in sorted(AUDIO.glob(f"{n:02d}-*.mp3")))
         file=name.name
         if n in (1,2,3):
@@ -34,7 +36,8 @@ def chunks():
             d=BALANCED[file];start=d["results_start_seconds"];end=d["results_end_seconds"]
             body_end=min(end,start+d["slot_seconds"]*35)
         else:
-            d=CREATURE;start=d["first_boundary_seconds"];end=d["last_encounter_slot_end_seconds"]
+            d=CREATURE if n==14 else json.loads(RELICS_PATH.read_text())
+            start=d["first_boundary_seconds"];end=d["last_encounter_slot_end_seconds"]
             body_end=d["boundary_times_seconds"][min(8,len(d["boundary_times_seconds"])-1)]
         yield n,name,start,body_end,end
 
