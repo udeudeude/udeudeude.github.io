@@ -89,7 +89,7 @@ assert.ok(projectCategories.get('asheville-golocal-maps').includes('asheville'),
 assert.ok(projectCategories.get('orchestral-maneuvers-dark').includes('asheville'), 'Asheville FM is Asheville-related');
 assert.ok(projectCategories.get('anaglyph-friends').includes('print') && projectCategories.get('anaglyph-friends').includes('visual'), 'Multi-category membership works');
 
-assert.equal(cards.length, 19, 'All 19 currently curated projects are present');
+assert.equal(cards.length, 20, 'All 20 currently curated projects are present');
 assert.ok(!categorySet.has('devices'), 'Obsolete Devices category was removed');
 assert.ok(!projectCategories.get('lighthouse').includes('hardware'), 'LightHouse is not in hardware-specific projects');
 assert.ok(projectCategories.get('sorting-cards').includes('print'), 'Sorting with Cards is printable work');
