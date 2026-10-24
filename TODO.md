@@ -1,3 +1,13 @@
+## October 23, 2026 exhibition promotion
+
+- [x] Promote Temporarily Leave the Universe to the curated public exhibition, after the existing eighteen projects.
+- [x] Remove its duplicate tile from Open Workshop and adjust the workshop count to seven.
+- [x] Add two faithful CRT-style SVG illustrations based on the owner's supplied green and purple screenshots.
+- [x] Include browser launch and source links, with phone/browser equipment flags.
+- [x] Preserve personal workbench links and task data through the project's identifier migration.
+- [x] Update mobile and desktop regression checks, README, and category/filter counts.
+- [ ] Optionally replace SVG screen renditions with exact user-supplied JPEG screenshots when the original raster assets can be uploaded to GitHub.
+
 ## Open Workshop publication approved October 22, 2026
 
 - [x] Create a distinct `/workshop/` page with eight approved projects, including Th’die’s Cast and Pocket Operations Manual.
