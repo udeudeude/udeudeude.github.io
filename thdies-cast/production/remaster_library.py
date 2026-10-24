@@ -45,8 +45,15 @@ def write_mp3(path, audio):
         # Avoid large soundfile temporary allocations for 30-minute episodes.
         for a in range(0,len(audio),5*RATE):
             output.write(audio[a:a+5*RATE])
-    duration=pilot.emit_mp3(temp,intermediary)
+    # The old whole-file dynamic loudnorm is responsible for the dramatic
+    # level falloff in the final spoken codas. Re-encode mastered PCM directly.
+    subprocess.run(["ffmpeg","-hide_banner","-loglevel","error","-y",
+        "-i",str(temp),"-ar",str(RATE),"-ac","1",
+        "-c:a","libmp3lame","-b:a","64k",str(intermediary)],check=True)
+    temp.unlink()
     os.replace(intermediary,path)
+    duration=float(json.loads(subprocess.check_output(["ffprobe","-v","error",
+        "-show_entries","format=duration","-of","json",str(path)],text=True))["format"]["duration"])
     return duration
 
 def last_voice_sample(voice):
@@ -164,15 +171,15 @@ def level_one(n,path):
             gains[key]=0.0
             continue
         diff=reference-measured
-        if abs(diff)<2.0:
+        if abs(diff)<1.15:
             gains[key]=0.0
             continue
-        boost=max(-11.0,min(11.0,diff))
+        boost=max(-11.0,min(28.0,diff))
         block=x[round(lo*RATE):round(hi*RATE)]
         maxamp=float(np.max(np.abs(block))) if len(block) else 0.0
         # Keep peaks below -0.7 dBFS without hard clipping.
         if boost>0 and maxamp>0:
-            boost=min(boost,20*math.log10(.92/maxamp))
+            boost=max(0.0,min(boost,20*math.log10(.92/maxamp)))
         factor=10**(boost/20)
         block*=factor
         gains[key]=round(boost,2)
@@ -254,6 +261,22 @@ def update_public(changed,report):
         dpage=dpage.replace(name+'"',name+'?revision='+VERSION+'"')
     dice.write_text(dpage,encoding="utf-8")
     (ROOT/"production/level-qc-report.json").write_text(json.dumps(report,indent=2)+"\n",encoding="utf-8")
+    # Keep machine-readable published metadata synchronized with re-encoded media.
+    balanced=json.loads(BALANCED_MANIFEST.read_text(encoding="utf-8"))
+    pilot_info=json.loads(PILOT_MANIFEST.read_text(encoding="utf-8"))
+    for record in report:
+        if not record["changed"]:
+            continue
+        name=record["filename"]
+        n=record["episode"]
+        if 6<=n<=13:
+            m=balanced["new_episodes"][name]
+            m["enclosure_bytes"]=(AUDIO/name).stat().st_size
+            m["total_seconds_approx"]=record["duration"]
+        elif n in (1,2,3):
+            pilot_info["episodes"][name]["total_seconds_approx"]=record["duration"]
+    BALANCED_MANIFEST.write_text(json.dumps(balanced,indent=2,ensure_ascii=False)+"\n",encoding="utf-8")
+    PILOT_MANIFEST.write_text(json.dumps(pilot_info,indent=2,ensure_ascii=False)+"\n",encoding="utf-8")
     # Keep Creatures' own manifest and notes honest about total runtime.
     creature=json.loads(CREATURE_MANIFEST.read_text(encoding="utf-8"))
     creature["enclosure_bytes"]=(AUDIO/creature["file"]).stat().st_size
@@ -280,7 +303,8 @@ def main():
     for n in range(1,15):
         path=next(AUDIO.glob(f"{n:02d}-*.mp3"))
         modified,record=level_one(n,path)
-        changed.add(path.name) if modified else None
+        if modified:
+            changed.add(path.name)
         if record:report.append(record)
     # Updated public enclosure details and cache revisions for all changed MP3s.
     update_public(changed,report)
