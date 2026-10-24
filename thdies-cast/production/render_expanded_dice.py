@@ -419,7 +419,7 @@ details p{white-space:pre-wrap;font-size:.9rem}footer{margin-top:20px;color:#bbc
 <p>Eight complete balanced recordings: three D20 experiments, paired 2D6, D100, D4, D8 and D12. Every edition begins with a different observation, followed by <em>“I am Brother Rubicon. The die’s cast.”</em> Each has a distinct final remark, and no roll is a separate chapter.</p>
 <p><a href="../feed.xml">Subscribe to the audio podcast feed</a> · <a href="../">Original five episodes</a></p>
 """+''.join(blocks)+"""
-<footer><p>The original D20 remains a current balanced edition. Only the original 2D6 and D100 are marked archival. Use the complete functional portion for seeking; hand-operated podcast scrubbers are not guaranteed to sample uniformly.</p></footer>
+<footer><p>The original D20 remains a current balanced edition. Only the original 2D6 and D100 are marked archival. Seek to a random point during the rolls. Ignore any result already underway; your roll is the next one heard from its beginning. Hand-operated seeking may not select positions uniformly.</p></footer>
 </main><script>document.querySelectorAll('audio').forEach(a=>a.addEventListener('play',()=>document.querySelectorAll('audio').forEach(b=>{if(b!==a)b.pause()})))</script></body></html>"""
     (DIRECTORY/"index.html").write_text(page,encoding="utf-8")
 
