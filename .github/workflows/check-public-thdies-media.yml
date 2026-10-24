@@ -1,80 +1,57 @@
-name: Verify public audio and illustrated video podcast feeds
+name: Verify public Thdie's Cast audio-only podcast
 on:
   push:
     branches: [main]
     paths:
       - '.github/workflows/check-public-thdies-media.yml'
   workflow_dispatch:
-
 permissions:
   contents: read
-
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 10
     steps:
-      - name: Confirm external feeds, all 13 MP3 enclosures, MP4 and page
+      - name: Check public podcast RSS and its 13 MP3 files
         shell: bash
         run: |
           set -euo pipefail
           python3 - <<'PY'
-          from collections import Counter
           import time
           import urllib.request as req
           import xml.etree.ElementTree as ET
-
           BASE="https://udeudeude.github.io/thdies-cast/"
-          def read(url,byte_range=None):
-              headers={'User-Agent':'ThdiesCastPublicFeedCheck/1.0'}
-              if byte_range:headers['Range']=byte_range
-              last=None
-              for attempt in range(8):
+          def read(url,byterange=None):
+              headers={"User-Agent":"ThdiesCastPublicAudioCheck/2.0"}
+              if byterange: headers["Range"]=byterange
+              for attempt in range(7):
                   try:
-                      with req.urlopen(req.Request(url,headers=headers),timeout=40) as r:
-                          data=r.read(2400 if byte_range else 100000)
-                          return r.status,r.headers.get('Content-Type',''),data
+                      with req.urlopen(req.Request(url,headers=headers),timeout=30) as r:
+                          return r.status,r.headers.get("Content-Type",""),r.read(2048 if byterange else 100000)
                   except Exception as e:
-                      last=e
-                      print('retry',attempt+1,url,str(e),flush=True)
-                      time.sleep(10)
-              raise RuntimeError(f'Public access failed for {url}: {last}')
-          st,typ,audio_rss=read(BASE+'feed.xml')
-          assert st==200
-          rss=ET.fromstring(audio_rss)
-          items=rss.findall('./channel/item')
-          assert len(items)==13,len(items)
-          guid=[x.findtext('guid') for x in items]
-          assert len(set(guid))==13
-          mp3_links=[x.find('enclosure') for x in items]
-          assert len(mp3_links)==13 and all(x is not None for x in mp3_links)
-          assert all(x.get('type')=='audio/mpeg' for x in mp3_links)
-          original=next(x for x in items if x.findtext('guid')=='urn:thdies-cast:pilot:03:v1')
-          assert 'ARCHIVAL METHOD' in original.findtext('description')
-          print('Thirteen public RSS entries present; detailed metadata checked in source repository',flush=True)
-          print('Feed 13 entries; original 01-03 remain marked archival',flush=True)
-          for enclosure in mp3_links:
-              url=enclosure.get('url')
-              assert url.startswith(BASE+'audio/')
-              status,content_type,part=read(url,'bytes=0-1023')
+                      print("Retry",attempt+1,url,e,flush=True)
+                      time.sleep(8)
+              raise RuntimeError("Cannot access "+url)
+          status,_,data=read(BASE+"feed.xml")
+          assert status==200
+          feed=ET.fromstring(data)
+          items=feed.findall("./channel/item")
+          assert len(items)==13
+          assert len(set(x.findtext("guid") for x in items))==13
+          titles=[x.findtext("title") for x in items]
+          assert not any(t[:3].strip().isdigit() for t in titles),titles
+          first=next(x for x in items if x.findtext("guid")=="urn:thdies-cast:pilot:01:v1")
+          itunes="{http://www.itunes.com/dtds/podcast-1.0.dtd}"
+          assert first.findtext(itunes+"episodeType")=="full"
+          assert "ARCHIVAL METHOD" not in first.findtext("description","")
+          for x in items:
+              enclosure=x.find("enclosure")
+              assert enclosure is not None and enclosure.get("type")=="audio/mpeg"
+              url=enclosure.get("url")
+              assert url.startswith(BASE+"audio/")
+              status,content,data=read(url,"bytes=0-1023")
               assert status in (200,206),(url,status)
-              assert part[:3]==b'ID3' or part[:1]==b'\xff' or b'\xff\xfb' in part,('Not MP3',url)
-              print('MP3',url.split('/')[-1],status,content_type,flush=True)
-          status,_,video_xml=read(BASE+'video-feed.xml')
-          assert status==200
-          vids=ET.fromstring(video_xml).findall('./channel/item')
-          assert len(vids)==1
-          video_enclosure=vids[0].find('enclosure')
-          assert video_enclosure is not None and video_enclosure.get('type')=='video/mp4'
-          video=video_enclosure.get('url')
-          assert video==BASE+'dice-methods/illustrated-d20-light-house.mp4'
-          status,typ,head=read(video,'bytes=0-1023')
-          assert status in (200,206)
-          assert head[4:8]==b'ftyp',('Not MP4 file',head[:12])
-          print('VIDEO',status,typ,'bytes:',video_enclosure.get('length'),flush=True)
-          status,_,page=read(BASE+'dice-methods/')
-          assert status==200
-          assert b'lighthouse-video' in page
-          assert b'illustrated-d20-light-house.mp4' in page
-          print('PASSED: public 13-item RSS, 13 accessible MP3s, video RSS, actual MP4 and preview page',flush=True)
+              assert data.startswith(b"ID3") or data[:1]==b"\xff" or b"\xff\xfb" in data,("Invalid MP3",url)
+              print("MP3",url.rsplit("/",1)[-1],status,content,flush=True)
+          print("PUBLIC AUDIO PODCAST OK: 13 episodes and valid unnumbered titles",flush=True)
           PY
