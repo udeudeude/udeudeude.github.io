@@ -1,0 +1,264 @@
+[
+  {
+    "episode": 1,
+    "filename": "01-d20.mp3",
+    "changed": true,
+    "before": {
+      "intro_db": -17.05,
+      "body_db": -15.59,
+      "coda_db": -15.74
+    },
+    "after": {
+      "intro_db": -16.35,
+      "body_db": -16.17,
+      "coda_db": -16.21
+    },
+    "gain_db": {
+      "intro": 1.14,
+      "coda": 0.0
+    },
+    "duration": 1837.68
+  },
+  {
+    "episode": 2,
+    "filename": "02-2d6.mp3",
+    "changed": true,
+    "before": {
+      "intro_db": -16.42,
+      "body_db": -17.84,
+      "coda_db": -17.21
+    },
+    "after": {
+      "intro_db": -18.31,
+      "body_db": -18.1,
+      "coda_db": -17.67
+    },
+    "gain_db": {
+      "intro": -1.42,
+      "coda": 0.0
+    },
+    "duration": 1836.408
+  },
+  {
+    "episode": 3,
+    "filename": "03-d100.mp3",
+    "changed": true,
+    "before": {
+      "intro_db": -16.56,
+      "body_db": -15.89,
+      "coda_db": -17.3
+    },
+    "after": {
+      "intro_db": -17.01,
+      "body_db": -16.35,
+      "coda_db": -16.61
+    },
+    "gain_db": {
+      "intro": 0.0,
+      "coda": 1.12
+    },
+    "duration": 1836.864
+  },
+  {
+    "episode": 4,
+    "filename": "04-wilderness-oracle.mp3",
+    "changed": false,
+    "before": {
+      "intro_db": -17.75,
+      "body_db": -17.82,
+      "coda_db": -18.11
+    },
+    "after": {
+      "intro_db": -17.75,
+      "body_db": -17.82,
+      "coda_db": -18.11
+    },
+    "gain_db": {
+      "intro": 0.0,
+      "coda": 0.0
+    },
+    "duration": 1420.875
+  },
+  {
+    "episode": 6,
+    "filename": "06-d20-shuffled-sets.mp3",
+    "changed": true,
+    "before": {
+      "intro_db": -16.76,
+      "body_db": -14.75,
+      "coda_db": -36.49
+    },
+    "after": {
+      "intro_db": -16.31,
+      "body_db": -15.14,
+      "coda_db": -17.39
+    },
+    "gain_db": {
+      "intro": 0.88,
+      "coda": 19.55
+    },
+    "duration": 1837.896
+  },
+  {
+    "episode": 7,
+    "filename": "07-d20-giant-shuffle.mp3",
+    "changed": true,
+    "before": {
+      "intro_db": -16.6,
+      "body_db": -14.68,
+      "coda_db": -36.61
+    },
+    "after": {
+      "intro_db": -16.07,
+      "body_db": -15.15,
+      "coda_db": -18.16
+    },
+    "gain_db": {
+      "intro": 0.89,
+      "coda": 18.92
+    },
+    "duration": 1834.632
+  },
+  {
+    "episode": 8,
+    "filename": "08-d20-pair-balanced.mp3",
+    "changed": true,
+    "before": {
+      "intro_db": -16.82,
+      "body_db": -14.57,
+      "coda_db": -36.23
+    },
+    "after": {
+      "intro_db": -16.68,
+      "body_db": -15.49,
+      "coda_db": -18.24
+    },
+    "gain_db": {
+      "intro": 0.97,
+      "coda": 15.74
+    },
+    "duration": 2038.464,
+    "postmaster_soft_limiter": true
+  },
+  {
+    "episode": 9,
+    "filename": "09-2d6-balanced.mp3",
+    "changed": true,
+    "before": {
+      "intro_db": -16.43,
+      "body_db": -16.22,
+      "coda_db": -35.77
+    },
+    "after": {
+      "intro_db": -16.87,
+      "body_db": -16.66,
+      "coda_db": -17.38
+    },
+    "gain_db": {
+      "intro": 0.0,
+      "coda": 18.76
+    },
+    "duration": 1840.512
+  },
+  {
+    "episode": 10,
+    "filename": "10-d100-balanced.mp3",
+    "changed": true,
+    "before": {
+      "intro_db": -16.68,
+      "body_db": -14.91,
+      "coda_db": -36.95
+    },
+    "after": {
+      "intro_db": -16.01,
+      "body_db": -15.37,
+      "coda_db": -17.44
+    },
+    "gain_db": {
+      "intro": 1.11,
+      "coda": 19.96
+    },
+    "duration": 1839.384
+  },
+  {
+    "episode": 11,
+    "filename": "11-d4-balanced.mp3",
+    "changed": true,
+    "before": {
+      "intro_db": -16.81,
+      "body_db": -14.93,
+      "coda_db": -39.55
+    },
+    "after": {
+      "intro_db": -16.21,
+      "body_db": -15.34,
+      "coda_db": -17.88
+    },
+    "gain_db": {
+      "intro": 1.07,
+      "coda": 22.08
+    },
+    "duration": 1832.328
+  },
+  {
+    "episode": 12,
+    "filename": "12-d8-balanced.mp3",
+    "changed": true,
+    "before": {
+      "intro_db": -16.23,
+      "body_db": -14.06,
+      "coda_db": -41.11
+    },
+    "after": {
+      "intro_db": -16.16,
+      "body_db": -14.94,
+      "coda_db": -17.63
+    },
+    "gain_db": {
+      "intro": 0.94,
+      "coda": 21.91
+    },
+    "duration": 1832.928,
+    "postmaster_soft_limiter": true
+  },
+  {
+    "episode": 13,
+    "filename": "13-d12-balanced.mp3",
+    "changed": true,
+    "before": {
+      "intro_db": -16.57,
+      "body_db": -14.15,
+      "coda_db": -36.2
+    },
+    "after": {
+      "intro_db": -16.05,
+      "body_db": -14.6,
+      "coda_db": -18.14
+    },
+    "gain_db": {
+      "intro": 0.97,
+      "coda": 18.49
+    },
+    "duration": 1835.664
+  },
+  {
+    "episode": 14,
+    "filename": "14-creatures-behaving-strangely.mp3",
+    "changed": false,
+    "before": {
+      "intro_db": -44.76,
+      "body_db": -44.94,
+      "coda_db": -45.25
+    },
+    "after": {
+      "intro_db": -44.76,
+      "body_db": -44.94,
+      "coda_db": -45.25
+    },
+    "gain_db": {
+      "intro": 0.0,
+      "coda": 0.0
+    },
+    "duration": 1216.739
+  }
+]
