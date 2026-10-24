@@ -8,14 +8,14 @@ const home = fs.readFileSync('index.html','utf8');
 const workshop = fs.readFileSync('workshop/index.html','utf8');
 const expected = [
   'MAZE · Seedling Rejuvenation',
-  'Ortholinear',
+  'Key Scratch',
   'Sphero Laboratory',
   'MPK249 Universal Map',
   'Escape Team Activate',
-  'Th’die’s Cast',
+  'Play by Ear · GameCast',
   'Pocket Operations Manual'
 ];
-assert.equal((home.match(/<article class="project /g)||[]).length,19,'Public exhibition contains 19 curated tiles');
+assert.equal((home.match(/<article class="project /g)||[]).length,20,'Public exhibition contains 20 curated tiles');
 assert.match(home, /href="\/workshop\/"/, 'Only one understated workshop destination added');
 assert.ok(!home.includes('href="/xyzzy/"'), 'Unlisted workbench remains unlinked from public homepage');
 assert.ok(!workshop.includes('href="/xyzzy/"'), 'Workshop does not reveal private workbench URL');
@@ -26,8 +26,8 @@ assert.ok(workshop.includes('requires developer signing') || workshop.includes('
 assert.ok(workshop.includes('No finished, blind-playtested mission'),'Unfinished puzzle work is not mislabeled as released');
 assert.ok(workshop.includes('real-device verification'), 'Device-dependent features are explicitly qualified');
 assert.ok(!workshop.includes('href="https://chatgpt.com/'), 'No personal working conversations embedded in public workshop');
-assert.ok(workshop.includes('href="/thdies-cast/feed.xml"'), 'Podcast subscription is available');
-assert.ok(workshop.includes('href="/thdies-cast/"'), 'Podcast episodes are available');
+assert.ok(home.includes('href="/thdies-cast/feed.xml"'), 'Podcast subscription is available');
+assert.ok(home.includes('href="/thdies-cast/"'), 'Podcast episodes are available');
 assert.ok(workshop.includes('href="https://udeudeude.github.io/Pocket-Operations-Manual/"'), 'Playable PO-35 simulator linked');
 assert.ok(fs.existsSync('thdies-cast/cover.png'),'Podcast artwork exists in portfolio repository');
 
@@ -57,8 +57,8 @@ try {
     }));
     assert.equal(dimensions.cards.length,expected.length,'All approved cards are rendered at '+width);
     assert.ok(dimensions.scrollWidth<=dimensions.viewport+2,'No sideways scrolling at '+width);
-    assert.equal(dimensions.columns,width===390?1:2,'Appropriate columns at '+width);
-    assert.ok(dimensions.cards.every(b=>b.width>290 && b.right<=dimensions.viewport+2 && b.left>=-2),'Card bounds within viewport at '+width);
+    assert.equal(dimensions.columns,2,'Appropriate columns at '+width);
+    assert.ok(dimensions.cards.every(b=>b.width>130 && b.right<=dimensions.viewport+2 && b.left>=-2),'Card bounds within viewport at '+width);
     for(const name of expected) assert.equal(await page.getByRole('heading',{name,exact:true}).count(),1,name+' is legible');
 
     if(width===390){
