@@ -47,5 +47,20 @@ jobs:
                       failures.append((n,section,delta))
           print('Brother Rubicon intro/coda level QC failures:',failures,flush=True)
           assert not failures,failures
-          print('PASS: balanced dice and encounter episodes have comparable narration levels',flush=True)
+          from pathlib import Path
+          import json
+          root=Path('thdies-cast')
+          manifest=json.loads((root/'pilot-manifest.json').read_text())
+          creatures=json.loads((root/'creatures-manifest.json').read_text())
+          relics=json.loads((root/'relics-manifest.json').read_text())
+          baseline=next(x for x in report if x['episode']==4)
+          ref=baseline['body_db']
+          assert abs(baseline['intro_db']-ref)<3.0,(baseline,ref)
+          for n,meta in ((14,creatures),(15,relics)):
+              row=next(x for x in report if x['episode']==n)
+              assert meta['encounters']==80 and meta['neutral_chimes']==0
+              assert abs(row['body_db']-ref)<2.5,(n,row['body_db'],ref)
+              assert abs(row['intro_db']-ref)<4,(n,row['intro_db'],ref)
+              assert abs(row['coda_db']-ref)<4,(n,row['coda_db'],ref)
+          print('PASS: dice narration and all three encounter editions match the catalog speaking volume',flush=True)
           PY
