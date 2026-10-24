@@ -260,7 +260,15 @@
     const extras = [];
     for (const repo of repos) {
       // Public GitHub metadata only; a private repo is never in the published snapshot.
-      const target = repo.name === 'Key-Scratch' ? 'repo-key-scratch' : knownRepoProject[repo.name];
+      const target = ({
+        'Key-Scratch':'repo-key-scratch',
+        'Maze-Seedling-Rejuvenation':'repo-maze-seedling-rejuvenation',
+        'Sphero-Laboratory':'repo-sphero-laboratory',
+        'MPK249-Universal-Map':'repo-mpk249-universal-map',
+        'Escape-Team-Activate':'repo-escape-team-activate',
+        'Pocket-Operations-Manual':'repo-pocket-operations-manual',
+        'Play-by-Ear-GameCast':'repo-play-by-ear-gamecast'
+      })[repo.name] || knownRepoProject[repo.name];
       const repoUrl = httpsLink(repo.url) || 'https://github.com/' + OWNER + '/' + encodeURIComponent(repo.name);
       if (target && mapped.has(target)) {
         const p = mapped.get(target);
@@ -426,8 +434,19 @@
       card.append(visual);
     } else card.append(node('div','visual fallback', '⌘'));
     const body = node('div','inside');
-    body.append(node('div','kind', project.status),node('h2','',project.name),
-      node('p','summary',project.description));
+    const disclosure = node('button','tile-disclosure');
+    disclosure.type='button';
+    disclosure.setAttribute('aria-expanded','false');
+    disclosure.setAttribute('aria-label','Expand '+project.name);
+    disclosure.append(node('h2','',project.name),node('p','summary',project.description));
+    const more = node('div','tile-more');
+    more.hidden=true;
+    disclosure.addEventListener('click',()=>{
+      more.hidden=!more.hidden;
+      disclosure.setAttribute('aria-expanded',String(!more.hidden));
+      disclosure.setAttribute('aria-label',(more.hidden?'Expand ':'Collapse ')+project.name);
+    });
+    body.append(disclosure);
     const mainLinks = node('div','links');
     if (project.publicUrl) addLink(mainLinks,'Public tile',project.publicUrl);
     const unique = new Set();
@@ -437,8 +456,9 @@
       unique.add(uri);
       addLink(mainLinks,source.label,uri);
     }
-    body.append(mainLinks);
-    body.append(renderBacklog(project));
+    more.append(node('div','kind',project.status));
+    more.append(mainLinks);
+    more.append(renderBacklog(project));
 
     const saved = node('div','');
     const ownLinks = Array.isArray(links[project.id]) ? links[project.id] : [];
@@ -458,7 +478,7 @@
       });
       saved.append(list);
     } else saved.append(node('p','small','No personal chat or Codex links attached yet.'));
-    body.append(saved);
+    more.append(saved);
 
     const details=node('details','');
     details.append(node('summary','', 'Attach a ChatGPT chat, Work or Codex link'));
@@ -489,7 +509,7 @@
       });
       save();message.textContent='Link saved on this device for '+project.name+'.';refresh();
     });
-    details.append(form);body.append(details);
+    details.append(form);more.append(details);
     if(project.group==='local'){
       const remove=node('button','', 'Remove this local project');
       remove.type='button';remove.style.marginTop='12px';
@@ -501,8 +521,9 @@
         delete completed[project.id];
         save();refresh();
       });
-      body.append(remove);
+      more.append(remove);
     }
+    body.append(more);
     card.append(body);return card;
   }
 
