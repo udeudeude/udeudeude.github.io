@@ -36,7 +36,7 @@ TITLE = "Creatures Behaving Strangely"
 IDENTITY = "I am Brother Rubicon. The die's cast."
 PAUSE = 0.32
 INSTRUCTION = (
-    "Seek to a random point during the encounters. "
+    "This is Creatures Behaving Strangely. Seek to a random point during the encounters. "
     "Ignore any encounter already in progress. "
     "Your encounter is the next complete scene you hear from its beginning."
 )
