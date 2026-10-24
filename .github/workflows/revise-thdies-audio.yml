@@ -1,0 +1,143 @@
+name: Revise encounter episodes and restore Brother Rubicon audio levels
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/revise-thdies-audio.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: thdies-audio-revision-20261024
+  cancel-in-progress: false
+
+jobs:
+  revise:
+    runs-on: ubuntu-latest
+    timeout-minutes: 100
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install the original Brother Rubicon production environment
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg espeak-ng
+          python -m pip install --upgrade pip
+          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -r thdies-cast/production/requirements.txt
+          ffmpeg -hide_banner -filters | grep rubberband
+      - name: Validate new 80-scene manuscript and save every original checksum
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile thdies-cast/production/{render_creatures,remaster_library,audit_audio_levels,render_pilot_season}.py
+          python thdies-cast/production/render_creatures.py --check-only
+          sha256sum thdies-cast/audio/*.mp3 > /tmp/original-14.sha256
+          test "$(wc -l < /tmp/original-14.sha256)" -eq 14
+          sha256sum thdies-cast/audio/05-ten-minutes-to-disaster.mp3 > /tmp/untouched-timer.sha256
+      - name: Record the before levels for every existing episode
+        shell: bash
+        run: python -u thdies-cast/production/audit_audio_levels.py
+      - name: Record 80 creature encounters with natural pauses and no synthetic sounds
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -u thdies-cast/production/render_creatures.py
+          sha256sum -c /tmp/original-14.sha256 --ignore-missing | grep -v '14-creatures-behaving-strangely.mp3' || true
+      - name: Remove all Wilderness chimes and restore patter-to-body voice balance
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -u thdies-cast/production/remaster_library.py
+          sha256sum -c /tmp/untouched-timer.sha256
+          python thdies-cast/production/render_creatures.py --verify-only
+      - name: Save finished MP3s and production manifests even if release fails
+        uses: actions/upload-artifact@v4
+        with:
+          name: corrected-thdies-episodes-14
+          path: |
+            thdies-cast/audio/*.mp3
+            thdies-cast/feed.xml
+            thdies-cast/creatures-manifest.json
+            thdies-cast/pilot-manifest.json
+            thdies-cast/dice-methods/manifest.json
+            thdies-cast/production/level-qc-report.json
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 0
+      - name: Check corrected podcast before release
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import json,xml.etree.ElementTree as ET
+          root=Path('thdies-cast')
+          manifest=json.loads((root/'creatures-manifest.json').read_text())
+          wilderness=json.loads((root/'pilot-manifest.json').read_text())['episodes']['04-wilderness-oracle.mp3']
+          levels=json.loads((root/'production/level-qc-report.json').read_text())
+          assert manifest['encounters']==80 and manifest['neutral_chimes']==0
+          assert wilderness['encounters']==80 and wilderness['neutral_chimes']==0
+          assert len(manifest['boundary_times_seconds'])==80
+          assert len(wilderness['boundary_times_seconds'])==80
+          assert manifest['inter_scene_pause_seconds']<=1.0
+          assert wilderness['inter_scene_pause_seconds']<=1.0
+          assert len(levels)==13
+          for row in levels:
+              if 6<=row['episode']<=13:
+                  delta=abs(row['after']['body_db']-row['after']['coda_db'])
+                  assert delta<4.5,(row['episode'],delta,row['gain_db'])
+                  intro=abs(row['after']['body_db']-row['after']['intro_db'])
+                  assert intro<3.0,(row['episode'],intro,row['gain_db'])
+          feed=ET.parse(root/'feed.xml')
+          items=feed.findall('./channel/item')
+          assert len(items)==14
+          assert len(set(i.findtext('guid') for i in items))==14
+          for item in items:
+              enc=item.find('enclosure')
+              if enc is None:continue
+              file=enc.get('url').split('/')[-1].split('?')[0]
+              src=root/'audio'/file
+              assert src.is_file() and src.stat().st_size==int(enc.get('length')),(file,src.stat().st_size)
+          for n in (4,14):
+              item=next(i for i in items if (i.findtext('guid') or '').endswith(f':{n:02d}:v1'))
+              description=item.findtext('description','').lower()
+              assert 'chime' not in description
+              assert 'kokoro' not in description
+              assert 'hand-operated scrubbing' not in description
+          assert len(list((root/'audio').glob('*.mp3')))==14
+          print('PASS: 80+80 encounters, 0 chimes, short gaps, 14 intact episodes, matched dice patter/codas',flush=True)
+          PY
+      - name: Commit corrected media, notes, feed and measured levels
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add thdies-cast/audio/*.mp3 thdies-cast/feed.xml thdies-cast/index.html thdies-cast/dice-methods/index.html thdies-cast/dice-methods/manifest.json thdies-cast/pilot-manifest.json thdies-cast/creatures-manifest.json thdies-cast/creatures-behaving-strangely.md thdies-cast/production/level-qc-report.json
+          if git diff --cached --quiet; then
+            echo 'No publication changes'
+            exit 0
+          fi
+          git commit -m 'Publish eighty chime-free creatures, quiet Wilderness and matched Rubicon speech levels'
+          git stash push --include-untracked -m 'Clear rendering temp files for clean rebase' || true
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
+      - name: Verify published repository includes all episodes
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          git ls-tree -r --name-only origin/main | grep -Fx 'thdies-cast/audio/14-creatures-behaving-strangely.mp3'
+          git ls-tree -r --name-only origin/main | grep -Fx 'thdies-cast/audio/04-wilderness-oracle.mp3'
+          echo '14 RSS media files committed. GitHub Pages deployment follows.'
