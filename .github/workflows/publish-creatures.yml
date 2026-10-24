@@ -1,0 +1,93 @@
+name: Publish Creatures Behaving Strangely
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'thdies-cast/production/render_creatures.py'
+      - 'thdies-cast/production/creatures_behaving_strangely.md'
+      - '.github/workflows/publish-creatures.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: thdies-cast-creatures-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install the established Rubicon voice pipeline
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg espeak-ng
+          python -m pip install --upgrade pip
+          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -r thdies-cast/production/requirements.txt
+          ffmpeg -hide_banner -filters | grep rubberband
+      - name: Validate source and preserve previous audio checksums
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile thdies-cast/production/render_creatures.py
+          python thdies-cast/production/render_creatures.py --check-only
+          sha256sum thdies-cast/audio/*.mp3 > /tmp/original-thdies-13.sha256
+          test "$(wc -l < /tmp/original-thdies-13.sha256)" -eq 13
+      - name: Synthesize all twenty encounters and publish metadata locally
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -u thdies-cast/production/render_creatures.py
+      - name: Verify audio and podcast integrity
+        shell: bash
+        run: |
+          set -euo pipefail
+          sha256sum -c /tmp/original-thdies-13.sha256
+          python thdies-cast/production/render_creatures.py --verify-only
+          ffprobe -v error -show_entries format=duration,size -of csv=p=0 thdies-cast/audio/14-creatures-behaving-strangely.mp3
+          python - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+          root=Path('thdies-cast')
+          items=ET.parse(root/'feed.xml').findall('./channel/item')
+          assert len(items)==14
+          old=[x.findtext('guid') for x in items[1:]]
+          assert old==[f'urn:thdies-cast:balanced:{n:02d}:v1' for n in range(13,5,-1)]+[f'urn:thdies-cast:pilot:{n:02d}:v1' for n in range(5,0,-1)]
+          assert (root/'audio/14-creatures-behaving-strangely.mp3').stat().st_size>250000
+          print('Confirmed all 13 original episode IDs and new Episode 14',flush=True)
+          PY
+      - name: Commit verified media and publication files
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add thdies-cast/audio/14-creatures-behaving-strangely.mp3 thdies-cast/creatures-manifest.json thdies-cast/creatures-behaving-strangely.md thdies-cast/feed.xml thdies-cast/index.html
+          git diff --cached --quiet && { echo 'Episode already committed'; exit 0; }
+          git commit -m 'Publish Creatures Behaving Strangely as narrated podcast episode 14'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
+      - name: Retain production artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: thdies-creatures-episode
+          path: |
+            thdies-cast/audio/14-creatures-behaving-strangely.mp3
+            thdies-cast/creatures-manifest.json
+            thdies-cast/creatures-behaving-strangely.md
+          if-no-files-found: warn
+          retention-days: 14
