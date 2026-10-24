@@ -114,6 +114,11 @@ try {
  await page.locator('.project[data-key="temporarily-leave-the-universe"] .tile-toggle').click();
  const images=page.locator('.project[data-key="temporarily-leave-the-universe"] .gallery img');
  assert.equal(await images.count(),2,'Two provided-screen-inspired CRT previews exist');
+ // Gallery uses lazy loading. Scroll each image into view before measuring.
+ for(let i=0;i<2;i++){
+   await images.nth(i).scrollIntoViewIfNeeded();
+   await images.nth(i).evaluate(el=>el.decode());
+ }
  const geometry=await images.evaluateAll(els=>els.map(el=>({
    loaded:el.complete && el.naturalWidth>0,
    width:el.getBoundingClientRect().width,
