@@ -76,13 +76,19 @@
     #message{font-size:.82rem;color:#b9edf2;min-height:1.4rem}
     footer{padding:14px 0 36px;color:var(--quiet);font-size:.76rem}
     @media(max-width:890px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    .tile-disclosure{display:block;width:100%;min-height:0;padding:0;border:0;background:none;text-align:left;color:inherit}
+    .tile-disclosure:hover{background:none}
+    .tile-disclosure h2{margin:0 0 6px}
+    .tile-disclosure .summary{margin:0}
+    .tile-more[hidden]{display:none}
+    .tile-more{margin-top:12px}
     @media(max-width:620px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.inside{padding:10px}.visual{height:100px}.wrap{width:calc(100% - 22px)}}
   </style>
 </head>
 <body>
 <header class="wrap">
   <nav class="back-nav" aria-label="Site"><a href="/">← Ude Projects</a></nav>
-  <div class="eyebrow">Unlisted project workspace</div>
+  <div class="eyebrow">Personal project dashboard</div>
   <h1>Workbench.</h1>
 </header>
 <main class="wrap">
@@ -95,7 +101,7 @@
   <div class="tabs" role="group" aria-label="Project type">
     <button data-view="all" aria-pressed="true">Everything</button>
     <button data-view="curated" aria-pressed="false">Curated projects</button>
-    <button data-view="workshop" aria-pressed="false">Open Workshop</button>
+    <button data-view="workshop" aria-pressed="false">Studio</button>
     <button data-view="repos" aria-pressed="false">Other repositories</button>
     <button data-view="local" aria-pressed="false">Personal additions</button>
   </div>
@@ -116,6 +122,6 @@
   <div class="tools"><button id="clear-data" type="button">Clear locally stored links and additions</button></div>
 </main>
 <footer class="wrap">Personal links are not synchronized between browsers. Export a backup if you want to move them to another device. Keep that backup private.</footer>
-<script src="/xyzzy/workbench.js" defer></script>
+<script src="/xyzzy/workbench.js?v=20261024b" defer></script>
 </body>
 </html>
