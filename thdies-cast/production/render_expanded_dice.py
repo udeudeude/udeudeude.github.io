@@ -305,12 +305,12 @@ def mark_originals_as_archive(channel):
         existing=description.text or ""
         # Remove any earlier generated archive prefix before updating; the
         # generator is idempotent across repeated publication.
-        if existing.startswith("ARCHIVAL METHOD:"):
+        if existing.startswith(("ARCHIVAL METHOD:", "CURRENT BALANCED METHOD:")):
             existing=existing.split("\n\n",1)[1] if "\n\n" in existing else ""
         if number==1:
             title.text="D20 · Shuffled Sets"
             caveat=(
-                "CURRENT BALANCED METHOD: Eighteen shuffled groups of twenty, "
+                "Eighteen shuffled groups of twenty, "
                 "with every D20 face appearing equally often. This is a fully "
                 "valid seek-to-roll edition; successive rolls inside a group "
                 "are not independent, which is explained in the method notes."
