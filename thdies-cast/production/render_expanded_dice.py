@@ -305,7 +305,7 @@ def mark_originals_as_archive(channel):
         existing=description.text or ""
         # Remove any earlier generated archive prefix before updating; the
         # generator is idempotent across repeated publication.
-        if existing.startswith(("ARCHIVAL METHOD:", "CURRENT BALANCED METHOD:")):
+        if existing.startswith(("ARCHIVAL METHOD:", "CURRENT BALANCED METHOD:", "Eighteen independently shuffled complete sets of twenty.", "Eighteen shuffled groups of twenty,")):
             existing=existing.split("\n\n",1)[1] if "\n\n" in existing else ""
         if number==1:
             title.text="D20 · Shuffled Sets"
