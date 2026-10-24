@@ -37,34 +37,48 @@ D4D8D12={
     13:("D12 · Twelve Paths",12,30,20261025),
 }
 
+# Read a seek instruction as a practical direction, not a slogan.
+SEEK_SINGLE=(
+    "Seek to a random point during the dice rolls. "
+    "Ignore any number already in progress. "
+    "Your roll is the next number you hear from its beginning."
+)
+SEEK_PAIR=(
+    "Seek to a random point during the rolls. "
+    "If a roll has already begun, disregard it. "
+    "Wait for the next roll to begin, then use both dice and their sum."
+)
+SIGNATURE="I am Brother Rubicon. The die's cast."
+SIGNATURE_BEAT=.32
+
 def preference_opening(observation,method):
-    return observation+" I am Brother Rubicon. The die's cast. "+method
+    return observation+" "+SIGNATURE+" "+method
 
 INTRO={
  6: preference_opening(
     "No one here agrees upon the first rule of the game. They are quite certain of the last.",
-    "Twenty faces, eighteen shuffled sets. Each set contains every number once. Seek to the next complete result."),
+    "Twenty faces, eighteen shuffled sets. Each set contains every number once. "+SEEK_SINGLE),
  7: preference_opening(
     "I have been asked whether chance can lie. I have never discovered that it speaks.",
-    "Twenty faces, eighteen copies of each, shuffled together as one great set. Seek to the next complete result."),
+    "Twenty faces, eighteen copies of each, shuffled together as one great set. "+SEEK_SINGLE),
  8: preference_opening(
     "In our oldest register, there is a place left for a name that has not yet been given. Beneath it is a number.",
-    "Twenty faces. Every possible consecutive pair appears once in the complete circle. Seek to the next complete result."),
+    "Twenty faces. Every possible consecutive pair appears once in the complete circle. "+SEEK_SINGLE),
  9: preference_opening(
     "Our abbot keeps the keys, and I keep the tally. It is not certain which of us has the heavier duty.",
-    "Two six-sided dice. All thirty-six possible pairs appear in each shuffle. Hear both dice and their sum."),
+    "Two six-sided dice. All thirty-six possible pairs appear in each shuffle. I read both dice and their sum. "+SEEK_PAIR),
  10: preference_opening(
     "There is a road through the wood which appears upon no map. Nevertheless, the milestones are carefully numbered.",
-    "One hundred faces, shuffled in three complete sets. Every number appears three times. Seek to the next complete result."),
+    "One hundred possible numbers, shuffled in three complete sets. Every number appears three times. "+SEEK_SINGLE),
  11: preference_opening(
     "At the blackthorn, the road divides. Both ways are marked as the shorter.",
-    "Four faces, ninety shuffled sets. Take the next complete number."),
+    "Four faces, ninety shuffled sets. "+SEEK_SINGLE),
  12: preference_opening(
     "There are hours appointed for prayer, for labor, and for rest. There is no appointed hour for chance.",
-    "Eight faces, forty-five shuffled sets. Take the next complete number."),
+    "Eight faces, forty-five shuffled sets. "+SEEK_SINGLE),
  13: preference_opening(
     "In the oldest days, men cast lots to discover what they could not otherwise know. Some of their questions were better left unanswered.",
-    "Twelve faces, thirty shuffled sets. Take the next complete number.")
+    "Twelve faces, thirty shuffled sets. "+SEEK_SINGLE)
 }
 CODAS={
  6: ["Twenty-one.", "No. The die has twenty faces. The extra number was not in the record yesterday."],
@@ -224,13 +238,23 @@ def show_notes(spec):
 def make_audio(voice,spec,values,samples):
     idx=spec["n"]
     filename=f"{idx:02d}-{spec['slug']}.mp3"
-    intro=pilot.synthesize(voice,spec["intro"])
+    # Preserve the exact spoken sentence as one utterance. A small beat
+    # isolates it from both the episode-specific observation and instructions.
+    assert spec["intro"].count(" "+SIGNATURE+" ")==1
+    observation,instructions=spec["intro"].split(" "+SIGNATURE+" ",1)
+    observation_audio=pilot.synthesize(voice,observation.strip())
+    signature_audio=pilot.synthesize(voice,SIGNATURE)
+    instruction_audio=pilot.synthesize(voice,instructions.strip())
     endings=[pilot.synthesize(voice,part) for part in spec["coda"]]
     wav=AUDIO/f"{idx:02d}-{spec['slug']}.tmp.wav"
     voice_cache=samples[spec["category"]]
     with pilot.sound_file(wav) as file:
         file.write(pilot.blank(.3))
-        file.write(intro)
+        file.write(observation_audio)
+        file.write(pilot.blank(SIGNATURE_BEAT))
+        file.write(signature_audio)
+        file.write(pilot.blank(SIGNATURE_BEAT))
+        file.write(instruction_audio)
         file.write(pilot.blank(.65))
         outcome_start=file.frames/RATE
         for v in values:
@@ -257,7 +281,9 @@ def make_audio(voice,spec,values,samples):
         "postroll_pre_coda_pause_seconds":round(coda_first-outcome_end,6),
         "coda_text":spec["coda"],"coda_internal_pause_seconds":spec["coda_pause"],
         "spoken_intro_text":spec["intro"],
-        "standard_intro":"I am Brother Rubicon. The die's cast.",
+        "standard_intro":SIGNATURE,
+        "signature_pause_before_seconds":SIGNATURE_BEAT,
+        "signature_pause_after_seconds":SIGNATURE_BEAT,
         "total_seconds_approx":round(duration,3),
         "enclosure_bytes":(AUDIO/filename).stat().st_size,
         "ordered_outcomes":values,
@@ -265,42 +291,51 @@ def make_audio(voice,spec,values,samples):
     }
 
 def mark_originals_as_archive(channel):
-    """Clear, nonjudgmental history with stable GUIDs and the same media files."""
-    items=channel.findall("item")
-    baseline={x.findtext("guid"):x for x in items}
-    for n in range(1,4):
-        guid=f"urn:thdies-cast:pilot:{n:02d}:v1"
-        item=baseline.get(guid)
-        assert item is not None,guid
-        old_title=item.find("title")
-        old_desc=item.find("description")
-        assert old_title is not None and old_desc is not None
-        if n==1:
-            old_title.text="01 · D20 (original shuffled-block experiment)"
-            caveat=("ARCHIVAL METHOD: Every twenty-result block is a shuffled permutation "
-                    "of 1–20, so each face occurs equally often in the finished recording. "
-                    "Consecutive results are not independent, and the next-complete-result "
-                    "seeking convention has boundary limitations. "
-                    "For new experiments see the D20 balanced method editions.")
-        elif n==2:
-            old_title.text="02 · 2D6 (original independent-draw experiment)"
-            caveat=("ARCHIVAL METHOD: The original 300 rolls were generated from two "
-                    "independently fair six-sided dice, but their frequencies were not "
-                    "balanced after being frozen into an audio recording. The second die "
-                    "shows a five on 75 of 300 recorded rolls. This does not make the "
-                    "generator biased; it makes this particular audio sample imperfect "
-                    "as a seek-based die. Prefer the new balanced 2D6.")
+    """Keep original D20 current; archive only the unbalanced 2D6 and D100.
+
+    Stable GUIDs preserve subscriptions. The episode title stays free of
+    sequence numbers; <itunes:episode> carries ordering separately.
+    """
+    original={x.findtext("guid"):x for x in channel.findall("item")}
+    for number in range(1,4):
+        item=original[f"urn:thdies-cast:pilot:{number:02d}:v1"]
+        title=item.find("title")
+        description=item.find("description")
+        assert title is not None and description is not None
+        existing=description.text or ""
+        # Remove any earlier generated archive prefix before updating; the
+        # generator is idempotent across repeated publication.
+        if existing.startswith("ARCHIVAL METHOD:"):
+            existing=existing.split("\n\n",1)[1] if "\n\n" in existing else ""
+        if number==1:
+            title.text="D20 · Shuffled Sets"
+            caveat=(
+                "CURRENT BALANCED METHOD: Eighteen shuffled groups of twenty, "
+                "with every D20 face appearing equally often. This is a fully "
+                "valid seek-to-roll edition; successive rolls inside a group "
+                "are not independent, which is explained in the method notes."
+            )
+            # No ARCHIVAL METHOD label, and no bonus flag.
+            episode_type="full"
+        elif number==2:
+            title.text="2D6 · Archival Independent Draws"
+            caveat=(
+                "ARCHIVAL METHOD: The two dice were generated fairly and independently, "
+                "but this fixed recording's result frequencies differ from the ideal "
+                "2D6 distribution; in particular, the second die shows five "
+                "75 times in 300 results. For seeking, prefer the balanced 2D6 edition."
+            )
+            episode_type="bonus"
         else:
-            old_title.text="03 · D100 (original independent-draw experiment)"
-            caveat=("ARCHIVAL METHOD: These 300 independent draws did not contain all "
-                    "one hundred faces. The numbers 39, 43, 46, 49, 82, and 85 never "
-                    "occur in the recording. The generator was uniform, but this "
-                    "particular fixed audio cannot produce those six numbers when sought. "
-                    "Prefer the new complete-shuffle D100.")
-        old_desc.text=caveat+"\n\n"+(old_desc.text or "")
-        tag=f"{{http://www.itunes.com/dtds/podcast-1.0.dtd}}episodeType"
-        et=item.find(tag)
-        if et is not None:et.text="bonus"
+            title.text="D100 · Archival Independent Draws"
+            caveat=(
+                "ARCHIVAL METHOD: Although the original numbers were generated "
+                "uniformly, the recorded sequence omits 39, 43, 46, 49, 82 and 85. "
+                "For seeking, prefer the balanced complete-shuffle D100 edition."
+            )
+            episode_type="bonus"
+        description.text=caveat+"\n\n"+existing
+        item.find("{http://www.itunes.com/dtds/podcast-1.0.dtd}episodeType").text=episode_type
 
 def rss_append(records):
     feed=BASE/"feed.xml"
@@ -322,11 +357,17 @@ def rss_append(records):
         e=ET.SubElement(parent,tag,attrs or {})
         if text is not None:e.text=str(text)
         return e
+    # The series now has multiple audio-only versions of the same die.
+    channel.find("description").text=(
+        "Useful audio tools for tabletop games with Brother Rubicon. "
+        "Thirteen audio episodes: balanced dice editions, encounter oracle, "
+        "and a functional countdown. No companion app is required."
+    )
     now=datetime.now(timezone.utc)
     for spec in sorted(SPECS,key=lambda s:s["n"],reverse=True):
         m=records[f"{spec['n']:02d}-{spec['slug']}.mp3"]
         item=ET.Element("item")
-        sub(item,"title",f"{spec['n']:02d} · {spec['title']} (balanced edition)")
+        sub(item,"title",f"{spec['title']} (balanced edition)")
         sub(item,"description",show_notes(spec))
         sub(item,"link",SITE+"dice-methods/#ep"+str(spec["n"]))
         sub(item,"guid",f"urn:thdies-cast:balanced:{spec['n']:02d}:v1",{"isPermaLink":"false"})
@@ -356,7 +397,7 @@ def landing_page(records):
         filename=html.escape(m["filename"])
         full=html.escape(description(spec)).replace("\n\n","</p><p>")
         blocks.append(f"""<article class="ep" id="ep{spec['n']}">
-        <div class="n">EPISODE {spec['n']:02d}</div><h2>{label}</h2>
+        <div class="n">DICE EDITION</div><h2>{label}</h2>
         <p>{m['outcome_count']} balanced outcomes · {m['results_duration_seconds']//60} minutes of results</p>
         <audio controls preload="none" src="../audio/{filename}"></audio>
         <p><a href="../audio/{filename}">Listen or download</a> · <a href="show-notes/{spec['n']:02d}-{spec['slug']}.md">Full written show notes</a></p>
@@ -378,7 +419,7 @@ details p{white-space:pre-wrap;font-size:.9rem}footer{margin-top:20px;color:#bbc
 <p>Eight complete balanced recordings: three D20 experiments, paired 2D6, D100, D4, D8 and D12. Every edition begins with a different observation, followed by <em>“I am Brother Rubicon. The die’s cast.”</em> Each has a distinct final remark, and no roll is a separate chapter.</p>
 <p><a href="../feed.xml">Subscribe to the audio podcast feed</a> · <a href="../">Original five episodes</a></p>
 """+''.join(blocks)+"""
-<footer><p>The first three dice recordings are retained in the feed as labeled archival experiments, not silently replaced. Use the complete functional portion for seeking; hand-operated podcast scrubbers are not guaranteed to sample uniformly.</p></footer>
+<footer><p>The original D20 remains a current balanced edition. Only the original 2D6 and D100 are marked archival. Use the complete functional portion for seeking; hand-operated podcast scrubbers are not guaranteed to sample uniformly.</p></footer>
 </main><script>document.querySelectorAll('audio').forEach(a=>a.addEventListener('play',()=>document.querySelectorAll('audio').forEach(b=>{if(b!==a)b.pause()})))</script></body></html>"""
     (DIRECTORY/"index.html").write_text(page,encoding="utf-8")
 
