@@ -127,7 +127,7 @@
       return {
         id: card.id === 'key-scratch' ? 'repo-key-scratch' : 'repo-' + card.id,
         name, description:card.querySelector('.description')?.textContent?.trim() || '',
-        status:card.querySelector('.status')?.textContent?.trim() || 'Open Workshop',
+        status:card.querySelector('.status')?.textContent?.trim() || 'Workshop',
         group:'workshop',rank:rank+1,categories:'',visual:picture,
         publicUrl:location.origin+'/workshop/#'+card.id,
         links:[...card.querySelectorAll('.actions a')].map(a=>({label:a.textContent.trim(),url:a.href})),
@@ -294,7 +294,7 @@
           description:moire
             ? 'True moiré, barrier-grid animation and printable SVG experiments. Currently kept out of the public portfolio while it is developed.'
             : (repo.description || 'GitHub project; open the repository for README, source and activity.'),
-          status:moire ? 'Workbench only · optical experiments' : 'Additional public repository',
+          status:moire ? 'Unpublished · optical experiments' : 'Additional public repository',
           group:'repos', rank:999, categories:moire?'visual print':'',
           visual, publicUrl:'', repos:[repoUrl],
           links:[...(moire ? [{label:'Open web workshop',url:'https://moire-lab.onrender.com/'}] : []),
