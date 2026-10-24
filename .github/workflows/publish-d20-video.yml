@@ -1,7 +1,7 @@
 name: Publish chapter-free LightHouse D20 video podcast
 on:
   workflow_run:
-    workflows: ["Publish expanded balanced dice season"]
+    workflows: ["Publish expanded balanced dice season", "Restore verified balanced dice publication"]
     types: [completed]
   workflow_dispatch:
 
