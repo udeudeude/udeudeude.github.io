@@ -38,8 +38,7 @@ PAUSE = 0.32
 INSTRUCTION = (
     "Seek to a random point during the encounters. "
     "Ignore any encounter already in progress. "
-    "Your encounter is the next complete scene you hear from its beginning. "
-    "If you reach the end, return to the first encounter after the introduction."
+    "Your encounter is the next complete scene you hear from its beginning."
 )
 
 def manuscript():
