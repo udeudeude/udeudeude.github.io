@@ -2023,7 +2023,8 @@
       "prior_chimes_removed": 80,
       "source_master_duration_seconds": 1873.035,
       "new_chime_free_intro": true,
-      "spoken_intro_text": "Some paths through a wood have not been walked for centuries. They are seldom overgrown. I am Brother Rubicon. The die's cast. This is the Wilderness Oracle. Seek to a random point during the encounters. If a scene is already in progress, ignore it. Your encounter is the next complete one you hear from its beginning."
+      "spoken_intro_text": "Some paths through a wood have not been walked for centuries. They are seldom overgrown. I am Brother Rubicon. The die's cast. This is the Wilderness Oracle. Seek to a random point during the encounters. If a scene is already in progress, ignore it. Your encounter is the next complete one you hear from its beginning.",
+      "new_intro_voice_reference_db": -18.3
     },
     "05-ten-minutes-to-disaster.mp3": {
       "functional_countdown_seconds": 600,

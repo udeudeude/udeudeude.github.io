@@ -94,7 +94,7 @@
   ],
   "last_encounter_slot_end_seconds": 1209.894,
   "longest_scene_speech_seconds": 15.845,
-  "total_seconds": 1216.739,
+  "total_seconds": 1216.8,
   "enclosure_bytes": 9734637,
   "voice_model": "bm_lewis",
   "voice_tts_speed": 0.94,
@@ -200,5 +200,7 @@
     "The Raven's Appointment",
     "The Fireflies' Boundary",
     "The Beaver's Bridge"
-  ]
+  ],
+  "reference_level_db": -18.3,
+  "mastered_scene_level_db": -18.95
 }
