@@ -39,7 +39,7 @@ jobs:
           set -euo pipefail
           sudo apt-get update
           sudo apt-get install -y ffmpeg
-          python -m pip install 'numpy>=1.26,<3'
+          python -m pip install 'numpy>=1.26,<3' 'soundfile>=0.12' 'Pillow>=10.4'
           python - <<'PY'
           from pathlib import Path
           import json,re,sys,xml.etree.ElementTree as ET
