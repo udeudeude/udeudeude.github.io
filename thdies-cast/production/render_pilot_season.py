@@ -123,7 +123,11 @@ def emit_mp3(wav:Path,mp3:Path):
     mp3.parent.mkdir(parents=True,exist_ok=True)
     subprocess.run([
         'ffmpeg','-hide_banner','-loglevel','error','-y',
-        '-i',str(wav),'-af','loudnorm=I=-17:TP=-1.5:LRA=7',
+        # Audio is already voice-processed. Do not run whole-file *dynamic*
+        # loudnorm over 30-minute recordings: it suppressed the final codas
+        # by more than 20 dB in eight published dice editions. Use a plain
+        # timing-preserving encode, then run segment-level voice QC.
+        '-i',str(wav),
         '-ar',str(SAMPLE_RATE),'-ac','1','-c:a','libmp3lame','-b:a','64k',str(mp3)
     ],check=True)
     wav.unlink()
