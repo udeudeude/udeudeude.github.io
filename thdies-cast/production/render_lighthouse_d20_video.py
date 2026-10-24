@@ -100,7 +100,7 @@ def orientation(face_index):
 
 def projection(p):
     perspective=4.6/(4.6-p[2])
-    return (W/2+p[0]*250*1.60*perspective, 410+p[1]*250*1.60*perspective)
+    return (W/2+p[0]*175*1.60*perspective, 400+p[1]*175*1.60*perspective)
 
 def font(size,bold=False,serif=False):
     names=[]
@@ -221,6 +221,7 @@ def encode_video(playlist):
         "-map","0:v:0","-map","1:a:0",
         "-c:v","libx264","-preset","veryfast","-tune","stillimage",
         "-crf","27","-pix_fmt","yuv420p","-fps_mode","vfr",
+        "-g","1","-keyint_min","1","-map_chapters","-1",
         "-video_track_timescale","24000",
         "-c:a","aac","-b:a","72k",
         "-movflags","+faststart","-shortest",str(VIDEO)
