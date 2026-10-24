@@ -1,0 +1,153 @@
+name: Publish Relics and Curiosities and correct Wilderness narration
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-relics.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Wait until the 80-scene Creatures / Wilderness / level-restoration build finishes.
+concurrency:
+  group: thdies-audio-revision-20261024
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 95
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install the working Brother Rubicon voice and mastering software
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg espeak-ng
+          python -m pip install --upgrade pip
+          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -r thdies-cast/production/requirements.txt
+          ffmpeg -hide_banner -filters | grep rubberband
+      - name: Verify prior revisions, validate 80 relics and preserve 14 originals
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile thdies-cast/production/{render_relics,replace_wilderness_intro,render_pilot_season,remaster_library,audit_audio_levels}.py
+          python thdies-cast/production/render_relics.py --check-only
+          python - <<'PY'
+          import json,xml.etree.ElementTree as E
+          from pathlib import Path
+          root=Path('thdies-cast')
+          assert len(E.parse(root/'feed.xml').findall('./channel/item'))==14
+          p=json.loads((root/'pilot-manifest.json').read_text())['episodes']['04-wilderness-oracle.mp3']
+          c=json.loads((root/'creatures-manifest.json').read_text())
+          assert p['neutral_chimes']==0 and p['encounters']==80, 'First fix Wilderness audio'
+          assert c['neutral_chimes']==0 and c['encounters']==80, 'First publish expanded Creatures audio'
+          assert not p.get('new_chime_free_intro')
+          assert not (root/'audio/15-relics-and-curiosities.mp3').exists()
+          PY
+          sha256sum thdies-cast/audio/*.mp3 > /tmp/previous14.sha256
+          test "$(wc -l < /tmp/previous14.sha256)" -eq 14
+          sha256sum thdies-cast/audio/05-ten-minutes-to-disaster.mp3 > /tmp/untouched-timer.sha256
+      - name: Produce Relics and Curiosities 80-scene episode 15
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -u thdies-cast/production/render_relics.py
+      - name: Remove chime reference from Wilderness spoken instructions
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -u thdies-cast/production/replace_wilderness_intro.py
+      - name: Validate all episodes, voices, chimes, feed and old media
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -v '04-wilderness-oracle.mp3' /tmp/previous14.sha256 | sha256sum -c -
+          sha256sum -c /tmp/untouched-timer.sha256
+          python thdies-cast/production/render_relics.py --verify-only
+          python - <<'PY'
+          import sys,json,xml.etree.ElementTree as E
+          from pathlib import Path
+          root=Path('thdies-cast')
+          sys.path.insert(0,str(root/'production'))
+          from audit_audio_levels import active_voice_db
+          import remaster_library as remix
+          feed=E.parse(root/'feed.xml')
+          items=feed.findall('./channel/item')
+          assert len(items)==15 and len({i.findtext('guid') for i in items})==15
+          for item in items:
+              enc=item.find('enclosure')
+              name=enc.get('url').split('/')[-1].split('?')[0]
+              file=root/'audio'/name
+              assert file.exists() and file.stat().st_size==int(enc.get('length')),(name,enc.get('length'))
+          p=json.loads((root/'pilot-manifest.json').read_text())['episodes']['04-wilderness-oracle.mp3']
+          c=json.loads((root/'creatures-manifest.json').read_text())
+          r=json.loads((root/'relics-manifest.json').read_text())
+          assert p['neutral_chimes']==c['neutral_chimes']==r['neutral_chimes']==0
+          assert p['encounters']==c['encounters']==r['encounters']==80
+          assert p['new_chime_free_intro']
+          assert len(p['boundary_times_seconds'])==len(c['boundary_times_seconds'])==len(r['boundary_times_seconds'])==80
+          assert len(list((root/'audio').glob('*.mp3')))==15
+          def db(x,a,b):
+              import math
+              z=active_voice_db(x[max(0,round(a*24000)):min(len(x),round(b*24000))])
+              assert math.isfinite(z)
+              return z
+          audio=remix.decode_mp3(root/'audio/15-relics-and-curiosities.mp3')
+          beginning=r['first_boundary_seconds']; end=r['last_encounter_slot_end_seconds']
+          voice=db(audio,beginning,r['boundary_times_seconds'][9])
+          intro=db(audio,0,beginning)
+          coda=db(audio,end,len(audio)/24000)
+          assert abs(voice-intro)<5,(intro,voice)
+          assert abs(voice-coda)<5,(coda,voice)
+          for number in (4,14,15):
+              target=next(i for i in items if i.findtext('guid').endswith(f':{number:02d}:v1'))
+              desc=target.findtext('description','').lower()
+              assert 'chime' not in desc
+              assert 'kokoro' not in desc
+              assert 'hand-operated scrubbing' not in desc
+          print(f'PASS: 15 episodes, three sets of 80 chime-free encounters, Relics voice levels {intro:.1f}/{voice:.1f}/{coda:.1f} dB',flush=True)
+          PY
+      - name: Preserve completed MP3s even if later publication fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relics-wilderness-final-audio
+          path: |
+            thdies-cast/audio/04-wilderness-oracle.mp3
+            thdies-cast/audio/15-relics-and-curiosities.mp3
+            thdies-cast/relics-manifest.json
+            thdies-cast/pilot-manifest.json
+            thdies-cast/feed.xml
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Commit the final verified audio and feed
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add thdies-cast/audio/04-wilderness-oracle.mp3 thdies-cast/audio/15-relics-and-curiosities.mp3 thdies-cast/relics-manifest.json thdies-cast/relics-and-curiosities.md thdies-cast/pilot-manifest.json thdies-cast/feed.xml thdies-cast/index.html
+          git diff --cached --quiet && { echo "Already released"; exit 0; }
+          git commit -m 'Publish Relics and Curiosities as episode 15 and fix Wilderness spoken guidance'
+          git stash push --include-untracked -m 'Clear temporary synthesis artifacts before rebase' || true
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
+      - name: Verify source branch publication
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          git ls-tree -r --name-only origin/main | grep -Fx 'thdies-cast/audio/15-relics-and-curiosities.mp3'
+          git ls-tree -r --name-only origin/main | grep -Fx 'thdies-cast/audio/04-wilderness-oracle.mp3'
+          echo 'Published to GitHub. Pages deployment separately required.'
