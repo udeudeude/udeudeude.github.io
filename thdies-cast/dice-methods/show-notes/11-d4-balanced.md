@@ -1,0 +1,21 @@
+# D4 · Four Paths
+
+D4 · Four Paths · Balanced dice method, episode 11
+
+D4: NINETY COMPLETE SHUFFLES OF FOUR
+Each of ninety blocks includes 1, 2, 3 and 4 once in randomized order. There are 360 five-second slots, exactly thirty minutes of results, and each face occurs ninety times: 90/360 = 25%. Equal slot durations give exact global outcome balance for uniform time sampling within the results section. Sequential results are not independent: no face repeats inside a block, although it can repeat across a block boundary.
+
+HOW TO USE THIS AUDIO DIE
+Seek somewhere inside the numbered-result portion, not the introductory or closing words. Ignore a clipped result and use the next result spoken fully, with each result occupying an equal-length time slot. If playback reaches the coda instead of another complete roll, seek back to the first numbered result. A fair timeline sample means each time slot has the same chance of being selected; ordinary finger-driven scrubbing is not guaranteed to produce uniformly random seek times.
+
+FAIRNESS VERSUS INDEPENDENCE
+This is a prerecorded deterministic sequence, not a source of fresh live randomness. Exact balanced frequencies guarantee fair outcomes for a uniformly chosen time slot, but a continuous run of results need not have the independence of fresh dice throws. If each playback position is independently sampled uniformly over the result region, those sampled outcomes are independent despite the fixed recording. All experiments use fixed, documented pseudorandom seeds and can be reconstructed.
+
+PRODUCTION
+Narrated by Brother Rubicon using Kokoro's Lewis voice with the producer-selected Saved 02 treatment. The spoken introductions are intentionally brief, provisional explanations of the methods; the permanent character introduction has not been chosen. A distinct whimsical closing coda follows the last valid roll, without a long silence. The coda is not an outcome.
+
+This version has its own Brother Rubicon opening observation and a distinct closing coda; both come from this production edition. The standard introduction is always: I am Brother Rubicon. The die's cast.
+
+Specific opening: At the blackthorn, the road divides. Both ways are marked as the shorter. I am Brother Rubicon. The die's cast. Four faces, ninety shuffled sets. Take the next complete number.
+
+Closing coda: There were four ways from the crossing. / The fifth was discovered afterward.
