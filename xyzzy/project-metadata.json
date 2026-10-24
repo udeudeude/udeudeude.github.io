@@ -494,26 +494,6 @@
         "Test a completed five-checkpoint mission in the official app."
       ]
     },
-    "repo-temporarily-leave-the-universe": {
-      "name": "Temporarily Leave the Universe",
-      "status": "Live web experiment",
-      "description": "A small, self-contained interactive terminal-like browser experience with a retro computer aesthetic. Minimal project documentation currently exists.",
-      "links": [
-        {
-          "label": "Open web experience",
-          "url": "https://udeudeude.github.io/Temporarily-Leave-the-Universe/"
-        },
-        {
-          "label": "Source / landing page",
-          "url": "https://github.com/udeudeude/Temporarily-Leave-the-Universe/blob/main/index.html"
-        }
-      ],
-      "tasks": [
-        "Document intended commands and user interactions in the README.",
-        "Test the interactive terminal on mobile Safari and with a keyboard.",
-        "Review accessibility of the cursor, color themes and touch input."
-      ]
-    },
     "repo-key-scratch": {
       "name": "Ortholinear (Key Scratch)",
       "status": "Native iOS keyboard · source build",
@@ -547,6 +527,26 @@
       ],
       "image": "https://raw.githubusercontent.com/udeudeude/Key-Scratch/main/docs/screenshots/app-store/iphone-home.png",
       "imageAlt": "Actual Ortholinear keyboard iPhone simulator screenshot"
+    },
+    "temporarily-leave-the-universe": {
+      "name": "Temporarily Leave the Universe",
+      "status": "Live web experiment",
+      "description": "A small, self-contained interactive terminal-like browser experience with a retro computer aesthetic. Minimal project documentation currently exists.",
+      "links": [
+        {
+          "label": "Open web experience",
+          "url": "https://udeudeude.github.io/Temporarily-Leave-the-Universe/"
+        },
+        {
+          "label": "Source / landing page",
+          "url": "https://github.com/udeudeude/Temporarily-Leave-the-Universe/blob/main/index.html"
+        }
+      ],
+      "tasks": [
+        "Document intended commands and user interactions in the README.",
+        "Test the interactive terminal on mobile Safari and with a keyboard.",
+        "Review accessibility of the cursor, color themes and touch input."
+      ]
     }
   }
 }

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 1100" role="img" aria-label="Vector rendition of the supplied green CRT interface screenshot">
+<defs><pattern id="scan" width="3" height="5" patternUnits="userSpaceOnUse"><path d="M0 4.5H640" stroke="#000" stroke-width="1" opacity=".45"/></pattern><filter id="glow" x="-10%" y="-15%" width="120%" height="130%"><feGaussianBlur stdDeviation="3"/></filter></defs>
+<rect width="640" height="1100" fill="#020503"/><rect x="1" y="1" width="638" height="1098" fill="none" stroke="#1e4326" stroke-width="7"/>
+<g font-family="'Courier New',monospace" font-size="23" letter-spacing=".7" fill="#79ec80" opacity=".52" filter="url(#glow)"><text x="24" y="60">THE MAIN HALL</text>
+  <text x="24" y="98">OF THE GUILD OF FREE ADVENTURERS</text>
+  <text x="24" y="162">WELCOME, RAGDEMAN.</text>
+  <text x="24" y="226">A BURLY IRISHMAN POLISHES A GLASS.</text>
+  <text x="24" y="264">THE FIREPLACE HAS NOT BEEN LIT SINCE 1985.</text>
+  <text x="24" y="335">1. GO ON AN ADVENTURE</text>
+  <text x="24" y="368">2. VISIT THE WEAPON SHOP</text>
+  <text x="24" y="401">3. LEARN MAGIC</text>
+  <text x="24" y="434">4. VISIT THE BANK</text>
+  <text x="24" y="467">5. EXAMINE YOUR ABILITIES</text>
+  <text x="24" y="500">6. TEMPORARILY LEAVE THE UNIVERSE</text>
+  <text x="24" y="565">CHOOSE 1-6.</text>
+  <text x="24" y="598">> 1</text>
+  <text x="24" y="633">DRIVE 1 IS EMPTY.</text>
+  <text x="24" y="698">THE GUILD KEEPS A WOODEN CASE OF</text>
+  <text x="24" y="731">ADVENTURE DISKETTES.</text>
+  <text x="24" y="789">01 THE FORTY-SEVENTH EXIT</text>
+  <text x="24" y="820">02 THE VERB MERCHANT</text>
+  <text x="24" y="851">03 THE MONSTER'S ADVENTURE</text>
+  <text x="24" y="882">04 THE INVENTORY OF LOST THINGS</text>
+  <text x="24" y="913">05 THE CARTOGRAPHER'S ERROR</text>
+  <text x="24" y="944">06 THE DUNGEON OF UNFINISHED SENTENCES</text>
+  <text x="24" y="975">07 THE LAST HIT POINT</text>
+  <text x="24" y="1006">08 THE ADVENTURE THAT WAS ALREADY WON</text>
+  <text x="24" y="1055">TYPE A NUMBER TO INSERT A DISK.</text></g>
+<g font-family="'Courier New',monospace" font-size="23" letter-spacing=".7" fill="#79ec80"><text x="24" y="60">THE MAIN HALL</text>
+  <text x="24" y="98">OF THE GUILD OF FREE ADVENTURERS</text>
+  <text x="24" y="162">WELCOME, RAGDEMAN.</text>
+  <text x="24" y="226">A BURLY IRISHMAN POLISHES A GLASS.</text>
+  <text x="24" y="264">THE FIREPLACE HAS NOT BEEN LIT SINCE 1985.</text>
+  <text x="24" y="335">1. GO ON AN ADVENTURE</text>
+  <text x="24" y="368">2. VISIT THE WEAPON SHOP</text>
+  <text x="24" y="401">3. LEARN MAGIC</text>
+  <text x="24" y="434">4. VISIT THE BANK</text>
+  <text x="24" y="467">5. EXAMINE YOUR ABILITIES</text>
+  <text x="24" y="500">6. TEMPORARILY LEAVE THE UNIVERSE</text>
+  <text x="24" y="565">CHOOSE 1-6.</text>
+  <text x="24" y="598">> 1</text>
+  <text x="24" y="633">DRIVE 1 IS EMPTY.</text>
+  <text x="24" y="698">THE GUILD KEEPS A WOODEN CASE OF</text>
+  <text x="24" y="731">ADVENTURE DISKETTES.</text>
+  <text x="24" y="789">01 THE FORTY-SEVENTH EXIT</text>
+  <text x="24" y="820">02 THE VERB MERCHANT</text>
+  <text x="24" y="851">03 THE MONSTER'S ADVENTURE</text>
+  <text x="24" y="882">04 THE INVENTORY OF LOST THINGS</text>
+  <text x="24" y="913">05 THE CARTOGRAPHER'S ERROR</text>
+  <text x="24" y="944">06 THE DUNGEON OF UNFINISHED SENTENCES</text>
+  <text x="24" y="975">07 THE LAST HIT POINT</text>
+  <text x="24" y="1006">08 THE ADVENTURE THAT WAS ALREADY WON</text>
+  <text x="24" y="1055">TYPE A NUMBER TO INSERT A DISK.</text></g>
+<rect width="640" height="1100" fill="url(#scan)" pointer-events="none"/><rect x="3" y="3" width="634" height="1094" fill="none" stroke="#1e4326" stroke-width="5" opacity=".55"/>
+</svg>

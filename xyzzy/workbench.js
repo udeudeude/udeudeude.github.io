@@ -21,7 +21,8 @@
     'Escape-Pod-Cast':'escape-pod-cast',
     'GoLocal-on-a-Map-Asheville':'asheville-golocal-maps',
     'PnP-o-matic':'pnp-o-matic',
-    'Moire-Lab':'moire-lab'
+    'Moire-Lab':'moire-lab',
+    'Temporarily-Leave-the-Universe':'temporarily-leave-the-universe'
   };
   const grid = document.getElementById('projects');
   const count = document.getElementById('result-count');
@@ -185,9 +186,33 @@
     return project;
   }
 
+  // Keep personal links and completed checklists when a project moves from
+  // "additional repository" into the curated exhibition.
+  function migratePromotedProject() {
+    const oldId='repo-temporarily-leave-the-universe';
+    const newId='temporarily-leave-the-universe';
+    let changed=false;
+    for(const store of [links,customTodos]) {
+      if(Array.isArray(store[oldId])){
+        const previous=Array.isArray(store[newId])?store[newId]:[];
+        const existingIds=new Set(previous.map(x=>x.id));
+        store[newId]=[...previous,...store[oldId].filter(x=>!existingIds.has(x.id))];
+        delete store[oldId];
+        changed=true;
+      }
+    }
+    if(Array.isArray(completed[oldId])){
+      completed[newId]=[...new Set([...(Array.isArray(completed[newId])?completed[newId]:[]),...completed[oldId]])];
+      delete completed[oldId];
+      changed=true;
+    }
+    if(changed) save();
+  }
+
   async function initialize() {
     const [curated, repos, metadata] = await Promise.all([publishedProjects(), publicRepositories(), loadMetadata()]);
     projectMetadata = metadata;
+    migratePromotedProject();
     const mapped = new Map(curated.map(p => [p.id, p]));
     const extras = [];
     for (const repo of repos) {

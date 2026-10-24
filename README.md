@@ -10,13 +10,19 @@ This is the **portfolio repository**, not the source repository for LightHouse o
 
 **Public page:** https://udeudeude.github.io/workshop/
 
-The project site now has three levels: the curated homepage exhibition, the selective public **Open Workshop** of exploratory and developing work, and the unlinked personal `/xyzzy/` dashboard. The Open Workshop is linked quietly below the public portfolio's 18 curated projects; it is a separate page, not a new public category.
+The project site now has three levels: the curated homepage exhibition, the selective public **Open Workshop** of exploratory and developing work, and the unlinked personal `/xyzzy/` dashboard. The Open Workshop is linked quietly below the public portfolio's 19 curated projects; it is a separate page, not a new public category.
 
-The owner approved publication on October 22, 2026 with **eight** projects: Temporarily Leave the Universe; MAZE · Seedling Rejuvenation; Ortholinear; Sphero Laboratory; MPK249 Universal Map; Escape Team Activate; Th’die’s Cast; and Pocket Operations Manual. No additional project was promoted to the curated exhibition.
+The owner approved publication on October 22, 2026 with eight initial projects. On October 23, Temporarily Leave the Universe moved into the curated exhibition; Open Workshop now contains seven projects: MAZE · Seedling Rejuvenation; Ortholinear; Sphero Laboratory; MPK249 Universal Map; Escape Team Activate; Th’die’s Cast; and Pocket Operations Manual.
 
 Each tile describes what a visitor can do now and what requires more testing or equipment. Th’die’s Cast offers a direct podcast subscription and pilot listener. Pocket Operations Manual links directly to its live simulator and documented fidelity differences. Genuine MAZE, Ortholinear, Th’die’s Cast and PO-35 source artwork is used where available.
 
-Run `node tests/workshop.test.mjs` with Playwright installed to verify phone/desktop layouts, the eight-project selection, and navigation/privacy boundaries. Automated CI runs this alongside existing portfolio checks.
+Run `node tests/workshop.test.mjs` with Playwright installed to verify phone/desktop layouts, the current seven-project selection, and navigation/privacy boundaries. Automated CI runs this alongside existing portfolio checks.
+
+## October 23, 2026 promotion
+
+**Temporarily Leave the Universe** now appears as the nineteenth curated exhibition tile, after the established eighteen, with direct browser-play and source links. The project has moved out of Open Workshop, which now presents seven projects. The new tile's two screen illustrations were re-created as SVG previews from the owner's supplied green and purple CRT screenshots; they are **not the original JPEG screenshots**.
+
+The unlisted workbench keeps the adventure's project entry and automatically migrates its personal ChatGPT links, locally added tasks and completion markers from the former `repo-temporarily-leave-the-universe` identifier to `temporarily-leave-the-universe`. Project metadata follows the same ID. No saved private URL is committed publicly.
 
 ## Works on the homepage
 
@@ -38,6 +44,7 @@ Run `node tests/workshop.test.mjs` with Playwright installed to verify phone/des
 - AI on Kindle
 - SuperCollider studies
 - Kokoro Voice Lab
+- Temporarily Leave the Universe
 
 ## Repository guide
 
@@ -108,7 +115,7 @@ Important limitations: an unlisted static GitHub Pages URL is not an authenticat
 
 ### Workbench links and backlog
 
-`xyzzy/project-metadata.json` supplements the 18 curated public tiles and additional public repositories with known **subscription feeds**, **live demos**, **app releases**, reference downloads and **sourced outstanding tasks**. The title of the tabletop-utility podcast is spelled **Th’die’s Cast**. The workbench provides direct RSS subscriptions for Living Patterns, Orchestral Maneuvers in the Dark, Th’die’s Cast and the experimental Play by Ear · GameCast.
+`xyzzy/project-metadata.json` supplements the 19 curated public tiles and additional public repositories with known **subscription feeds**, **live demos**, **app releases**, reference downloads and **sourced outstanding tasks**. The title of the tabletop-utility podcast is spelled **Th’die’s Cast**. The workbench provides direct RSS subscriptions for Living Patterns, Orchestral Maneuvers in the Dark, Th’die’s Cast and the experimental Play by Ear · GameCast.
 
 The public portfolio is the starting point for any links already offered there. Workbench metadata adds useful repository-specific actions and pending future public-tile links without incorrectly labeling incomplete software as released. GitHub Issues and Releases pages remain available for repository-based work, even when an issue list has not been populated.
 
@@ -118,15 +125,15 @@ The workbench header contains a link back to the public homepage. The lengthy in
 
 ## October 15, 2026 site improvements
 
-The public filter interface now provides **Clear filters** when a selection is active, plus a useful reset action when category and equipment settings produce zero matching projects. These controls preserve existing shareable URL behavior and keep all 18 curated projects in their editorial order.
+The public filter interface now provides **Clear filters** when a selection is active, plus a useful reset action when category and equipment settings produce zero matching projects. These controls preserve existing shareable URL behavior and keep all 19 curated projects in their editorial order.
 
 The unlisted workbench search also matches project-action labels and sourced or locally entered backlog text. Checking or adding a task now preserves keyboard focus and scroll position after updating the local checklist. The weekly link checker decodes HTML ampersand entities before checking the actual browser target, avoiding misleading false 404s.
 
 ## October 22, 2026 unlisted-workbench audit
 
-The unlisted workbench snapshot now covers **29 public GitHub repositories** (plus the 18 curated portfolio tiles, with overlaps deduplicated). Six newly added public repositories have workbench-only entries with reviewed project status, credible resource links, and source-based tasks: MPK249 Universal Map, MAZE · Seedling Rejuvenation, Sphero Laboratory, Escape Team Activate, Temporarily Leave the Universe, and Ortholinear (Key Scratch).
+The unlisted workbench snapshot now covers **29 public GitHub repositories** (plus the 19 curated portfolio tiles, with overlaps deduplicated). Six newly added public repositories have workbench-only entries with reviewed project status, credible resource links, and source-based tasks: MPK249 Universal Map, MAZE · Seedling Rejuvenation, Sphero Laboratory, Escape Team Activate, Temporarily Leave the Universe, and Ortholinear (Key Scratch).
 
-The workbench recognizes genuine repository media where it exists; the MAZE app icon and Ortholinear iPhone simulator screenshot are not fabricated preview images. Incomplete prototypes and hardware-dependent utilities are clearly labeled. No new repository was added to the public portfolio.
+The workbench recognizes genuine repository media where it exists; the MAZE app icon and Ortholinear iPhone simulator screenshot are not fabricated preview images. Incomplete prototypes and hardware-dependent utilities are clearly labeled. No repository was promoted during the October 22 audit. Temporarily Leave the Universe was promoted separately with owner approval on October 23.
 
 Importing a **version 1** personal workbench backup now retains any newer local to-do and completion data, while version 2 imports still replace that data after the user's confirmation. Personal links and task state remain browser-local. The automated external-link checker confirms reported 404 and 410 HEAD responses with GET before treating them as broken, without changing public-site links.
 

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 1100" role="img" aria-label="Vector rendition of the supplied purple CRT interface screenshot">
+<defs><pattern id="scan" width="3" height="5" patternUnits="userSpaceOnUse"><path d="M0 4.5H640" stroke="#000" stroke-width="1" opacity=".45"/></pattern><filter id="glow" x="-10%" y="-15%" width="120%" height="130%"><feGaussianBlur stdDeviation="3"/></filter></defs>
+<rect width="640" height="1100" fill="#020503"/><rect x="1" y="1" width="638" height="1098" fill="none" stroke="#45365a" stroke-width="7"/>
+<g font-family="'Courier New',monospace" font-size="23" letter-spacing=".7" fill="#e3c0f7" opacity=".52" filter="url(#glow)"><text x="24" y="60">THE MAIN HALL</text>
+  <text x="24" y="98">OF THE GUILD OF FREE ADVENTURERS</text>
+  <text x="24" y="163">WELCOME, RAGDEMAN.</text>
+  <text x="24" y="227">A BURLY IRISHMAN POLISHES A GLASS.</text>
+  <text x="24" y="265">THE FIREPLACE HAS NOT BEEN LIT SINCE 1985.</text>
+  <text x="24" y="329">1. GO ON AN ADVENTURE</text>
+  <text x="24" y="363">2. VISIT THE WEAPON SHOP</text>
+  <text x="24" y="397">3. LEARN MAGIC</text>
+  <text x="24" y="431">4. VISIT THE BANK</text>
+  <text x="24" y="465">5. EXAMINE YOUR ABILITIES</text>
+  <text x="24" y="499">6. TEMPORARILY LEAVE THE UNIVERSE</text>
+  <text x="24" y="556">CHOOSE 1-6.</text>
+  <text x="24" y="594">> TALK</text>
+  <text x="24" y="628">"ADVENTURES DON'T COME TO YOU," SAYS THE</text>
+  <text x="24" y="662">BARTENDER. "UNLESS SOMETHING HAS GONE</text>
+  <text x="24" y="696">VERY WRONG."</text>
+  <text x="24" y="737">> 5</text>
+  <text x="24" y="770">ADVENTURER: RAGDEMAN</text>
+  <text x="24" y="804">HARDINESS: 16</text>
+  <text x="24" y="838">AGILITY: 13</text>
+  <text x="24" y="872">CHARISMA: 11</text>
+  <text x="24" y="906">GOLD: 200</text>
+  <text x="24" y="940">WEAPON: NONE</text>
+  <text x="24" y="974">SPELL: NONE</text>
+  <text x="24" y="1012">ADVENTURES COMPLETED: 0</text>
+  <text x="24" y="1058">TYPE HALL TO RETURN.</text></g>
+<g font-family="'Courier New',monospace" font-size="23" letter-spacing=".7" fill="#e3c0f7"><text x="24" y="60">THE MAIN HALL</text>
+  <text x="24" y="98">OF THE GUILD OF FREE ADVENTURERS</text>
+  <text x="24" y="163">WELCOME, RAGDEMAN.</text>
+  <text x="24" y="227">A BURLY IRISHMAN POLISHES A GLASS.</text>
+  <text x="24" y="265">THE FIREPLACE HAS NOT BEEN LIT SINCE 1985.</text>
+  <text x="24" y="329">1. GO ON AN ADVENTURE</text>
+  <text x="24" y="363">2. VISIT THE WEAPON SHOP</text>
+  <text x="24" y="397">3. LEARN MAGIC</text>
+  <text x="24" y="431">4. VISIT THE BANK</text>
+  <text x="24" y="465">5. EXAMINE YOUR ABILITIES</text>
+  <text x="24" y="499">6. TEMPORARILY LEAVE THE UNIVERSE</text>
+  <text x="24" y="556">CHOOSE 1-6.</text>
+  <text x="24" y="594">> TALK</text>
+  <text x="24" y="628">"ADVENTURES DON'T COME TO YOU," SAYS THE</text>
+  <text x="24" y="662">BARTENDER. "UNLESS SOMETHING HAS GONE</text>
+  <text x="24" y="696">VERY WRONG."</text>
+  <text x="24" y="737">> 5</text>
+  <text x="24" y="770">ADVENTURER: RAGDEMAN</text>
+  <text x="24" y="804">HARDINESS: 16</text>
+  <text x="24" y="838">AGILITY: 13</text>
+  <text x="24" y="872">CHARISMA: 11</text>
+  <text x="24" y="906">GOLD: 200</text>
+  <text x="24" y="940">WEAPON: NONE</text>
+  <text x="24" y="974">SPELL: NONE</text>
+  <text x="24" y="1012">ADVENTURES COMPLETED: 0</text>
+  <text x="24" y="1058">TYPE HALL TO RETURN.</text></g>
+<rect width="640" height="1100" fill="url(#scan)" pointer-events="none"/><rect x="3" y="3" width="634" height="1094" fill="none" stroke="#45365a" stroke-width="5" opacity=".55"/>
+</svg>
