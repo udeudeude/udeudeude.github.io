@@ -314,7 +314,8 @@
       window.scrollTo(0,scrollY);
     }
     count.textContent = shown.length + ' projects shown · ' + all.length + ' total (' +
-      all.filter(p=>p.group==='curated').length + ' exhibition, ' +\n      all.filter(p=>p.group==='workshop').length + ' workshop, ' +
+      all.filter(p=>p.group==='curated').length + ' exhibition, ' +
+      all.filter(p=>p.group==='workshop').length + ' workshop, ' +
       all.filter(p=>p.group==='repos').length + ' extra public repositories, ' +
       all.filter(p=>p.group==='local').length + ' locally added)';
   }
