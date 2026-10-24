@@ -1,0 +1,128 @@
+name: Publish expanded balanced dice season
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'thdies-cast/production/render_expanded_dice.py'
+      - '.github/workflows/publish-expanded-dice.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: thdies-expanded-dice-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install audio and speech dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg espeak-ng
+          python -m pip install --upgrade pip
+          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -r thdies-cast/production/requirements.txt
+          ffmpeg -hide_banner -filters | grep rubberband
+      - name: Verify all probability constructions before production
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile thdies-cast/production/render_expanded_dice.py
+          python thdies-cast/production/render_expanded_dice.py --check-only
+          sha256sum thdies-cast/audio/0[1-5]-*.mp3 > /tmp/archived-pilot-checksums.txt
+      - name: Produce eight balanced episodes with their own introductions and endings
+        shell: bash
+        run: |
+          set -euo pipefail
+          python thdies-cast/production/render_expanded_dice.py
+      - name: Verify full audio, mathematics, feed and archival preservation
+        shell: bash
+        run: |
+          set -euo pipefail
+          sha256sum -c /tmp/archived-pilot-checksums.txt
+          python - <<'PY'
+          from pathlib import Path
+          from collections import Counter
+          import json,xml.etree.ElementTree as ET
+          root=Path('thdies-cast')
+          manifest=json.loads((root/'dice-methods/manifest.json').read_text())
+          eps=manifest['new_episodes']
+          assert len(eps)==8
+          feed=ET.parse(root/'feed.xml')
+          items=feed.findall('./channel/item')
+          assert len(items)==13,len(items)
+          assert len(set(item.findtext('guid') for item in items))==13
+          assert [x.findtext('guid') for x in items[8:]]==[f'urn:thdies-cast:pilot:{i:02d}:v1' for i in (5,4,3,2,1)]
+          spec_counts={6:360,7:360,8:400,9:360,10:300,11:360,12:360,13:360}
+          sides={11:4,12:8,13:12}
+          for name,m in eps.items():
+              n=m['episode']
+              assert m['outcome_count']==spec_counts[n]
+              assert m['results_duration_seconds'] in (1800,2000)
+              assert m['postroll_pre_coda_pause_seconds']<=0.001
+              assert 'I am Brother Rubicon. The die\\'s cast.' in m['spoken_intro_text']
+              source=root/'audio'/name
+              assert source.is_file() and source.stat().st_size>1000000
+              records=[item for item in items if item.find('enclosure') is not None and item.find('enclosure').get('url','').endswith('/'+name)]
+              assert len(records)==1,(name,len(records))
+              assert int(records[0].find('enclosure').get('length'))==source.stat().st_size
+              assert len(records[0].findtext('description'))>600
+              assert (root/m['full_show_notes_path']).stat().st_size>600
+              if n in sides:
+                  expected=Counter({x:360//sides[n] for x in range(1,sides[n]+1)})
+                  assert Counter(m['ordered_outcomes'])==expected
+          d20a=eps['06-d20-shuffled-sets.mp3']['ordered_outcomes']
+          d20b=eps['07-d20-giant-shuffle.mp3']['ordered_outcomes']
+          d20c=eps['08-d20-pair-balanced.mp3']['ordered_outcomes']
+          pair=eps['09-2d6-balanced.mp3']['ordered_outcomes']
+          d100=eps['10-d100-balanced.mp3']['ordered_outcomes']
+          assert all(Counter(d20a[x:x+20])==Counter(range(1,21)) for x in range(0,360,20))
+          assert Counter(d20b)==Counter({x:18 for x in range(1,21)})
+          assert Counter(d20c)==Counter({x:20 for x in range(1,21)})
+          assert len(set((d20c[x],d20c[(x+1)%400]) for x in range(400)))==400
+          assert Counter(map(tuple,pair))==Counter({(a,b):10 for a in range(1,7) for b in range(1,7)})
+          assert Counter(a+b for a,b in pair)==Counter({k:10*(6-abs(7-k)) for k in range(2,13)})
+          assert Counter(d100)==Counter({x:3 for x in range(1,101)})
+          for n in (2,3):
+              item=next(i for i in items if i.findtext('guid')==f'urn:thdies-cast:pilot:{n:02d}:v1')
+              assert 'ARCHIVAL METHOD' in item.findtext('description')
+          print('PASSED: eight new MP3s, 13 RSS entries, all math, old recordings unchanged',flush=True)
+          PY
+          for track in thdies-cast/audio/{06,07,08,09,10,11,12,13}-*.mp3; do
+            ffprobe -v error -show_entries format=duration,size -of csv=p=0 "$track"
+          done
+      - name: Commit and publish new media, show notes, RSS and landing page
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add thdies-cast/audio/{06,07,08,09,10,11,12,13}-*.mp3 thdies-cast/dice-methods thdies-cast/feed.xml
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish eight balanced Rubicon dice episodes with folklore openings'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - name: Save manifest and show notes as action artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: expanded-rubicon-dice-season
+          path: |
+            thdies-cast/dice-methods/manifest.json
+            thdies-cast/dice-methods/show-notes/
+            thdies-cast/feed.xml
+          if-no-files-found: warn
