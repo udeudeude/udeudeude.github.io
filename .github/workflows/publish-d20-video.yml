@@ -1,0 +1,106 @@
+name: Publish chapter-free LightHouse D20 video podcast
+on:
+  workflow_run:
+    workflows: ["Publish expanded balanced dice season"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: lighthouse-d20-video-publish
+  cancel-in-progress: false
+
+jobs:
+  video:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install illustration and MP4 encoding dependencies
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          python -m pip install --upgrade pip
+          python -m pip install numpy pillow soundfile
+      - name: Verify balanced D20 audio before encoding video
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path("thdies-cast")
+          mp3=root/"audio/08-d20-pair-balanced.mp3"
+          m=root/"dice-methods/manifest.json"
+          assert mp3.is_file() and mp3.stat().st_size>1000000
+          assert m.is_file()
+          data=json.loads(m.read_text())["new_episodes"]["08-d20-pair-balanced.mp3"]
+          assert len(data["ordered_outcomes"])==400
+          assert data["results_duration_seconds"]==2000
+          print("Source audio present",mp3.stat().st_size,flush=True)
+          PY
+      - name: Render original LightHouse D20 mesh art into synchronized video
+        run: |
+          set -euo pipefail
+          python -m py_compile thdies-cast/production/render_lighthouse_d20_video.py
+          python thdies-cast/production/render_lighthouse_d20_video.py
+      - name: Check timing, chapter exclusion and RSS enclosure
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, subprocess, xml.etree.ElementTree as ET
+          from pathlib import Path
+          root=Path("thdies-cast")
+          mp4=root/"dice-methods/illustrated-d20-light-house.mp4"
+          assert mp4.stat().st_size>1000000
+          man=json.loads((root/"dice-methods/illustrated-d20-manifest.json").read_text())
+          src=json.loads((root/"dice-methods/manifest.json").read_text())["new_episodes"]["08-d20-pair-balanced.mp3"]
+          assert man["chapter_count"]==0 and man["image_count"]==21
+          assert man["bytes"]==mp4.stat().st_size
+          props=json.loads(subprocess.check_output(["ffprobe","-v","error","-show_format","-show_streams","-show_chapters","-of","json",str(mp4)],text=True))
+          assert not props.get("chapters",[]), "No per-roll chapter markers permitted"
+          codecs={s["codec_name"] for s in props["streams"]}
+          assert "h264" in codecs and "aac" in codecs
+          assert abs(float(props["format"]["duration"])-src["total_seconds_approx"])<1.0
+          items=ET.parse(root/"video-feed.xml").findall("./channel/item")
+          assert len(items)==1
+          enclosure=items[0].find("enclosure")
+          assert enclosure.get("type")=="video/mp4"
+          assert enclosure.get("url")=="https://udeudeude.github.io/thdies-cast/dice-methods/illustrated-d20-light-house.mp4"
+          assert int(enclosure.get("length"))==mp4.stat().st_size
+          print("VIDEO VERIFIED",props["format"]["duration"],"seconds, zero chapters",flush=True)
+          PY
+      - name: Commit video MP4, separate video RSS and provenance
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add thdies-cast/dice-methods/illustrated-d20-light-house.mp4 thdies-cast/dice-methods/illustrated-d20-manifest.json thdies-cast/video-feed.xml
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish chapter-free LightHouse illustrated D20 video podcast'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - name: Save video metadata and preview frames
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Lighthouse-D20-video-production
+          path: |
+            thdies-cast/dice-methods/illustrated-d20-manifest.json
+            thdies-cast/dice-methods/light-house-frames/01.png
+            thdies-cast/dice-methods/light-house-frames/20.png
+            thdies-cast/video-feed.xml
+          if-no-files-found: warn
