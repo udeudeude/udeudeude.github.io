@@ -1,11 +1,6 @@
 name: Publish Creatures Behaving Strangely
+# Manual rebuild only: published audio is intentionally immutable unless reviewed.
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'thdies-cast/production/render_creatures.py'
-      - 'thdies-cast/production/creatures_behaving_strangely.md'
-      - '.github/workflows/publish-creatures.yml'
   workflow_dispatch:
 
 permissions:
@@ -77,6 +72,7 @@ jobs:
           git add thdies-cast/audio/14-creatures-behaving-strangely.mp3 thdies-cast/creatures-manifest.json thdies-cast/creatures-behaving-strangely.md thdies-cast/feed.xml thdies-cast/index.html
           git diff --cached --quiet && { echo 'Episode already committed'; exit 0; }
           git commit -m 'Publish Creatures Behaving Strangely as narrated podcast episode 14'
+          git stash push --include-untracked -m 'Clear unreleased runtime files before rebase' || true
           git fetch origin main
           git rebase origin/main
           git push origin HEAD:main
