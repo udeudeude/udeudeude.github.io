@@ -73,7 +73,7 @@ and `.github/workflows/check-thdies-voice-levels.yml` before release.
 
 **Current release tools:** `render_creatures.py`,
 `remaster_library.py`, `audit_audio_levels.py`, and
-`.github/workflows/revise-thdies-audio.yml`.
+archived GitHub Actions run [40076724684](https://github.com/udeudeude/udeudeude.github.io/actions/runs/40076724684). The one-time revision workflow was retired after successful release; `.github/workflows/publish-relics.yml` remains available for deliberate, manual use.
 Original five-episode builders are archival references and must not be used
 to overwrite the current 14-episode feed. Public podcast descriptions must
 not contain engineering jargon, model settings, arbitrary seek-distribution
