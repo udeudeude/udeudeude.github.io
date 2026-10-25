@@ -130,7 +130,7 @@ async function initializeVoiceBrowser() {
       availableVoiceIds=new Set(data.available);
       chooseAndRenderVoiceBrowser(true);
       const count=availableVoiceIds.size;
-      $('voiceAvailability').textContent=count+' / 54 recordings ready';
+      $('voiceAvailability').textContent=count+' recordings available';
     }catch(e){
       // Source selector remains usable with the existing Lewis audition clips.
       $('voiceAvailability').textContent='Voice recordings are being prepared';
