@@ -10,8 +10,8 @@
   <title>Kokoro Voice Lab · Th’die’s Cast</title>
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./style.css?rev=voice-lab-community-v2">
-  <script src="./app.js?rev=voice-lab-community-v2" type="module" defer></script>
+  <link rel="stylesheet" href="./style.css?rev=voice-lab-filters-v3">
+  <script src="./app.js?rev=voice-lab-filters-v3" type="module" defer></script>
 </head>
 <body>
 <div class="shell">
@@ -24,9 +24,24 @@
     <div class="panel-head"><h2>01 <span>Listen & compare</span></h2><div class="live-status" id="loadStatus" aria-live="polite">Initializing…</div></div>
     <div class="voice-browser" aria-labelledby="voiceBrowseHeading">
       <div class="voice-browser-head">
-        <h3 id="voiceBrowseHeading">Kokoro voice library <span class="count" id="voiceCount">54 voices</span></h3>
+        <h3 id="voiceBrowseHeading">AI voice library <span class="count" id="voiceCount">voices</span></h3>
         <span id="voiceAvailability" class="sr-only" role="status" aria-live="polite">Checking samples…</span>
       </div>
+      <div class="voice-browser-grid" style="margin-bottom:10px">
+        <div><label for="originSelect">Voice collection</label>
+          <select id="originSelect">
+            <option value="original">Original Kokoro</option>
+            <option value="community">Independent voices</option>
+            <option value="english">English originals</option>
+            <option value="accents">Accent experiments</option>
+            <option value="all">All collections</option>
+          </select>
+        </div>
+        <div><label for="voiceSearch">Find a voice</label>
+          <input id="voiceSearch" type="search" placeholder="Search name or accent" autocomplete="off" style="width:100%;min-height:42px;border-radius:8px;padding:8px;background:#283442;color:#eee9df;border:1px solid #49515a">
+        </div>
+      </div>
+      <label style="display:flex;align-items:center;gap:8px;margin:6px 0 14px"><input type="checkbox" id="playableOnly" checked> Only show voices with available recordings</label>
       <div class="voice-browser-grid">
         <div>
           <label class="sr-only" for="languageSelect">Language or accent</label>
@@ -48,7 +63,7 @@
         <button type="button" class="secondary small" id="nextVoice" disabled>Next ›</button>
         <button type="button" class="main-action" id="auditionVoice" disabled>▶ Replay selected voice</button>
       </div>
-      <p class="microtext" id="voiceSampleText">Every voice in one language or accent reads the same sentence. Other languages use localized text. These are genuine Kokoro recordings, not processed versions of Lewis.</p>
+      <p class="microtext" id="voiceSampleText">Select a collection, then narrow by accent, gender, or name. Community demonstrations may use different scripts and cannot be compared directly.</p>
     </div>
     <div class="source-grid">
       <div><label class="sr-only" for="sampleSelect">Source recording</label>
