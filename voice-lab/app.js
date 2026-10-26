@@ -41,7 +41,7 @@ const GUSHI_MANIFEST_URL = GUSHI_SAMPLE_ROOT + 'manifest.json';
 let voiceCatalog = null;
 let availableVoiceIds = null;
 let nativeVoiceIds = new Set();
-function voicePlayable(id) { return availableVoiceIds===null || availableVoiceIds.has(id) || ($('originSelect')?.value==='international' && nativeVoiceIds.has(id)); }
+function voicePlayable(id) { return availableVoiceIds===null || availableVoiceIds.has(id) || ($('originSelect')?.value!=='accents' && nativeVoiceIds.has(id)); }
 let filteredVoices = [];
 let voiceLoading = false;
 let voiceLoadQueued = false;
@@ -60,7 +60,7 @@ function eligibleVoices() {
   const origin = $('originSelect')?.value || 'english';
   const search = ($('voiceSearch')?.value || '').trim().toLowerCase();
   const playable = $('playableOnly')?.checked ?? true;
-  const isAvailable = voice => availableVoiceIds===null || availableVoiceIds.has(voice.id) || (origin==='international' && nativeVoiceIds.has(voice.id));
+  const isAvailable = voice => availableVoiceIds===null || availableVoiceIds.has(voice.id) || (origin!=='accents' && nativeVoiceIds.has(voice.id));
   return (voiceCatalog?.groups||[]).flatMap(group =>
     (language==='all'||language===group.code) && (origin==='all' || (origin==='community' ? (group.code==='gushi'||group.code.startsWith('community-')) : (origin==='original' ? group.code!=='gushi'&&!group.code.startsWith('community-') : (origin==='accents' || origin==='international' ? 'efhijpz'.includes(group.code) && group.code.length===1 : (group.code==='a'||group.code==='b')))))
       ? group.voices.filter(voice => (profile==='all'||voice.gender===profile) && (!search || (voice.name+' '+voice.id+' '+group.label).toLowerCase().includes(search)) && (!playable || isAvailable(voice)))
@@ -123,7 +123,7 @@ function updateVoiceBrowserState() {
     }
   }
   if (info) {
-    $('voiceSampleText').textContent = ($('originSelect')?.value==='international' ? 'Original-language recording, not English speech. ' : '') + info.group.label + ' · ' +
+    $('voiceSampleText').textContent = (nativeVoiceIds.has(id) && $('originSelect')?.value!=='accents' ? 'Original-language recording, not English speech. ' : '') + info.group.label + ' · ' +
       (info.voice.gender === 'f' ? 'Feminine' : 'Masculine') +
       (info.voice.demoOnly ? '. Community sample not yet hosted here.' :
         '. Spoken script: “' + info.group.sample + '”');
@@ -211,7 +211,7 @@ async function loadLibraryVoice(force=false){
   voiceLoading=true;busyLoading=true;updateVoiceBrowserState();
   setStatus('Loading '+info.voice.name+'…');
   try{
-    const response=await fetch((info.voice.demoUrl ? info.voice.demoUrl : ($('originSelect')?.value === 'international' && nativeVoiceIds.has(info.voice.id) ? VOICE_SAMPLE_ROOT : info.voice.sampleRoot === 'english-accents/' ? ACCENT_SAMPLE_ROOT : info.voice.sampleRoot === 'community-v1.1/' ? COMMUNITY_SAMPLE_ROOT : info.voice.sampleRoot === 'gushi/' ? GUSHI_SAMPLE_ROOT : VOICE_SAMPLE_ROOT)+encodeURIComponent(info.voice.id)+'.mp3'));
+    const response=await fetch((info.voice.demoUrl ? info.voice.demoUrl : ($('originSelect')?.value !== 'accents' && nativeVoiceIds.has(info.voice.id) ? VOICE_SAMPLE_ROOT : info.voice.sampleRoot === 'english-accents/' ? ACCENT_SAMPLE_ROOT : info.voice.sampleRoot === 'community-v1.1/' ? COMMUNITY_SAMPLE_ROOT : info.voice.sampleRoot === 'gushi/' ? GUSHI_SAMPLE_ROOT : VOICE_SAMPLE_ROOT)+encodeURIComponent(info.voice.id)+'.mp3'));
     if(!response.ok)throw Error('Audio not found (HTTP '+response.status+')');
     const bytes=await response.arrayBuffer();
     $('clipStart').value='0';
