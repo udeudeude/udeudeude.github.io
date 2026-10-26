@@ -166,17 +166,20 @@
         {
           "id": "ef_dora",
           "name": "dora",
-          "gender": "f"
+          "gender": "f",
+          "sampleRoot": "english-accents/"
         },
         {
           "id": "em_alex",
           "name": "alex",
-          "gender": "m"
+          "gender": "m",
+          "sampleRoot": "english-accents/"
         },
         {
           "id": "em_santa",
           "name": "santa",
-          "gender": "m"
+          "gender": "m",
+          "sampleRoot": "english-accents/"
         }
       ]
     },
@@ -188,7 +191,8 @@
         {
           "id": "ff_siwis",
           "name": "siwis",
-          "gender": "f"
+          "gender": "f",
+          "sampleRoot": "english-accents/"
         }
       ]
     },
@@ -200,22 +204,26 @@
         {
           "id": "hf_alpha",
           "name": "alpha",
-          "gender": "f"
+          "gender": "f",
+          "sampleRoot": "english-accents/"
         },
         {
           "id": "hf_beta",
           "name": "beta",
-          "gender": "f"
+          "gender": "f",
+          "sampleRoot": "english-accents/"
         },
         {
           "id": "hm_omega",
           "name": "omega",
-          "gender": "m"
+          "gender": "m",
+          "sampleRoot": "english-accents/"
         },
         {
           "id": "hm_psi",
           "name": "psi",
-          "gender": "m"
+          "gender": "m",
+          "sampleRoot": "english-accents/"
         }
       ]
     },
@@ -227,12 +235,14 @@
         {
           "id": "if_sara",
           "name": "sara",
-          "gender": "f"
+          "gender": "f",
+          "sampleRoot": "english-accents/"
         },
         {
           "id": "im_nicola",
           "name": "nicola",
-          "gender": "m"
+          "gender": "m",
+          "sampleRoot": "english-accents/"
         }
       ]
     },
@@ -244,27 +254,32 @@
         {
           "id": "jf_alpha",
           "name": "alpha",
-          "gender": "f"
+          "gender": "f",
+          "sampleRoot": "english-accents/"
         },
         {
           "id": "jf_gongitsune",
           "name": "gongitsune",
-          "gender": "f"
+          "gender": "f",
+          "sampleRoot": "english-accents/"
         },
         {
           "id": "jf_nezumi",
           "name": "nezumi",
-          "gender": "f"
+          "gender": "f",
+          "sampleRoot": "english-accents/"
         },
         {
           "id": "jf_tebukuro",
           "name": "tebukuro",
-          "gender": "f"
+          "gender": "f",
+          "sampleRoot": "english-accents/"
         },
         {
           "id": "jm_kumo",
           "name": "kumo",
-          "gender": "m"
+          "gender": "m",
+          "sampleRoot": "english-accents/"
         }
       ]
     },
@@ -276,17 +291,20 @@
         {
           "id": "pf_dora",
           "name": "dora",
-          "gender": "f"
+          "gender": "f",
+          "sampleRoot": "english-accents/"
         },
         {
           "id": "pm_alex",
           "name": "alex",
-          "gender": "m"
+          "gender": "m",
+          "sampleRoot": "english-accents/"
         },
         {
           "id": "pm_santa",
           "name": "santa",
-          "gender": "m"
+          "gender": "m",
+          "sampleRoot": "english-accents/"
         }
       ]
     },
@@ -298,42 +316,50 @@
         {
           "id": "zf_xiaobei",
           "name": "xiaobei",
-          "gender": "f"
+          "gender": "f",
+          "sampleRoot": "english-accents/"
         },
         {
           "id": "zf_xiaoni",
           "name": "xiaoni",
-          "gender": "f"
+          "gender": "f",
+          "sampleRoot": "english-accents/"
         },
         {
           "id": "zf_xiaoxiao",
           "name": "xiaoxiao",
-          "gender": "f"
+          "gender": "f",
+          "sampleRoot": "english-accents/"
         },
         {
           "id": "zf_xiaoyi",
           "name": "xiaoyi",
-          "gender": "f"
+          "gender": "f",
+          "sampleRoot": "english-accents/"
         },
         {
           "id": "zm_yunjian",
           "name": "yunjian",
-          "gender": "m"
+          "gender": "m",
+          "sampleRoot": "english-accents/"
         },
         {
           "id": "zm_yunxi",
           "name": "yunxi",
-          "gender": "m"
+          "gender": "m",
+          "sampleRoot": "english-accents/"
         },
         {
           "id": "zm_yunxia",
           "name": "yunxia",
-          "gender": "m"
+          "gender": "m",
+          "sampleRoot": "english-accents/"
         },
         {
           "id": "zm_yunyang",
           "name": "yunyang",
-          "gender": "m"
+          "gender": "m",
+          "sampleRoot": "english-accents/"
         }
       ]
     },
