@@ -405,18 +405,20 @@
           "name": "Tony",
           "gender": "m",
           "source": "Gushi Labs",
-          "demoOnly": true,
+          "demoOnly": false,
           "sourceUrl": "https://huggingface.co/gushilabs/gushilabs-voices-for-kokoro-v1",
-          "availabilityNote": "Developer demo is not accessible as in-app audio; a locally hosted sample is needed."
+          "availabilityNote": "Available only after a successfully published generated audition.",
+          "sampleRoot": "gushi/"
         },
         {
           "id": "gushi_vivien",
           "name": "Vivien",
           "gender": "f",
           "source": "Gushi Labs",
-          "demoOnly": true,
+          "demoOnly": false,
           "sourceUrl": "https://huggingface.co/gushilabs/gushilabs-voices-for-kokoro-v1",
-          "availabilityNote": "Developer demo is not accessible as in-app audio; a locally hosted sample is needed."
+          "availabilityNote": "Available only after a successfully published generated audition.",
+          "sampleRoot": "gushi/"
         }
       ]
     }
