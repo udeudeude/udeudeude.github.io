@@ -1,0 +1,38 @@
+name: Publish experimental English-accent auditions
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/generate-english-accents.py'
+      - '.github/workflows/english-accents.yml'
+permissions:
+  contents: write
+concurrency:
+  group: english-accent-publishing
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install Kokoro
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y espeak-ng ffmpeg
+          python -m pip install 'kokoro==0.9.4' 'soundfile>=0.12,<1' 'numpy>=1.26,<3'
+      - name: Generate experimental accents
+        run: python scripts/generate-english-accents.py
+      - name: Publish successful auditions
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add voice-lab/english-accents/
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish experimental English-accent voice auditions'
+            git push
+          fi
