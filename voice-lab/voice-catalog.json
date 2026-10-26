@@ -404,17 +404,19 @@
           "id": "gushi_tony",
           "name": "Tony",
           "gender": "m",
-          "demoUrl": "https://huggingface.co/gushilabs/gushilabs-voices-for-kokoro-v1/resolve/main/audio_sample/TonyEveryoneEncodersCloning.m4a",
           "source": "Gushi Labs",
-          "demoOnly": true
+          "demoOnly": true,
+          "sourceUrl": "https://huggingface.co/gushilabs/gushilabs-voices-for-kokoro-v1",
+          "availabilityNote": "Developer demo is not accessible as in-app audio; a locally hosted sample is needed."
         },
         {
           "id": "gushi_vivien",
           "name": "Vivien",
           "gender": "f",
-          "demoUrl": "https://huggingface.co/gushilabs/gushilabs-voices-for-kokoro-v1/resolve/main/audio_sample/VivienWorldDiffuserDenoiser.m4a",
           "source": "Gushi Labs",
-          "demoOnly": true
+          "demoOnly": true,
+          "sourceUrl": "https://huggingface.co/gushilabs/gushilabs-voices-for-kokoro-v1",
+          "availabilityNote": "Developer demo is not accessible as in-app audio; a locally hosted sample is needed."
         }
       ]
     }
