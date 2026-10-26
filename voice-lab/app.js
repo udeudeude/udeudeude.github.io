@@ -104,6 +104,8 @@ function updateVoiceBrowserState() {
   $('nextVoice').disabled=voiceLoading||idx<0||choices.length<2;
   $('auditionVoice').disabled=voiceLoading||idx<0;
   const info=currentVoiceInfo();
+  const demoLink=$('communityDemoLink');
+  if(demoLink){demoLink.hidden=!info?.voice.demoUrl; if(info?.voice.demoUrl)demoLink.href=info.voice.demoUrl;}
   if(info) $('voiceSampleText').textContent=(info.voice.demoOnly?'Independent developer demonstration (not matched audition). ':'')+info.group.label+' · '+(info.voice.gender==='f'?'Feminine':'Masculine')+
     '. Spoken script: “'+info.group.sample+'”'+(availableVoiceIds&&!availableVoiceIds.has(id)&&!info.voice.demoUrl?' (audio unavailable)':'');
 }
