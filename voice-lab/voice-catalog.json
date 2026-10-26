@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "engine": "Kokoro-82M v1.0",
   "defaultVoice": "bf_alice",
-  "samplePolicy": "Identical passage within each English accent group. Unmodified base voices at speed 1.0.",
+  "samplePolicy": "English narration auditions; non-English Kokoro voices included as experimental English-with-accent candidates. Community v1.1 uses a separate checkpoint.",
   "groups": [
     {
       "code": "b",
@@ -155,6 +155,217 @@
           "id": "am_santa",
           "name": "Santa",
           "gender": "m"
+        }
+      ]
+    },
+    {
+      "code": "e",
+      "label": "English · Spanish-accent experiment",
+      "sample": "The road is long, and fortune seldom walks beside us. Still, you may roll.",
+      "voices": [
+        {
+          "id": "ef_dora",
+          "name": "dora",
+          "gender": "f"
+        },
+        {
+          "id": "em_alex",
+          "name": "alex",
+          "gender": "m"
+        },
+        {
+          "id": "em_santa",
+          "name": "santa",
+          "gender": "m"
+        }
+      ]
+    },
+    {
+      "code": "f",
+      "label": "English · French-accent experiment",
+      "sample": "The road is long, and fortune seldom walks beside us. Still, you may roll.",
+      "voices": [
+        {
+          "id": "ff_siwis",
+          "name": "siwis",
+          "gender": "f"
+        }
+      ]
+    },
+    {
+      "code": "h",
+      "label": "English · Hindi-accent experiment",
+      "sample": "The road is long, and fortune seldom walks beside us. Still, you may roll.",
+      "voices": [
+        {
+          "id": "hf_alpha",
+          "name": "alpha",
+          "gender": "f"
+        },
+        {
+          "id": "hf_beta",
+          "name": "beta",
+          "gender": "f"
+        },
+        {
+          "id": "hm_omega",
+          "name": "omega",
+          "gender": "m"
+        },
+        {
+          "id": "hm_psi",
+          "name": "psi",
+          "gender": "m"
+        }
+      ]
+    },
+    {
+      "code": "i",
+      "label": "English · Italian-accent experiment",
+      "sample": "The road is long, and fortune seldom walks beside us. Still, you may roll.",
+      "voices": [
+        {
+          "id": "if_sara",
+          "name": "sara",
+          "gender": "f"
+        },
+        {
+          "id": "im_nicola",
+          "name": "nicola",
+          "gender": "m"
+        }
+      ]
+    },
+    {
+      "code": "j",
+      "label": "English · Japanese-accent experiment",
+      "sample": "The road is long, and fortune seldom walks beside us. Still, you may roll.",
+      "voices": [
+        {
+          "id": "jf_alpha",
+          "name": "alpha",
+          "gender": "f"
+        },
+        {
+          "id": "jf_gongitsune",
+          "name": "gongitsune",
+          "gender": "f"
+        },
+        {
+          "id": "jf_nezumi",
+          "name": "nezumi",
+          "gender": "f"
+        },
+        {
+          "id": "jf_tebukuro",
+          "name": "tebukuro",
+          "gender": "f"
+        },
+        {
+          "id": "jm_kumo",
+          "name": "kumo",
+          "gender": "m"
+        }
+      ]
+    },
+    {
+      "code": "p",
+      "label": "English · Portuguese-accent experiment",
+      "sample": "The road is long, and fortune seldom walks beside us. Still, you may roll.",
+      "voices": [
+        {
+          "id": "pf_dora",
+          "name": "dora",
+          "gender": "f"
+        },
+        {
+          "id": "pm_alex",
+          "name": "alex",
+          "gender": "m"
+        },
+        {
+          "id": "pm_santa",
+          "name": "santa",
+          "gender": "m"
+        }
+      ]
+    },
+    {
+      "code": "z",
+      "label": "English · Mandarin-accent experiment",
+      "sample": "The road is long, and fortune seldom walks beside us. Still, you may roll.",
+      "voices": [
+        {
+          "id": "zf_xiaobei",
+          "name": "xiaobei",
+          "gender": "f"
+        },
+        {
+          "id": "zf_xiaoni",
+          "name": "xiaoni",
+          "gender": "f"
+        },
+        {
+          "id": "zf_xiaoxiao",
+          "name": "xiaoxiao",
+          "gender": "f"
+        },
+        {
+          "id": "zf_xiaoyi",
+          "name": "xiaoyi",
+          "gender": "f"
+        },
+        {
+          "id": "zm_yunjian",
+          "name": "yunjian",
+          "gender": "m"
+        },
+        {
+          "id": "zm_yunxi",
+          "name": "yunxi",
+          "gender": "m"
+        },
+        {
+          "id": "zm_yunxia",
+          "name": "yunxia",
+          "gender": "m"
+        },
+        {
+          "id": "zm_yunyang",
+          "name": "yunyang",
+          "gender": "m"
+        }
+      ]
+    },
+    {
+      "code": "community-us",
+      "label": "Community v1.1 · American English",
+      "sample": "The road is long, and fortune seldom walks beside us. Still, you may roll.",
+      "voices": [
+        {
+          "id": "af_maple",
+          "name": "Maple",
+          "gender": "f",
+          "sampleRoot": "community-v1.1/"
+        },
+        {
+          "id": "af_sol",
+          "name": "Sol",
+          "gender": "f",
+          "sampleRoot": "community-v1.1/"
+        }
+      ]
+    },
+    {
+      "code": "community-uk",
+      "label": "Community v1.1 · British English",
+      "sample": "The road is long, and fortune seldom walks beside us. Still, you may roll.",
+      "voices": [
+        {
+          "id": "bf_vale",
+          "name": "Vale",
+          "gender": "f",
+          "sampleRoot": "community-v1.1/"
         }
       ]
     }
