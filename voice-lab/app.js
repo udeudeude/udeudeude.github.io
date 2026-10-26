@@ -29,7 +29,7 @@ const SOURCES = {
 // Resolve assets relative to this module, not the HTML page. This keeps
 // the alternate cache-free entry point connected to the same audio library.
 const LAB_ROOT = new URL('./', document.querySelector('script[src*="app.js"]')?.src || location.href);
-const VOICE_CATALOG_URL = new URL('voice-catalog.json?rev=voice-lab-repair-v4', LAB_ROOT).href;
+const VOICE_CATALOG_URL = new URL('voice-catalog.json?rev=voice-lab-international-v5', LAB_ROOT).href;
 const VOICE_SAMPLE_MANIFEST_URL = new URL('voice-samples/manifest.json', LAB_ROOT).href;
 const VOICE_SAMPLE_ROOT = new URL('voice-samples/', LAB_ROOT).href;
 const COMMUNITY_SAMPLE_ROOT = 'https://udeudeude.github.io/voice-lab/community-v1.1/';
@@ -38,6 +38,8 @@ const ACCENT_SAMPLE_ROOT = 'https://udeudeude.github.io/voice-lab/english-accent
 const ACCENT_MANIFEST_URL = ACCENT_SAMPLE_ROOT + 'manifest.json';
 let voiceCatalog = null;
 let availableVoiceIds = null;
+let nativeVoiceIds = new Set();
+function voicePlayable(id) { return availableVoiceIds===null || availableVoiceIds.has(id) || ($('originSelect')?.value==='international' && nativeVoiceIds.has(id)); }
 let filteredVoices = [];
 let voiceLoading = false;
 let voiceLoadQueued = false;
@@ -56,9 +58,10 @@ function eligibleVoices() {
   const origin = $('originSelect')?.value || 'english';
   const search = ($('voiceSearch')?.value || '').trim().toLowerCase();
   const playable = $('playableOnly')?.checked ?? true;
+  const isAvailable = voice => availableVoiceIds===null || availableVoiceIds.has(voice.id) || (origin==='international' && nativeVoiceIds.has(voice.id));
   return (voiceCatalog?.groups||[]).flatMap(group =>
-    (language==='all'||language===group.code) && (origin==='all' || (origin==='community' ? (group.code==='gushi'||group.code.startsWith('community-')) : (origin==='original' ? group.code!=='gushi'&&!group.code.startsWith('community-') : (origin==='accents' ? 'efhijpz'.includes(group.code) && group.code.length===1 : (group.code==='a'||group.code==='b')))))
-      ? group.voices.filter(voice => (profile==='all'||voice.gender===profile) && (!search || (voice.name+' '+voice.id+' '+group.label).toLowerCase().includes(search)) && (!playable || availableVoiceIds===null || availableVoiceIds.has(voice.id) || voice.demoUrl))
+    (language==='all'||language===group.code) && (origin==='all' || (origin==='community' ? (group.code==='gushi'||group.code.startsWith('community-')) : (origin==='original' ? group.code!=='gushi'&&!group.code.startsWith('community-') : (origin==='accents' || origin==='international' ? 'efhijpz'.includes(group.code) && group.code.length===1 : (group.code==='a'||group.code==='b')))))
+      ? group.voices.filter(voice => (profile==='all'||voice.gender===profile) && (!search || (voice.name+' '+voice.id+' '+group.label).toLowerCase().includes(search)) && (!playable || isAvailable(voice)))
         .map(voice=>({...voice,groupCode:group.code,groupLabel:group.label}))
       : []
   );
@@ -77,7 +80,7 @@ function chooseAndRenderVoiceBrowser(preserve=true) {
       const optgroup = document.createElement('optgroup');
       optgroup.label = group.label + ' · ' + (gender === 'f' ? 'Feminine' : 'Masculine');
       for (const voice of candidates) {
-        const playable = availableVoiceIds === null || availableVoiceIds.has(voice.id);
+        const playable = voicePlayable(voice.id);
         const option = new Option(voice.name + (playable ? '' : ' · recording unavailable'), voice.id);
         option.disabled = !playable;
         optgroup.append(option);
@@ -85,7 +88,7 @@ function chooseAndRenderVoiceBrowser(preserve=true) {
       select.append(optgroup);
     }
   }
-  const compatible = filteredVoices.filter(v => availableVoiceIds === null || availableVoiceIds.has(v.id));
+  const compatible = filteredVoices.filter(v => voicePlayable(v.id));
   const chosen = compatible.find(v => v.id === previous) ||
     compatible.find(v => v.id === voiceCatalog.defaultVoice) || compatible[0];
   if (chosen) select.value = chosen.id;
@@ -100,7 +103,7 @@ function chooseAndRenderVoiceBrowser(preserve=true) {
 }
 function updateVoiceBrowserState() {
   const id = $('voiceSelect').disabled ? null : $('voiceSelect').value;
-  const choices = filteredVoices.filter(v => availableVoiceIds === null || availableVoiceIds.has(v.id));
+  const choices = filteredVoices.filter(v => voicePlayable(v.id));
   const idx = choices.findIndex(v => v.id === id);
   $('voicePosition').textContent = idx >= 0 ?
     ' · ' + (idx+1) + ' of ' + choices.length + ' playable' : ' · no playable recordings';
@@ -118,7 +121,7 @@ function updateVoiceBrowserState() {
     }
   }
   if (info) {
-    $('voiceSampleText').textContent = info.group.label + ' · ' +
+    $('voiceSampleText').textContent = ($('originSelect')?.value==='international' ? 'Original-language recording, not English speech. ' : '') + info.group.label + ' · ' +
       (info.voice.gender === 'f' ? 'Feminine' : 'Masculine') +
       (info.voice.demoOnly ? '. Community sample not yet hosted here.' :
         '. Spoken script: “' + info.group.sample + '”');
@@ -129,7 +132,7 @@ function updateVoiceBrowserState() {
   }
 }
 function browseVoices(delta) {
-  const list = filteredVoices.filter(v => availableVoiceIds === null || availableVoiceIds.has(v.id));
+  const list = filteredVoices.filter(v => voicePlayable(v.id));
   if (!list.length) return;
   const pos = list.findIndex(v => v.id === $('voiceSelect').value);
   $('voiceSelect').value = list[(pos + delta + list.length) % list.length].id;
@@ -156,6 +159,7 @@ async function initializeVoiceBrowser() {
       if(!m.ok)throw Error('Samples not yet published');
       const data=await m.json();
       if(!data.completed||!Array.isArray(data.available))throw Error('Samples still rendering');
+      nativeVoiceIds = new Set(data.available.filter(id => 'efhijpz'.includes(id[0])));
       availableVoiceIds=new Set(data.available.filter(id => !('efhijpz'.includes(id[0]))));
       try {
         const community = await fetch(COMMUNITY_MANIFEST_URL, {cache:'no-store'});
@@ -178,6 +182,7 @@ async function initializeVoiceBrowser() {
       // Source selector remains usable with the existing Lewis audition clips.
       $('voiceAvailability').textContent='Voice recordings are being prepared';
       availableVoiceIds=new Set();
+      nativeVoiceIds=new Set();
       chooseAndRenderVoiceBrowser(true);
     }
     return true;
@@ -192,7 +197,7 @@ async function loadLibraryVoice(force=false){
   if(!info)return;
   if(voiceLoading||busyLoading){voiceLoadQueued=true;return;}
   if(!force && loadedVoiceId===info.voice.id && $('sampleSelect').value==='voice-library')return;
-  if(availableVoiceIds&&!availableVoiceIds.has(info.voice.id)&&!info.voice.demoUrl){
+  if(!voicePlayable(info.voice.id)){
     setMessage('That voice recording is not yet available. Try an existing Lewis sample.',true);
     return;
   }
@@ -200,7 +205,7 @@ async function loadLibraryVoice(force=false){
   voiceLoading=true;busyLoading=true;updateVoiceBrowserState();
   setStatus('Loading '+info.voice.name+'…');
   try{
-    const response=await fetch((info.voice.demoUrl ? info.voice.demoUrl : (info.voice.sampleRoot === 'english-accents/' ? ACCENT_SAMPLE_ROOT : info.voice.sampleRoot === 'community-v1.1/' ? COMMUNITY_SAMPLE_ROOT : VOICE_SAMPLE_ROOT)+encodeURIComponent(info.voice.id)+'.mp3'));
+    const response=await fetch((info.voice.demoUrl ? info.voice.demoUrl : ($('originSelect')?.value === 'international' && nativeVoiceIds.has(info.voice.id) ? VOICE_SAMPLE_ROOT : info.voice.sampleRoot === 'english-accents/' ? ACCENT_SAMPLE_ROOT : info.voice.sampleRoot === 'community-v1.1/' ? COMMUNITY_SAMPLE_ROOT : VOICE_SAMPLE_ROOT)+encodeURIComponent(info.voice.id)+'.mp3'));
     if(!response.ok)throw Error('Audio not found (HTTP '+response.status+')');
     const bytes=await response.arrayBuffer();
     $('clipStart').value='0';
