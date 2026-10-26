@@ -1,0 +1,37 @@
+name: Publish community Kokoro voice auditions
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/generate-community-voices.py'
+      - '.github/workflows/community-voices.yml'
+permissions:
+  contents: write
+concurrency:
+  group: community-voice-publishing
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y espeak-ng ffmpeg
+          python -m pip install 'kokoro==0.9.4' 'soundfile>=0.12,<1' 'numpy>=1.26,<3'
+      - name: Generate v1.1 voice recordings
+        run: python scripts/generate-community-voices.py
+      - name: Commit generated recordings
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add voice-lab/community-v1.1/
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish three Kokoro v1.1 English voice auditions'
+            git push
+          fi
