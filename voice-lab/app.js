@@ -53,7 +53,7 @@ function currentVoiceInfo() {
 function eligibleVoices() {
   const language = $('languageSelect').value;
   const profile = $('genderSelect').value;
-  const origin = $('originSelect')?.value || 'original';
+  const origin = $('originSelect')?.value || 'english';
   const search = ($('voiceSearch')?.value || '').trim().toLowerCase();
   const playable = $('playableOnly')?.checked ?? true;
   return (voiceCatalog?.groups||[]).flatMap(group =>
@@ -104,7 +104,7 @@ function updateVoiceBrowserState() {
   $('nextVoice').disabled=voiceLoading||idx<0||choices.length<2;
   $('auditionVoice').disabled=voiceLoading||idx<0;
   const info=currentVoiceInfo();
-  if(info) $('voiceSampleText').textContent=info.group.label+' · '+(info.voice.gender==='f'?'Feminine':'Masculine')+
+  if(info) $('voiceSampleText').textContent=(info.voice.demoOnly?'Independent developer demonstration (not matched audition). ':'')+info.group.label+' · '+(info.voice.gender==='f'?'Feminine':'Masculine')+
     '. Spoken script: “'+info.group.sample+'”'+(availableVoiceIds&&!availableVoiceIds.has(id)&&!info.voice.demoUrl?' (audio unavailable)':'');
 }
 function browseVoices(delta) {
@@ -124,8 +124,8 @@ async function initializeVoiceBrowser() {
     const language=$('languageSelect');
     language.replaceChildren(new Option('All languages / accents','all'));
     for(const group of voiceCatalog.groups)language.add(new Option(group.label,group.code));
-    language.value='all';
-    $('originSelect').value='original';
+    language.value='b';
+    $('originSelect').value='english';
     $('genderSelect').value='all';
     language.disabled=false;$('genderSelect').disabled=false;
     chooseAndRenderVoiceBrowser(false);
@@ -189,7 +189,7 @@ async function loadLibraryVoice(force=false){
     setMessage(info.voice.name+' ('+info.group.label+') ready. Apply voice settings or compare A/B.');
   }catch(e){
     setStatus('Voice sample unavailable','error');
-    setMessage('Could not load '+info.voice.name+': '+e.message,true);
+    setMessage('Could not load '+info.voice.name+': '+e.message+(info.voice.demoUrl?' · Try the original demonstration link below.':''),true);
   }finally{
     voiceLoading=false;busyLoading=false;updateVoiceBrowserState();
     if(voiceLoadQueued){
