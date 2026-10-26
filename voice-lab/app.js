@@ -127,7 +127,7 @@ async function initializeVoiceBrowser() {
       if(!m.ok)throw Error('Samples not yet published');
       const data=await m.json();
       if(!data.completed||!Array.isArray(data.available))throw Error('Samples still rendering');
-      availableVoiceIds=new Set(data.available);
+      availableVoiceIds=new Set(data.available.filter(id => !('efhijpz'.includes(id[0]))));
       try {
         const community = await fetch(COMMUNITY_MANIFEST_URL, {cache:'no-store'});
         if (community.ok) {
