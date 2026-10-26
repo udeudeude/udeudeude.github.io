@@ -29,7 +29,7 @@ const SOURCES = {
 // Resolve assets relative to this module, not the HTML page. This keeps
 // the alternate cache-free entry point connected to the same audio library.
 const LAB_ROOT = new URL('./', document.querySelector('script[src*="app.js"]')?.src || location.href);
-const VOICE_CATALOG_URL = new URL('voice-catalog.json?rev=kokoro-54-v3', LAB_ROOT).href;
+const VOICE_CATALOG_URL = new URL('voice-catalog.json?rev=voice-lab-repair-v4', LAB_ROOT).href;
 const VOICE_SAMPLE_MANIFEST_URL = new URL('voice-samples/manifest.json', LAB_ROOT).href;
 const VOICE_SAMPLE_ROOT = new URL('voice-samples/', LAB_ROOT).href;
 const COMMUNITY_SAMPLE_ROOT = 'https://udeudeude.github.io/voice-lab/community-v1.1/';
@@ -64,59 +64,78 @@ function eligibleVoices() {
   );
 }
 function chooseAndRenderVoiceBrowser(preserve=true) {
-  if (!voiceCatalog)return;
+  if (!voiceCatalog) return;
   const previous = preserve ? $('voiceSelect').value : voiceCatalog.defaultVoice;
-  filteredVoices=eligibleVoices();
-  const select=$('voiceSelect');
+  filteredVoices = eligibleVoices();
+  const select = $('voiceSelect');
   select.replaceChildren();
   for (const group of voiceCatalog.groups) {
-    const included=filteredVoices.filter(v=>v.groupCode===group.code);
-    if (!included.length)continue;
-    for (const profile of ['f','m']) {
-      const candidates=included.filter(v=>v.gender===profile);
-      if (!candidates.length)continue;
-      const optgroup=document.createElement('optgroup');
-      optgroup.label=group.label+' · '+(profile==='f'?'Feminine':'Masculine');
-      for(const voice of candidates) {
-        const option=document.createElement('option');
-        option.value=voice.id;
-        option.textContent=voice.name + (availableVoiceIds&&!availableVoiceIds.has(voice.id)&&!voice.demoUrl?' · not available':'');
-        // Non-rendered voices are shown but not offered as working audio.
-        if(availableVoiceIds&&!availableVoiceIds.has(voice.id))option.disabled=true;
+    const included = filteredVoices.filter(v => v.groupCode === group.code);
+    for (const gender of ['f','m']) {
+      const candidates = included.filter(v => v.gender === gender);
+      if (!candidates.length) continue;
+      const optgroup = document.createElement('optgroup');
+      optgroup.label = group.label + ' · ' + (gender === 'f' ? 'Feminine' : 'Masculine');
+      for (const voice of candidates) {
+        const playable = availableVoiceIds === null || availableVoiceIds.has(voice.id);
+        const option = new Option(voice.name + (playable ? '' : ' · recording unavailable'), voice.id);
+        option.disabled = !playable;
         optgroup.append(option);
       }
       select.append(optgroup);
     }
   }
-  const compatible=filteredVoices.filter(v=>!availableVoiceIds||availableVoiceIds.has(v.id)||v.demoUrl);
-  const chosen=compatible.find(v=>v.id===previous) || compatible.find(v=>v.id===voiceCatalog.defaultVoice) || compatible[0];
-  if(chosen)select.value=chosen.id;
-  select.disabled=!chosen;
-  $('voiceCount').textContent=filteredVoices.length+' / '+voiceCatalog.groups.reduce((n,g)=>n+g.voices.length,0)+' voices';
+  const compatible = filteredVoices.filter(v => availableVoiceIds === null || availableVoiceIds.has(v.id));
+  const chosen = compatible.find(v => v.id === previous) ||
+    compatible.find(v => v.id === voiceCatalog.defaultVoice) || compatible[0];
+  if (chosen) select.value = chosen.id;
+  else {
+    select.replaceChildren(new Option(filteredVoices.length ?
+      'No playable recordings in this selection' : 'No matching voices', ''));
+  }
+  select.disabled = !chosen;
+  $('voiceCount').textContent = filteredVoices.length + ' / ' +
+    voiceCatalog.groups.reduce((n,g) => n + g.voices.length,0) + ' voices';
   updateVoiceBrowserState();
 }
 function updateVoiceBrowserState() {
-  const id=$('voiceSelect').value;
-  const choices=filteredVoices.filter(v=>!availableVoiceIds||availableVoiceIds.has(v.id));
-  const idx=choices.findIndex(v=>v.id===id);
-  $('voicePosition').textContent=idx>=0?(' · '+(idx+1)+' of '+choices.length+' playable'):' · no playable samples';
-  $('prevVoice').disabled=voiceLoading||idx<0||choices.length<2;
-  $('nextVoice').disabled=voiceLoading||idx<0||choices.length<2;
-  $('auditionVoice').disabled=voiceLoading||idx<0;
-  const info=currentVoiceInfo();
-  const demoLink=$('communityDemoLink');
-  if(demoLink){demoLink.hidden=!info?.voice.demoUrl; if(info?.voice.demoUrl)demoLink.href=info.voice.demoUrl;}
-  if(info) $('voiceSampleText').textContent=(info.voice.demoOnly?'Independent developer demonstration (not matched audition). ':'')+info.group.label+' · '+(info.voice.gender==='f'?'Feminine':'Masculine')+
-    '. Spoken script: “'+info.group.sample+'”'+(availableVoiceIds&&!availableVoiceIds.has(id)&&!info.voice.demoUrl?' (audio unavailable)':'');
+  const id = $('voiceSelect').disabled ? null : $('voiceSelect').value;
+  const choices = filteredVoices.filter(v => availableVoiceIds === null || availableVoiceIds.has(v.id));
+  const idx = choices.findIndex(v => v.id === id);
+  $('voicePosition').textContent = idx >= 0 ?
+    ' · ' + (idx+1) + ' of ' + choices.length + ' playable' : ' · no playable recordings';
+  $('prevVoice').disabled = voiceLoading || idx < 0 || choices.length < 2;
+  $('nextVoice').disabled = voiceLoading || idx < 0 || choices.length < 2;
+  $('auditionVoice').disabled = voiceLoading || idx < 0;
+  const info = id ? currentVoiceInfo() : null;
+  const link = $('communityDemoLink');
+  if (link) {
+    const source = info?.voice.sourceUrl || null;
+    link.hidden = !source;
+    if (source) {
+      link.href = source;
+      link.textContent = 'View community voice source and demonstrations';
+    }
+  }
+  if (info) {
+    $('voiceSampleText').textContent = info.group.label + ' · ' +
+      (info.voice.gender === 'f' ? 'Feminine' : 'Masculine') +
+      (info.voice.demoOnly ? '. Community sample not yet hosted here.' :
+        '. Spoken script: “' + info.group.sample + '”');
+  } else {
+    $('voiceSampleText').textContent = filteredVoices.length ?
+      'This collection has no playable recordings yet. Uncheck the availability filter to inspect its voices, or choose another collection to listen.' :
+      'No voices match these filters. Change the collection, language, gender, or search.';
+  }
 }
 function browseVoices(delta) {
-  const list=filteredVoices.filter(v=>!availableVoiceIds||availableVoiceIds.has(v.id));
-  const n=list.length;
-  if(!n)return;
-  const pos=list.findIndex(v=>v.id===$('voiceSelect').value);
-  $('voiceSelect').value=list[(pos+delta+n)%n].id;
+  const list = filteredVoices.filter(v => availableVoiceIds === null || availableVoiceIds.has(v.id));
+  if (!list.length) return;
+  const pos = list.findIndex(v => v.id === $('voiceSelect').value);
+  $('voiceSelect').value = list[(pos + delta + list.length) % list.length].id;
   updateVoiceBrowserState();
 }
+
 async function initializeVoiceBrowser() {
   try {
     const response=await fetch(VOICE_CATALOG_URL,{cache:'no-cache'});
