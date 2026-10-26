@@ -57,7 +57,7 @@ function eligibleVoices() {
   const search = ($('voiceSearch')?.value || '').trim().toLowerCase();
   const playable = $('playableOnly')?.checked ?? true;
   return (voiceCatalog?.groups||[]).flatMap(group =>
-    (language==='all'||language===group.code) && (origin==='all' || (origin==='community' ? (group.code==='gushi'||group.code.startsWith('community-')) : (origin==='original' ? group.code!=='gushi'&&!group.code.startsWith('community-') : (origin==='accents' ? 'efhijpz'.includes(group.code) && group.code.length===1 : (group.code==='a'||group.code==='b'))))
+    (language==='all'||language===group.code) && (origin==='all' || (origin==='community' ? (group.code==='gushi'||group.code.startsWith('community-')) : (origin==='original' ? group.code!=='gushi'&&!group.code.startsWith('community-') : (origin==='accents' ? 'efhijpz'.includes(group.code) && group.code.length===1 : (group.code==='a'||group.code==='b')))))
       ? group.voices.filter(voice => (profile==='all'||voice.gender===profile) && (!search || (voice.name+' '+voice.id+' '+group.label).toLowerCase().includes(search)) && (!playable || availableVoiceIds===null || availableVoiceIds.has(voice.id) || voice.demoUrl))
         .map(voice=>({...voice,groupCode:group.code,groupLabel:group.label}))
       : []
