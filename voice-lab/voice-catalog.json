@@ -160,7 +160,7 @@
     },
     {
       "code": "e",
-      "label": "English · Spanish-accent experiment",
+      "label": "Original Kokoro · Spanish voice (English experiment pending)",
       "sample": "The road is long, and fortune seldom walks beside us. Still, you may roll.",
       "voices": [
         {
@@ -182,7 +182,7 @@
     },
     {
       "code": "f",
-      "label": "English · French-accent experiment",
+      "label": "Original Kokoro · French voice (English experiment pending)",
       "sample": "The road is long, and fortune seldom walks beside us. Still, you may roll.",
       "voices": [
         {
@@ -194,7 +194,7 @@
     },
     {
       "code": "h",
-      "label": "English · Hindi-accent experiment",
+      "label": "Original Kokoro · Hindi voice (English experiment pending)",
       "sample": "The road is long, and fortune seldom walks beside us. Still, you may roll.",
       "voices": [
         {
@@ -221,7 +221,7 @@
     },
     {
       "code": "i",
-      "label": "English · Italian-accent experiment",
+      "label": "Original Kokoro · Italian voice (English experiment pending)",
       "sample": "The road is long, and fortune seldom walks beside us. Still, you may roll.",
       "voices": [
         {
@@ -238,7 +238,7 @@
     },
     {
       "code": "j",
-      "label": "English · Japanese-accent experiment",
+      "label": "Original Kokoro · Japanese voice (English experiment pending)",
       "sample": "The road is long, and fortune seldom walks beside us. Still, you may roll.",
       "voices": [
         {
@@ -270,7 +270,7 @@
     },
     {
       "code": "p",
-      "label": "English · Portuguese-accent experiment",
+      "label": "Original Kokoro · Portuguese voice (English experiment pending)",
       "sample": "The road is long, and fortune seldom walks beside us. Still, you may roll.",
       "voices": [
         {
@@ -292,7 +292,7 @@
     },
     {
       "code": "z",
-      "label": "English · Mandarin-accent experiment",
+      "label": "Original Kokoro · Mandarin voice (English experiment pending)",
       "sample": "The road is long, and fortune seldom walks beside us. Still, you may roll.",
       "voices": [
         {
