@@ -636,7 +636,7 @@ function bindInputs(){
   }
   $('applyVoice').addEventListener('click',requestVoiceRender);
   $('sampleSelect').addEventListener('change',loadSelected);
-  $('originSelect').addEventListener('change',()=>chooseAndRenderVoiceBrowser(false));
+  $('originSelect').addEventListener('change',()=>{$('languageSelect').value='all';chooseAndRenderVoiceBrowser(false);loadLibraryVoice();});
   $('voiceSearch').addEventListener('input',()=>chooseAndRenderVoiceBrowser(true));
   $('playableOnly').addEventListener('change',()=>chooseAndRenderVoiceBrowser(true));
   $('languageSelect').addEventListener('change',()=>{chooseAndRenderVoiceBrowser(true);loadLibraryVoice();});
