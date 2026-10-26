@@ -20,7 +20,7 @@ pipelines = {code: KPipeline(lang_code=code, repo_id=REPO, model=model) for code
 records = []
 with tempfile.TemporaryDirectory() as temp:
     for voice, code in VOICES.items():
-        chunks = [np.asarray(result.audio, dtype=np.float32) for result in pipelines[code](TEXT, voice=voice)]
+        chunks = [np.asarray(audio, dtype=np.float32) for _, _, audio in pipelines[code](TEXT, voice=voice)]
         if not chunks:
             raise RuntimeError(f"No audio generated for {voice}")
         wav = Path(temp) / (voice + ".wav")
