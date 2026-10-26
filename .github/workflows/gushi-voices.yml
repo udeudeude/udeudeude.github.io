@@ -1,0 +1,35 @@
+name: Publish Gushi Labs Kokoro auditions
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/generate-gushi-voices.py'
+      - '.github/workflows/gushi-voices.yml'
+permissions:
+  contents: write
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install runtime
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y espeak-ng ffmpeg
+          python -m pip install 'kokoro==0.9.4' 'soundfile>=0.12,<1' 'numpy>=1.26,<3' 'huggingface_hub>=0.24,<1'
+      - name: Generate independent voice auditions
+        run: python scripts/generate-gushi-voices.py
+      - name: Publish recordings
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add voice-lab/gushi/
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish playable Gushi Labs voice auditions'
+            git pull --rebase
+            git push
+          fi
