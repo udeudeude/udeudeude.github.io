@@ -110,7 +110,7 @@ function updateVoiceBrowserState() {
   const info = id ? currentVoiceInfo() : null;
   const link = $('communityDemoLink');
   if (link) {
-    const source = info?.voice.sourceUrl || null;
+    const source = info?.voice.sourceUrl || ($('originSelect')?.value === 'community' && filteredVoices.some(v => v.groupCode === 'gushi') ? 'https://huggingface.co/gushilabs/gushilabs-voices-for-kokoro-v1' : null);
     link.hidden = !source;
     if (source) {
       link.href = source;
