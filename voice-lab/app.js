@@ -32,6 +32,10 @@ const LAB_ROOT = new URL('./', document.querySelector('script[src*="app.js"]')?.
 const VOICE_CATALOG_URL = new URL('voice-catalog.json?rev=kokoro-54-v3', LAB_ROOT).href;
 const VOICE_SAMPLE_MANIFEST_URL = new URL('voice-samples/manifest.json', LAB_ROOT).href;
 const VOICE_SAMPLE_ROOT = new URL('voice-samples/', LAB_ROOT).href;
+const COMMUNITY_SAMPLE_ROOT = 'https://udeudeude.github.io/voice-lab/community-v1.1/';
+const COMMUNITY_MANIFEST_URL = COMMUNITY_SAMPLE_ROOT + 'manifest.json';
+const ACCENT_SAMPLE_ROOT = 'https://udeudeude.github.io/voice-lab/english-accents/';
+const ACCENT_MANIFEST_URL = ACCENT_SAMPLE_ROOT + 'manifest.json';
 let voiceCatalog = null;
 let availableVoiceIds = null;
 let filteredVoices = [];
@@ -49,9 +53,12 @@ function currentVoiceInfo() {
 function eligibleVoices() {
   const language = $('languageSelect').value;
   const profile = $('genderSelect').value;
+  const origin = $('originSelect')?.value || 'original';
+  const search = ($('voiceSearch')?.value || '').trim().toLowerCase();
+  const playable = $('playableOnly')?.checked ?? true;
   return (voiceCatalog?.groups||[]).flatMap(group =>
-    (language==='all'||language===group.code)
-      ? group.voices.filter(voice => profile==='all'||voice.gender===profile)
+    (language==='all'||language===group.code) && (origin==='all' || (origin==='community' ? (group.code==='gushi'||group.code.startsWith('community-')) : (origin==='original' ? group.code!=='gushi'&&!group.code.startsWith('community-') : (origin==='accents' ? 'efhijpz'.includes(group.code) && group.code.length===1 : (group.code==='a'||group.code==='b'))))
+      ? group.voices.filter(voice => (profile==='all'||voice.gender===profile) && (!search || (voice.name+' '+voice.id+' '+group.label).toLowerCase().includes(search)) && (!playable || availableVoiceIds===null || availableVoiceIds.has(voice.id) || voice.demoUrl))
         .map(voice=>({...voice,groupCode:group.code,groupLabel:group.label}))
       : []
   );
@@ -73,7 +80,7 @@ function chooseAndRenderVoiceBrowser(preserve=true) {
       for(const voice of candidates) {
         const option=document.createElement('option');
         option.value=voice.id;
-        option.textContent=voice.name + (availableVoiceIds&&!availableVoiceIds.has(voice.id)?' · not available':'');
+        option.textContent=voice.name + (availableVoiceIds&&!availableVoiceIds.has(voice.id)&&!voice.demoUrl?' · not available':'');
         // Non-rendered voices are shown but not offered as working audio.
         if(availableVoiceIds&&!availableVoiceIds.has(voice.id))option.disabled=true;
         optgroup.append(option);
@@ -81,7 +88,7 @@ function chooseAndRenderVoiceBrowser(preserve=true) {
       select.append(optgroup);
     }
   }
-  const compatible=filteredVoices.filter(v=>!availableVoiceIds||availableVoiceIds.has(v.id));
+  const compatible=filteredVoices.filter(v=>!availableVoiceIds||availableVoiceIds.has(v.id)||v.demoUrl);
   const chosen=compatible.find(v=>v.id===previous) || compatible.find(v=>v.id===voiceCatalog.defaultVoice) || compatible[0];
   if(chosen)select.value=chosen.id;
   select.disabled=!chosen;
@@ -98,7 +105,7 @@ function updateVoiceBrowserState() {
   $('auditionVoice').disabled=voiceLoading||idx<0;
   const info=currentVoiceInfo();
   if(info) $('voiceSampleText').textContent=info.group.label+' · '+(info.voice.gender==='f'?'Feminine':'Masculine')+
-    '. Spoken script: “'+info.group.sample+'”'+(availableVoiceIds&&!availableVoiceIds.has(id)?' (audio unavailable)':'');
+    '. Spoken script: “'+info.group.sample+'”'+(availableVoiceIds&&!availableVoiceIds.has(id)&&!info.voice.demoUrl?' (audio unavailable)':'');
 }
 function browseVoices(delta) {
   const list=filteredVoices.filter(v=>!availableVoiceIds||availableVoiceIds.has(v.id));
@@ -118,6 +125,7 @@ async function initializeVoiceBrowser() {
     language.replaceChildren(new Option('All languages / accents','all'));
     for(const group of voiceCatalog.groups)language.add(new Option(group.label,group.code));
     language.value='all';
+    $('originSelect').value='original';
     $('genderSelect').value='all';
     language.disabled=false;$('genderSelect').disabled=false;
     chooseAndRenderVoiceBrowser(false);
@@ -163,7 +171,7 @@ async function loadLibraryVoice(force=false){
   if(!info)return;
   if(voiceLoading||busyLoading){voiceLoadQueued=true;return;}
   if(!force && loadedVoiceId===info.voice.id && $('sampleSelect').value==='voice-library')return;
-  if(availableVoiceIds&&!availableVoiceIds.has(info.voice.id)){
+  if(availableVoiceIds&&!availableVoiceIds.has(info.voice.id)&&!info.voice.demoUrl){
     setMessage('That voice recording is not yet available. Try an existing Lewis sample.',true);
     return;
   }
@@ -171,7 +179,7 @@ async function loadLibraryVoice(force=false){
   voiceLoading=true;busyLoading=true;updateVoiceBrowserState();
   setStatus('Loading '+info.voice.name+'…');
   try{
-    const response=await fetch((info.voice.sampleRoot === 'english-accents/' ? ACCENT_SAMPLE_ROOT : info.voice.sampleRoot === 'community-v1.1/' ? COMMUNITY_SAMPLE_ROOT : VOICE_SAMPLE_ROOT)+encodeURIComponent(info.voice.id)+'.mp3');
+    const response=await fetch((info.voice.demoUrl ? info.voice.demoUrl : (info.voice.sampleRoot === 'english-accents/' ? ACCENT_SAMPLE_ROOT : info.voice.sampleRoot === 'community-v1.1/' ? COMMUNITY_SAMPLE_ROOT : VOICE_SAMPLE_ROOT)+encodeURIComponent(info.voice.id)+'.mp3'));
     if(!response.ok)throw Error('Audio not found (HTTP '+response.status+')');
     const bytes=await response.arrayBuffer();
     $('clipStart').value='0';
@@ -628,6 +636,9 @@ function bindInputs(){
   }
   $('applyVoice').addEventListener('click',requestVoiceRender);
   $('sampleSelect').addEventListener('change',loadSelected);
+  $('originSelect').addEventListener('change',()=>chooseAndRenderVoiceBrowser(false));
+  $('voiceSearch').addEventListener('input',()=>chooseAndRenderVoiceBrowser(true));
+  $('playableOnly').addEventListener('change',()=>chooseAndRenderVoiceBrowser(true));
   $('languageSelect').addEventListener('change',()=>{chooseAndRenderVoiceBrowser(true);loadLibraryVoice();});
   $('genderSelect').addEventListener('change',()=>{chooseAndRenderVoiceBrowser(true);loadLibraryVoice();});
   $('voiceSelect').addEventListener('change',()=>{updateVoiceBrowserState();loadLibraryVoice();});
