@@ -36,6 +36,8 @@ const COMMUNITY_SAMPLE_ROOT = 'https://udeudeude.github.io/voice-lab/community-v
 const COMMUNITY_MANIFEST_URL = COMMUNITY_SAMPLE_ROOT + 'manifest.json';
 const ACCENT_SAMPLE_ROOT = 'https://udeudeude.github.io/voice-lab/english-accents/';
 const ACCENT_MANIFEST_URL = ACCENT_SAMPLE_ROOT + 'manifest.json';
+const GUSHI_SAMPLE_ROOT = 'https://udeudeude.github.io/voice-lab/gushi/';
+const GUSHI_MANIFEST_URL = GUSHI_SAMPLE_ROOT + 'manifest.json';
 let voiceCatalog = null;
 let availableVoiceIds = null;
 let nativeVoiceIds = new Set();
@@ -175,6 +177,10 @@ async function initializeVoiceBrowser() {
           if (extra.completed && Array.isArray(extra.available)) extra.available.forEach(id=>availableVoiceIds.add(id));
         }
       } catch (_) { /* Accent recordings may not have been published yet. */ }
+      try {
+        const gushi = await fetch(GUSHI_MANIFEST_URL, {cache:'no-store'});
+        if(gushi.ok){const extra=await gushi.json();if(extra.completed && Array.isArray(extra.available)) extra.available.forEach(id=>availableVoiceIds.add(id));}
+      } catch (_) { /* Independent voices are optional. */ }
       chooseAndRenderVoiceBrowser(true);
       const count=availableVoiceIds.size;
       $('voiceAvailability').textContent=count+' recordings available';
@@ -205,7 +211,7 @@ async function loadLibraryVoice(force=false){
   voiceLoading=true;busyLoading=true;updateVoiceBrowserState();
   setStatus('Loading '+info.voice.name+'…');
   try{
-    const response=await fetch((info.voice.demoUrl ? info.voice.demoUrl : ($('originSelect')?.value === 'international' && nativeVoiceIds.has(info.voice.id) ? VOICE_SAMPLE_ROOT : info.voice.sampleRoot === 'english-accents/' ? ACCENT_SAMPLE_ROOT : info.voice.sampleRoot === 'community-v1.1/' ? COMMUNITY_SAMPLE_ROOT : VOICE_SAMPLE_ROOT)+encodeURIComponent(info.voice.id)+'.mp3'));
+    const response=await fetch((info.voice.demoUrl ? info.voice.demoUrl : ($('originSelect')?.value === 'international' && nativeVoiceIds.has(info.voice.id) ? VOICE_SAMPLE_ROOT : info.voice.sampleRoot === 'english-accents/' ? ACCENT_SAMPLE_ROOT : info.voice.sampleRoot === 'community-v1.1/' ? COMMUNITY_SAMPLE_ROOT : info.voice.sampleRoot === 'gushi/' ? GUSHI_SAMPLE_ROOT : VOICE_SAMPLE_ROOT)+encodeURIComponent(info.voice.id)+'.mp3'));
     if(!response.ok)throw Error('Audio not found (HTTP '+response.status+')');
     const bytes=await response.arrayBuffer();
     $('clipStart').value='0';
