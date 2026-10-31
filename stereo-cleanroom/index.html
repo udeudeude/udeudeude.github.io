@@ -39,7 +39,7 @@ function depthMap(w,h){
  const out=new Float32Array(w*h),mode=$('depthmode').value;
  if(mode==='file'&&depthFile){
   const raw=drawToData(depthFile,w,h).data;
-  for(let i=0;i<out.length;i++)out[i]=(raw[i]+raw[4*i+1]+raw[4*i+2])/765;
+  for(let i=0;i<out.length;i++)out[i]=(raw[4*i]+raw[4*i+1]+raw[4*i+2])/765;
   return out;
  }
  for(let y=0;y<h;y++)for(let x=0;x<w;x++){
