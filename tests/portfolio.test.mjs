@@ -24,11 +24,10 @@ for (const [, key, rank, body] of cards) {
   assert.ok(body.includes('<h2>'), key + ' has a readable project name');
 }
 const anaglyph = cards.find(card => card[1] === 'anaglyph-friends')[3];
-assert.ok(anaglyph.includes('https://anaglyph-and-friends.onrender.com/'), 'Hosted Anaglyph edition is linked');
-for (const arch of ['intel', 'apple-silicon']) {
-  assert.ok(anaglyph.includes('Anaglyph-and-Friends-' + arch + '.zip'), arch + ' Mac download remains available');
-}
-assert.ok(anaglyph.includes('not Apple-notarized'), 'Signing disclaimer remains');
+assert.ok(anaglyph.includes('https://anaglyph-friends-independent.onrender.com/'), 'Current Anaglyph application is linked');
+assert.ok(anaglyph.includes('https://anaglyph-friends-independent.onrender.com/source'), 'Current application source is available');
+assert.ok(!anaglyph.includes('https://anaglyph-and-friends.onrender.com/'), 'Legacy service is not linked');
+assert.ok(!anaglyph.includes('github.com/udeudeude/Anaglyph-and-Friends/'), 'Legacy repository is not linked');
 assert.ok(html.includes('href="/golocal/"'), 'GoLocal has an actionable project note');
 assert.ok(html.includes('href="/favicon.svg"'), 'Site links to its favicon');
 assert.ok(html.includes('id="clear-filters"') && html.includes('id="empty-results"'),'Portfolio offers recovery from restrictive filters');
