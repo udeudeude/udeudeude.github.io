@@ -57,12 +57,12 @@
       "name": null,
       "links": [
         {
-          "label": "Mac releases",
-          "url": "https://github.com/udeudeude/Anaglyph-and-Friends/releases"
+          "label": "Source code",
+          "url": "https://anaglyph-friends-independent.onrender.com/source"
         },
         {
           "label": "Hosted web app",
-          "url": "https://anaglyph-and-friends.onrender.com/"
+          "url": "https://anaglyph-friends-independent.onrender.com/"
         }
       ],
       "tasks": [
