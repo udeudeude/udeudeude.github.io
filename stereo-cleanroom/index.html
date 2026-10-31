@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Independent Stereo Laboratory</title>
+<style>
+:root{font:15px system-ui,sans-serif;color-scheme:dark;background:#10151c;color:#e7eef6}
+*{box-sizing:border-box}body{max-width:1160px;margin:auto;padding:20px}h1{font-size:1.65rem;margin-bottom:4px}
+p{line-height:1.5;color:#b7c4d3}a{color:#9bd5ff}.controls{display:flex;gap:16px;flex-wrap:wrap;align-items:end;padding:16px;background:#1b2531;border-radius:12px;margin:16px 0}
+label{display:flex;flex-direction:column;gap:7px;min-width:140px}input,select,button{font:inherit}input[type=file]{max-width:250px}
+button{padding:10px 16px;background:#d1e8ff;color:#102030;border:0;border-radius:7px;cursor:pointer}
+button:disabled{opacity:.5}canvas{max-width:100%;height:auto;background:#000;border:1px solid #435264}
+.views{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px}
+figure{margin:0}figcaption{padding:8px 0;color:#b7c4d3}small{color:#b7c4d3}
+#status{min-height:24px}input[type=range]{width:170px}
+</style></head><body>
+<h1>Independent Stereo Laboratory</h1>
+<p>Experimental, independently implemented browser renderer. Upload a photograph and, ideally, a corresponding grayscale depth map. Everything runs locally in this browser; images are not uploaded. This is <strong>not yet</strong> the replacement Anaglyph &amp; Friends application.</p>
+<div class="controls">
+<label>Photograph <input id="photo" type="file" accept="image/*"></label>
+<label>Depth map (optional) <input id="depth" type="file" accept="image/*"></label>
+<label>Depth source <select id="depthmode"><option value="file">Uploaded depth map</option><option value="radial">Synthetic central foreground</option><option value="linear">Synthetic left-to-right ramp</option></select></label>
+<label>Disparity <span id="dispValue">3.0%</span><input id="disp" type="range" min="0" max="12" step=".25" value="3"></label>
+<label>Screen depth <span id="planeValue">0.50</span><input id="plane" type="range" min="0" max="1" step=".02" value=".5"></label>
+<label>Display <select id="viewmode"><option value="anaglyph">Red/cyan anaglyph</option><option value="parallel">Parallel stereo</option><option value="cross">Cross-eye stereo</option><option value="left">Left eye</option><option value="right">Right eye</option><option value="mask">Uncovered pixels</option></select></label>
+<button id="render" disabled>Render</button><button id="save" disabled>Save PNG</button>
+</div>
+<div id="status" role="status">Choose a photograph to begin.</div>
+<div class="views">
+<figure><figcaption>Result</figcaption><canvas id="result" width="800" height="500"></canvas></figure>
+<figure><figcaption>Depth map (white = nearer)</figcaption><canvas id="preview" width="800" height="500"></canvas></figure>
+</div>
+<p><small>Experimental limitations: maximum working width 800 px; nearest-pixel splatting with explicit depth-order resolution; horizontal gap interpolation, not true hidden-surface reconstruction. The optional synthetic depth is for testing the renderer, not AI depth estimation. Original input photos remain yours.</small></p>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+let photo=null,depthFile=null,output=null;
+function readImage(file){return new Promise((resolve,reject)=>{const url=URL.createObjectURL(file),img=new Image();img.onload=()=>{URL.revokeObjectURL(url);resolve(img)};img.onerror=()=>{URL.revokeObjectURL(url);reject(new Error('Cannot read image'))};img.src=url})}
+function drawToData(img,w,h){const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d',{willReadFrequently:true});x.drawImage(img,0,0,w,h);return x.getImageData(0,0,w,h)}
+function depthMap(w,h){
+ const out=new Float32Array(w*h),mode=$('depthmode').value;
+ if(mode==='file'&&depthFile){
+  const raw=drawToData(depthFile,w,h).data;
+  for(let i=0;i<out.length;i++)out[i]=(raw[i]+raw[4*i+1]+raw[4*i+2])/765;
+  return out;
+ }
+ for(let y=0;y<h;y++)for(let x=0;x<w;x++){
+  const nx=(x+.5)/w,ny=(y+.5)/h;
+  out[y*w+x]=mode==='linear'?nx:Math.max(0,1-Math.hypot((nx-.5)*1.8,(ny-.5)*1.8));
+ }
+ return out;
+}
+function eye(source,depth,w,h,shift,plane){
+ const count=w*h,dest=new Uint8ClampedArray(count*4),winner=new Float32Array(count),covered=new Uint8Array(count);
+ winner.fill(-Infinity);
+ // Two passes make foreground occlusion independent of iteration order.
+ for(let pass=0;pass<2;pass++){
+  for(let y=0;y<h;y++)for(let x=0;x<w;x++){
+   const i=y*w+x,z=depth[i],dx=Math.round(x+(z-plane)*shift);
+   if(dx<0||dx>=w)continue;
+   const j=y*w+dx;
+   if(pass===0){if(z>winner[j])winner[j]=z}
+   else if(!covered[j]&&z>=winner[j]-1e-6){dest.set(source.subarray(i*4,i*4+4),j*4);covered[j]=1}
+  }
+ }
+ const holes=new Uint8Array(count);
+ for(let i=0;i<count;i++)if(!covered[i])holes[i]=1;
+ // Fill missing spans using the nearest valid horizontal neighbor.
+ for(let y=0;y<h;y++){
+  let first=-1;
+  for(let x=0;x<w;x++)if(covered[y*w+x]){first=x;break}
+  if(first<0)continue;
+  let last=first;
+  for(let x=0;x<first;x++)dest.set(dest.subarray((y*w+first)*4,(y*w+first)*4+4),(y*w+x)*4);
+  for(let x=first+1;x<w;x++){
+   const j=y*w+x;
+   if(covered[j]){last=x;continue}
+   let next=x;while(next<w&&!covered[y*w+next])next++;
+   const from=(next<w&&next-x<x-last)?next:last;
+   dest.set(dest.subarray((y*w+from)*4,(y*w+from)*4+4),j*4);
+  }
+ }
+ return {data:dest,holes};
+}
+function toCanvasData(data,w,h){return new ImageData(data,w,h)}
+function compose(left,right,w,h,mode){
+ const n=w*h;
+ if(mode==='left')return {pixels:left.data,w,h};
+ if(mode==='right')return {pixels:right.data,w,h};
+ if(mode==='mask'){
+  const out=new Uint8ClampedArray(n*4);
+  for(let i=0;i<n;i++){out[i*4]=left.holes[i]?255:0;out[i*4+1]=right.holes[i]?255:0;out[i*4+3]=255}
+  return {pixels:out,w,h};
+ }
+ if(mode==='parallel'||mode==='cross'){
+  const out=new Uint8ClampedArray(n*8),a=mode==='parallel'?left.data:right.data,b=mode==='parallel'?right.data:left.data;
+  for(let y=0;y<h;y++){out.set(a.subarray(y*w*4,(y+1)*w*4),y*w*8);out.set(b.subarray(y*w*4,(y+1)*w*4),y*w*8+w*4)}
+  return {pixels:out,w:w*2,h};
+ }
+ const out=new Uint8ClampedArray(n*4);
+ for(let i=0;i<n;i++){const j=i*4;out[j]=left.data[j];out[j+1]=right.data[j+1];out[j+2]=right.data[j+2];out[j+3]=255}
+ return {pixels:out,w,h};
+}
+async function render(){
+ if(!photo)return;
+ $('status').textContent='Rendering…';
+ await new Promise(r=>requestAnimationFrame(()=>setTimeout(r,0)));
+ try{
+  const w=Math.min(800,photo.naturalWidth),h=Math.max(1,Math.round(photo.naturalHeight*w/photo.naturalWidth));
+  const src=drawToData(photo,w,h),depth=depthMap(w,h),d=Number($('disp').value)*w/100,plane=Number($('plane').value);
+  const left=eye(src.data,depth,w,h,d/2,plane),right=eye(src.data,depth,w,h,-d/2,plane);
+  const result=compose(left,right,w,h,$('viewmode').value),canvas=$('result');canvas.width=result.w;canvas.height=result.h;
+  canvas.getContext('2d').putImageData(toCanvasData(result.pixels,result.w,result.h),0,0);
+  const map=$('preview');map.width=w;map.height=h;
+  const gray=new Uint8ClampedArray(w*h*4);
+  for(let i=0;i<depth.length;i++){gray[i*4]=gray[i*4+1]=gray[i*4+2]=Math.round(depth[i]*255);gray[i*4+3]=255}
+  map.getContext('2d').putImageData(toCanvasData(gray,w,h),0,0);
+  $('status').textContent='Rendered '+w+' × '+h+' pixels locally. Depth: '+($('depthmode').value==='file'&&depthFile?'uploaded map':'synthetic demonstration')+'.';
+  $('save').disabled=false;
+ }catch(e){$('status').textContent='Render failed: '+e.message}
+}
+$('photo').onchange=async e=>{try{photo=await readImage(e.target.files[0]);$('render').disabled=false;render()}catch(e){$('status').textContent=e.message}};
+$('depth').onchange=async e=>{try{depthFile=await readImage(e.target.files[0]);$('depthmode').value='file';render()}catch(e){$('status').textContent=e.message}};
+$('render').onclick=render;
+for(const id of ['disp','plane','viewmode','depthmode'])$(id).addEventListener('input',()=>{$('dispValue').textContent=Number($('disp').value).toFixed(1)+'%';$('planeValue').textContent=Number($('plane').value).toFixed(2);if(photo)render()});
+$('save').onclick=()=>{$('result').toBlob(blob=>{if(!blob)return;const a=document.createElement('a'),url=URL.createObjectURL(blob);a.href=url;a.download='independent-stereo.png';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)},'image/png')};
+</script></body></html>
