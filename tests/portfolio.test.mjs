@@ -25,7 +25,8 @@ for (const [, key, rank, body] of cards) {
 }
 const anaglyph = cards.find(card => card[1] === 'anaglyph-friends')[3];
 assert.ok(anaglyph.includes('https://anaglyph-friends-independent.onrender.com/'), 'Current Anaglyph application is linked');
-assert.ok(anaglyph.includes('https://anaglyph-friends-independent.onrender.com/source'), 'Current application source is available');
+assert.ok(anaglyph.includes('https://github.com/udeudeude/Anaglyph-and-Friends-Independent-'), 'Current application source is available');
+assert.ok(anaglyph.includes('https://github.com/udeudeude/Anaglyph-and-Friends-Independent-/releases'), 'Current Mac release page is linked');
 assert.ok(!anaglyph.includes('https://anaglyph-and-friends.onrender.com/'), 'Legacy service is not linked');
 assert.ok(!anaglyph.includes('github.com/udeudeude/Anaglyph-and-Friends/'), 'Legacy repository is not linked');
 assert.ok(html.includes('href="/golocal/"'), 'GoLocal has an actionable project note');
