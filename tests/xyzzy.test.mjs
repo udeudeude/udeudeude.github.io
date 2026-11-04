@@ -20,6 +20,8 @@ assert.match(script, /expandedProjects\.delete\(project\.id\)/);
 assert.match(script, /disclosure\.setAttribute\('aria-controls',more\.id\)/);
 assert.match(script, /workshopProjects\(\)\.catch/);
 assert.match(script, /group:'workshop'/);
+assert.match(script, /'Anaglyph-and-Friends-Independent-':'anaglyph-friends'/);
+assert.match(script, /migrateProjectId\('repo-anaglyph-and-friends-independent','anaglyph-friends'\)/);
 assert.match(script, /migrateProjectId\('repo-th-die-s-cast','thdies-cast'\)/);
 assert.ok(!portfolio.includes('href="/xyzzy/"'));
 assert.ok(!workshop.includes('href="/xyzzy/"'));
