@@ -781,13 +781,9 @@
     loader.onload = recover;
     document.head.append(loader);
   }
-  Promise.all(images.map(img => new Promise(resolve => {
-    if (img.complete) resolve(img.naturalWidth > 0);
-    else {
-      img.addEventListener('load', () => resolve(true), {once:true});
-      img.addEventListener('error', () => resolve(false), {once:true});
-    }
-  }))).then(results => { if (results.some(ok => !ok)) loadZip(); });
+  fetch(images[0].getAttribute('src'), {method:'HEAD'})
+    .then(response => { if (!response.ok) loadZip(); })
+    .catch(loadZip);
 })();
 </script>
 </body>
