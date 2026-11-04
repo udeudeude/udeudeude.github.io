@@ -24,7 +24,9 @@
     'Moire-Lab':'moire-lab',
     'Temporarily-Leave-the-Universe':'temporarily-leave-the-universe',
     'Th-die-s-Cast':'thdies-cast',
-    'Play-by-Ear-GameCast':'repo-play-by-ear-gamecast'
+    'Play-by-Ear-GameCast':'repo-play-by-ear-gamecast',
+    'SuperCollision':'supercollision',
+    'Mergent':'repo-mergent'
   };
   const grid = document.getElementById('projects');
   const count = document.getElementById('result-count');
@@ -268,7 +270,8 @@
         'MPK249-Universal-Map':'repo-mpk249-universal-map',
         'Escape-Team-Activate':'repo-escape-team-activate',
         'Pocket-Operations-Manual':'repo-pocket-operations-manual',
-        'Play-by-Ear-GameCast':'repo-play-by-ear-gamecast'
+        'Play-by-Ear-GameCast':'repo-play-by-ear-gamecast',
+        'Mergent':'repo-mergent'
       })[repo.name] || knownRepoProject[repo.name];
       const repoUrl = httpsLink(repo.url) || 'https://github.com/' + OWNER + '/' + encodeURIComponent(repo.name);
       if (target && mapped.has(target)) {
