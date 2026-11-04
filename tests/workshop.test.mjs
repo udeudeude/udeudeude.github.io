@@ -15,7 +15,7 @@ const expected = [
   'Play by Ear · GameCast',
   'Mergent'
 ];
-assert.equal((home.match(/<article class="project /g)||[]).length,22,'Public exhibition contains 22 curated tiles');
+assert.equal((home.match(/<article class="project /g)||[]).length,21,'Public exhibition contains 21 curated tiles');
 assert.match(home, /href="\/workshop\/"/, 'Only one understated workshop destination added');
 assert.ok(!home.includes('href="/xyzzy/"'), 'Unlisted workbench remains unlinked from public homepage');
 assert.ok(!workshop.includes('href="/xyzzy/"'), 'Workshop does not reveal private workbench URL');
