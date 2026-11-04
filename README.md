@@ -8,11 +8,11 @@ This is the **portfolio repository**, not the source repository for LightHouse o
 
 ## Public collections (November 2026)
 
-The Exhibition contains 21 curated projects, including **SuperCollision**. The Workshop at https://udeudeude.github.io/workshop/ contains eight developing projects, including **Mergent**. The established order and equipment filters remain intact.
+The Exhibition contains 22 curated projects, including **SuperCollision**. The Workshop at https://udeudeude.github.io/workshop/ contains seven developing projects, including **Mergent**. The established order and equipment filters remain intact.
 
 **Anaglyph & Friends** is the sole public-facing name of the stereoscopic application. Its current browser and Mac releases are linked from the Exhibition.
 
-**Key Scratch** remains in the Workshop pending a separate exhibition decision. Its source is a fork of Ortholinear with a different intended direction. Visitors building the iPhone keyboard need Xcode and their own Apple developer signing configuration. The repository's MIT license permits commercial use and redistribution subject to retaining notices; bundled data may have separate licenses.
+**Key Scratch** is now in the Exhibition. Its source is a fork of Ortholinear with a different intended direction. Visitors building the iPhone keyboard need Xcode and their own Apple developer signing configuration. The repository's MIT license permits commercial use and redistribution subject to retaining notices; bundled data may have separate licenses.
 
 Run `node tests/portfolio.test.mjs`, `node tests/workshop.test.mjs`, and `node tests/xyzzy.test.mjs` to check the respective collections and dashboard behavior.
 
@@ -45,6 +45,7 @@ The unlisted workbench keeps the adventure's project entry and automatically mig
 - Temporarily Leave the Universe
 - Th’die’s Cast
 - SuperCollision
+- Key Scratch
 
 ## Repository guide
 
