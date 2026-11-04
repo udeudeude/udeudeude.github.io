@@ -26,7 +26,8 @@
     'Th-die-s-Cast':'thdies-cast',
     'Play-by-Ear-GameCast':'repo-play-by-ear-gamecast',
     'SuperCollision':'supercollision',
-    'Mergent':'repo-mergent'
+    'Mergent':'repo-mergent',
+    'Key-Scratch':'key-scratch'
   };
   const grid = document.getElementById('projects');
   const count = document.getElementById('result-count');
@@ -259,12 +260,13 @@
     projectMetadata = metadata;
     migratePromotedProject();
     migrateProjectId('repo-th-die-s-cast','thdies-cast');
+    migrateProjectId('repo-key-scratch','key-scratch');
     const mapped = new Map([...curated, ...workshop].map(p => [p.id, p]));
     const extras = [];
     for (const repo of repos) {
       // Public GitHub metadata only; a private repo is never in the published snapshot.
       const target = ({
-        'Key-Scratch':'repo-key-scratch',
+        'Key-Scratch':'key-scratch',
         'Maze-Seedling-Rejuvenation':'repo-maze-seedling-rejuvenation',
         'Sphero-Laboratory':'repo-sphero-laboratory',
         'MPK249-Universal-Map':'repo-mpk249-universal-map',
