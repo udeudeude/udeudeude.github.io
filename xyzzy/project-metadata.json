@@ -516,20 +516,16 @@
     },
     "key-scratch": {
       "name": "Key Scratch",
-      "status": "Concept · keyboard and notes",
-      "description": "An iPhone/iPad keyboard project forked from Ortholinear. Key Scratch's separate design direction includes reusable notes beside the keyboard; the current source requires Xcode and personal developer signing to install.",
+      "status": "Source build · iPhone and iPad",
+      "description": "An iPhone and iPad keyboard forked from Ortholinear, with a persistent scratchpad, multiple note pages and image attachments. Build and sign with Xcode to install.",
       "links": [
+        {
+          "label": "Key Scratch source and setup",
+          "url": "https://github.com/udeudeude/Key-Scratch"
+        },
         {
           "label": "Build / install guide",
           "url": "https://github.com/udeudeude/Key-Scratch/blob/main/README.md"
-        },
-        {
-          "label": "iPhone screenshot",
-          "url": "https://github.com/udeudeude/Key-Scratch/blob/main/docs/screenshots/app-store/iphone-home.png"
-        },
-        {
-          "label": "iPad screenshot",
-          "url": "https://github.com/udeudeude/Key-Scratch/blob/main/docs/screenshots/app-store/ipad-home.png"
         },
         {
           "label": "Privacy policy",
