@@ -8,7 +8,6 @@ const home = fs.readFileSync('index.html','utf8');
 const workshop = fs.readFileSync('workshop/index.html','utf8');
 const expected = [
   'MAZE · Seedling Rejuvenation',
-  'Key Scratch',
   'Sphero Laboratory',
   'MPK249 Universal Map',
   'Escape Team Activate',
@@ -16,14 +15,15 @@ const expected = [
   'Play by Ear · GameCast',
   'Mergent'
 ];
-assert.equal((home.match(/<article class="project /g)||[]).length,21,'Public exhibition contains 21 curated tiles');
+assert.equal((home.match(/<article class="project /g)||[]).length,22,'Public exhibition contains 22 curated tiles');
 assert.match(home, /href="\/workshop\/"/, 'Only one understated workshop destination added');
 assert.ok(!home.includes('href="/xyzzy/"'), 'Unlisted workbench remains unlinked from public homepage');
 assert.ok(!workshop.includes('href="/xyzzy/"'), 'Workshop does not reveal private workbench URL');
 assert.ok(!workshop.includes('id="temporarily-leave-the-universe"'),'Promoted adventure is removed from workshop');
-assert.equal((workshop.match(/<article class="project"/g)||[]).length,expected.length,'Workshop keeps eight projects after exhibition promotion');
+assert.equal((workshop.match(/<article class="project"/g)||[]).length,expected.length,'Workshop keeps seven projects after exhibition promotion');
 assert.deepEqual([...workshop.matchAll(/<h2>([^<]+)<\/h2>/g)].map(m=>m[1]),expected,'Reviewed selection and order');
-assert.ok(workshop.includes('visible, reusable notes'), 'Key Scratch describes the notes keyboard concept');
+assert.ok(home.includes('<h2>Key Scratch</h2>'), 'Key Scratch is in Exhibition');
+assert.ok(home.includes('own Apple developer signing configuration'), 'Key Scratch build requirement is explicit');
 assert.ok(workshop.includes('No finished, blind-playtested mission'),'Unfinished puzzle work is not mislabeled as released');
 assert.ok(workshop.includes('real-device verification'), 'Device-dependent features are explicitly qualified');
 assert.ok(!workshop.includes('href="https://chatgpt.com/'), 'No personal working conversations embedded in public workshop');
