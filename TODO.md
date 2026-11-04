@@ -1,3 +1,11 @@
+## November 4, 2026 Anaglyph consolidation and genuine screenshots
+
+- [x] Consolidate legacy and current Anaglyph repositories into one dashboard project; migrate local links and task data from the former duplicate ID.
+- [x] Use authentic existing application screenshots as Exhibition tile artwork for Anaglyph & Friends, LightHouse, and TV-b-goner.
+- [x] Refresh the fallback public repository snapshot and add a regression check for Anaglyph identity.
+- [ ] Capture new genuine screenshots from running apps when the hosting network is reachable; no synthetic screenshots or unverified app captures.
+- [ ] Verify mobile screenshot framing and latest Pages deployment in iPhone Safari.
+
 ## November 4, 2026 Key Scratch resource audit follow-through
 
 - [x] Remove Ortholinear and licensing explanations from the public project description; retain the licensing link.
