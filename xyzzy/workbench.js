@@ -31,6 +31,7 @@
   const message = document.getElementById('message');
   const search = document.getElementById('search');
   let view = 'all';
+  const expandedProjects = new Set();
   let items = [];
   let links = load(STORE_LINKS, {});
   let localProjects = load(STORE_LOCAL, []);
@@ -110,7 +111,7 @@
 
   async function workshopProjects() {
     const response = await fetch('/workshop/', {cache:'no-cache'});
-    if (!response.ok) return [];
+    if (!response.ok) throw new Error('Workshop listing unavailable');
     const html = new DOMParser().parseFromString(await response.text(), 'text/html');
     return [...html.querySelectorAll('.projects .project')].map((card, rank) => {
       const name = card.querySelector('h2')?.textContent?.trim() || card.id;
@@ -252,7 +253,7 @@
   }
 
   async function initialize() {
-    const [curated, repos, metadata, workshop] = await Promise.all([publishedProjects(), publicRepositories(), loadMetadata(), workshopProjects()]);
+    const [curated, repos, metadata, workshop] = await Promise.all([publishedProjects(), publicRepositories(), loadMetadata(), workshopProjects().catch(() => { message.textContent='Workshop projects could not be loaded. Reload to retry.'; return []; })]);
     projectMetadata = metadata;
     migratePromotedProject();
     migrateProjectId('repo-th-die-s-cast','thdies-cast');
@@ -330,6 +331,7 @@
     const scrollY = window.scrollY;
     grid.replaceChildren();
     shown.forEach(project => grid.append(renderCard(project)));
+    for (const card of grid.querySelectorAll('.tile')) card.classList.toggle('expanded',expandedProjects.has(card.dataset.projectId));
     if (focus) {
       const card = [...grid.querySelectorAll('.tile')].find(el=>el.dataset.projectId===focus.id);
       const target = card?.querySelector(focus.selector);
@@ -440,9 +442,16 @@
     disclosure.setAttribute('aria-label','Expand '+project.name);
     disclosure.append(node('h2','',project.name),node('p','summary',project.description));
     const more = node('div','tile-more');
-    more.hidden=true;
+    more.id='details-'+project.id.replace(/[^a-z0-9-]/gi,'-');
+    disclosure.setAttribute('aria-controls',more.id);
+    more.hidden=!expandedProjects.has(project.id);
+    disclosure.setAttribute('aria-expanded',String(!more.hidden));
+    disclosure.setAttribute('aria-label',(more.hidden?'Expand ':'Collapse ')+project.name);
     disclosure.addEventListener('click',()=>{
       more.hidden=!more.hidden;
+      if (more.hidden) expandedProjects.delete(project.id);
+      else expandedProjects.add(project.id);
+      card.classList.toggle('expanded',!more.hidden);
       disclosure.setAttribute('aria-expanded',String(!more.hidden));
       disclosure.setAttribute('aria-label',(more.hidden?'Expand ':'Collapse ')+project.name);
     });
