@@ -1,0 +1,40 @@
+name: Extract portfolio screenshots
+on:
+  push:
+    paths:
+      - '.github/workflows/extract-portfolio-screenshots.yml'
+      - 'assets/screenshots/portfolio_screenshots_ready.zip'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Extract verified screenshot archive
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile
+          archive=Path('assets/screenshots/portfolio_screenshots_ready.zip')
+          expected={'supercollision-code.webp','supercollision-performance.webp','asheville-golocal.webp','key-scratch.webp','kokoro-voice-lab.webp','wisdom-watch-face.webp','wisdom-watch-reading.webp'}
+          with ZipFile(archive) as z:
+              names=z.namelist()
+              assert set(names)=={'assets/screenshots/'+x for x in expected}, names
+              for name in names:
+                  data=z.read(name)
+                  assert data[:4]==b'RIFF' and data[8:12]==b'WEBP', name
+                  Path(name).write_bytes(data)
+          PY
+      - name: Commit extracted images
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/screenshots/*.webp
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish seven genuine portfolio screenshots"
+            git push
+          fi
