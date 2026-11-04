@@ -13,14 +13,15 @@ const expected = [
   'MPK249 Universal Map',
   'Escape Team Activate',
   'Pocket Operations Manual',
-  'Play by Ear · GameCast'
+  'Play by Ear · GameCast',
+  'Mergent'
 ];
-assert.equal((home.match(/<article class="project /g)||[]).length,20,'Public exhibition contains 20 curated tiles');
+assert.equal((home.match(/<article class="project /g)||[]).length,21,'Public exhibition contains 21 curated tiles');
 assert.match(home, /href="\/workshop\/"/, 'Only one understated workshop destination added');
 assert.ok(!home.includes('href="/xyzzy/"'), 'Unlisted workbench remains unlinked from public homepage');
 assert.ok(!workshop.includes('href="/xyzzy/"'), 'Workshop does not reveal private workbench URL');
 assert.ok(!workshop.includes('id="temporarily-leave-the-universe"'),'Promoted adventure is removed from workshop');
-assert.equal((workshop.match(/<article class="project"/g)||[]).length,expected.length,'Workshop keeps seven projects after exhibition promotion');
+assert.equal((workshop.match(/<article class="project"/g)||[]).length,expected.length,'Workshop keeps eight projects after exhibition promotion');
 assert.deepEqual([...workshop.matchAll(/<h2>([^<]+)<\/h2>/g)].map(m=>m[1]),expected,'Reviewed selection and order');
 assert.ok(workshop.includes('visible, reusable notes'), 'Key Scratch describes the notes keyboard concept');
 assert.ok(workshop.includes('No finished, blind-playtested mission'),'Unfinished puzzle work is not mislabeled as released');
