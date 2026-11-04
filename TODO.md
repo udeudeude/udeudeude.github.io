@@ -1,3 +1,11 @@
+## November 4, 2026 Key Scratch resource audit follow-through
+
+- [x] Remove Ortholinear and licensing explanations from the public project description; retain the licensing link.
+- [x] Verify the app icon files are identical Git blobs and record that artwork ownership is not established.
+- [x] Add a repeatable five-asset suggestion-data checksum and attribution test to Key Scratch's iOS workflow.
+- [ ] Obtain artwork rights confirmation before applying non-commercial restrictions to the icon.
+- [ ] Confirm a successful workflow run and deployed public tile in a browser.
+
 ## November 4, 2026 Key Scratch licensing and promotion
 
 - [x] Confirm the fork retains Ortholinear's MIT License, which permits commercial redistribution.
@@ -5,7 +13,7 @@
 - [x] Promote Key Scratch to the Exhibition, with explicit Xcode and own-developer-signing requirements.
 - [x] Preserve personal task and link data when changing the project identifier.
 - [ ] Identify wholly original Key Scratch files and their rights holders before applying any file-specific non-commercial license.
-- [ ] Audit bundled language-data licenses before distributing a packaged application.
+- [x] Trace bundled English/Ukrainian suggestion-data sources, licenses, attribution, and pinned checksums; add a GitHub Actions integrity gate in Key Scratch.
 - [ ] Run the updated 22-project Exhibition and seven-project Workshop tests and verify deployment.
 
 ## November 4, 2026 approved public updates
@@ -28,7 +36,7 @@
 - [x] Add static regression checks for expansion state, category loading, naming and public/private navigation boundaries.
 - [x] Update the README's current 20/7 roster and identify Key Scratch as a distinct fork.
 - [ ] Run real Safari iPhone and desktop browser interaction tests after deployment.
-- [ ] Verify GitHub Actions and Pages publication status; the connector exposes no successful run for this review.
+- [ ] Independently confirm GitHub Pages deployment and browser rendering; workflow status is not exposed by the available connector.
 - [ ] Review newly added repositories for xyzzy coverage and refresh the public-repository fallback snapshot.
 - [ ] Audit older historical README passages for stale counts and availability claims without changing approved public editorial content.
 - [ ] Ask before any further public-facing project promotion, artwork, descriptions, or layout changes.
