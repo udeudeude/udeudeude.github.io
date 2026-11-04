@@ -8,7 +8,7 @@ This is the **portfolio repository**, not the source repository for LightHouse o
 
 ## Public collections (November 2026)
 
-The Exhibition contains 22 curated projects, including **SuperCollision**. The Workshop at https://udeudeude.github.io/workshop/ contains seven developing projects, including **Mergent**. The established order and equipment filters remain intact.
+The Exhibition contains 21 curated projects, including **SuperCollision**. The Workshop at https://udeudeude.github.io/workshop/ contains seven developing projects, including **Mergent**. The established order and equipment filters remain intact.
 
 **Anaglyph & Friends** is the sole public-facing name of the stereoscopic application. Its current browser and Mac releases are linked from the Exhibition.
 
@@ -40,7 +40,6 @@ The unlisted workbench keeps the adventure's project entry and automatically mig
 - Biofeedback Play
 - TV-b-goner
 - AI on Kindle
-- SuperCollider studies
 - Kokoro Voice Lab
 - Temporarily Leave the Universe
 - Th’die’s Cast
