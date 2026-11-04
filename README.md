@@ -6,15 +6,15 @@ A visual index of software, sound, publishing tools, browser experiments, and ot
 
 This is the **portfolio repository**, not the source repository for LightHouse or any other individual app.
 
-## Current exhibition, Workshop and xyzzy (November 2026)
+## Public collections (November 2026)
 
-The public homepage contains 20 curated projects, including Temporarily Leave the Universe and Th’die’s Cast. The public Workshop at /workshop/ contains seven developing projects: MAZE · Seedling Rejuvenation, Key Scratch, Sphero Laboratory, MPK249 Universal Map, Escape Team Activate, Pocket Operations Manual, and Play by Ear · GameCast.
+The Exhibition contains 21 curated projects, including **SuperCollision**. The Workshop at https://udeudeude.github.io/workshop/ contains eight developing projects, including **Mergent**. The established order and equipment filters remain intact.
 
-The personal dashboard at /xyzzy/ is called **xyzzy**, not Workbench or Studio. It gathers the curated exhibition, Workshop and additional public repositories, and supports browser-local additions, links and tasks. The page is unlinked and marked noindex, **not access-controlled**. Never commit personal conversations, credentials or private repository names to the site. Back up local data before clearing browser storage.
+**Anaglyph & Friends** is the sole public-facing name of the stereoscopic application. Its current browser and Mac releases are linked from the Exhibition.
 
-Key Scratch is a fork of Ortholinear with a distinct direction. The upstream keyboard implementation must not be mistaken for verified Key Scratch functionality.
+**Key Scratch** remains in the Workshop pending a separate exhibition decision. Its source is a fork of Ortholinear with a different intended direction. Visitors building the iPhone keyboard need Xcode and their own Apple developer signing configuration. The repository's MIT license permits commercial use and redistribution subject to retaining notices; bundled data may have separate licenses.
 
-Cards on the Workshop and xyzzy start compact. On xyzzy, expanded cards contain resource links, tasks and personal links. Expanded state survives checklist updates and adding tasks. Run `node tests/xyzzy.test.mjs` for the static regression checks; browser-based mobile and interaction verification is still necessary.
+Run `node tests/portfolio.test.mjs`, `node tests/workshop.test.mjs`, and `node tests/xyzzy.test.mjs` to check the respective collections and dashboard behavior.
 
 ## Historical note: October 23, 2026 promotion
 
@@ -43,6 +43,8 @@ The unlisted workbench keeps the adventure's project entry and automatically mig
 - SuperCollider studies
 - Kokoro Voice Lab
 - Temporarily Leave the Universe
+- Th’die’s Cast
+- SuperCollision
 
 ## Repository guide
 
