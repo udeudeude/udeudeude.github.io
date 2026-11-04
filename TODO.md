@@ -1,3 +1,15 @@
+## November 4, 2026 approved public updates
+
+- [x] Keep the public name **Anaglyph & Friends** and link to its current browser app and Mac releases.
+- [x] Add SuperCollision to the Exhibition without replacing the existing SuperCollider studies.
+- [x] Add Mergent to Workshop with its physical MERGE Cube and iPhone camera requirements.
+- [x] Update the 21-project Exhibition and eight-project Workshop regression expectations.
+- [x] Preserve Key Scratch in Workshop pending explicit promotion; document developer-signing requirements and MIT commercial permissions.
+- [x] Remove unnecessary personal dashboard discussion from the top of the public README.
+- [ ] Run the complete browser test suite and verify GitHub Pages deployment.
+- [ ] Verify SuperCollision browser entry point and capture authentic application imagery when available.
+- [ ] If Key Scratch is promoted, verify the fork's implemented behavior and licensing of bundled language resources.
+
 ## November 4, 2026 xyzzy reliability review
 
 - [x] Preserve expanded project details while completing or adding tasks; avoid collapsing the tile on re-render.
