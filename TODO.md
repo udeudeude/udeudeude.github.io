@@ -1,3 +1,16 @@
+## November 4, 2026 xyzzy reliability review
+
+- [x] Preserve expanded project details while completing or adding tasks; avoid collapsing the tile on re-render.
+- [x] Make expanded cards span both phone columns, with larger task checkboxes and usable resource links.
+- [x] Keep xyzzy usable if the public Workshop listing fails to load; display a retry message instead of failing initialization.
+- [x] Add static regression checks for expansion state, category loading, naming and public/private navigation boundaries.
+- [x] Update the README's current 20/7 roster and identify Key Scratch as a distinct fork.
+- [ ] Run real Safari iPhone and desktop browser interaction tests after deployment.
+- [ ] Verify GitHub Actions and Pages publication status; the connector exposes no successful run for this review.
+- [ ] Review newly added repositories for xyzzy coverage and refresh the public-repository fallback snapshot.
+- [ ] Audit older historical README passages for stale counts and availability claims without changing approved public editorial content.
+- [ ] Ask before any further public-facing project promotion, artwork, descriptions, or layout changes.
+
 ## October 23, 2026 exhibition promotion
 
 - [x] Promote Temporarily Leave the Universe to the curated public exhibition, after the existing eighteen projects.
