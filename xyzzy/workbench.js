@@ -9,6 +9,7 @@
   const knownRepoProject = {
     'LightHouse':'lighthouse',
     'Anaglyph-and-Friends':'anaglyph-friends',
+    'Anaglyph-and-Friends-Independent-':'anaglyph-friends',
     'Living-Patterns-Podcast':'living-patterns',
     '1AM-wisdom':'wisdom-watch',
     'Sorting-Algorithms-with-Playing-Cards':'sorting-cards',
@@ -261,6 +262,7 @@
     migratePromotedProject();
     migrateProjectId('repo-th-die-s-cast','thdies-cast');
     migrateProjectId('repo-key-scratch','key-scratch');
+    migrateProjectId('repo-anaglyph-and-friends-independent','anaglyph-friends');
     const mapped = new Map([...curated, ...workshop].map(p => [p.id, p]));
     const extras = [];
     for (const repo of repos) {
