@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-22",
+  "generated": "2026-11-04",
   "owner": "udeudeude",
   "repositories": [
     {
@@ -117,6 +117,30 @@
     {
       "name": "Key-Scratch",
       "url": "https://github.com/udeudeude/Key-Scratch"
+    },
+    {
+      "name": "Anaglyph-and-Friends-Independent-",
+      "url": "https://github.com/udeudeude/Anaglyph-and-Friends-Independent-"
+    },
+    {
+      "name": "SuperCollision",
+      "url": "https://github.com/udeudeude/SuperCollision"
+    },
+    {
+      "name": "Mergent",
+      "url": "https://github.com/udeudeude/Mergent"
+    },
+    {
+      "name": "AI-Voice-Library",
+      "url": "https://github.com/udeudeude/AI-Voice-Library"
+    },
+    {
+      "name": "Bodkin",
+      "url": "https://github.com/udeudeude/Bodkin"
+    },
+    {
+      "name": "Giant-Dead-Things",
+      "url": "https://github.com/udeudeude/Giant-Dead-Things"
     }
   ]
 }
