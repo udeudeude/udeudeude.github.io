@@ -10,13 +10,23 @@ This is the **portfolio repository**, not the source repository for LightHouse o
 
 **Public page:** https://udeudeude.github.io/workshop/
 
-The project site now has three levels: the curated homepage exhibition, the selective public **Open Workshop** of exploratory and developing work, and the unlinked personal `/xyzzy/` dashboard. The Open Workshop is linked quietly below the public portfolio's 19 curated projects; it is a separate page, not a new public category.
+The project site now has three levels: the curated homepage exhibition, the selective public **Open Workshop** of exploratory and developing work, and the unlinked personal `/xyzzy/` dashboard. The Open Workshop is linked quietly below the public portfolio's 20 curated projects; it is a separate page, not a new public category.
 
 The owner approved publication on October 22, 2026 with eight initial projects. On October 23, Temporarily Leave the Universe moved into the curated exhibition; Open Workshop now contains seven projects: MAZE · Seedling Rejuvenation; Ortholinear; Sphero Laboratory; MPK249 Universal Map; Escape Team Activate; Th’die’s Cast; and Pocket Operations Manual.
 
 Each tile describes what a visitor can do now and what requires more testing or equipment. Th’die’s Cast offers a direct podcast subscription and pilot listener. Pocket Operations Manual links directly to its live simulator and documented fidelity differences. Genuine MAZE, Ortholinear, Th’die’s Cast and PO-35 source artwork is used where available.
 
 Run `node tests/workshop.test.mjs` with Playwright installed to verify phone/desktop layouts, the current seven-project selection, and navigation/privacy boundaries. Automated CI runs this alongside existing portfolio checks.
+
+## Current exhibition, Workshop and xyzzy (November 2026)
+
+The public homepage contains 20 curated projects, including Temporarily Leave the Universe and Th’die’s Cast. The public Workshop at /workshop/ contains seven developing projects: MAZE · Seedling Rejuvenation, Key Scratch, Sphero Laboratory, MPK249 Universal Map, Escape Team Activate, Pocket Operations Manual, and Play by Ear · GameCast.
+
+The personal dashboard at /xyzzy/ is called **xyzzy**, not Workbench or Studio. It gathers the curated exhibition, Workshop and additional public repositories, and supports browser-local additions, links and tasks. The page is unlinked and marked noindex, **not access-controlled**. Never commit personal conversations, credentials or private repository names to the site. Back up local data before clearing browser storage.
+
+Key Scratch is a fork of Ortholinear with a distinct direction. The upstream keyboard implementation must not be mistaken for verified Key Scratch functionality.
+
+Cards on the Workshop and xyzzy start compact. On xyzzy, expanded cards contain resource links, tasks and personal links. Expanded state survives checklist updates and adding tasks. Run `node tests/xyzzy.test.mjs` for the static regression checks; browser-based mobile and interaction verification is still necessary.
 
 ## October 23, 2026 promotion
 
