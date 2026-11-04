@@ -749,5 +749,46 @@
   syncFromAddress(Boolean(activeProject()));
 })();
 </script>
+<script>
+/* Serve uploaded screenshots directly from the ZIP until the extraction job publishes files. */
+(() => {
+  const images = [...document.querySelectorAll('img[src^="/assets/screenshots/"]')]
+    .filter(img => /\/(supercollision-code|supercollision-performance|asheville-golocal|key-scratch|kokoro-voice-lab|wisdom-watch-face|wisdom-watch-reading)\.webp$/.test(img.getAttribute('src')));
+  if (!images.length) return;
+  const archive = '/assets/screenshots/portfolio_screenshots_ready.zip';
+  async function recover() {
+    if (!window.JSZip) return;
+    try {
+      const response = await fetch(archive);
+      if (!response.ok) return;
+      const zip = await JSZip.loadAsync(await response.arrayBuffer());
+      const urls = new Map();
+      for (const img of images) {
+        const path = img.getAttribute('src').slice(1);
+        if (!zip.file(path)) continue;
+        if (!urls.has(path)) {
+          const data = await zip.file(path).async('blob');
+          urls.set(path, URL.createObjectURL(new Blob([data], {type:'image/webp'})));
+        }
+        img.src = urls.get(path);
+      }
+      window.addEventListener('pagehide', () => urls.forEach(url => URL.revokeObjectURL(url)), {once:true});
+    } catch (error) { console.warn('Screenshot archive unavailable',error); }
+  }
+  function loadZip() {
+    const loader = document.createElement('script');
+    loader.src = 'https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js';
+    loader.onload = recover;
+    document.head.append(loader);
+  }
+  Promise.all(images.map(img => new Promise(resolve => {
+    if (img.complete) resolve(img.naturalWidth > 0);
+    else {
+      img.addEventListener('load', () => resolve(true), {once:true});
+      img.addEventListener('error', () => resolve(false), {once:true});
+    }
+  }))).then(results => { if (results.some(ok => !ok)) loadZip(); });
+})();
+</script>
 </body>
 </html>
