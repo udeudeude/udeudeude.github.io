@@ -1,3 +1,13 @@
+## November 4, 2026 Key Scratch licensing and promotion
+
+- [x] Confirm the fork retains Ortholinear's MIT License, which permits commercial redistribution.
+- [x] Add a licensing scope document distinguishing MIT-derived code from future separately licensed original Key Scratch contributions.
+- [x] Promote Key Scratch to the Exhibition, with explicit Xcode and own-developer-signing requirements.
+- [x] Preserve personal task and link data when changing the project identifier.
+- [ ] Identify wholly original Key Scratch files and their rights holders before applying any file-specific non-commercial license.
+- [ ] Audit bundled language-data licenses before distributing a packaged application.
+- [ ] Run the updated 22-project Exhibition and seven-project Workshop tests and verify deployment.
+
 ## November 4, 2026 approved public updates
 
 - [x] Keep the public name **Anaglyph & Friends** and link to its current browser app and Mac releases.
