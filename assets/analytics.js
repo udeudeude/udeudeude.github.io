@@ -2,15 +2,6 @@
   'use strict';
   // Never instrument the unlisted personal dashboard.
   if (location.pathname.startsWith('/xyzzy')) return;
-  const websiteId = window.UDE_ANALYTICS_WEBSITE_ID;
-  if (typeof websiteId !== 'string' ||
-      !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(websiteId)) return;
-  const tracker = document.createElement('script');
-  tracker.defer = true;
-  tracker.src = 'https://cloud.umami.is/script.js';
-  tracker.dataset.websiteId = websiteId;
-  document.head.appendChild(tracker);
-
   // Track aggregate interactions, not search terms, personal content or URLs.
   document.addEventListener('click', event => {
     const element = event.target.closest('a, .tile-toggle, .filter-button');
