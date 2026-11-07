@@ -14,6 +14,12 @@ When configured, the public pages record aggregate page visits and project-open/
 
 To exclude the owner's own visits, use an ad/tracker blocker or a browser profile with Umami blocked when visiting the public site. Umami's dashboard reports traffic only after configuration, not retrospectively. Separate applications on other hosting domains require their own approved analytics instrumentation.
 
+## Workshop ordering and repository discovery
+
+The public Workshop automatically loads the owner's **public, non-archived** GitHub repositories, adds those not already represented in the Exhibition or the Workshop, and sorts all Workshop tiles by GitHub's `pushed_at` timestamp (latest pushed changes first). Each tile shows its latest activity date. This is refreshed on each page load, so a newly pushed public repository can appear without a website commit.
+
+The Exhibition's editorial order is unaffected. Private repositories are never requested or displayed. When GitHub is unreachable or rate-limited, the original seven Workshop cards remain accessible as a saved fallback; dynamic additions and exact activity ordering require a successful GitHub response. Run `node tests/workshop-activity.test.mjs` for regression checks.
+
 ## Public collections (November 2026)
 
 The Exhibition contains 21 curated projects, including **SuperCollision**. The Workshop at https://udeudeude.github.io/workshop/ contains seven developing projects, including **Mergent**. The established order and equipment filters remain intact.
