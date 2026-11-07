@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+const html = fs.readFileSync('workshop/index.html','utf8');
+assert.match(html, /users\/udeudeude\/repos\?per_page=100&type=public&sort=pushed&direction=desc/);
+assert.match(html, /!repo\.private && !repo\.archived/);
+assert.match(html, /excluded\.has\(repo\.name\)/);
+assert.match(html, /newCard\(repo\)/);
+assert.match(html, /dataset\.lastActivity/);
+assert.match(html, /all\.sort\(/);
+assert.match(html, /grid\.replaceChildren\(\.\.\.all\)/);
+assert.match(html, /GitHub activity unavailable/);
+assert.match(html, /existing\.forEach\(attach\)/);
+assert.match(html, /'Anaglyph-and-Friends-Independent-'/);
+assert.match(html, /'udeudeude.github.io'/);
+console.log('Workshop activity ordering and privacy checks passed');
