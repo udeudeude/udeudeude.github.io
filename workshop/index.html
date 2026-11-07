@@ -240,6 +240,23 @@
     });
   }
   existing.forEach(attach);
+  // Explicitly documented application links; never infer a deployment from a repository name.
+  const verifiedApps = {
+    'Moire-Lab': [{label:'Open Moiré Lab',url:'https://moire-lab.onrender.com/'}],
+    'Old-Man-JiGaZo': [{label:'Open Ji Ga Zo',url:'https://udeudeude.github.io/Old-Man-JiGaZo/'}],
+    'Pocket-Operations-Mobile-Depot': [
+      {label:'Open Mobile Depot',url:'https://udeudeude.github.io/Pocket-Operations-Mobile-Depot/'},
+      {label:'PO-35 Bridge',url:'https://udeudeude.github.io/Pocket-Operations-Mobile-Depot/po35-bridge/'}
+    ]
+  };
+  function addAppLink(actions, label, url) {
+    if (!/^https:\/\//i.test(url)) return;
+    if ([...actions.querySelectorAll('a')].some(a => a.href === url)) return;
+    const link = document.createElement('a');
+    link.href = url;
+    link.textContent = label;
+    actions.insertBefore(link,actions.firstChild);
+  }
   function newCard(repo) {
     const card = document.createElement('article');
     card.className = 'project';
@@ -264,12 +281,11 @@
     link.href = repo.html_url;
     link.textContent = 'Source and project history';
     actions.append(link);
-    if (repo.homepage && /^https:\/\//i.test(repo.homepage)) {
-      const home = document.createElement('a');
-      home.href = repo.homepage;
-      home.textContent = 'Project website';
-      actions.prepend(home);
-    }
+    // The repository's configured homepage is its preferred direct application link.
+    if (repo.homepage && /^https:\/\//i.test(repo.homepage))
+      addAppLink(actions,'Open project',repo.homepage);
+    for (const app of verifiedApps[repo.name] || [])
+      addAppLink(actions,app.label,app.url);
     details.append(actions);
     content.append(heading,description,details);
     card.append(banner,content);
