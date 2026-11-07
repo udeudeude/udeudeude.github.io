@@ -29,7 +29,7 @@
     .projects{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;align-items:stretch}
     .project{min-width:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card);display:flex;flex-direction:column}
     .banner{height:155px;background:linear-gradient(140deg,#356078,#172f42);display:flex;align-items:center;justify-content:center;overflow:hidden}
-    .banner img{display:block;width:100%;height:100%;object-fit:contain}
+    .banner img,.banner svg{display:block;width:100%;height:100%;object-fit:contain}
     .banner.image{background:#1d3745;padding:10px}
     .banner.terminal{background:#030b05;color:#8eee91;justify-content:flex-start;padding:24px;font:clamp(1.05rem,3vw,1.4rem)/1.4 "Courier New",monospace;letter-spacing:.01em}
     .banner.terminal span{border-right:2px solid #8eee91;padding-right:5px}
@@ -242,6 +242,9 @@
   existing.forEach(attach);
   // Explicitly documented application links; never infer a deployment from a repository name.
   const verifiedApps = {
+    'Dactyl-Nightmare-Lucid-Dream': [{label:'Play Dactyl Nightmare',url:'https://udeudeude.github.io/Dactyl-Nightmare-Lucid-Dream/'},{label:'Second-phone controller',url:'https://udeudeude.github.io/Dactyl-Nightmare-Lucid-Dream/controller.html'}],
+    'earbud-controller-': [{label:'Try browser app (if Pages enabled)',url:'https://udeudeude.github.io/earbud-controller-/'}],
+    'Bright-Lines': [{label:'Try browser app (if Pages enabled)',url:'https://udeudeude.github.io/Bright-Lines/'}],
     'Moire-Lab': [{label:'Open Moiré Lab',url:'https://moire-lab.onrender.com/'}],
     'Old-Man-JiGaZo': [{label:'Open Ji Ga Zo',url:'https://udeudeude.github.io/Old-Man-JiGaZo/'}],
     'Pocket-Operations-Mobile-Depot': [
@@ -264,14 +267,32 @@
     const banner = document.createElement('div');
     banner.className = 'banner graphic';
     banner.setAttribute('aria-hidden','true');
-    banner.textContent = '⌘';
+    // Distinct original vector cover art for browser apps and hardware experiments.
+    const art = {
+      'Dactyl-Nightmare-Lucid-Dream': '<rect width="800" height="600" fill="#122437"/><path d="M100 480L260 190L400 360L545 155L700 480Z" fill="#375b74" stroke="#9fd4d6" stroke-width="10"/><circle cx="400" cy="260" r="78" fill="#dfab70"/><path d="M360 260h80m-40-40v80" stroke="#15283c" stroke-width="12"/><path d="M90 525h620" stroke="#7cb5bc" stroke-width="7"/>',
+      'earbud-controller-': '<rect width="800" height="600" fill="#182d43"/><path d="M230 180c-110-80-155 85-45 150l90 55v90M570 180c110-80 155 85 45 150l-90 55v90" stroke="#d5e8f2" stroke-width="24" fill="none" stroke-linecap="round"/><circle cx="275" cy="185" r="74" fill="#79a6be" stroke="#d5e8f2" stroke-width="16"/><circle cx="525" cy="185" r="74" fill="#79a6be" stroke="#d5e8f2" stroke-width="16"/><path d="M320 435h160m-80-80v160" stroke="#e9c38b" stroke-width="18" stroke-linecap="round"/>',
+      'Bright-Lines': '<rect width="800" height="600" fill="#10253b"/><g fill="none" stroke-width="13"><path d="M100 470L280 120L430 470L620 170" stroke="#91d8d8"/><path d="M100 350L270 420L470 120L710 350" stroke="#e5bd83"/><path d="M120 180L410 350L690 160" stroke="#c8a5e6"/></g>',
+      'Moire-Lab': '<rect width="800" height="600" fill="#142c3d"/><g fill="none" stroke="#c6e5e7" stroke-width="5"><path d="M100 130q300 250 600 0M100 160q300 250 600 0M100 190q300 250 600 0M100 220q300 250 600 0M100 250q300 250 600 0M100 280q300 250 600 0M100 310q300 250 600 0"/></g><circle cx="400" cy="300" r="155" fill="none" stroke="#e9bc8b" stroke-width="12"/>',
+      'Old-Man-JiGaZo': '<rect width="800" height="600" fill="#20394b"/><g stroke="#bcdce5" stroke-width="7"><rect x="170" y="100" width="140" height="140" rx="20" fill="#6a8ca7"/><rect x="330" y="100" width="140" height="140" rx="20" fill="#e1b782"/><rect x="490" y="100" width="140" height="140" rx="20" fill="#6a8ca7"/><rect x="170" y="260" width="140" height="140" rx="20" fill="#e1b782"/><rect x="330" y="260" width="140" height="140" rx="20" fill="#6a8ca7"/><rect x="490" y="260" width="140" height="140" rx="20" fill="#e1b782"/></g><path d="M270 160q60-90 120 0t120 0" fill="none" stroke="#fff" stroke-width="14"/>',
+      'Pocket-Operations-Mobile-Depot': '<rect width="800" height="600" fill="#1c3548"/><rect x="210" y="85" width="380" height="430" rx="24" fill="#d4a968"/><rect x="245" y="125" width="310" height="120" rx="8" fill="#293b42"/><path d="M265 185h270" stroke="#95d7be" stroke-width="9"/><g fill="#273945"><circle cx="300" cy="310" r="35"/><circle cx="400" cy="310" r="35"/><circle cx="500" cy="310" r="35"/><circle cx="300" cy="410" r="35"/><circle cx="400" cy="410" r="35"/><circle cx="500" cy="410" r="35"/></g>'
+    };
+    const drawing = art[repo.name] || '<rect width="800" height="600" fill="#1b394d"/><path d="M160 430L400 150L640 430Z" fill="none" stroke="#b4e2e9" stroke-width="18"/><circle cx="400" cy="310" r="75" fill="none" stroke="#e5bf89" stroke-width="14"/>';
+    banner.innerHTML = '<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' + drawing + '</svg>';
     const content = document.createElement('div');
     content.className = 'content';
     const heading = document.createElement('h2');
     heading.textContent = repo.name.replace(/[-_]+/g,' ').trim();
     const description = document.createElement('p');
     description.className = 'description';
-    description.textContent = repo.description || 'Project source and development history.';
+    const summaries = {
+      'Dactyl-Nightmare-Lucid-Dream':'A browser-based, phone-first reconstruction of the 1991 virtual-reality arcade game.',
+      'earbud-controller-':'An experimental browser interface for earbud controls.',
+      'Bright-Lines':'An interactive browser experiment.',
+      'Moire-Lab':'Optical line patterns and moving-image experiments.',
+      'Old-Man-JiGaZo':'A modern browser companion for the original Ji Ga Zo puzzle.',
+      'Pocket-Operations-Mobile-Depot':'Phone-friendly utilities for Pocket Operator instruments.'
+    };
+    description.textContent = repo.description || summaries[repo.name] || 'Project source and development history.';
     const details = document.createElement('div');
     details.className = 'expanded-content';
     details.hidden = true;
