@@ -12,7 +12,16 @@
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./style.css?rev=voice-lab-international-v6">
   <script src="./app.js?rev=voice-lab-international-v6" type="module" defer></script>
-</head>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f374a945-0ea2-41ed-8eb7-4b6ab6933f9a"></script>
+<script>
+document.addEventListener('click', function(e) {
+  const el=e.target.closest('button,[role="button"]');
+  if (!el || !window.umami || typeof umami.track!=='function') return;
+  const label=(el.id+' '+(el.getAttribute('aria-label')||'')+' '+(el.textContent||'').slice(0,40)).toLowerCase();
+  if (/play|start|run|send|render|generate|create|export|record|preview|process|scan|load/.test(label))
+    umami.track('app-use',{project:'kokoro-voice-lab',action:'interaction'});
+},true);
+</script></head>
 <body>
 <div class="shell">
   <header class="header">
