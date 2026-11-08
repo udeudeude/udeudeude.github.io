@@ -9,19 +9,19 @@ const workbench=fs.readFileSync('xyzzy/workbench.js','utf8');
 const snapshot=JSON.parse(fs.readFileSync('xyzzy/repositories.json','utf8'));
 const metadata=JSON.parse(fs.readFileSync('xyzzy/project-metadata.json','utf8'));
 assert.equal(metadata.version,1,'Curated project metadata schema is versioned');
-assert.equal(metadata.projects['repo-th-die-s-cast'].name,'Th’die’s Cast','Correct podcast title with both apostrophes');
+assert.equal(metadata.projects['thdies-cast'].name,'Th’die’s Cast','Correct podcast title with both apostrophes');
 for(const [key,label] of [
  ['repo-maze-seedling-rejuvenation','Open web companion'],
  ['temporarily-leave-the-universe','Open web experience'],
  ['repo-mpk249-universal-map','Download source ZIP'],
  ['repo-sphero-laboratory','Mac startup and safety instructions'],
- ['repo-key-scratch','Build / install guide'],
+ ['key-scratch','Build / install guide'],
  ['repo-escape-team-activate','No Such Room prototype']
 ]) {
  assert.ok(metadata.projects[key].links.some(link=>link.label===label),'Reviewed project resource: '+key);
  assert.ok(metadata.projects[key].tasks.length>0,'New project has actionable work: '+key);
 }
-assert.equal(snapshot.repositories.length,29,'Offline snapshot includes all 29 public repositories');
+assert.equal(snapshot.repositories.length,34,'Offline snapshot includes all 34 public repositories');
 assert.ok(!JSON.stringify(snapshot).includes('gear-harness'),'Private repository absent from workbench snapshot');
 assert.ok(workbench.includes('payload.version===1'),'Legacy backup handling remains available');
 
@@ -34,9 +34,9 @@ for(const [key,url] of [
  assert.ok(metadata.projects[key].links.some(x=>x.url===url),'Podcast subscription is recorded for '+key);
 }
 
-assert.equal((html.match(/data-phone-ready="/g)||[]).length,19,'All public projects have a phone-readiness flag');
-assert.equal((html.match(/data-browser-ready="/g)||[]).length,19,'All public projects have browser-readiness flags');
-assert.equal((html.match(/data-needs="/g)||[]).length,19,'All public projects declare required equipment');
+assert.equal((html.match(/data-phone-ready="/g)||[]).length,22,'All public projects have a phone-readiness flag');
+assert.equal((html.match(/data-browser-ready="/g)||[]).length,22,'All public projects have browser-readiness flags');
+assert.equal((html.match(/data-needs="/g)||[]).length,22,'All public projects declare required equipment');
 assert.ok(!html.includes('data-access-filter='),'Removed all three access-mode buttons');
 assert.ok(html.includes('What can I use right now?') && html.includes('Hide projects that require'),'Equipment prompt headings kept together');
 assert.ok(html.indexOf('id="filter-summary"') > html.indexOf('data-exclude="hardware"'),'Count follows last equipment checkbox');
@@ -72,7 +72,7 @@ try {
  await page.goto('http://127.0.0.1:4179/',{waitUntil:'domcontentloaded'});
  await page.locator('#filter-summary').waitFor({state:'visible'});
  const visible=()=>page.locator('#project-grid .project:visible').count();
- assert.equal(await visible(),19,'All curated projects visible by default');
+ assert.equal(await visible(),22,'All curated projects visible by default');
 
 
  // Equipment selection is independent of interest categories; counts follow it.
@@ -97,13 +97,13 @@ try {
  assert.ok(!keys.includes('lighthouse') && !keys.includes('tv-b-goner'),'Hardware-dependent projects can be hidden');
  assert.ok(keys.includes('living-patterns'),'Ready-to-listen projects remain when equipment hidden');
  await page.locator('[data-exclude="hardware"]').uncheck();
- assert.equal(await visible(),19,'Unchecking exclusions restores all 19 public projects');
+ assert.equal(await visible(),22,'Unchecking exclusions restores all 22 public projects');
  assert.equal(await page.locator('#clear-filters').isVisible(),false,'Reset link hidden without active filters');
  await page.locator('[data-filter="visual"]').click();
  await page.locator('[data-exclude="mac"]').check();
  assert.equal(await page.locator('#clear-filters').isVisible(),true,'Reset link appears with filters');
  await page.locator('#clear-filters').click();
- assert.equal(await visible(),19,'Clear filters restores the full portfolio');
+ assert.equal(await visible(),22,'Clear filters restores the full portfolio');
  assert.equal(await page.locator('[data-exclude="mac"]').isChecked(),false,'Clear filters resets equipment');
  assert.ok(!page.url().includes('hide=')&&!page.url().includes('category='),'Clear filters removes query state');
 
@@ -154,7 +154,7 @@ try {
    await x.waitForFunction(()=>document.getElementById('result-count')?.textContent?.includes('projects shown'),null,{timeout:16000});
  });
  const text=await x.locator('#result-count').textContent();
- assert.match(text,/19 curated/,'The workbench reflects the current 19 public cards');
+ assert.match(text,/22 exhibition/,'The workbench reflects the current 19 public cards');
  assert.match(text,/extra public repositories/,'Non-curated GitHub repos included');
  assert.ok(await x.getByText('Incredible Expanding Gospel',{exact:false}).count()>0,'Non-curated repo visible');
 assert.ok(await x.getByRole('heading',{name:'Moiré Lab'}).count()>0,'Moiré Lab remains available in the unlisted workbench');
@@ -181,7 +181,7 @@ assert.equal(await moireCard.getByRole('link',{name:'Public tile'}).count(),0,'U
   ['MAZE · Seedling Rejuvenation','Open web companion'],
   ['MPK249 Universal Map','Download source ZIP'],
   ['Sphero Laboratory','Mac startup and safety instructions'],
-  ['Ortholinear (Key Scratch)','Build / install guide'],
+  ['Key Scratch','Build / install guide'],
   ['Escape Team Activate','No Such Room prototype']
  ];
  for(const [title,label] of newlyIndexed){
