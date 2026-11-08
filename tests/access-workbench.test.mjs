@@ -189,7 +189,7 @@ assert.equal(await moireCard.getByRole('link',{name:'Public tile'}).count(),0,'U
    assert.equal(await card.count(),1,title+' gets an independent workbench tile');
    assert.equal(await card.getByRole('link',{name:label}).count(),1,title+' gets a verified action');
    assert.ok((await card.locator('.backlog h3').textContent()).includes('open of'),title+' shows source-based to-dos');
-   assert.equal(await card.getByRole('link',{name:'Public tile'}).count(),0,title+' has not been promoted to the public portfolio');
+   assert.equal(await card.getByRole('link',{name:'Public tile'}).count(),title==='Key Scratch'?1:0,title+' has the correct public portfolio status');
  }
 
  const first=x.locator('.tile').first();
@@ -263,7 +263,7 @@ assert.equal(await moireCard.getByRole('link',{name:'Public tile'}).count(),0,'U
 
 
 
- console.log('Access filters and unlisted workbench passed: 19 curated, public extras, podcast subscriptions and locally persisted links/to-dos.');
+ console.log('Access filters and unlisted workbench passed: 22 curated, public extras, podcast subscriptions and locally persisted links/to-dos.');
  await context.close();
 } finally {
  if(browser)await browser.close();
