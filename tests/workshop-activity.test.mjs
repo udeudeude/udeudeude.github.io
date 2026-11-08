@@ -28,4 +28,7 @@ assert.doesNotMatch(html, /description\.textContent\s*=\s*repo\.description\s*\|
 assert.match(html, /'PhomemoMuma':'An iPhone Bluetooth diagnostic/);
 assert.match(html, /'Blue-Driving':'An experimental Bluetooth vehicle-diagnostics/);
 assert.match(html, /description\.remove\(\)/);
+assert.match(html, /Try M02 diagnostics/);
+assert.match(html, /Try vehicle diagnostics/);
+assert.match(html, /Read the Bodkin compendium/);
 console.log('Workshop activity ordering, launch links and privacy checks passed');
