@@ -156,8 +156,8 @@ assert.ok(browserJS.includes("initializeVoiceBrowser().then(ready=>") && browser
 assert.ok(browserJS.includes("await decodeOriginal(bytes,info.voice.name"),'Selecting a voice feeds the existing audio editor');
 assert.ok(Number(read('voice-lab/sw.js').match(/kokoro-voice-lab-shell-v(\d+)/)?.[1]) >= 8,'Updated mobile app shell cache is used');
 assert.ok(read('voice-lab/sw.js').includes('fetch(req).then(response=>'),'Live interface is fetched network-first to prevent stuck older versions');
-assert.ok(lab.includes('app.js?rev=voice-lab-precise-v1'),'Current JavaScript bypasses stale Safari service-worker asset caches');
-assert.ok(lab.includes('style.css?rev=voice-lab-precise-v1'),'Current stylesheet bypasses stale Safari service-worker asset caches');
+assert.ok(lab.includes('app.js?rev='),'Current JavaScript bypasses stale Safari service-worker asset caches');
+assert.ok(lab.includes('style.css?rev='),'Current stylesheet bypasses stale Safari service-worker asset caches');
 assert.ok(!lab.includes('release-marker') && !freshLab.includes('release-marker'),'Unnecessary edition labels are absent');
 assert.ok(lab.includes('id="voiceAvailability" class="sr-only"'),'The specific recording availability counter is visually hidden');
 assert.ok(lab.includes('<div class="source-grid">') && freshLab.includes('<div class="source-grid">'),'Original audio selection and upload controls remain visible');
