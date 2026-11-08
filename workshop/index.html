@@ -233,7 +233,7 @@
     'PnP-o-matic','GoLocal-on-a-Map-Asheville','Escape-Pod-Cast',
     'Sorting-Algorithms-with-Playing-Cards','TV-b-goner','Th-die-s-Cast',
     'Key-Scratch','TouchBarpalooza','Biofeedback-Play','AI-on-Kindle',
-    'Old-Man-JiGaZo','Incredible-Expanding-Gospel','AI-Voice-Library'
+    'Old-Man-JiGaZo','Incredible-Expanding-Gospel','AI-Voice-Library','sc-web'
   ]);
   function attach(card) {
     const details = card.querySelector('.expanded-content');
@@ -308,9 +308,15 @@
       'Bright-Lines':'An interactive browser experiment.',
       'Moire-Lab':'Optical line patterns and moving-image experiments.',
       'Old-Man-JiGaZo':'A modern browser companion for the original Ji Ga Zo puzzle.',
-      'Pocket-Operations-Mobile-Depot':'Phone-friendly utilities for Pocket Operator instruments.'
+      'Pocket-Operations-Mobile-Depot':'Phone-friendly utilities for Pocket Operator instruments.',
+      'PhomemoMuma':'An iPhone Bluetooth diagnostic for the Phomemo M02 portable printer; inspects services without sending print commands.',
+      'Blue-Driving':'An experimental Bluetooth vehicle-diagnostics laboratory with live telemetry, simulated data and downloadable logs.',
+      'Bodkin':'An evolving tabletop roleplaying and world-building compendium, reconstructing original game concepts.',
+      'earbud-controller-':'Test which wired earbud-button commands Safari can detect, with guided timing experiments.',
+      'Bright-Lines':'Draw using a camera-tracked light pen, then export the captured strokes as images or vector paths.'
     };
-    description.textContent = repo.description || summaries[repo.name] || 'Project source and development history.';
+    description.textContent = summaries[repo.name] || repo.description || '';
+    if (!description.textContent) description.remove();
     const details = document.createElement('div');
     details.className = 'expanded-content';
     details.hidden = true;
