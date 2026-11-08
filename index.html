@@ -863,7 +863,7 @@
     headers: {'Accept': 'application/vnd.github+json'}
   }).then(response => response.ok ? response.json() : null).then(release => {
     if (!release || release.draft || release.prerelease || !Array.isArray(release.assets)) return;
-    const version = /^v(\\d+)\\.(\\d+)(?:\\.(\\d+))?$/.exec(release.tag_name || '');
+    const version = /^v(\d+)\.(\d+)(?:\.(\d+))?$/.exec(release.tag_name || '');
     if (!version || (Number(version[1]) === 0 && Number(version[2]) < 5)) return;
     const urls = required.map(([name]) => {
       const asset = release.assets.find(item => item.name === name &&
