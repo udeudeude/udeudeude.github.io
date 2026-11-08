@@ -160,7 +160,7 @@ try {
 assert.ok(await x.getByRole('heading',{name:'Moiré Lab'}).count()>0,'Moiré Lab remains available in the unlisted workbench');
 const promoted=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Temporarily Leave the Universe',exact:true})});
 assert.equal(await promoted.count(),1,'Promoted adventure appears exactly once in workbench');
-assert.equal(await promoted.getByRole('link',{name:'Public tile'}).count(),1,'Promoted adventure now links to exhibition');
+assert.equal(await promoted.getByRole('link',{name:'Public tile'}).count(),1, 'Promoted adventure now links to exhibition: '+(await promoted.locator('a').allTextContents()).join(' | ')+'; expanded='+await promoted.locator('.tile-disclosure').getAttribute('aria-expanded'));
 assert.equal(await promoted.getByRole('link',{name:'Open web experience'}).count(),1,'Adventure retains its metadata launch action');
  assert.equal(await promoted.getByRole('link',{name:'ChatGPT: Previous adventure conversation'}).count(),1,'Old personal chat survives promotion');
  assert.ok(await promoted.getByText('Resume old adventure work').count(),'Old personal to-do survives promotion');
