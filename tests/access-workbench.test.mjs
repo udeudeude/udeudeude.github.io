@@ -244,6 +244,7 @@ assert.equal(await moireCard.getByRole('link',{name:'Public tile'}).count(),0,'U
  await expand(depot);
  await expand(depot);
  assert.ok(await depot.getByRole('link',{name:'PO-35 Bridge'}).count(),'PO-35 utility is linked');
+ await expand(moireCard);
  assert.ok(await moireCard.getByRole('link',{name:'Online workshop'}).count(),'Moiré workshop online action appears');
  const escape=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Escape Pod Cast'})});
  await expand(escape);
