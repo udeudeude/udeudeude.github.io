@@ -244,7 +244,7 @@
   existing.forEach(attach);
   // Explicitly documented application links; never infer a deployment from a repository name.
   const verifiedApps = {
-    'new-awesome-game-part-1': [{label:'Play Dino Rickroll',url:'https://udeudeude.github.io/new-awesome-game-part-1/'}],
+    'new-awesome-game-part-1': [{label:'Play New Awesome Game Part 1',url:'https://udeudeude.github.io/new-awesome-game-part-1/'}],
     'Dactyl-Nightmare-Lucid-Dream': [{label:'Play Dactyl Nightmare',url:'https://udeudeude.github.io/Dactyl-Nightmare-Lucid-Dream/'},{label:'Second-phone controller',url:'https://udeudeude.github.io/Dactyl-Nightmare-Lucid-Dream/controller.html'}],
     'earbud-controller-': [{label:'Try browser app (if Pages enabled)',url:'https://udeudeude.github.io/earbud-controller-/'}],
     'Bright-Lines': [{label:'Try browser app (if Pages enabled)',url:'https://udeudeude.github.io/Bright-Lines/'}],
@@ -288,7 +288,7 @@
     const description = document.createElement('p');
     description.className = 'description';
     const summaries = {
-      'new-awesome-game-part-1':'A familiar offline dinosaur screen with an unexpected start.',
+      'new-awesome-game-part-1':'A new browser game.',
       'Dactyl-Nightmare-Lucid-Dream':'A browser-based, phone-first reconstruction of the 1991 virtual-reality arcade game.',
       'earbud-controller-':'An experimental browser interface for earbud controls.',
       'Bright-Lines':'An interactive browser experiment.',
@@ -314,10 +314,10 @@
     details.append(actions);
     content.append(heading,description,details);
     if (repo.name === 'new-awesome-game-part-1') {
-      heading.textContent = 'Dino Rickroll';
+      heading.textContent = 'New Awesome Game Part 1';
       const play = document.createElement('a');
       play.href = 'https://udeudeude.github.io/new-awesome-game-part-1/';
-      play.textContent = 'Play Dino Rickroll';
+      play.textContent = 'Play New Awesome Game Part 1';
       play.className = 'direct-play';
       content.insertBefore(play,details);
     }
