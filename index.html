@@ -848,5 +848,39 @@
     .catch(loadZip);
 })();
 </script>
+<script>
+/* Add direct printable downloads only after the files exist in the official release. */
+(() => {
+  const project = document.querySelector('[data-key="sorting-cards"] .links');
+  if (!project) return;
+  const repository = 'udeudeude/Sorting-Algorithms-with-Playing-Cards';
+  fetch('https://api.github.com/repos/' + repository + '/releases/tags/learner-draft-0.3', {
+    headers: {'Accept': 'application/vnd.github+json'}
+  }).then(response => {
+    if (!response.ok) return null;
+    return response.json();
+  }).then(release => {
+    if (!release || !Array.isArray(release.assets)) return;
+    const wanted = [
+      ['sorting-algorithms-with-playing-cards.pdf','Download the course PDF'],
+      ['sorting-algorithms-booklet-print.pdf','Download the printable booklet PDF'],
+      ['sorting-algorithms-booklet-pages.pdf','Read the compact booklet PDF']
+    ];
+    const links = [];
+    for (const [filename, title] of wanted) {
+      const asset = release.assets.find(item => item.name === filename &&
+        item.state === 'uploaded' &&
+        typeof item.browser_download_url === 'string' &&
+        item.browser_download_url.startsWith('https://github.com/' + repository + '/releases/download/'));
+      if (!asset) continue;
+      const link = document.createElement('a');
+      link.href = asset.browser_download_url;
+      link.textContent = title;
+      links.push(link);
+    }
+    project.prepend(...links);
+  }).catch(() => { /* The manuscript/source links still work without GitHub's API. */ });
+})();
+</script>
 </body>
 </html>
