@@ -14,7 +14,6 @@
     '1AM-wisdom':'wisdom-watch',
     'Sorting-Algorithms-with-Playing-Cards':'sorting-cards',
     'TouchBarpalooza':'touchbarpalooza',
-    'sc-web':'supercollider',
     'AI-on-Kindle':'ai-kindle',
     'Print-as-PocketMod-for-Mac':'print-pocketmod',
     'Biofeedback-Play':'biofeedback-play',
@@ -152,7 +151,7 @@
       if (!response.ok) throw new Error('Public GitHub API unavailable');
       const fetched = await response.json();
       if (!Array.isArray(fetched)) throw new Error('Invalid repository data');
-      return fetched.filter(repo => !repo.private && !repo.archived).map(repo => ({
+      return fetched.filter(repo => !repo.private && !repo.archived && repo.name !== 'sc-web').map(repo => ({
         name:repo.name,
         url:repo.html_url,
         description:repo.description || '',
@@ -160,7 +159,7 @@
       }));
     } catch {
       message.textContent = 'Using saved public repository list. GitHub live listing was unavailable.';
-      return snapshot;
+      return snapshot.filter(repo => repo.name !== 'sc-web');
     }
   }
 
