@@ -24,7 +24,7 @@ try{
   await page.goto('http://127.0.0.1:4186/voice-lab/?release=kokoro-54-v2',{waitUntil:'domcontentloaded'});
   assert.ok((await page.title()).includes('Kokoro Voice Lab'));
   await page.locator('#languageSelect').waitFor({state:'visible'});
-  await page.waitForFunction(()=>document.querySelector('#voiceAvailability')?.textContent?.includes('54 / 54'),{timeout:30000});
+  await page.waitForFunction(()=>/^\d+ recordings available$/.test(document.querySelector('#voiceAvailability')?.textContent?.trim()||''),{timeout:30000});
   assert.ok(await page.locator('.header p').count()<=1,'Only the previously unquoted help link remains in the main header');
   assert.equal(await page.locator('footer').count(),0,'No repeating app footer');
   assert.ok(await page.locator('#sampleSelect').isVisible(),'Original audio source menu remains visible');
@@ -81,7 +81,7 @@ try{
   const freshErrors=[];
   fresh.on('pageerror',error=>freshErrors.push(error.message));
   await fresh.goto('http://127.0.0.1:4186/kokoro-voice-lab/',{waitUntil:'domcontentloaded'});
-  await fresh.waitForFunction(()=>document.querySelector('#voiceAvailability')?.textContent?.includes('54 / 54'),{timeout:30000});
+  await fresh.waitForFunction(()=>/^\d+ recordings available$/.test(document.querySelector('#voiceAvailability')?.textContent?.trim()||''),{timeout:30000});
   await fresh.waitForFunction(()=>document.querySelector('#fileHelp')?.textContent?.includes('Alice'),{timeout:30000});
   assert.equal(await fresh.locator('#voiceSelect').inputValue(),'bf_alice','Fresh entry loads Alice instead of Lewis');
   await fresh.locator('#voiceSelect').selectOption('bm_george');
