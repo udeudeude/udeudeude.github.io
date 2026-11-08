@@ -23,6 +23,10 @@ Public Exhibition and Workshop; plus application entry pages in these repositori
 - Maze-Seedling-Rejuvenation
 - Old-Man-JiGaZo
 - Pocket-Operations-Mobile-Depot
+- TV-b-goner
+- Moire-Lab
+- Kokoro Voice Lab (both hosted entry pages)
+- Asheville GoLocal project information page
 
 The same Umami website ID is used for the public applications. When hosted on another domain, Umami's website domain configuration may need to permit that host. Other application routes and projects are not yet comprehensively instrumented. Do not infer zero usage from missing app-use events.
 
