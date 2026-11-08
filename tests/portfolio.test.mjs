@@ -154,7 +154,7 @@ assert.ok(allVoices.some(v=>v.id==='bm_lewis'),'Lewis remains selectable');
 assert.ok(browserJS.includes('const language = $(\'languageSelect\').value;') && browserJS.includes('const profile = $(\'genderSelect\').value;'),'Both filters are used to derive the voice selection');
 assert.ok(browserJS.includes("initializeVoiceBrowser().then(ready=>") && browserJS.includes('browseVoices'),'The voice browser initializes and supports previous/next');
 assert.ok(browserJS.includes("await decodeOriginal(bytes,info.voice.name"),'Selecting a voice feeds the existing audio editor');
-assert.ok(read('voice-lab/sw.js').includes('kokoro-voice-lab-shell-v8'),'Updated mobile app shell cache is used');
+assert.ok(Number(read('voice-lab/sw.js').match(/kokoro-voice-lab-shell-v(\\d+)/)?.[1]) >= 8,'Updated mobile app shell cache is used');
 assert.ok(read('voice-lab/sw.js').includes('fetch(req).then(response=>'),'Live interface is fetched network-first to prevent stuck older versions');
 assert.ok(lab.includes('app.js?rev=voice-lab-precise-v1'),'Current JavaScript bypasses stale Safari service-worker asset caches');
 assert.ok(lab.includes('style.css?rev=voice-lab-precise-v1'),'Current stylesheet bypasses stale Safari service-worker asset caches');
