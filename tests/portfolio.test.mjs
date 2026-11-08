@@ -141,10 +141,10 @@ const recipes = JSON.parse(read('voice-lab/presets/saved-user-recipes.json'));
 const voiceCatalog = JSON.parse(read('voice-lab/voice-catalog.json'));
 const browserJS = read('voice-lab/app.js');
 const allVoices = voiceCatalog.groups.flatMap(group => group.voices.map(voice => ({...voice,groupCode:group.code})));
-assert.equal(voiceCatalog.groups.length,9,'All nine Kokoro language/accent families are listed');
-assert.equal(allVoices.length,54,'All 54 native Kokoro speakers are catalogued');
-assert.equal(new Set(allVoices.map(v=>v.id)).size,54,'Voice IDs are unique');
-assert.ok(allVoices.every(v=>v.id.startsWith(v.groupCode+v.gender+'_')),'Native voice identifiers match language and profile');
+assert.equal(voiceCatalog.groups.length,12,'Nine original Kokoro groups and three additional voice families are listed');
+assert.equal(allVoices.length,59,'Fifty-four native Kokoro speakers and five additions are catalogued');
+assert.equal(new Set(allVoices.map(v=>v.id)).size,59,'Voice IDs are unique');
+assert.ok(allVoices.filter(v => !['community-us','community-uk','gushi'].includes(v.groupCode)).every(v=>v.id.startsWith(v.groupCode+v.gender+'_')),'Native voice identifiers match language and profile');
 assert.ok(lab.includes('id="languageSelect"') && lab.includes('id="genderSelect"') && lab.includes('id="voiceSelect"'),'Language, gender and speaker have independent selectors');
 assert.ok(lab.includes('All languages') && lab.includes('All genders'),'Unrestricted filter choices exist');
 assert.ok(browserJS.includes("const language = $('languageSelect').value;") && browserJS.includes("const profile = $('genderSelect').value;"),'Voice selection respects both facets independently');
@@ -183,12 +183,28 @@ assert.deepEqual(recipes.presets.map(p => p.recipe.settings.formant), [-1.15, -1
 assert.deepEqual(recipes.presets.map(p => p.recipe.settings.reverb), [0, 8], 'Both room choices remain distinct');
 
 const curatedOrder = [
-  'anaglyph-friends', 'print-pocketmod', 'lighthouse', 'wisdom-watch',
-  'living-patterns', 'tales-from-the-loop-toolkit',
-  'starfinder-homebrewery-toolkit', 'pnp-o-matic', 'asheville-golocal-maps',
-  'orchestral-maneuvers-dark', 'escape-pod-cast', 'touchbarpalooza',
-  'sorting-cards', 'biofeedback-play', 'tv-b-goner', 'ai-kindle',
-  'supercollider', 'lewis-voice-lab', 'temporarily-leave-the-universe'
+  'anaglyph-friends',
+  'print-pocketmod',
+  'lighthouse',
+  'supercollision',
+  'wisdom-watch',
+  'living-patterns',
+  'temporarily-leave-the-universe',
+  'tales-from-the-loop-toolkit',
+  'starfinder-homebrewery-toolkit',
+  'pnp-o-matic',
+  'asheville-golocal-maps',
+  'orchestral-maneuvers-dark',
+  'escape-pod-cast',
+  'sorting-cards',
+  'tv-b-goner',
+  'thdies-cast',
+  'key-scratch',
+  'touchbarpalooza',
+  'ji-ga-zo',
+  'lewis-voice-lab',
+  'biofeedback-play',
+  'ai-kindle'
 ];
 assert.deepEqual(keys, curatedOrder, 'Preserve the intentional project order');
 const populatedStarfinder = 'https://homebrewery.naturalcrit.com/share/u41Swqyrcj1W';
