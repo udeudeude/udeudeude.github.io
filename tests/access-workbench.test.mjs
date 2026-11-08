@@ -28,7 +28,7 @@ assert.ok(workbench.includes('payload.version===1'),'Legacy backup handling rema
 for(const [key,url] of [
   ['living-patterns','https://udeudeude.github.io/Living-Patterns-Podcast/feed.xml'],
   ['orchestral-maneuvers-dark','https://om-weekly-podcast.workspace-310067.chatgpt.site/feed.xml'],
-  ['repo-th-die-s-cast','https://udeudeude.github.io/thdies-cast/feed.xml'],
+  ['thdies-cast','https://udeudeude.github.io/thdies-cast/feed.xml'],
   ['repo-play-by-ear-gamecast','https://play-by-ear-gamecast-lab.onrender.com/feed.xml']
 ]) {
  assert.ok(metadata.projects[key].links.some(x=>x.url===url),'Podcast subscription is recorded for '+key);
