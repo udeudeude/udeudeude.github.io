@@ -63,6 +63,8 @@
     footer a{color:#d9f1f8}
     @media(max-width:690px){.projects{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.banner{height:100px}.content{padding:10px}.actions a{padding:7px;font-size:.74rem}h2{font-size:1.1rem}header{padding-top:16px}main{padding-top:23px}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+    .direct-play{display:inline-flex;align-items:center;align-self:flex-start;margin:10px 0 2px;padding:9px 13px;border-radius:7px;background:#e0f4f7;color:#102633;text-decoration:none;font-size:.85rem;font-weight:750;position:relative;z-index:1}
+    .direct-play:hover{background:#fff}
   </style>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="f374a945-0ea2-41ed-8eb7-4b6ab6933f9a"></script>
   <script src="/assets/analytics.js" defer></script>
@@ -242,6 +244,7 @@
   existing.forEach(attach);
   // Explicitly documented application links; never infer a deployment from a repository name.
   const verifiedApps = {
+    'new-awesome-game-part-1': [{label:'Play Dino Rickroll',url:'https://udeudeude.github.io/new-awesome-game-part-1/'}],
     'Dactyl-Nightmare-Lucid-Dream': [{label:'Play Dactyl Nightmare',url:'https://udeudeude.github.io/Dactyl-Nightmare-Lucid-Dream/'},{label:'Second-phone controller',url:'https://udeudeude.github.io/Dactyl-Nightmare-Lucid-Dream/controller.html'}],
     'earbud-controller-': [{label:'Try browser app (if Pages enabled)',url:'https://udeudeude.github.io/earbud-controller-/'}],
     'Bright-Lines': [{label:'Try browser app (if Pages enabled)',url:'https://udeudeude.github.io/Bright-Lines/'}],
@@ -285,6 +288,7 @@
     const description = document.createElement('p');
     description.className = 'description';
     const summaries = {
+      'new-awesome-game-part-1':'A familiar offline dinosaur screen with an unexpected start.',
       'Dactyl-Nightmare-Lucid-Dream':'A browser-based, phone-first reconstruction of the 1991 virtual-reality arcade game.',
       'earbud-controller-':'An experimental browser interface for earbud controls.',
       'Bright-Lines':'An interactive browser experiment.',
@@ -309,6 +313,14 @@
       addAppLink(actions,app.label,app.url);
     details.append(actions);
     content.append(heading,description,details);
+    if (repo.name === 'new-awesome-game-part-1') {
+      heading.textContent = 'Dino Rickroll';
+      const play = document.createElement('a');
+      play.href = 'https://udeudeude.github.io/new-awesome-game-part-1/';
+      play.textContent = 'Play Dino Rickroll';
+      play.className = 'direct-play';
+      content.insertBefore(play,details);
+    }
     card.append(banner,content);
     attach(card);
     return card;
