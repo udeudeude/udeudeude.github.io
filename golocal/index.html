@@ -31,7 +31,16 @@
     a:focus-visible{outline:3px solid #f1fbff;outline-offset:4px}
     footer{padding:24px 0 42px;font-size:.82rem;color:var(--muted);border-top:1px solid #ffffff24}
   </style>
-</head>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f374a945-0ea2-41ed-8eb7-4b6ab6933f9a"></script>
+<script>
+document.addEventListener('click', function(e) {
+  const el=e.target.closest('button,[role="button"]');
+  if (!el || !window.umami || typeof umami.track!=='function') return;
+  const label=(el.id+' '+(el.getAttribute('aria-label')||'')+' '+(el.textContent||'').slice(0,40)).toLowerCase();
+  if (/play|start|run|send|render|generate|create|export|record|preview|process|scan|load/.test(label))
+    umami.track('app-use',{project:'asheville-golocal',action:'interaction'});
+},true);
+</script></head>
 <body>
 <header class="wrap"><nav><a href="/">← Ude Projects</a></nav></header>
 <main class="wrap">
