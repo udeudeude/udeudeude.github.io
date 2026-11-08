@@ -83,6 +83,19 @@
 <main id="main" class="wrap">
   <p class="section-label">Workshop projects · newest activity first</p>
   <section class="projects" aria-label="Workshop projects">
+    <article class="project" id="repo-new-awesome-game-part-1">
+      <div class="banner graphic" aria-hidden="true">▣ ◇ ▣</div>
+      <div class="content">
+        <div class="status">Browser game</div>
+        <h2>New Awesome Game Part 1</h2>
+        <p class="description">A new browser game.</p>
+        <a class="direct-play" href="https://udeudeude.github.io/new-awesome-game-part-1/">Play New Awesome Game Part 1</a>
+        <div class="expanded-content" hidden>
+          <div class="actions"><a href="https://github.com/udeudeude/new-awesome-game-part-1">Source and project history</a></div>
+        </div>
+      </div>
+    </article>
+
 
 
     <article class="project" id="maze-seedling-rejuvenation">
@@ -204,6 +217,7 @@
   const grid = document.querySelector('.projects');
   const existing = [...grid.querySelectorAll('.project')];
   const established = new Map([
+    ['new-awesome-game-part-1','repo-new-awesome-game-part-1'],
     ['Maze-Seedling-Rejuvenation','maze-seedling-rejuvenation'],
     ['Sphero-Laboratory','sphero-laboratory'],
     ['MPK249-Universal-Map','mpk249-universal-map'],
