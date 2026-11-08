@@ -152,6 +152,7 @@ try {
  await x.goto('http://127.0.0.1:4179/xyzzy/',{waitUntil:'domcontentloaded'});
  await x.locator('#result-count').getByText('projects shown').waitFor({timeout:16000}).catch(async()=>{
    await x.waitForFunction(()=>document.getElementById('result-count')?.textContent?.includes('projects shown'),null,{timeout:16000});
+ await expand(x.locator('.tile').first());
  });
  const text=await x.locator('#result-count').textContent();
  assert.match(text,/22 exhibition/,'The workbench reflects the current 19 public cards');
@@ -202,6 +203,7 @@ assert.equal(await moireCard.getByRole('link',{name:'Public tile'}).count(),0,'U
  }
 
  const first=x.locator('.tile').first();
+ await expand(first);
  await first.locator('details summary').click();
  await first.locator('input[name="title"]').fill('A saved working conversation');
  await first.locator('input[name="url"]').fill('https://chatgpt.com/c/example-user-only');
@@ -210,6 +212,7 @@ assert.equal(await moireCard.getByRole('link',{name:'Public tile'}).count(),0,'U
  assert.ok(await x.getByText('A saved working conversation').count(),'ChatGPT link appears in project');
  await x.reload();
  await x.waitForFunction(()=>document.getElementById('result-count')?.textContent?.includes('projects shown'),null,{timeout:16000});
+ await expand(x.locator('.tile').first());
  assert.ok(await x.getByText('A saved working conversation').count(),'Private ChatGPT link survives reload on same browser');
  assert.ok(!fs.readFileSync('xyzzy/index.html','utf8').includes('example-user-only'),'Local conversation not added to published file');
  const shownCount=await x.locator('.tile').count();
@@ -252,6 +255,7 @@ assert.equal(await moireCard.getByRole('link',{name:'Public tile'}).count(),0,'U
  assert.ok(await x.getByText('A task saved privately on this device').count(),'Personal to-do visible after save');
  await x.reload();
  await x.waitForFunction(()=>document.getElementById('result-count')?.textContent?.includes('projects shown'),null,{timeout:16000});
+ await expand(x.locator('.tile').first());
  assert.ok(await x.getByText('A task saved privately on this device').count(),'Personal to-do persists across reload');
  const task=x.locator('.tile').first().locator('.backlog-items li').filter({hasText:'A task saved privately on this device'});
  await task.locator('input[type="checkbox"]').check();
