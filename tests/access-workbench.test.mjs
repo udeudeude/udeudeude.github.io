@@ -174,6 +174,7 @@ assert.equal(await promoted.getByRole('link',{name:'Open web experience'}).count
  assert.ok(migrated.done['temporarily-leave-the-universe']?.includes('source-0'),'Previously checked source task remains checked');
 
 const moireCard=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Moiré Lab'})});
+ await expand(moireCard);
 assert.ok(await moireCard.getByRole('link',{name:'Online workshop'}).count()>0,'Moiré still links to its working web app');
 assert.equal(await moireCard.getByRole('link',{name:'Public tile'}).count(),0,'Unpublished Moiré has no public-portfolio shortcut');
  assert.ok(!(await x.locator('body').innerText()).includes('gear-harness'),'Private repository is not included publicly');
@@ -207,21 +208,28 @@ assert.equal(await moireCard.getByRole('link',{name:'Public tile'}).count(),0,'U
  assert.equal(await x.locator('.tile .backlog h3').count(),shownCount,'Every tile visibly includes backlog heading');
  assert.equal(await x.locator('.tile .backlog input[name="todo"]').count(),shownCount,'Every tile has an add-to-do control');
  const thdie=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Th’die’s Cast'})});
+ await expand(thdie);
  assert.equal(await thdie.count(),1,'Correct podcast display spelling');
  assert.ok(await thdie.getByRole('link',{name:'Subscribe (RSS)'}).count(),'Th’die’s Cast has a direct subscription link');
  assert.ok(await thdie.getByRole('link',{name:'Listen to the pilot episodes'}).count(),'Podcast has episode listener link');
  const gameCast=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Play by Ear · GameCast'})});
+ await expand(gameCast);
  assert.ok(await gameCast.getByRole('link',{name:'Subscribe to test feed (RSS)'}).count(),'GameCast has subscription URL');
  const living=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Living Patterns'})});
+ await expand(living);
  assert.ok(await living.getByRole('link',{name:'Subscribe (RSS)'}).count(),'Living Patterns has direct RSS link');
  const orchestral=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Orchestral Maneuvers in the Dark'})});
+ await expand(orchestral);
  assert.ok(await orchestral.getByRole('link',{name:'Subscribe (RSS)'}).count(),'Orchestral show has RSS link');
  const po35=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Pocket Operations Manual'})});
+ await expand(po35);
  assert.ok(await po35.getByRole('link',{name:'Interactive PO-35 Speak simulator'}).count(),'Non-curated web simulator linked');
  const depot=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Pocket Operations Mobile Depot'})});
+ await expand(depot);
  assert.ok(await depot.getByRole('link',{name:'PO-35 Bridge'}).count(),'PO-35 utility is linked');
  assert.ok(await moireCard.getByRole('link',{name:'Online workshop'}).count(),'Moiré workshop online action appears');
  const escape=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Escape Pod Cast'})});
+ await expand(escape);
  assert.ok(await escape.getByRole('link',{name:'Latest Mac releases'}).count(),'Mac downloads offered in workbench');
  const backlog=first.locator('.backlog');
  await backlog.locator('input[name="todo"]').fill('A task saved privately on this device');
