@@ -463,7 +463,7 @@
     });
     body.append(disclosure);
     const mainLinks = node('div','links');
-    if (project.publicUrl) addLink(mainLinks,'Public tile',project.publicUrl);
+    if (project.publicUrl) addLink(mainLinks, project.group==='workshop' ? 'Workshop tile' : 'Public tile', project.publicUrl);
     const unique = new Set();
     for (const source of project.links||[]) {
       const uri=source.url;

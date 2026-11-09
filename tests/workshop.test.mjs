@@ -7,6 +7,7 @@ import { chromium } from 'playwright';
 const home = fs.readFileSync('index.html','utf8');
 const workshop = fs.readFileSync('workshop/index.html','utf8');
 const expected = [
+  'New Awesome Game Part 1',
   'MAZE · Seedling Rejuvenation',
   'Sphero Laboratory',
   'MPK249 Universal Map',
@@ -15,12 +16,12 @@ const expected = [
   'Play by Ear · GameCast',
   'Mergent'
 ];
-assert.equal((home.match(/<article class="project /g)||[]).length,21,'Public exhibition contains 21 curated tiles');
+assert.equal((home.match(/<article class="project /g)||[]).length,22,'Public exhibition contains 22 curated tiles');
 assert.match(home, /href="\/workshop\/"/, 'Only one understated workshop destination added');
 assert.ok(!home.includes('href="/xyzzy/"'), 'Unlisted workbench remains unlinked from public homepage');
 assert.ok(!workshop.includes('href="/xyzzy/"'), 'Workshop does not reveal private workbench URL');
 assert.ok(!workshop.includes('id="temporarily-leave-the-universe"'),'Promoted adventure is removed from workshop');
-assert.equal((workshop.match(/<article class="project"/g)||[]).length,expected.length,'Workshop keeps seven projects after exhibition promotion');
+assert.equal((workshop.match(/<article class="project"/g)||[]).length,expected.length,'Workshop keeps eight projects after exhibition promotion');
 assert.deepEqual([...workshop.matchAll(/<h2>([^<]+)<\/h2>/g)].map(m=>m[1]),expected,'Reviewed selection and order');
 assert.ok(home.includes('<h2>Key Scratch</h2>'), 'Key Scratch is in Exhibition');
 assert.ok(home.includes('own Apple developer signing configuration'), 'Key Scratch build requirement is explicit');
@@ -64,7 +65,7 @@ try {
 
     if(width===390){
       await page.goto('http://127.0.0.1:4182/',{waitUntil:'domcontentloaded'});
-      const workshopLink=page.getByRole('link',{name:/Explore the studio/});
+      const workshopLink=page.getByRole('link',{name:/Explore the workshop/});
       assert.equal(await workshopLink.count(),1,'Exactly one invitation beneath public portfolio');
       await workshopLink.click();
       await page.waitForURL('**/workshop/');

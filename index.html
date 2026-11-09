@@ -464,9 +464,9 @@
         <div class="caption"><div class="status">Hands-on learning</div><h2>Sorting Algorithms with Playing Cards</h2><p class="tile-summary">Explore sorting algorithms with a deck of playing cards.</p></div><span class="tile-count" hidden aria-hidden="true"></span>
       </button>
       <div class="expand">
-        <p>A 13-algorithm field-test booklet using a 52-card deck, with computer, tabletop, and in-hand approaches, experiments, and complexity examples.</p>
+        <p>An illustrated course in 13 sorting algorithms, comparing computer, tabletop and in-hand methods through worked examples and exercises.</p>
         <p class="access-note"><strong>To use:</strong> Hands-on exercises require a deck of playing cards. A printer can be useful but is optional.</p>
-        <div class="links"><a href="https://github.com/udeudeude/Sorting-Algorithms-with-Playing-Cards/blob/main/drafts/0.3/book.md">Read Draft 0.3 manuscript</a><a href="https://github.com/udeudeude/Sorting-Algorithms-with-Playing-Cards">GitHub project</a></div>
+        <div class="links"><a href="https://github.com/udeudeude/Sorting-Algorithms-with-Playing-Cards">Publication and source history</a></div>
       </div>
     </article>
 
@@ -849,37 +849,40 @@
 })();
 </script>
 <script>
-/* Add direct printable downloads only after the files exist in the official release. */
+/* Show only verified PDF assets belonging to the latest edition (0.5 or newer). */
 (() => {
-  const project = document.querySelector('[data-key="sorting-cards"] .links');
-  if (!project) return;
+  const container = document.querySelector('[data-key="sorting-cards"] .links');
+  if (!container) return;
   const repository = 'udeudeude/Sorting-Algorithms-with-Playing-Cards';
-  fetch('https://api.github.com/repos/' + repository + '/releases/tags/learner-draft-0.3', {
+  const prefix = 'https://github.com/' + repository + '/releases/download/';
+  const required = [
+    ['Sorting-Algorithms-with-Playing-Cards.pdf', 'Read the illustrated book (PDF)'],
+    ['Sorting-Algorithms-with-Playing-Cards-Booklet-LONG-EDGE.pdf', 'Print the long-edge booklet (PDF)']
+  ];
+  fetch('https://api.github.com/repos/' + repository + '/releases/latest', {
     headers: {'Accept': 'application/vnd.github+json'}
-  }).then(response => {
-    if (!response.ok) return null;
-    return response.json();
-  }).then(release => {
-    if (!release || !Array.isArray(release.assets)) return;
-    const wanted = [
-      ['sorting-algorithms-with-playing-cards.pdf','Download the course PDF'],
-      ['sorting-algorithms-booklet-print.pdf','Download the printable booklet PDF'],
-      ['sorting-algorithms-booklet-pages.pdf','Read the compact booklet PDF']
-    ];
-    const links = [];
-    for (const [filename, title] of wanted) {
-      const asset = release.assets.find(item => item.name === filename &&
+  }).then(response => response.ok ? response.json() : null).then(release => {
+    if (!release || release.draft || release.prerelease || !Array.isArray(release.assets)) return;
+    const version = /^v(\d+)\.(\d+)(?:\.(\d+))?$/.exec(release.tag_name || '');
+    if (!version || (Number(version[1]) === 0 && Number(version[2]) < 5)) return;
+    const urls = required.map(([name]) => {
+      const asset = release.assets.find(item => item.name === name &&
         item.state === 'uploaded' &&
         typeof item.browser_download_url === 'string' &&
-        item.browser_download_url.startsWith('https://github.com/' + repository + '/releases/download/'));
-      if (!asset) continue;
+        item.browser_download_url.startsWith(prefix));
+      return asset?.browser_download_url || '';
+    });
+    if (urls.some(url => !url)) return;
+    const links = required.map((entry, index) => {
       const link = document.createElement('a');
-      link.href = asset.browser_download_url;
-      link.textContent = title;
-      links.push(link);
-    }
-    project.prepend(...links);
-  }).catch(() => { /* The manuscript/source links still work without GitHub's API. */ });
+      link.href = urls[index];
+      link.textContent = entry[1];
+      return link;
+    });
+    container.prepend(...links);
+  }).catch(() => {
+    /* Keep the repository link available when GitHub cannot be reached. */
+  });
 })();
 </script>
 </body>

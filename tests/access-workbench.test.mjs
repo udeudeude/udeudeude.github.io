@@ -9,34 +9,34 @@ const workbench=fs.readFileSync('xyzzy/workbench.js','utf8');
 const snapshot=JSON.parse(fs.readFileSync('xyzzy/repositories.json','utf8'));
 const metadata=JSON.parse(fs.readFileSync('xyzzy/project-metadata.json','utf8'));
 assert.equal(metadata.version,1,'Curated project metadata schema is versioned');
-assert.equal(metadata.projects['repo-th-die-s-cast'].name,'Th’die’s Cast','Correct podcast title with both apostrophes');
+assert.equal(metadata.projects['thdies-cast'].name,'Th’die’s Cast','Correct podcast title with both apostrophes');
 for(const [key,label] of [
  ['repo-maze-seedling-rejuvenation','Open web companion'],
  ['temporarily-leave-the-universe','Open web experience'],
  ['repo-mpk249-universal-map','Download source ZIP'],
  ['repo-sphero-laboratory','Mac startup and safety instructions'],
- ['repo-key-scratch','Build / install guide'],
+ ['key-scratch','Build / install guide'],
  ['repo-escape-team-activate','No Such Room prototype']
 ]) {
  assert.ok(metadata.projects[key].links.some(link=>link.label===label),'Reviewed project resource: '+key);
  assert.ok(metadata.projects[key].tasks.length>0,'New project has actionable work: '+key);
 }
-assert.equal(snapshot.repositories.length,29,'Offline snapshot includes all 29 public repositories');
+assert.equal(snapshot.repositories.length,34,'Offline snapshot includes all 34 public repositories');
 assert.ok(!JSON.stringify(snapshot).includes('gear-harness'),'Private repository absent from workbench snapshot');
 assert.ok(workbench.includes('payload.version===1'),'Legacy backup handling remains available');
 
 for(const [key,url] of [
   ['living-patterns','https://udeudeude.github.io/Living-Patterns-Podcast/feed.xml'],
   ['orchestral-maneuvers-dark','https://om-weekly-podcast.workspace-310067.chatgpt.site/feed.xml'],
-  ['repo-th-die-s-cast','https://udeudeude.github.io/thdies-cast/feed.xml'],
+  ['thdies-cast','https://udeudeude.github.io/thdies-cast/feed.xml'],
   ['repo-play-by-ear-gamecast','https://play-by-ear-gamecast-lab.onrender.com/feed.xml']
 ]) {
  assert.ok(metadata.projects[key].links.some(x=>x.url===url),'Podcast subscription is recorded for '+key);
 }
 
-assert.equal((html.match(/data-phone-ready="/g)||[]).length,19,'All public projects have a phone-readiness flag');
-assert.equal((html.match(/data-browser-ready="/g)||[]).length,19,'All public projects have browser-readiness flags');
-assert.equal((html.match(/data-needs="/g)||[]).length,19,'All public projects declare required equipment');
+assert.equal((html.match(/data-phone-ready="/g)||[]).length,22,'All public projects have a phone-readiness flag');
+assert.equal((html.match(/data-browser-ready="/g)||[]).length,22,'All public projects have browser-readiness flags');
+assert.equal((html.match(/data-needs="/g)||[]).length,22,'All public projects declare required equipment');
 assert.ok(!html.includes('data-access-filter='),'Removed all three access-mode buttons');
 assert.ok(html.includes('What can I use right now?') && html.includes('Hide projects that require'),'Equipment prompt headings kept together');
 assert.ok(html.indexOf('id="filter-summary"') > html.indexOf('data-exclude="hardware"'),'Count follows last equipment checkbox');
@@ -72,7 +72,7 @@ try {
  await page.goto('http://127.0.0.1:4179/',{waitUntil:'domcontentloaded'});
  await page.locator('#filter-summary').waitFor({state:'visible'});
  const visible=()=>page.locator('#project-grid .project:visible').count();
- assert.equal(await visible(),19,'All curated projects visible by default');
+ assert.equal(await visible(),22,'All curated projects visible by default');
 
 
  // Equipment selection is independent of interest categories; counts follow it.
@@ -97,13 +97,13 @@ try {
  assert.ok(!keys.includes('lighthouse') && !keys.includes('tv-b-goner'),'Hardware-dependent projects can be hidden');
  assert.ok(keys.includes('living-patterns'),'Ready-to-listen projects remain when equipment hidden');
  await page.locator('[data-exclude="hardware"]').uncheck();
- assert.equal(await visible(),19,'Unchecking exclusions restores all 19 public projects');
+ assert.equal(await visible(),22,'Unchecking exclusions restores all 22 public projects');
  assert.equal(await page.locator('#clear-filters').isVisible(),false,'Reset link hidden without active filters');
  await page.locator('[data-filter="visual"]').click();
  await page.locator('[data-exclude="mac"]').check();
  assert.equal(await page.locator('#clear-filters').isVisible(),true,'Reset link appears with filters');
  await page.locator('#clear-filters').click();
- assert.equal(await visible(),19,'Clear filters restores the full portfolio');
+ assert.equal(await visible(),22,'Clear filters restores the full portfolio');
  assert.equal(await page.locator('[data-exclude="mac"]').isChecked(),false,'Clear filters resets equipment');
  assert.ok(!page.url().includes('hide=')&&!page.url().includes('category='),'Clear filters removes query state');
 
@@ -152,15 +152,22 @@ try {
  await x.goto('http://127.0.0.1:4179/xyzzy/',{waitUntil:'domcontentloaded'});
  await x.locator('#result-count').getByText('projects shown').waitFor({timeout:16000}).catch(async()=>{
    await x.waitForFunction(()=>document.getElementById('result-count')?.textContent?.includes('projects shown'),null,{timeout:16000});
+ await expand(x.locator('.tile').first());
  });
  const text=await x.locator('#result-count').textContent();
- assert.match(text,/19 curated/,'The workbench reflects the current 19 public cards');
+ assert.match(text,/22 exhibition/,'The workbench reflects the current 19 public cards');
  assert.match(text,/extra public repositories/,'Non-curated GitHub repos included');
  assert.ok(await x.getByText('Incredible Expanding Gospel',{exact:false}).count()>0,'Non-curated repo visible');
 assert.ok(await x.getByRole('heading',{name:'Moiré Lab'}).count()>0,'Moiré Lab remains available in the unlisted workbench');
+ const expand = async card => {
+   const button = card.locator('.tile-disclosure');
+   if (await button.getAttribute('aria-expanded') === 'false') await button.click();
+   assert.equal(await button.getAttribute('aria-expanded'), 'true', 'Expanded tile displays its resources');
+ };
 const promoted=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Temporarily Leave the Universe',exact:true})});
+ await expand(promoted);
 assert.equal(await promoted.count(),1,'Promoted adventure appears exactly once in workbench');
-assert.equal(await promoted.getByRole('link',{name:'Public tile'}).count(),1,'Promoted adventure now links to exhibition');
+assert.equal(await promoted.getByRole('link',{name:'Public tile'}).count(),1, 'Promoted adventure now links to exhibition: '+(await promoted.locator('a').allTextContents()).join(' | ')+'; expanded='+await promoted.locator('.tile-disclosure').getAttribute('aria-expanded'));
 assert.equal(await promoted.getByRole('link',{name:'Open web experience'}).count(),1,'Adventure retains its metadata launch action');
  assert.equal(await promoted.getByRole('link',{name:'ChatGPT: Previous adventure conversation'}).count(),1,'Old personal chat survives promotion');
  assert.ok(await promoted.getByText('Resume old adventure work').count(),'Old personal to-do survives promotion');
@@ -174,6 +181,8 @@ assert.equal(await promoted.getByRole('link',{name:'Open web experience'}).count
  assert.ok(migrated.done['temporarily-leave-the-universe']?.includes('source-0'),'Previously checked source task remains checked');
 
 const moireCard=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Moiré Lab'})});
+ await expand(moireCard);
+ await expand(moireCard);
 assert.ok(await moireCard.getByRole('link',{name:'Online workshop'}).count()>0,'Moiré still links to its working web app');
 assert.equal(await moireCard.getByRole('link',{name:'Public tile'}).count(),0,'Unpublished Moiré has no public-portfolio shortcut');
  assert.ok(!(await x.locator('body').innerText()).includes('gear-harness'),'Private repository is not included publicly');
@@ -181,18 +190,20 @@ assert.equal(await moireCard.getByRole('link',{name:'Public tile'}).count(),0,'U
   ['MAZE · Seedling Rejuvenation','Open web companion'],
   ['MPK249 Universal Map','Download source ZIP'],
   ['Sphero Laboratory','Mac startup and safety instructions'],
-  ['Ortholinear (Key Scratch)','Build / install guide'],
+  ['Key Scratch','Build / install guide'],
   ['Escape Team Activate','No Such Room prototype']
  ];
  for(const [title,label] of newlyIndexed){
    const card=x.locator('.tile').filter({has:x.getByRole('heading',{name:title,exact:true})});
    assert.equal(await card.count(),1,title+' gets an independent workbench tile');
+    await expand(card);
    assert.equal(await card.getByRole('link',{name:label}).count(),1,title+' gets a verified action');
    assert.ok((await card.locator('.backlog h3').textContent()).includes('open of'),title+' shows source-based to-dos');
-   assert.equal(await card.getByRole('link',{name:'Public tile'}).count(),0,title+' has not been promoted to the public portfolio');
+   assert.equal(await card.getByRole('link',{name:'Public tile'}).count(),title==='Key Scratch'?1:0,title+' has the correct public portfolio status');
  }
 
  const first=x.locator('.tile').first();
+ await expand(first);
  await first.locator('details summary').click();
  await first.locator('input[name="title"]').fill('A saved working conversation');
  await first.locator('input[name="url"]').fill('https://chatgpt.com/c/example-user-only');
@@ -201,27 +212,43 @@ assert.equal(await moireCard.getByRole('link',{name:'Public tile'}).count(),0,'U
  assert.ok(await x.getByText('A saved working conversation').count(),'ChatGPT link appears in project');
  await x.reload();
  await x.waitForFunction(()=>document.getElementById('result-count')?.textContent?.includes('projects shown'),null,{timeout:16000});
+ await expand(x.locator('.tile').first());
  assert.ok(await x.getByText('A saved working conversation').count(),'Private ChatGPT link survives reload on same browser');
  assert.ok(!fs.readFileSync('xyzzy/index.html','utf8').includes('example-user-only'),'Local conversation not added to published file');
  const shownCount=await x.locator('.tile').count();
  assert.equal(await x.locator('.tile .backlog h3').count(),shownCount,'Every tile visibly includes backlog heading');
  assert.equal(await x.locator('.tile .backlog input[name="todo"]').count(),shownCount,'Every tile has an add-to-do control');
  const thdie=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Th’die’s Cast'})});
+ await expand(thdie);
+ await expand(thdie);
  assert.equal(await thdie.count(),1,'Correct podcast display spelling');
  assert.ok(await thdie.getByRole('link',{name:'Subscribe (RSS)'}).count(),'Th’die’s Cast has a direct subscription link');
  assert.ok(await thdie.getByRole('link',{name:'Listen to the pilot episodes'}).count(),'Podcast has episode listener link');
  const gameCast=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Play by Ear · GameCast'})});
+ await expand(gameCast);
+ await expand(gameCast);
  assert.ok(await gameCast.getByRole('link',{name:'Subscribe to test feed (RSS)'}).count(),'GameCast has subscription URL');
  const living=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Living Patterns'})});
+ await expand(living);
+ await expand(living);
  assert.ok(await living.getByRole('link',{name:'Subscribe (RSS)'}).count(),'Living Patterns has direct RSS link');
  const orchestral=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Orchestral Maneuvers in the Dark'})});
+ await expand(orchestral);
+ await expand(orchestral);
  assert.ok(await orchestral.getByRole('link',{name:'Subscribe (RSS)'}).count(),'Orchestral show has RSS link');
  const po35=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Pocket Operations Manual'})});
+ await expand(po35);
+ await expand(po35);
  assert.ok(await po35.getByRole('link',{name:'Interactive PO-35 Speak simulator'}).count(),'Non-curated web simulator linked');
  const depot=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Pocket Operations Mobile Depot'})});
+ await expand(depot);
+ await expand(depot);
  assert.ok(await depot.getByRole('link',{name:'PO-35 Bridge'}).count(),'PO-35 utility is linked');
+ await expand(moireCard);
  assert.ok(await moireCard.getByRole('link',{name:'Online workshop'}).count(),'Moiré workshop online action appears');
  const escape=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Escape Pod Cast'})});
+ await expand(escape);
+ await expand(escape);
  assert.ok(await escape.getByRole('link',{name:'Latest Mac releases'}).count(),'Mac downloads offered in workbench');
  const backlog=first.locator('.backlog');
  await backlog.locator('input[name="todo"]').fill('A task saved privately on this device');
@@ -229,6 +256,7 @@ assert.equal(await moireCard.getByRole('link',{name:'Public tile'}).count(),0,'U
  assert.ok(await x.getByText('A task saved privately on this device').count(),'Personal to-do visible after save');
  await x.reload();
  await x.waitForFunction(()=>document.getElementById('result-count')?.textContent?.includes('projects shown'),null,{timeout:16000});
+ await expand(x.locator('.tile').first());
  assert.ok(await x.getByText('A task saved privately on this device').count(),'Personal to-do persists across reload');
  const task=x.locator('.tile').first().locator('.backlog-items li').filter({hasText:'A task saved privately on this device'});
  await task.locator('input[type="checkbox"]').check();
@@ -263,7 +291,7 @@ assert.equal(await moireCard.getByRole('link',{name:'Public tile'}).count(),0,'U
 
 
 
- console.log('Access filters and unlisted workbench passed: 19 curated, public extras, podcast subscriptions and locally persisted links/to-dos.');
+ console.log('Access filters and unlisted workbench passed: 22 curated, public extras, podcast subscriptions and locally persisted links/to-dos.');
  await context.close();
 } finally {
  if(browser)await browser.close();

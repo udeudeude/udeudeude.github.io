@@ -27,6 +27,7 @@ jobs:
               for name in names:
                   data=z.read(name)
                   assert data[:4]==b'RIFF' and data[8:12]==b'WEBP', name
+                  assert len(data)>10000, 'Screenshot unexpectedly small: '+name
                   Path(name).write_bytes(data)
           PY
       - name: Commit extracted images
