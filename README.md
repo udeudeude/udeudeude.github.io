@@ -42,7 +42,6 @@ The unlisted workbench keeps the adventure's project entry and automatically mig
 - Print as PocketMod
 - LightHouse
 - SuperCollision
-- Kokoro Voice Lab
 - 1AM Wisdom Watch
 - Living Patterns
 - Temporarily Leave the Universe
@@ -58,6 +57,7 @@ The unlisted workbench keeps the adventure's project entry and automatically mig
 - Key Scratch
 - TouchBarpalooza
 - Ji Ga Zo Mosaic Workshop
+- Kokoro Voice Lab
 - Biofeedback Play
 - AI on Kindle
 
