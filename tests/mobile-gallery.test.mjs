@@ -22,6 +22,49 @@ try {
     reducedMotion:'reduce'
   });
   await page.goto('http://127.0.0.1:4178/', {waitUntil:'domcontentloaded'});
+  // Guard against a recurrence of the missing/clipped Exhibition descriptions.
+  // Check actual browser layout, not just whether summary text exists in HTML.
+  async function checkCaptions(browserPage, device) {
+    const entries = await browserPage.locator('.project').evaluateAll(projects => projects.map(project => {
+      const caption=project.querySelector('.caption');
+      const summary=project.querySelector('.tile-summary');
+      const title=caption?.querySelector('h2');
+      const toggle=project.querySelector('.tile-toggle');
+      const visual=project.querySelector('.visual');
+      if(!caption || !summary || !title || !toggle || !visual) {
+        return {key:project.dataset.key, missing:true};
+      }
+      const s=summary.getBoundingClientRect();
+      const c=caption.getBoundingClientRect();
+      return {
+        key:project.dataset.key, text:summary.textContent.trim(),
+        display:getComputedStyle(summary).display,
+        visibility:getComputedStyle(summary).visibility,
+        opacity:Number(getComputedStyle(summary).opacity),
+        width:s.width,height:s.height,top:s.top,bottom:s.bottom,
+        captionTop:c.top,captionBottom:c.bottom,
+        titleBottom:title.getBoundingClientRect().bottom,
+        visualBottom:visual.getBoundingClientRect().bottom,
+        buttonBottom:toggle.getBoundingClientRect().bottom
+      };
+    }));
+    assert.equal(entries.length,22,device+': all curated Exhibition tiles are rendered');
+    for(const entry of entries) {
+      const label=device+': '+entry.key;
+      assert.ok(!entry.missing,label+' has a title, caption, summary, and tile button');
+      assert.ok(entry.text.length>=18,label+' has a substantive description');
+      assert.notEqual(entry.display,'none',label+' description is displayed');
+      assert.equal(entry.visibility,'visible',label+' description is visible');
+      assert.ok(entry.opacity>=0.99,label+' description is opaque');
+      assert.ok(entry.width>50 && entry.height>=12,label+' description occupies real space');
+      assert.ok(entry.top>=entry.titleBottom-2,label+' description follows the title');
+      assert.ok(entry.top>=entry.captionTop-2 && entry.bottom<=entry.captionBottom+2,
+        label+' description is not clipped by its caption');
+      assert.ok(entry.captionTop>=entry.visualBottom-2 && entry.captionBottom<=entry.buttonBottom+2,
+        label+' caption fits below the visual and inside the tile button');
+    }
+  }
+  await checkCaptions(page,'iPhone 390px');
   const keys=['anaglyph-friends','lighthouse','living-patterns','tv-b-goner'];
   for(const key of keys){
     const project=page.locator('.project[data-key="'+key+'"]');
@@ -65,6 +108,11 @@ try {
     console.log(key+': '+layout.items.map(item=>Math.round(item.width)+'x'+Math.round(item.height)).join(', '));
   }
   await page.close();
+  const desktopPage=await browser.newPage({viewport:{width:1280,height:900},reducedMotion:'reduce'});
+  await desktopPage.goto('http://127.0.0.1:4178/',{waitUntil:'domcontentloaded'});
+  await checkCaptions(desktopPage,'desktop 1280px');
+  await desktopPage.close();
+  console.log('All 22 Exhibition captions are visible and unclipped at phone and desktop widths.');
 } finally {
   if(browser) await browser.close();
   server.kill('SIGTERM');
