@@ -617,7 +617,7 @@ async function exportWav(){
     const blob=encodeWav(result.getChannelData(0),RATE);
     const link=document.createElement('a');
     const url=URL.createObjectURL(blob);
-    link.href=url;link.download='lewis-voice-lab-'+Date.now()+'.wav';
+    link.href=url;link.download='kokoro-voice-lab-'+Date.now()+'.wav';
     document.body.append(link);link.click();link.remove();
     setTimeout(()=>URL.revokeObjectURL(url),45000);
     setMessage(`WAV ready: ${(blob.size/1024/1024).toFixed(2)} MB. On iPhone, save it using the Share menu if needed.`);
