@@ -137,8 +137,14 @@ const escape = cards.find(card => card[1] === 'escape-pod-cast')?.[3];
 assert.ok(pnp?.includes('release is still pending'), 'PnP-o-matic makes no false release claim');
 assert.ok(escape?.includes('app-v0.7.0') && !escape.includes('/audio/'), 'Escape Pod Cast links to Mac release, not an episode feed');
 
+assert.deepEqual(keys.slice(3,6),['supercollision','lewis-voice-lab','wisdom-watch'],
+  'Kokoro Voice Lab sits immediately after SuperCollision in fifth place');
 const voiceLabCard = cards.find(card => card[1] === 'lewis-voice-lab')?.[3];
 assert.ok(voiceLabCard?.includes('https://udeudeude.github.io/kokoro-voice-lab/'), 'Cache-free Kokoro Voice Lab is discoverable from the home page');
+assert.match(voiceLabCard, /<div class="visual"[^>]*>\s*<img src="\/assets\/screenshots\/kokoro-voice-lab\.webp"/,
+  'The closed Kokoro tile features a real screenshot, not a decorative waveform');
+assert.ok(fs.existsSync(new URL('assets/screenshots/kokoro-voice-lab.webp',root)),
+  'Real Kokoro screenshot exists');
 assert.ok(projectCategories.get('lewis-voice-lab').includes('audio'), 'Voice Lab is classified under Sound');
 assert.ok(projectCategories.get('lewis-voice-lab').includes('tabletop'), 'Voice Lab is relevant to tabletop production');
 const lab = read('voice-lab/index.html');
