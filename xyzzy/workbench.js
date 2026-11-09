@@ -141,8 +141,15 @@
   }
 
   async function publicRepositories() {
-    const snapshotResponse = await fetch('/xyzzy/repositories.json', {cache:'no-cache'});
-    const snapshot = snapshotResponse.ok ? (await snapshotResponse.json()).repositories : [];
+    // A missing or malformed snapshot must never prevent live discovery.
+    let snapshot = [];
+    try {
+      const response = await fetch('/xyzzy/repositories.json', {cache:'no-cache'});
+      if (response.ok) {
+        const data = await response.json();
+        if (Array.isArray(data.repositories)) snapshot = data.repositories;
+      }
+    } catch { /* Continue with live GitHub discovery. */ }
     try {
       const response = await fetch('https://api.github.com/users/' + OWNER + '/repos?per_page=100&type=owner&sort=updated', {
         headers: {'Accept':'application/vnd.github+json'},
