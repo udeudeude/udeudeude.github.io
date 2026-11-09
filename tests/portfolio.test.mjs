@@ -203,6 +203,7 @@ const curatedOrder = [
   'print-pocketmod',
   'lighthouse',
   'supercollision',
+  'lewis-voice-lab',
   'wisdom-watch',
   'living-patterns',
   'temporarily-leave-the-universe',
@@ -218,7 +219,6 @@ const curatedOrder = [
   'key-scratch',
   'touchbarpalooza',
   'ji-ga-zo',
-  'lewis-voice-lab',
   'biofeedback-play',
   'ai-kindle'
 ];
