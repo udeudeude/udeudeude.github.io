@@ -30,9 +30,9 @@ assert.equal(keys.indexOf('supercollision'),keys.indexOf('lighthouse')+1,
   'SuperCollision immediately follows LightHouse');
 assert.equal(keys.indexOf('temporarily-leave-the-universe'),keys.indexOf('living-patterns')+1,
   'Temporarily Leave the Universe immediately follows Living Patterns');
-assert.ok(['touchbarpalooza','lewis-voice-lab','biofeedback-play','ai-kindle']
+assert.ok(['touchbarpalooza','biofeedback-play','ai-kindle']
   .every((key,i,ordered)=>i===0 || keys.indexOf(ordered[i-1])<keys.indexOf(key)),
-  'Original final four retain their relative order after later additions');
+  'Other former final projects retain their relative order after promoting Kokoro');
 const anaglyph = cards.find(card => card[1] === 'anaglyph-friends')[3];
 assert.ok(anaglyph.includes('https://anaglyph-friends-independent.onrender.com/'), 'Current Anaglyph application is linked');
 assert.ok(anaglyph.includes('https://github.com/udeudeude/Anaglyph-and-Friends-Independent-'), 'Current application source is available');
