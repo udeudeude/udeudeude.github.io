@@ -35,7 +35,7 @@ try{
   assert.ok(await page.locator('#voiceSampleText').isVisible(),'Previously unquoted comparison guidance remains visible');
   assert.ok(await page.locator('#auditionVoice').isVisible(),'Original replay control is restored');
   assert.ok(await page.locator('.learning').isVisible(),'Original reference section remains visible');
-    assert.equal(await page.locator('#languageSelect').inputValue(),'all','No forced language-first choice');
+    assert.equal(await page.locator('#languageSelect').inputValue(),'b','Current voice browser initially showcases British English, with language and voice profile independently selectable');
   assert.equal(await page.locator('#genderSelect').inputValue(),'all','No forced gender-first choice');
   const defaultId=await page.locator('#voiceSelect').inputValue();
   const defaultLabel=await page.locator('#voiceSelect option:checked').textContent();
