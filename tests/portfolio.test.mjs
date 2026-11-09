@@ -22,7 +22,17 @@ for (const [, key, rank, body] of cards) {
   assert.ok(body.includes('aria-expanded="false"'), key + ' declares initial closed state');
   assert.ok(body.includes('<div class="expand">'), key + ' has expansion content');
   assert.ok(body.includes('<h2>'), key + ' has a readable project name');
+  const summaries=[...body.matchAll(/<p class="tile-summary">([^<]+)<\/p>/g)];
+  assert.equal(summaries.length,1,key+' has exactly one short tile description');
+  assert.ok(summaries[0][1].trim().length>=18,key+' description is substantive');
 }
+assert.equal(keys.indexOf('supercollision'),keys.indexOf('lighthouse')+1,
+  'SuperCollision immediately follows LightHouse');
+assert.equal(keys.indexOf('temporarily-leave-the-universe'),keys.indexOf('living-patterns')+1,
+  'Temporarily Leave the Universe immediately follows Living Patterns');
+assert.ok(['touchbarpalooza','lewis-voice-lab','biofeedback-play','ai-kindle']
+  .every((key,i,ordered)=>i===0 || keys.indexOf(ordered[i-1])<keys.indexOf(key)),
+  'Original final four retain their relative order after later additions');
 const anaglyph = cards.find(card => card[1] === 'anaglyph-friends')[3];
 assert.ok(anaglyph.includes('https://anaglyph-friends-independent.onrender.com/'), 'Current Anaglyph application is linked');
 assert.ok(anaglyph.includes('https://github.com/udeudeude/Anaglyph-and-Friends-Independent-'), 'Current application source is available');
