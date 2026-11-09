@@ -22,7 +22,7 @@ The Exhibition's editorial order is unaffected. Private repositories are never r
 
 ## Public collections (November 2026)
 
-The Exhibition contains 21 curated projects, including **SuperCollision**. The Workshop at https://udeudeude.github.io/workshop/ contains seven developing projects, including **Mergent**. The established order and equipment filters remain intact.
+The Exhibition contains 22 curated projects, including **SuperCollision** and **Kokoro Voice Lab**. The Workshop at https://udeudeude.github.io/workshop/ contains eight developing projects, including **Mergent**. The established order and equipment filters remain intact.
 
 **Anaglyph & Friends** is the sole public-facing name of the stereoscopic application. Its current browser and Mac releases are linked from the Exhibition.
 
@@ -41,24 +41,25 @@ The unlisted workbench keeps the adventure's project entry and automatically mig
 - Anaglyph & Friends
 - Print as PocketMod
 - LightHouse
+- SuperCollision
+- Kokoro Voice Lab
 - 1AM Wisdom Watch
 - Living Patterns
+- Temporarily Leave the Universe
 - Tales from the Loop Homebrewery Toolkit
 - Starfinder 2e Homebrewery Toolkit
 - PnP-o-matic
 - Asheville GoLocal Card + Google Maps
 - Orchestral Maneuvers in the Dark
 - Escape Pod Cast
-- TouchBarpalooza
 - Sorting Algorithms with Playing Cards
-- Biofeedback Play
 - TV-b-goner
-- AI on Kindle
-- Kokoro Voice Lab
-- Temporarily Leave the Universe
 - Th’die’s Cast
-- SuperCollision
 - Key Scratch
+- TouchBarpalooza
+- Ji Ga Zo Mosaic Workshop
+- Biofeedback Play
+- AI on Kindle
 
 ## Repository guide
 

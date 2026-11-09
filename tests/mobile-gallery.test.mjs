@@ -65,7 +65,15 @@ try {
     }
   }
   await checkCaptions(page,'iPhone 390px');
-  const keys=['anaglyph-friends','lighthouse','living-patterns','tv-b-goner'];
+  const kokoroImage=page.locator('.project[data-key="lewis-voice-lab"] .visual img');
+  await kokoroImage.scrollIntoViewIfNeeded();
+  await kokoroImage.evaluate(async image=>{image.loading='eager';await image.decode();});
+  assert.ok(await kokoroImage.evaluate(image=>image.naturalWidth>0&&image.naturalHeight>0),
+    'Kokoro closed-card image is a real, loadable screenshot');
+  assert.equal(await kokoroImage.evaluate(image=>getComputedStyle(image).objectFit),'contain',
+    'Kokoro screenshot stays visible without cropping');
+
+  const keys=['anaglyph-friends','lighthouse','living-patterns','tv-b-goner','lewis-voice-lab'];
   for(const key of keys){
     const project=page.locator('.project[data-key="'+key+'"]');
     await project.locator('.tile-toggle').click();
