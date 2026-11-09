@@ -21,7 +21,10 @@ for(const [key,label] of [
  assert.ok(metadata.projects[key].links.some(link=>link.label===label),'Reviewed project resource: '+key);
  assert.ok(metadata.projects[key].tasks.length>0,'New project has actionable work: '+key);
 }
-assert.equal(snapshot.repositories.length,34,'Offline snapshot includes all 34 public repositories');
+assert.ok(snapshot.repositories.length>=40,'Offline snapshot retains at least 40 public repositories');
+assert.equal(new Set(snapshot.repositories.map(repo=>repo.name)).size,snapshot.repositories.length,'Snapshot repository names are unique');
+for(const name of ['Pashto-English','new-awesome-game-part-1','earbud-controller-','Dactyl-Nightmare-Lucid-Dream','Old-Man-JiGaZo','PhomemoMuma'])
+ assert.ok(snapshot.repositories.some(repo=>repo.name===name),'Recent repository in offline snapshot: '+name);
 assert.ok(!JSON.stringify(snapshot).includes('gear-harness'),'Private repository absent from workbench snapshot');
 assert.ok(workbench.includes('payload.version===1'),'Legacy backup handling remains available');
 
