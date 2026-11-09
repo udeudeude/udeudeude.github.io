@@ -10,7 +10,7 @@ This is the **portfolio repository**, not the source repository for LightHouse o
 
 The Exhibition and Workshop include optional Umami Cloud analytics. Tracking is **disabled until** `assets/analytics-config.js` contains a valid website ID from the owner's Umami Cloud dashboard. Do not commit login credentials or API tokens. Register `udeudeude.github.io` as the website domain in Umami Cloud and copy the website ID into that file.
 
-When configured, the public pages record aggregate page visits and project-open/project-link/category-filter events. They do not transmit search terms, user-entered text, or personal URLs. The unlisted `/xyzzy/` dashboard is deliberately excluded, and no analytics scripts are loaded there.
+When configured, the public pages record aggregate page visits and project-open/project-link/category-filter events. They do not transmit search terms, user-entered text, or personal URLs. Internal management pages do not load public visitor analytics.
 
 To exclude the owner's own visits, use an ad/tracker blocker or a browser profile with Umami blocked when visiting the public site. Umami's dashboard reports traffic only after configuration, not retrospectively. Separate applications on other hosting domains require their own approved analytics instrumentation.
 
@@ -28,13 +28,11 @@ The Exhibition contains 22 curated projects, including **SuperCollision** and **
 
 **Key Scratch** is now in the Exhibition. Its source is a fork of Ortholinear with a different intended direction. Visitors building the iPhone keyboard need Xcode and their own Apple developer signing configuration. The repository's MIT license permits commercial use and redistribution subject to retaining notices; bundled data may have separate licenses.
 
-Run `node tests/portfolio.test.mjs`, `node tests/workshop.test.mjs`, and `node tests/xyzzy.test.mjs` to check the respective collections and dashboard behavior.
+Run `node tests/portfolio.test.mjs` and `node tests/workshop.test.mjs` to check the public collections.
 
 ## Historical note: October 23, 2026 promotion
 
 **Temporarily Leave the Universe** now appears as the nineteenth curated exhibition tile, after the established eighteen, with direct browser-play and source links. The project has moved out of Open Workshop, which now presents seven projects. The new tile's two screen illustrations were re-created as SVG previews from the owner's supplied green and purple CRT screenshots; they are **not the original JPEG screenshots**.
-
-The unlisted workbench keeps the adventure's project entry and automatically migrates its personal ChatGPT links, locally added tasks and completion markers from the former `repo-temporarily-leave-the-universe` identifier to `temporarily-leave-the-universe`. Project metadata follows the same ID. No saved private URL is committed publicly.
 
 ## Works on the homepage
 
@@ -118,41 +116,11 @@ The public homepage offers four independent **Hide projects that require** check
 
 Every tile declares a short equipment-requirements note. Optional output devices and secondary platform editions are not treated as prerequisites for using the online version. Equipment exclusions can be bookmarked with `?hide=mac,printer`. The former quick-action access-mode buttons have been removed to keep the page simple.
 
-## Unlisted workbench
-
-A separate, unlinked, `noindex` workspace is included for the creator. It mirrors curated projects from the public HTML and obtains additional **public** repositories from the GitHub API, falling back to a checked-in list when GitHub is unavailable. Repo issue/PR/action links appear alongside public demo links.
-
-Moiré Lab is temporarily excluded from the public homepage but remains in the workbench as an additional repository with its web-app and source links. Previously saved per-project personal links remain attached using the same project identifier.
-
-The workbench can add private repository projects and multiple **ChatGPT chat**, **Work**, **Codex**, and other direct URLs per tile. **Those links are entered by the creator and stored solely in that browser's localStorage, not in GitHub source.** The page offers export/import JSON backups to transfer them to another browser. There is no ChatGPT API or authenticated connector in this static webpage to enumerate the user's private conversations automatically.
-
-Important limitations: an unlisted static GitHub Pages URL is not an authentication mechanism. Search-engine `noindex` is advisory, not security. Only the locally entered links and private project records avoid public hosting; any bundled HTML, JavaScript, and public repo names remain visible to anyone who discovers the route. Imported backups contain private links and must be protected.
-
-### Workbench links and backlog
-
-`xyzzy/project-metadata.json` supplements the 19 curated public tiles and additional public repositories with known **subscription feeds**, **live demos**, **app releases**, reference downloads and **sourced outstanding tasks**. The title of the tabletop-utility podcast is spelled **Th’die’s Cast**. The workbench provides direct RSS subscriptions for Living Patterns, Orchestral Maneuvers in the Dark, Th’die’s Cast and the experimental Play by Ear · GameCast.
-
-The public portfolio is the starting point for any links already offered there. Workbench metadata adds useful repository-specific actions and pending future public-tile links without incorrectly labeling incomplete software as released. GitHub Issues and Releases pages remain available for repository-based work, even when an issue list has not been populated.
-
-Every workbench tile displays a **Backlog / to-dos** section. Pre-filled items were summarized from the portfolio TODO and project README/BACKLOG notes on 2026-10-12; they are *not* a live issue synchronization. Where no public tasks are documented, the card explicitly says so. You can add tasks and tick off both the imported summaries and private tasks locally. Local task and completion records are stored separately in browser localStorage and are included in **version 2** of the workbench's private JSON backup. Older version 1 backups continue to import.
-
-The workbench header contains a link back to the public homepage. The lengthy introductory and privacy-warning paragraphs have been removed; the site remains unlisted but not password-protected.
-
 ## October 15, 2026 site improvements
 
 The public filter interface now provides **Clear filters** when a selection is active, plus a useful reset action when category and equipment settings produce zero matching projects. These controls preserve existing shareable URL behavior and keep all 19 curated projects in their editorial order.
 
-The unlisted workbench search also matches project-action labels and sourced or locally entered backlog text. Checking or adding a task now preserves keyboard focus and scroll position after updating the local checklist. The weekly link checker decodes HTML ampersand entities before checking the actual browser target, avoiding misleading false 404s.
-
-## October 22, 2026 unlisted-workbench audit
-
-The unlisted workbench snapshot now covers **29 public GitHub repositories** (plus the 19 curated portfolio tiles, with overlaps deduplicated). Six newly added public repositories have workbench-only entries with reviewed project status, credible resource links, and source-based tasks: MPK249 Universal Map, MAZE · Seedling Rejuvenation, Sphero Laboratory, Escape Team Activate, Temporarily Leave the Universe, and Ortholinear (Key Scratch).
-
-The workbench recognizes genuine repository media where it exists; the MAZE app icon and Ortholinear iPhone simulator screenshot are not fabricated preview images. Incomplete prototypes and hardware-dependent utilities are clearly labeled. No repository was promoted during the October 22 audit. Temporarily Leave the Universe was promoted separately with owner approval on October 23.
-
-Importing a **version 1** personal workbench backup now retains any newer local to-do and completion data, while version 2 imports still replace that data after the user's confirmation. Personal links and task state remain browser-local. The automated external-link checker confirms reported 404 and 410 HEAD responses with GET before treating them as broken, without changing public-site links.
-
-Public-site changes require editorial approval. Candidate promotions and link repairs were intentionally held back during this audit.
+The weekly link checker decodes HTML ampersand entities before checking the actual browser target, avoiding misleading false 404s.
 
 ## Content and credits
 
