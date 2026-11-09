@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { chromium } from 'playwright';
+import fs from 'node:fs';
 
 const server=spawn('python3',['-m','http.server','4186','--bind','127.0.0.1'],{stdio:'ignore'});
 let browser;
@@ -86,6 +87,54 @@ try{
   assert.equal(await fresh.locator('#voiceSelect').inputValue(),'bf_alice','Fresh entry loads Alice instead of Lewis');
   await fresh.locator('#voiceSelect').selectOption('bm_george');
   await fresh.waitForFunction(()=>document.querySelector('#fileHelp')?.textContent?.includes('George'),{timeout:30000});
+  // End-to-end processing and file export on an emulated iPhone-sized browser.
+  // Covers the real worker, offline audio effects, and downloaded WAV bytes.
+  const savedLink=fresh.locator('a[download][href$="saved-user-recipes.json"]');
+  assert.equal(await savedLink.getAttribute('href'),'/voice-lab/presets/saved-user-recipes.json',
+    'Saved presets link resolves to their actual shared source location');
+  const presetResponse=await fresh.context().request.get(
+    'http://127.0.0.1:4186/voice-lab/presets/saved-user-recipes.json');
+  assert.equal(presetResponse.status(),200,'Saved presets download is served');
+  const presetData=await presetResponse.json();
+  assert.deepEqual(presetData.presets.map(p=>p.id),['savedDeepDry','savedNaturalRoom'],
+    'Both approved presets are preserved');
+
+  await fresh.waitForFunction(()=>!document.querySelector('#downloadWav')?.disabled,null,{timeout:90000});
+  for(const [id,value] of [['pitch','-1'],['formant','-0.75'],['speed','1.25'],['reverb','12']]){
+    await fresh.locator('#'+id).evaluate((el,newValue)=>{
+      el.value=newValue;
+      el.dispatchEvent(new Event('input',{bubbles:true}));
+    },value);
+  }
+  assert.equal(await fresh.locator('#applyVoice').isEnabled(),true,'New voice settings require applying');
+  await fresh.locator('#applyVoice').click();
+  await fresh.waitForFunction(()=>document.querySelector('#renderStatus')?.textContent?.startsWith('Voice ready (') &&
+    !document.querySelector('#downloadWav').disabled,null,{timeout:90000});
+  await fresh.locator('#btnB').click();
+  assert.equal(await fresh.locator('#btnB').getAttribute('aria-pressed'),'true',
+    'Processed voice can be selected for A/B comparison');
+  await fresh.locator('#btnA').click();
+  assert.equal(await fresh.locator('#btnA').getAttribute('aria-pressed'),'true',
+    'Original voice can be selected for A/B comparison');
+  const downloadPromise=fresh.waitForEvent('download',{timeout:90000});
+  await fresh.locator('#downloadWav').click();
+  const download=await downloadPromise;
+  assert.match(download.suggestedFilename(),/^kokoro-voice-lab-\d+\.wav$/,
+    'Export names identify the public Kokoro Voice Lab');
+  const output=fs.readFileSync(await download.path());
+  assert.ok(output.length>50000,'Export contains substantive audio samples');
+  assert.equal(output.toString('ascii',0,4),'RIFF','Export uses RIFF');
+  assert.equal(output.toString('ascii',8,12),'WAVE','Export uses WAV');
+  assert.equal(output.readUInt16LE(22),1,'Export is mono');
+  assert.equal(output.readUInt32LE(24),24000,'Export sample rate is 24 kHz');
+  assert.equal(output.readUInt16LE(34),16,'Export audio is 16-bit PCM');
+  assert.equal(output.readUInt32LE(40),output.length-44,'WAV header contains exact sample size');
+  let audible=false;
+  for(let i=44;i<output.length;i+=110){if(output.readInt16LE(i)>200||output.readInt16LE(i)<-200){audible=true;break;}}
+  assert.ok(audible,'Export is not silent');
+  assert.match(await fresh.locator('#renderStatus').textContent(),/WAV ready:/,
+    'Export status confirms completion');
+  console.log('Processed pitch, formant, speed and room effects; A/B controls and downloaded WAV verified.');
   assert.deepEqual(freshErrors,[],'Fresh cache-recovery entry has no JavaScript exceptions');
   await fresh.close();
   console.log('Verified clean /kokoro-voice-lab/ URL and non-Lewis native voice switching.');
