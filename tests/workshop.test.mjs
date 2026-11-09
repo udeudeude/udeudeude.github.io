@@ -47,6 +47,9 @@ try {
     const page=await browser.newPage({viewport:{width,height:844},isMobile:width===390,hasTouch:width===390});
     // Avoid network-dependent third party media for repeatable layout checks.
     await page.route('https://raw.githubusercontent.com/**',route=>route.abort());
+    // The workshop adds more public repositories when GitHub responds.
+    // This test checks the eight deliberately curated fallback cards.
+    await page.route('https://api.github.com/**',route=>route.abort());
     await page.goto('http://127.0.0.1:4182/workshop/',{waitUntil:'domcontentloaded'});
     const dimensions=await page.evaluate(()=>({
       viewport:window.innerWidth,
