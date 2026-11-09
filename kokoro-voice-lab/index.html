@@ -10,8 +10,8 @@
   <title>Kokoro Voice Lab · Th’die’s Cast</title>
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="/voice-lab/icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/voice-lab/style.css?rev=voice-lab-precise-v1">
-  <script src="/voice-lab/app.js?rev=voice-lab-precise-v1" type="module" defer></script>
+  <link rel="stylesheet" href="/voice-lab/style.css?rev=voice-lab-international-v6">
+  <script src="/voice-lab/app.js?rev=voice-lab-international-v6" type="module" defer></script>
 <script defer src="https://cloud.umami.is/script.js" data-website-id="f374a945-0ea2-41ed-8eb7-4b6ab6933f9a"></script>
 <script>
 document.addEventListener('click', function(e) {
@@ -32,9 +32,25 @@ document.addEventListener('click', function(e) {
     <div class="panel-head"><h2>01 <span>Listen & compare</span></h2><div class="live-status" id="loadStatus" aria-live="polite">Initializing…</div></div>
     <div class="voice-browser" aria-labelledby="voiceBrowseHeading">
       <div class="voice-browser-head">
-        <h3 id="voiceBrowseHeading">Kokoro voice library <span class="count" id="voiceCount">54 voices</span></h3>
+        <h3 id="voiceBrowseHeading">AI voice library <span class="count" id="voiceCount">voices</span></h3>
         <span id="voiceAvailability" class="sr-only" role="status" aria-live="polite">Checking samples…</span>
       </div>
+      <div class="voice-browser-grid" style="margin-bottom:10px">
+        <div><label for="originSelect">Voice collection</label>
+          <select id="originSelect">
+            <option value="original">Original Kokoro</option>
+            <option value="community">Independent voices</option>
+            <option value="english">English originals</option>
+            <option value="international">International voices (original language)</option>
+            <option value="accents">English-accent experiments</option>
+            <option value="all">All collections</option>
+          </select>
+        </div>
+        <div><label for="voiceSearch">Find a voice</label>
+          <input id="voiceSearch" type="search" placeholder="Search name or accent" autocomplete="off" style="width:100%;min-height:42px;border-radius:8px;padding:8px;background:#283442;color:#eee9df;border:1px solid #49515a">
+        </div>
+      </div>
+      <label style="display:flex;align-items:center;gap:8px;margin:6px 0 14px"><input type="checkbox" id="playableOnly" checked> Only show voices with available recordings</label>
       <div class="voice-browser-grid">
         <div>
           <label class="sr-only" for="languageSelect">Language or accent</label>
@@ -56,6 +72,7 @@ document.addEventListener('click', function(e) {
         <button type="button" class="secondary small" id="nextVoice" disabled>Next ›</button>
         <button type="button" class="main-action" id="auditionVoice" disabled>▶ Replay selected voice</button>
       </div>
+      <p class="microtext"><a id="communityDemoLink" href="https://huggingface.co/gushilabs/gushilabs-voices-for-kokoro-v1" target="_blank" rel="noopener" hidden>Listen to original community demonstration</a></p>
       <p class="microtext" id="voiceSampleText">Every voice in one language or accent reads the same sentence. Other languages use localized text. These are genuine Kokoro recordings, not processed versions of Lewis.</p>
     </div>
     <div class="source-grid">
