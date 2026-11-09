@@ -545,6 +545,29 @@
         "Verify text replacement and notes behavior in several host apps.",
         "Check iPad layouts and accessibility on physical hardware."
       ]
+    },
+    "repo-ai-voice-library": {
+      "name": "AI Voice Library",
+      "status": "Foundation only · synthetic voice research",
+      "description": "Shared, English-first workspace for comparing and preserving reproducible synthetic voices for podcasts and other creative projects. No voice model archived or synthesis tested yet.",
+      "links": [
+        {
+          "label": "Architecture",
+          "url": "https://github.com/udeudeude/AI-Voice-Library/blob/main/docs/architecture.md"
+        },
+        {
+          "label": "Voice registry",
+          "url": "https://github.com/udeudeude/AI-Voice-Library/blob/main/voices/registry.json"
+        },
+        {
+          "label": "Evaluation rubric",
+          "url": "https://github.com/udeudeude/AI-Voice-Library/blob/main/docs/evaluation.md"
+        }
+      ],
+      "tasks": [
+        "Verify existing podcast synthesis workflows and select a reproducible Kokoro runtime.",
+        "Record model and voice checksums and licenses; produce a common listening comparison."
+      ]
     }
   }
 }
