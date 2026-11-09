@@ -8,11 +8,7 @@ This is the **portfolio repository**, not the source repository for LightHouse o
 
 ## Public visitor analytics
 
-The Exhibition and Workshop include optional Umami Cloud analytics. Tracking is **disabled until** `assets/analytics-config.js` contains a valid website ID from the owner's Umami Cloud dashboard. Do not commit login credentials or API tokens. Register `udeudeude.github.io` as the website domain in Umami Cloud and copy the website ID into that file.
-
-When configured, the public pages record aggregate page visits and project-open/project-link/category-filter events. They do not transmit search terms, user-entered text, or personal URLs. Internal management pages do not load public visitor analytics.
-
-To exclude the owner's own visits, use an ad/tracker blocker or a browser profile with Umami blocked when visiting the public site. Umami's dashboard reports traffic only after configuration, not retrospectively. Separate applications on other hosting domains require their own approved analytics instrumentation.
+The Exhibition and Workshop load Umami Cloud using website ID `f374a945-0ea2-41ed-8eb7-4b6ab6933f9a`. The shared `assets/analytics.js` records project-open, project-link, and category-filter events when Umami is available. Search terms, entered text, and personal URLs are not transmitted by that script. Internal management pages do not load analytics. The public HTML currently embeds the identifier directly; `assets/analytics-config.js` is not loaded by these pages and must not be treated as the effective switch. Verify collection in Umami Cloud before claiming traffic is being received. Never commit credentials or API tokens.
 
 ## Workshop ordering and repository discovery
 
