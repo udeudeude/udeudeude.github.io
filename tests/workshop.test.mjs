@@ -65,7 +65,7 @@ try {
 
     if(width===390){
       await page.goto('http://127.0.0.1:4182/',{waitUntil:'domcontentloaded'});
-      const workshopLink=page.getByRole('link',{name:/Explore the studio/});
+      const workshopLink=page.getByRole('link',{name:/Explore the workshop/});
       assert.equal(await workshopLink.count(),1,'Exactly one invitation beneath public portfolio');
       await workshopLink.click();
       await page.waitForURL('**/workshop/');
