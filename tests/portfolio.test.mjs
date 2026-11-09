@@ -133,8 +133,8 @@ assert.ok(projectCategories.get('lewis-voice-lab').includes('audio'), 'Voice Lab
 assert.ok(projectCategories.get('lewis-voice-lab').includes('tabletop'), 'Voice Lab is relevant to tabletop production');
 const lab = read('voice-lab/index.html');
 const freshLab=read('kokoro-voice-lab/index.html');
-assert.ok(freshLab.includes('src="/voice-lab/app.js?rev=voice-lab-precise-v1"'), 'Cache-free entry loads current shared app JS');
-assert.ok(freshLab.includes('id="languageSelect"') && freshLab.includes('id="genderSelect"'), 'Fresh entry exposes both independent Kokoro filters');
+assert.ok(freshLab.includes('src="/voice-lab/app.js?rev=voice-lab-international-v6"'), 'Cache-free entry loads current shared app JS');
+assert.ok(['languageSelect','genderSelect','originSelect','voiceSearch','playableOnly','communityDemoLink'].every(id=>freshLab.includes('id="'+id+'"')), 'Fresh entry preserves all current voice-library controls');
 
 const recipes = JSON.parse(read('voice-lab/presets/saved-user-recipes.json'));
 
