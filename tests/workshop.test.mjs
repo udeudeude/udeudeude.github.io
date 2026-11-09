@@ -7,6 +7,7 @@ import { chromium } from 'playwright';
 const home = fs.readFileSync('index.html','utf8');
 const workshop = fs.readFileSync('workshop/index.html','utf8');
 const expected = [
+  'New Awesome Game Part 1',
   'MAZE · Seedling Rejuvenation',
   'Sphero Laboratory',
   'MPK249 Universal Map',
@@ -20,7 +21,7 @@ assert.match(home, /href="\/workshop\/"/, 'Only one understated workshop destina
 assert.ok(!home.includes('href="/xyzzy/"'), 'Unlisted workbench remains unlinked from public homepage');
 assert.ok(!workshop.includes('href="/xyzzy/"'), 'Workshop does not reveal private workbench URL');
 assert.ok(!workshop.includes('id="temporarily-leave-the-universe"'),'Promoted adventure is removed from workshop');
-assert.equal((workshop.match(/<article class="project"/g)||[]).length,expected.length,'Workshop keeps seven projects after exhibition promotion');
+assert.equal((workshop.match(/<article class="project"/g)||[]).length,expected.length,'Workshop keeps eight projects after exhibition promotion');
 assert.deepEqual([...workshop.matchAll(/<h2>([^<]+)<\/h2>/g)].map(m=>m[1]),expected,'Reviewed selection and order');
 assert.ok(home.includes('<h2>Key Scratch</h2>'), 'Key Scratch is in Exhibition');
 assert.ok(home.includes('own Apple developer signing configuration'), 'Key Scratch build requirement is explicit');
