@@ -31,4 +31,7 @@ assert.match(html, /description\.remove\(\)/);
 assert.match(html, /Try M02 diagnostics/);
 assert.match(html, /Try vehicle diagnostics/);
 assert.match(html, /Read the Bodkin compendium/);
+assert.match(html, /'Pashto-English': \[\{label:'Open Pashto ↔ English prototype'/);
+assert.match(html, /'Pashto-English':'Experimental phone-first spoken Pashto/);
+assert.match(html, /repo.name === 'Pashto-English' \? 'Pashto ↔ English \/ پښتو ↔ انګلیسي'/);
 console.log('Workshop activity ordering, launch links and privacy checks passed');
