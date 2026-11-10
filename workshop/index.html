@@ -258,6 +258,7 @@
   existing.forEach(attach);
   // Explicitly documented application links; never infer a deployment from a repository name.
   const verifiedApps = {
+    'Pashto-English': [{label:'Open Pashto ↔ English prototype',url:'https://udeudeude.github.io/Pashto-English/'}],
     'new-awesome-game-part-1': [{label:'Play New Awesome Game Part 1',url:'https://udeudeude.github.io/new-awesome-game-part-1/'}],
     'Dactyl-Nightmare-Lucid-Dream': [{label:'Play Dactyl Nightmare',url:'https://udeudeude.github.io/Dactyl-Nightmare-Lucid-Dream/'},{label:'Second-phone controller',url:'https://udeudeude.github.io/Dactyl-Nightmare-Lucid-Dream/controller.html'}],
     'earbud-controller-': [{label:'Try browser app (if Pages enabled)',url:'https://udeudeude.github.io/earbud-controller-/'}],
@@ -301,10 +302,11 @@
     const content = document.createElement('div');
     content.className = 'content';
     const heading = document.createElement('h2');
-    heading.textContent = repo.name.replace(/[-_]+/g,' ').trim();
+    heading.textContent = repo.name === 'Pashto-English' ? 'Pashto ↔ English / پښتو ↔ انګلیسي' : repo.name.replace(/[-_]+/g,' ').trim();
     const description = document.createElement('p');
     description.className = 'description';
     const summaries = {
+      'Pashto-English':'Experimental phone-first spoken Pashto–English translator. Speech recognition and translation accuracy are not yet validated; Pashto audio is experimental.',
       'new-awesome-game-part-1':'A new browser game.',
       'Dactyl-Nightmare-Lucid-Dream':'A browser-based, phone-first reconstruction of the 1991 virtual-reality arcade game.',
       'earbud-controller-':'An experimental browser interface for earbud controls.',
