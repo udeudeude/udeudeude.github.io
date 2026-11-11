@@ -38,4 +38,6 @@ assert.match(html, /banner.className = 'banner pashto-lettering'/);
 assert.match(html, /english.textContent = 'Pashto ↔ English'/);
 assert.match(html, /pashto.textContent = 'پښتو ↔ انګلیسي'/);
 assert.match(html, /if \(repo.name !== 'Pashto-English'\)/);
+assert.match(html, /no playable mission has yet been published or playtested/);
+assert.match(html, /physical controller verification is pending/);
 console.log('Workshop activity ordering, launch links and privacy checks passed');
