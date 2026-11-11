@@ -34,4 +34,8 @@ assert.match(html, /Read the Bodkin compendium/);
 assert.match(html, /'Pashto-English': \[\{label:'Open Pashto ↔ English prototype'/);
 assert.match(html, /'Pashto-English':'Experimental phone-first spoken Pashto/);
 assert.match(html, /repo.name === 'Pashto-English' \? 'Pashto ↔ English \/ پښتو ↔ انګلیسي'/);
+assert.match(html, /banner.className = 'banner pashto-lettering'/);
+assert.match(html, /english.textContent = 'Pashto ↔ English'/);
+assert.match(html, /pashto.textContent = 'پښتو ↔ انګلیسي'/);
+assert.match(html, /if \(repo.name !== 'Pashto-English'\)/);
 console.log('Workshop activity ordering, launch links and privacy checks passed');
