@@ -226,7 +226,7 @@ assert.equal(await moireCard.getByRole('link',{name:'Public tile'}).count(),0,'U
  await expand(thdie);
  assert.equal(await thdie.count(),1,'Correct podcast display spelling');
  assert.ok(await thdie.getByRole('link',{name:'Subscribe (RSS)'}).count(),'Th’die’s Cast has a direct subscription link');
- assert.ok(await thdie.getByRole('link',{name:'Listen to the pilot episodes'}).count(),'Podcast has episode listener link');
+ assert.ok(await thdie.getByRole('link',{name:'Listen to all published episodes'}).count(),'Podcast has episode listener link');
  const gameCast=x.locator('.tile').filter({has:x.getByRole('heading',{name:'Play by Ear · GameCast'})});
  await expand(gameCast);
  await expand(gameCast);
