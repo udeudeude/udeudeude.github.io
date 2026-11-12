@@ -135,7 +135,11 @@ assert.equal(new Map(labels).get('recurring'), 'Recurring', 'Recurring label is 
 const pnp = cards.find(card => card[1] === 'pnp-o-matic')?.[3];
 const escape = cards.find(card => card[1] === 'escape-pod-cast')?.[3];
 assert.ok(pnp?.includes('release is still pending'), 'PnP-o-matic makes no false release claim');
-assert.ok(escape?.includes('app-v0.7.1') && !escape.includes('/audio/'), 'Escape Pod Cast links to Mac release, not an episode feed');
+assert.ok(escape && !escape.includes('/audio/'), 'Escape Pod Cast links to Mac release, not an episode feed');
+const escapeStatus = escape.match(/<div class="status">Mac utility · v(\\d+\\.\\d+\\.\\d+)<\\/div>/);
+const escapeRelease = escape.match(/href="https:\\/\\/github\\.com\\/udeudeude\\/Escape-Pod-Cast\\/releases\\/tag\\/app-v(\\d+\\.\\d+\\.\\d+)"/);
+assert.ok(escapeStatus && escapeRelease, 'Escape Pod Cast has a release version and a direct Mac release link');
+assert.equal(escapeRelease[1], escapeStatus[1], 'Escape Pod Cast download matches the advertised version');
 
 const voiceLabCard = cards.find(card => card[1] === 'lewis-voice-lab')?.[3];
 assert.ok(voiceLabCard?.includes('https://udeudeude.github.io/kokoro-voice-lab/'), 'Cache-free Kokoro Voice Lab is discoverable from the home page');
