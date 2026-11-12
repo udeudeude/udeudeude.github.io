@@ -135,7 +135,7 @@ assert.equal(new Map(labels).get('recurring'), 'Recurring', 'Recurring label is 
 const pnp = cards.find(card => card[1] === 'pnp-o-matic')?.[3];
 const escape = cards.find(card => card[1] === 'escape-pod-cast')?.[3];
 assert.ok(pnp?.includes('release is still pending'), 'PnP-o-matic makes no false release claim');
-assert.ok(escape?.includes('app-v0.7.0') && !escape.includes('/audio/'), 'Escape Pod Cast links to Mac release, not an episode feed');
+assert.ok(escape?.includes('app-v0.7.1') && !escape.includes('/audio/'), 'Escape Pod Cast links to Mac release, not an episode feed');
 
 const voiceLabCard = cards.find(card => card[1] === 'lewis-voice-lab')?.[3];
 assert.ok(voiceLabCard?.includes('https://udeudeude.github.io/kokoro-voice-lab/'), 'Cache-free Kokoro Voice Lab is discoverable from the home page');
