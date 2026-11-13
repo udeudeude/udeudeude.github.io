@@ -136,8 +136,11 @@ const pnp = cards.find(card => card[1] === 'pnp-o-matic')?.[3];
 const escape = cards.find(card => card[1] === 'escape-pod-cast')?.[3];
 assert.ok(pnp?.includes('release is still pending'), 'PnP-o-matic makes no false release claim');
 assert.ok(escape && !escape.includes('/audio/'), 'Escape Pod Cast links to Mac release, not an episode feed');
-const escapeStatus = escape.match(/<div class="status">Mac utility · v(\\d+\\.\\d+\\.\\d+)<\\/div>/);
-const escapeRelease = escape.match(/href="https:\\/\\/github\\.com\\/udeudeude\\/Escape-Pod-Cast\\/releases\\/tag\\/app-v(\\d+\\.\\d+\\.\\d+)"/);
+const escapeStatus = escape.match(/Mac utility · v(\d+\.\d+\.\d+)/);
+const escapeLink = [...escape.matchAll(/href="([^"]+)"/g)]
+  .map(match => match[1])
+  .find(url => url.startsWith('https://github.com/udeudeude/Escape-Pod-Cast/releases/tag/'));
+const escapeRelease = escapeLink?.split('/').pop()?.match(/^app-v(\d+\.\d+\.\d+)$/);
 assert.ok(escapeStatus && escapeRelease, 'Escape Pod Cast has a release version and a direct Mac release link');
 assert.equal(escapeRelease[1], escapeStatus[1], 'Escape Pod Cast download matches the advertised version');
 
