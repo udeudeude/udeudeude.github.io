@@ -464,7 +464,7 @@
         <div class="caption"><div class="status">Hands-on learning</div><h2>Sorting Algorithms with Playing Cards</h2><p class="tile-summary">Explore sorting algorithms with a deck of playing cards.</p></div><span class="tile-count" hidden aria-hidden="true"></span>
       </button>
       <div class="expand">
-        <p>An illustrated course in 13 sorting algorithms, comparing computer, tabletop and in-hand methods through worked examples and exercises.</p>
+        <p>A hands-on course in sorting algorithms, comparing computer, tabletop and in-hand methods through worked examples and exercises.</p>
         <p class="access-note"><strong>To use:</strong> Hands-on exercises require a deck of playing cards. A printer can be useful but is optional.</p>
         <div class="links"><a href="https://github.com/udeudeude/Sorting-Algorithms-with-Playing-Cards">Publication and source history</a></div>
       </div>
@@ -876,7 +876,9 @@
     const links = required.map((entry, index) => {
       const link = document.createElement('a');
       link.href = urls[index];
-      link.textContent = entry[1];
+      link.textContent = /\btext-only\b/i.test(release.name || '')
+        ? entry[1].replace('latest', 'latest text-only')
+        : entry[1];
       return link;
     });
     container.prepend(...links);
