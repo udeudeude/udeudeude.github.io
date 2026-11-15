@@ -44,7 +44,9 @@ assert.equal((await run('v0.5', names.slice(0, 1))).length, 0, 'partial release 
 assert.equal((await run('v0.5', names, {prerelease: true})).length, 0, 'prerelease must not be advertised');
 const current = await run('v0.5', names);
 assert.equal(current.length, 2);
-assert.equal(current[0].textContent, 'Read the illustrated book (PDF)');
+assert.match(current[0].textContent, /^Read .*edition \(PDF\)$/i, 'reading link identifies the current PDF edition');
+assert.doesNotMatch(current[0].textContent, /\billustrated\b/i, 'reading link does not promise illustrations in text-only releases');
+assert.match(current[1].textContent, /^Print .*booklet \(long-edge PDF\)$/i, 'booklet link states its printing orientation');
 assert.match(current[1].href, /Booklet-LONG-EDGE\.pdf$/);
 assert.equal((await run('v0.6', names)).length, 2, 'future editions should appear without site edits');
 assert.equal((await run('v1.0', names)).length, 2, 'major versions should appear without site edits');
