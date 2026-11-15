@@ -64,7 +64,11 @@ let browser;
 try {
  let ready=false;
  for(let i=0;i<70;i++){
-   try{if((await fetch('http://127.0.0.1:4179/',{signal:AbortSignal.timeout(1000)})).ok){ready=true;break;}}
+   try {
+     const response=await fetch('http://127.0.0.1:4179/',{signal:AbortSignal.timeout(1000)});
+     await response.arrayBuffer(); // Drain the response before closing the connection (Node's HTTP parser).
+     if(response.ok){ready=true;break;}
+   }
    catch{}
    await new Promise(r=>setTimeout(r,180));
  }
