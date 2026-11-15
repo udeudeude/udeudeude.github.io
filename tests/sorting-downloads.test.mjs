@@ -17,7 +17,7 @@ const names = [
 ];
 const repository = 'udeudeude/Sorting-Algorithms-with-Playing-Cards';
 
-async function run(tag, filenames, {prerelease = false} = {}) {
+async function run(tag, filenames, {prerelease = false, releaseName = ''} = {}) {
   const inserted = [];
   const container = {prepend: (...links) => inserted.push(...links)};
   const assets = filenames.map(name => ({
@@ -32,7 +32,7 @@ async function run(tag, filenames, {prerelease = false} = {}) {
     },
     fetch: (url) => {
       assert.equal(url, 'https://api.github.com/repos/' + repository + '/releases/latest');
-      return Promise.resolve({ok: true, json: () => Promise.resolve({tag_name: tag, assets, draft: false, prerelease})});
+      return Promise.resolve({ok: true, json: () => Promise.resolve({tag_name: tag, name: releaseName, assets, draft: false, prerelease})});
     }
   };
   vm.runInNewContext(script, sandbox);
@@ -47,7 +47,11 @@ assert.equal(current.length, 2);
 assert.match(current[0].textContent, /^Read .*edition \(PDF\)$/i, 'reading link identifies the current PDF edition');
 assert.doesNotMatch(current[0].textContent, /\billustrated\b/i, 'reading link does not promise illustrations in text-only releases');
 assert.match(current[1].textContent, /^Print .*booklet \(long-edge PDF\)$/i, 'booklet link states its printing orientation');
-assert.match(current[1].href, /Booklet-LONG-EDGE\.pdf$/);
+assert.match(current[1].href, /Booklet-LONG-EDGE\\.pdf$/);
+const textOnly = await run('v0.9', names, {releaseName: 'Edition 0.9 - Text-only'});
+assert.equal(textOnly[0].textContent, 'Read latest text-only edition (PDF)', 'reading link discloses missing artwork');
+assert.equal(textOnly[1].textContent, 'Print latest text-only booklet (long-edge PDF)', 'booklet link discloses missing artwork');
+assert.doesNotMatch(html, /An illustrated course in 13 sorting algorithms/, 'portfolio must not misdescribe the text-only current release');
 assert.equal((await run('v0.6', names)).length, 2, 'future editions should appear without site edits');
 assert.equal((await run('v1.0', names)).length, 2, 'major versions should appear without site edits');
 console.log('Latest release gating, both PDF links and future-edition updates verified');
